@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YÊN — Chăm Sóc Bố Mẹ, Kể CẢ Khi Ở Xa | Case Study · Trứ</title>
+  <meta name="description" content="Case study chi tiết Yên — Hệ thống kết nối bố mẹ và con cái qua 3 bài toán: phát hiện té ngã, AI nhận diện lừa đảo và nhắc thuốc. Product Designer: Trứ.">
+  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EAEAE4;
+      --text-primary: #0E0E0E;
+      --text-muted: #666660;
+      --border-color: rgba(14, 14, 14, 0.14);
+      --accent: #0E0E0E;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0C0C0D;
+      --bg-secondary: #161618;
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.14);
+      --accent: #C4FF00;
+    }
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.2);
+      --accent: #121212;
+    }
+
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10B981, #C4FF00);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- TOP BAR -->
+  <div class="hairline-b font-mono text-[11px] tracking-mono uppercase py-2.5 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-secondary)]">
+    <a href="index.html" class="flex items-center gap-2 hover:underline font-bold magnetic-btn">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span data-i18n="top-back">QUAY LẠI DANH SÁCH DỰ ÁN</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 01 / 03</span>
+      <span class="font-bold text-emerald-500" data-i18n="top-case-tag">YÊN — HEALTHCARE CONCEPT</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <span class="font-extrabold text-2xl uppercase font-sans">TRỨ</span>
+        <span class="font-mono text-xs text-[var(--text-muted)] border border-[var(--border-color)] px-2 py-0.5 rounded">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- LANGUAGE TOGGLE -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- Theme Switchers -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase" data-target="pink">Pink</button>
+        </div>
+        <a href="index.html#contact" class="font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
+          Liên hệ
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-24 space-y-20 md:space-y-32">
+
+    <!-- HERO HEADER -->
+    <section class="space-y-8 hero-section">
+      <div class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold flex items-center gap-2" data-i18n="hero-tag">
+        <span>[ 01 // SELECTED WORK ]</span>
+        <span>·</span>
+        <span>HEALTHCARE & AGING-TECH DUAL APP</span>
+      </div>
+
+      <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
+        YÊN — CHĂM SÓC BỐ MẸ,<br>KỂ CẢ KHI Ở XA.
+      </h1>
+
+      <p class="case-hero-desc text-xl md:text-2xl text-[var(--text-muted)] max-w-4xl leading-relaxed" data-i18n="hero-desc">
+        Hai ứng dụng kết nối bố mẹ và con cái qua ba nhu cầu cốt lõi: hỗ trợ phát hiện té ngã, nhận diện lừa đảo bằng AI và lịch nhắc thuốc trực quan.
+      </p>
+
+      <!-- Project Metadata Grid -->
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-role-val">Product Designer</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-scope-lbl">[ PHẠM VI ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-scope-val">Product Discovery · UX/UI</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-type-lbl">[ LOẠI DỰ ÁN ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-type-val">Concept cá nhân</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-time-lbl">[ THỜI GIAN ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-time-val">2026</span>
+        </div>
+      </div>
+
+      <!-- Hero Showcase Image -->
+      <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
+        <img src="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png" alt="Yên Hero Banner" class="w-full h-auto object-cover">
+      </div>
+    </section>
+
+    <!-- 01 / BỐI CẢNH VÀ VẤN ĐỀ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec1-tag">
+        [ 01 // BỐI CẢNH VÀ XUNG ĐỘT TÂM LÝ ]
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Persona Bố Mẹ -->
+        <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+          <div class="rounded-lg overflow-hidden h-64 hairline-all">
+            <img src="https://framerusercontent.com/images/ihiHshhjp6ZEy7A6Npwnfx44.png" alt="Bố mẹ cần sự riêng tư" class="w-full h-full object-cover">
+          </div>
+          <div class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p1-tag">[ TÂM LÝ BỐ MẸ ]</div>
+          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="p1-quote">"Biết con quan tâm, nhưng tôi cần không gian riêng."</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p1-desc">
+            Bố mẹ vẫn muốn duy trì nhịp sống thường nhật, không muốn bị con cái coi như người bệnh hay liên tục phải báo cáo tình trạng từng giờ.
+          </p>
+        </div>
+
+        <!-- Persona Con Cái -->
+        <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+          <div class="rounded-lg overflow-hidden h-64 hairline-all">
+            <img src="https://framerusercontent.com/images/qemF9mO9KRaFTtRXSqXAZce5yGg.png" alt="Con cái bất an" class="w-full h-full object-cover">
+          </div>
+          <div class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="p2-tag">[ TÂM LÝ CON CÁI ]</div>
+          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="p2-quote">"Mẹ đang bận, hay có vấn đề gì xảy ra không ta?"</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p2-desc">
+            Khi sống xa nhà, con cái khó biết một cuộc gọi nhỡ chỉ đơn thuần là do bố mẹ đang quét sân hay là dấu hiệu cần được hỗ trợ y tế khẩn cấp.
+          </p>
+        </div>
+      </div>
+
+      <!-- Core HMW -->
+      <div class="p-8 md:p-12 rounded-2xl hairline-all bg-[var(--bg-secondary)] border-l-8 border-l-emerald-500 gsap-card">
+        <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="hmw-tag">
+          [ CÂU HỎI THIẾT KẾ CỐT LÕI (HOW MIGHT WE) ]
+        </span>
+        <blockquote class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-snug" data-i18n="hmw-quote">
+          "Làm thế nào để con cái nhận được thông tin cần thiết khi có sự cố, trong khi bố mẹ vẫn giữ được sự chủ động và quyền riêng tư trong sinh hoạt hằng ngày?"
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 02 / GIẢI PHÁP TỔNG QUAN -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec2-tag">
+        [ 02 // GIẢI PHÁP TỔNG QUAN ]
+      </div>
+
+      <div class="space-y-4 max-w-3xl">
+        <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec2-title">
+          TẬN DỤNG CHIẾC ĐIỆN THOẠI ĐANG CÓ
+        </h2>
+        <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec2-desc">
+          Concept sử dụng chính chiếc smartphone mà gia đình đã quen thuộc để hạn chế chi phí và rào cản làm quen với thiết bị chuyên dụng mới. Trải nghiệm được chia thành 2 ứng dụng độc lập với luồng tương tác đo ni đóng giày cho từng bên.
+        </p>
+      </div>
+
+      <!-- 3 Pillars Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-fall-tag">[ 01 / TÉ NGÃ ]</span>
+          <h3 class="text-xl font-bold uppercase" data-i18n="p-fall-title">Ghi Nhận Va Chạm</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-fall-desc">
+            Ghi nhận tín hiệu gia tốc kế khi có rơi va đập, hỏi bố mẹ trước và chỉ gửi cảnh báo đến con khi sau thời gian cài đặt không có phản hồi.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-scam-tag">[ 02 / LỪA ĐẢO ]</span>
+          <h3 class="text-xl font-bold uppercase" data-i18n="p-scam-title">AI Hỗ Trợ Đánh Giá</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+            Bố mẹ chuyển tiếp tin nhắn, cuộc gọi lạ; hệ thống AI phân tích dấu hiệu và gợi ý lời khuyên trực quan để con kiểm tra trước.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-med-tag">[ 03 / NHẮC THUỐC ]</span>
+          <h3 class="text-xl font-bold uppercase" data-i18n="p-med-title">Cài Đặt Từ Xa</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-med-desc">
+            Con cái thiết lập lịch uống thuốc phức tạp từ xa; phía bố mẹ chỉ nhận lời nhắc to rõ kèm một nút bấm "Tôi đã uống" duy nhất.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 / HAI ỨNG DỤNG ĐỘC LẬP -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">
+        [ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-3 gsap-card">
+            <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="child-app-tag">[ PHÍA CON CÁI ]</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="child-app-title">VIỆC GÌ CẦN XỬ LÝ?</h3>
+            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-app-desc">
+              Màn hình con cái ưu tiên các sự kiện bất thường cần giải quyết ngay. Mỗi thông báo đi kèm thời gian thực tế, mức pin của điện thoại bố mẹ và bối cảnh để con ra quyết định chính xác.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-3 gsap-card">
+            <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="parent-app-tag">[ PHÍA BỐ MẸ ]</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="parent-app-title">TÔI CẦN LÀM GÌ?</h3>
+            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="parent-app-desc">
+              Giao diện bố mẹ dùng chữ cỡ lớn, câu ngắn, loại bỏ toàn bộ icon trừu tượng. Mỗi màn hình chỉ chứa duy nhất một tác vụ chính để triệt tiêu mọi khả năng bấm nhầm.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl overflow-hidden hairline-all flex justify-center bg-neutral-900 p-8 shadow-2xl gsap-card">
+          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện màn hình con cái" class="max-w-xs h-auto rounded-xl shadow-2xl gsap-scrub-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 / TÍNH NĂNG CHI TIẾT: PHÁT HIỆN TÉ NGÃ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-tag">
+        [ 04 // PHÁT HIỆN TÉ NGÃ — HỎI BỐ MẸ TRƯỚC KHI BÁO CON ]
+      </div>
+
+      <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec4-desc">
+        Va chạm mạnh có thể đến từ một cú ngã thật sự hoặc chỉ do làm rơi điện thoại xuống đệm. Do đó, hệ thống luôn hỏi tình trạng của bố mẹ trước. Nếu không có phản hồi sau 30 giây, cảnh báo khẩn cấp mới được kích hoạt tới con.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
+        <div class="space-y-4 gsap-card">
+          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/MasQsRgkW4uvuGvYtNJc0m5I3Y.png" alt="Bố mẹ xác nhận" class="w-full h-auto rounded-lg">
+          </div>
+          <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step1-title">
+            01 / Bố mẹ xác nhận tình trạng
+          </div>
+        </div>
+
+        <div class="space-y-4 gsap-card">
+          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/ktz2hgjT8MXhjpRVV7ywEhxMxw.png" alt="Con nhận cảnh báo" class="w-full h-auto rounded-lg">
+          </div>
+          <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step2-title">
+            02 / Con nhận cảnh báo khẩn cấp
+          </div>
+        </div>
+
+        <div class="space-y-4 gsap-card">
+          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" class="w-full h-auto rounded-lg">
+          </div>
+          <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step3-title">
+            03 / Cập nhật trạng thái an toàn
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / TÍNH NĂNG CHI TIẾT: AI CHỐNG LỪA ĐẢO & NHẮC THUỐC -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec5-tag">
+        [ 05 // AI CHỐNG LỪA ĐẢO & LỊCH NHẮC THUỐC ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- AI Fraud -->
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
+          <h3 class="text-2xl font-bold uppercase" data-i18n="ai-fraud-title">AI NHẬN DIỆN LỪA ĐẢO</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="ai-fraud-desc">
+            Kết quả được phân cấp thành 3 mức minh bạch: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”, tránh tạo ảo tưởng rằng AI là công cụ xác thực tuyệt đối 100%.
+          </p>
+          <div class="grid grid-cols-3 gap-2">
+            <img src="https://framerusercontent.com/images/gtqUWWAxMMx3qOipzJrp4Lxc3ao.png" alt="Bố mẹ gửi tin nhắn" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/fs5B8ADrCoDu6X4orqQZKNilwA.png" alt="AI phân tích" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/q7GEQgtisRhwBBzhBAVPGF1cb8.png" alt="Khuyến nghị" class="rounded-lg hairline-all w-full">
+          </div>
+        </div>
+
+        <!-- Medication -->
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
+          <h3 class="text-2xl font-bold uppercase" data-i18n="med-remind-title">LỊCH NHẮC THUỐC ĐƠN GIẢN</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="med-remind-desc">
+            Đến giờ uống thuốc, điện thoại bố mẹ chỉ rung chuông kèm 2 lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con cái theo dõi được phản hồi từ xa trong ứng dụng của mình.
+          </p>
+          <div class="grid grid-cols-3 gap-2">
+            <img src="https://framerusercontent.com/images/hseGNKreVQyEktYVoECWHvku4.png" alt="Cài đặt lịch" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/W0eFyNLmv74gfKj0aDsa8b9c0gM.png" alt="Lời nhắc bố mẹ" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/E62qTLdSRvKGZNSMbM1E9TeYie8.png" alt="Trạng thái uống" class="rounded-lg hairline-all w-full">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 / BÀI HỌC VÀ BƯỚC TIẾP THEO -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-tag">
+        [ 06 // BÀI HỌC THIẾT KẾ & BƯỚC TIẾP THEO ]
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn1-tag">01 / KHẢ NĂNG SỬ DỤNG</span>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn1-desc">Cần thử nghiệm trực tiếp trên tay người lớn tuổi để xem họ có thể thao tác mà hoàn toàn không cần người khác hướng dẫn.</p>
+        </div>
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn2-tag">02 / ĐỘ TRỄ CẢNH BÁO</span>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn2-desc">Mốc thời gian 30 giây cần kiểm chứng trong các tình huống thực tế để tránh báo động giả gây hoang mang.</p>
+        </div>
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn3-tag">03 / NIỀM TIN VÀO AI</span>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn3-desc">Đảm bảo người dùng hiểu rõ AI chỉ đóng vai trò trợ lý tham khảo, con người vẫn là chốt chặn quyết định cuối cùng.</p>
+        </div>
+      </div>
+
+      <!-- Large Mockup Gallery -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+        <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
+          <img src="https://framerusercontent.com/images/qlM9pxASzFZ7b5QBhCyHXyx6k0U.png" alt="Mockup tổng thể 1" class="w-full h-auto">
+        </div>
+        <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
+          <img src="https://framerusercontent.com/images/0qItvNARgsTM78ftPP1t1VsVRZs.png" alt="Mockup tổng thể 2" class="w-full h-auto">
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT PROJECT FOOTER -->
+    <section class="pt-12 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono">
+      <a href="index.html" class="flex items-center gap-2 hover:underline magnetic-btn">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span data-i18n="foot-back">VỀ TRANG CHỦ</span>
+      </a>
+      <a href="iq-myth.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn">
+        <span data-i18n="foot-next">DỰ ÁN TIẾP THEO: IQ MYTH</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / scrollTotal) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // 3. Hero Entrance Animations
+    gsap.from('.case-hero-title', {
+      y: 60,
+      opacity: 0,
+      duration: 1.1,
+      ease: 'power4.out',
+      delay: 0.1
+    });
+    gsap.from('.case-hero-desc', {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.25
+    });
+    gsap.from('.case-hero-img', {
+      scale: 0.95,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      delay: 0.35
+    });
+
+    // 4. ScrollTrigger Reveals for Cards and Sections
+    gsap.utils.toArray('.gsap-card').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+    });
+
+    // 5. Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // Theme Switcher
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('tru_theme', t);
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === t) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.remove('text-[var(--text-muted)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.add('text-[var(--text-muted)]');
+        }
+      });
+    }
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // Bilingual Translation System
+    const translations = {
+      vi: {
+        'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
+        'top-case-num': 'CASE 01 / 03',
+        'top-case-tag': 'YÊN — HEALTHCARE CONCEPT',
+        'btn-contact': 'Liên hệ',
+        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>HEALTHCARE & AGING-TECH DUAL APP</span>',
+        'hero-title': 'YÊN — CHĂM SÓC BỐ MẸ,<br>KỂ CẢ KHI Ở XA.',
+        'hero-desc': 'Hai ứng dụng kết nối bố mẹ và con cái qua ba nhu cầu cốt lõi: hỗ trợ phát hiện té ngã, nhận diện lừa đảo bằng AI và lịch nhắc thuốc trực quan.',
+        'meta-role-lbl': '[ VAI TRÒ ]',
+        'meta-role-val': 'Product Designer',
+        'meta-scope-lbl': '[ PHẠM VI ]',
+        'meta-scope-val': 'Product Discovery · UX/UI',
+        'meta-type-lbl': '[ LOẠI DỰ ÁN ]',
+        'meta-type-val': 'Concept cá nhân',
+        'meta-time-lbl': '[ THỜI GIAN ]',
+        'meta-time-val': '2026',
+        'sec1-tag': '[ 01 // BỐI CẢNH VÀ XUNG ĐỘT TÂM LÝ ]',
+        'p1-tag': '[ TÂM LÝ BỐ MẸ ]',
+        'p1-quote': '"Biết con quan tâm, nhưng tôi cần không gian riêng."',
+        'p1-desc': 'Bố mẹ vẫn muốn duy trì nhịp sống thường nhật, không muốn bị con cái coi như người bệnh hay liên tục phải báo cáo tình trạng từng giờ.',
+        'p2-tag': '[ TÂM LÝ CON CÁI ]',
+        'p2-quote': '"Mẹ đang bận, hay có vấn đề gì xảy ra không ta?"',
+        'p2-desc': 'Khi sống xa nhà, con cái khó biết một cuộc gọi nhỡ chỉ đơn thuần là do bố mẹ đang quét sân hay là dấu hiệu cần được hỗ trợ y tế khẩn cấp.',
+        'hmw-tag': '[ CÂU HỎI THIẾT KẾ CỐT LÕI (HOW MIGHT WE) ]',
+        'hmw-quote': '"Làm thế nào để con cái nhận được thông tin cần thiết khi có sự cố, trong khi bố mẹ vẫn giữ được sự chủ động và quyền riêng tư trong sinh hoạt hằng ngày?"',
+        'sec2-tag': '[ 02 // GIẢI PHÁP TỔNG QUAN ]',
+        'sec2-title': 'TẬN DỤNG CHIẾC ĐIỆN THOẠI ĐANG CÓ',
+        'sec2-desc': 'Concept sử dụng chính chiếc smartphone mà gia đình đã quen thuộc để hạn chế chi phí và rào cản làm quen với thiết bị chuyên dụng mới. Trải nghiệm được chia thành 2 ứng dụng độc lập với luồng tương tác đo ni đóng giày cho từng bên.',
+        'p-fall-tag': '[ 01 / TÉ NGÃ ]',
+        'p-fall-title': 'Ghi Nhận Va Chạm',
+        'p-fall-desc': 'Ghi nhận tín hiệu gia tốc kế khi có rơi va đập, hỏi bố mẹ trước và chỉ gửi cảnh báo đến con khi sau thời gian cài đặt không có phản hồi.',
+        'p-scam-tag': '[ 02 / LỪA ĐẢO ]',
+        'p-scam-title': 'AI Hỗ Trợ Đánh Giá',
+        'p-scam-desc': 'Bố mẹ chuyển tiếp tin nhắn, cuộc gọi lạ; hệ thống AI phân tích dấu hiệu và gợi ý lời khuyên trực quan để con kiểm tra trước.',
+        'p-med-tag': '[ 03 / NHẮC THUỐC ]',
+        'p-med-title': 'Cài Đặt Từ Xa',
+        'p-med-desc': 'Con cái thiết lập lịch uống thuốc phức tạp từ xa; phía bố mẹ chỉ nhận lời nhắc to rõ kèm một nút bấm "Tôi đã uống" duy nhất.',
+        'sec3-tag': '[ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]',
+        'child-app-tag': '[ PHÍA CON CÁI ]',
+        'child-app-title': 'VIỆC GÌ CẦN XỬ LÝ?',
+        'child-app-desc': 'Màn hình con cái ưu tiên các sự kiện bất thường cần giải quyết ngay. Mỗi thông báo đi kèm thời gian thực tế, mức pin của điện thoại bố mẹ và bối cảnh để con ra quyết định chính xác.',
+        'parent-app-tag': '[ PHÍA BỐ MẸ ]',
+        'parent-app-title': 'TÔI CẦN LÀM GÌ?',
+        'parent-app-desc': 'Giao diện bố mẹ dùng chữ cỡ lớn, câu ngắn, loại bỏ toàn bộ icon trừu tượng. Mỗi màn hình chỉ chứa duy nhất một tác vụ chính để triệt tiêu mọi khả năng bấm nhầm.',
+        'sec4-tag': '[ 04 // PHÁT HIỆN TÉ NGÃ — HỎI BỐ MẸ TRƯỚC KHI BÁO CON ]',
+        'sec4-desc': 'Va chạm mạnh có thể đến từ một cú ngã thật sự hoặc chỉ do làm rơi điện thoại xuống đệm. Do đó, hệ thống luôn hỏi tình trạng của bố mẹ trước. Nếu không có phản hồi sau 30 giây, cảnh báo khẩn cấp mới được kích hoạt tới con.',
+        'step1-title': '01 / Bố mẹ xác nhận tình trạng',
+        'step2-title': '02 / Con nhận cảnh báo khẩn cấp',
+        'step3-title': '03 / Cập nhật trạng thái an toàn',
+        'sec5-tag': '[ 05 // AI CHỐNG LỪA ĐẢO & LỊCH NHẮC THUỐC ]',
+        'ai-fraud-title': 'AI NHẬN DIỆN LỪA ĐẢO',
+        'ai-fraud-desc': 'Kết quả được phân cấp thành 3 mức minh bạch: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”, tránh tạo ảo tưởng rằng AI là công cụ xác thực tuyệt đối 100%.',
+        'med-remind-title': 'LỊCH NHẮC THUỐC ĐƠN GIẢN',
+        'med-remind-desc': 'Đến giờ uống thuốc, điện thoại bố mẹ chỉ rung chuông kèm 2 lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con cái theo dõi được phản hồi từ xa trong ứng dụng của mình.',
+        'sec6-tag': '[ 06 // BÀI HỌC THIẾT KẾ & BƯỚC TIẾP THEO ]',
+        'learn1-tag': '01 / KHẢ NĂNG SỬ DỤNG',
+        'learn1-desc': 'Cần thử nghiệm trực tiếp trên tay người lớn tuổi để xem họ có thể thao tác mà hoàn toàn không cần người khác hướng dẫn.',
+        'learn2-tag': '02 / ĐỘ TRỄ CẢNH BÁO',
+        'learn2-desc': 'Mốc thời gian 30 giây cần kiểm chứng trong các tình huống thực tế để tránh báo động giả gây hoang mang.',
+        'learn3-tag': '03 / NIỀM TIN VÀO AI',
+        'learn3-desc': 'Đảm bảo người dùng hiểu rõ AI chỉ đóng vai trò trợ lý tham khảo, con người vẫn là chốt chặn quyết định cuối cùng.',
+        'foot-back': 'VỀ TRANG CHỦ',
+        'foot-next': 'DỰ ÁN TIẾP THEO: IQ MYTH'
+      },
+      en: {
+        'top-back': 'BACK TO PROJECT LIST',
+        'top-case-num': 'CASE 01 / 03',
+        'top-case-tag': 'YÊN — HEALTHCARE CONCEPT',
+        'btn-contact': 'Get in touch',
+        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>HEALTHCARE & AGING-TECH DUAL APP</span>',
+        'hero-title': 'YÊN — ELDERCARE FROM AFAR,<br>HONORING PRIVACY.',
+        'hero-desc': 'A dual-app system connecting elderly parents and adult children across three core needs: fall detection, AI fraud screening, and intuitive medication routines.',
+        'meta-role-lbl': '[ ROLE ]',
+        'meta-role-val': 'Product Designer',
+        'meta-scope-lbl': '[ SCOPE ]',
+        'meta-scope-val': 'Product Discovery · UX/UI',
+        'meta-type-lbl': '[ PROJECT TYPE ]',
+        'meta-type-val': 'Self-initiated Concept',
+        'meta-time-lbl': '[ TIMELINE ]',
+        'meta-time-val': '2026',
+        'sec1-tag': '[ 01 // CONTEXT & PSYCHOLOGICAL CONFLICT ]',
+        'p1-tag': '[ PARENT MINDSET ]',
+        'p1-quote': '"I appreciate their care, but I need my dignity and space."',
+        'p1-desc': 'Parents desire their normal daily rhythm without feeling treated as fragile patients or subjected to invasive hourly check-ins.',
+        'p2-tag': '[ ADULT CHILDREN MINDSET ]',
+        'p2-quote': '"Is mom just busy in the yard, or did something happen?"',
+        'p2-desc': 'Living away from home, adult children cannot distinguish an unanswered call from simple garden chores or an urgent medical incident.',
+        'hmw-tag': '[ CORE DESIGN QUESTION (HOW MIGHT WE) ]',
+        'hmw-quote': '"How might adult children receive essential signals during critical incidents while parents retain daily dignity and privacy?"',
+        'sec2-tag': '[ 02 // SOLUTION OVERVIEW ]',
+        'sec2-title': 'LEVERAGING FAMILIAR HARDWARE',
+        'sec2-desc': 'Built upon everyday smartphones families already own to eliminate hardware costs and learning hurdles. Segmented into two tailored apps with interaction flows engineered specifically for each generation.',
+        'p-fall-tag': '[ 01 / FALLS ]',
+        'p-fall-title': 'Impact & Fall Detection',
+        'p-fall-desc': 'Monitors accelerometer signals on heavy impact, asks parents first, and alerts children only when no response after 30 seconds.',
+        'p-scam-tag': '[ 02 / FRAUD ]',
+        'p-scam-title': 'AI Scam Screening',
+        'p-scam-desc': 'Parents forward suspicious calls or messages; AI classifies danger level so children can quickly verify and protect them.',
+        'p-med-tag': '[ 03 / MEDICATION ]',
+        'p-med-title': 'Remote Medication Config',
+        'p-med-desc': 'Children configure complex medication schedules remotely; parents receive high-legibility visual alerts with a single confirmation button.',
+        'sec3-tag': '[ 03 // DUAL APP — PURPOSE-BUILT FOR EACH SIDE ]',
+        'child-app-tag': '[ ADULT CHILD APP ]',
+        'child-app-title': 'WHAT REQUIRES ATTENTION?',
+        'child-app-desc': 'Child dashboard prioritizes urgent exceptions requiring quick action. Every alert includes real-time telemetry, parent battery level, and contextual cues.',
+        'parent-app-tag': '[ PARENT APP ]',
+        'parent-app-title': 'WHAT DO I DO NOW?',
+        'parent-app-desc': 'Senior interface uses oversized high-contrast type, short copy, and zero abstract icons. Exactly one focal action per screen eliminates misclicks.',
+        'sec4-tag': '[ 04 // FALL DETECTION — PARENT CONFIRMATION FIRST ]',
+        'sec4-desc': 'Heavy impacts can result from a genuine accident or merely dropping a phone on the couch. The system queries the parent first; emergency escalation triggers only after a 30-second unanswered window.',
+        'step1-title': '01 / Parent status confirmation',
+        'step2-title': '02 / Child receives incident alert',
+        'step3-title': '03 / Real-time status synced',
+        'sec5-tag': '[ 05 // AI FRAUD SCREENING & MEDICATION ROUTINES ]',
+        'ai-fraud-title': 'AI SCAM SCREENING',
+        'ai-fraud-desc': 'Outputs clear, transparent triage tiers: "Suspicious Warning", "Insufficient Data", and "No Immediate Red Flags", avoiding false impressions of 100% AI infallibility.',
+        'med-remind-title': 'STREAMLINED MEDICATION ROUTINE',
+        'med-remind-desc': 'When time arrives, parent phone rings with 2 clear choices: "I Have Taken It" or "Remind in 15 mins". Children monitor adherence status remotely in their feed.',
+        'sec6-tag': '[ 06 // DESIGN LEARNINGS & NEXT STEPS ]',
+        'learn1-tag': '01 / USABILITY TESTING',
+        'learn1-desc': 'Field-test directly in senior hands to ensure effortless zero-instruction independence.',
+        'learn2-tag': '02 / ALERT LATENCY',
+        'learn2-desc': 'The 30-second grace window must be tested across real environments to prevent anxiety-inducing false alarms.',
+        'learn3-tag': '03 / TRUST IN AI',
+        'learn3-desc': 'Ensure families understand AI is strictly an advisory assistant, with human family members making the final judgment.',
+        'foot-back': 'BACK TO HOME',
+        'foot-next': 'NEXT PROJECT: IQ MYTH'
+      }
+    };
+
+    function setLang(lang) {
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+    }
+
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+  </script>
+</body>
+</html>

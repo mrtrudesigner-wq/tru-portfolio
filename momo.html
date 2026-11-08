@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOMO TRANSFER — Cải Thiện Độ Rõ Ràng & An Tâm (40M+ Users) | Case Study · Trứ</title>
+  <meta name="description" content="Case study chi tiết MoMo Transfer — UX Audit, Research định tính và Redesign luồng chuyển tiền giải quyết Choice Overload cho 40+ triệu người dùng. UI/UX Designer: Trứ.">
+  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EAEAE4;
+      --text-primary: #0E0E0E;
+      --text-muted: #666660;
+      --border-color: rgba(14, 14, 14, 0.14);
+      --momo-pink: #A50064;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0C0C0D;
+      --bg-secondary: #161618;
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.14);
+      --momo-pink: #F95396;
+    }
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.2);
+      --momo-pink: #A50064;
+    }
+
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #A50064, #F95396, #10B981);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- TOP BAR -->
+  <div class="hairline-b font-mono text-[11px] tracking-mono uppercase py-2.5 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-secondary)]">
+    <a href="index.html" class="flex items-center gap-2 hover:underline font-bold magnetic-btn">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span data-i18n="top-back">QUAY LẠI DANH SÁCH DỰ ÁN</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 03 / 03</span>
+      <span class="font-bold text-pink-600" data-i18n="top-case-tag">MOMO TRANSFER — FINTECH REDESIGN</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <span class="font-extrabold text-2xl uppercase font-sans">TRỨ</span>
+        <span class="font-mono text-xs text-[var(--text-muted)] border border-[var(--border-color)] px-2 py-0.5 rounded">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- LANGUAGE TOGGLE -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- Theme Switchers -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase" data-target="pink">Pink</button>
+        </div>
+        <a href="index.html#contact" class="font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
+          Liên hệ
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-24 space-y-20 md:space-y-32">
+
+    <!-- HERO HEADER -->
+    <section class="space-y-8">
+      <div class="font-mono text-xs uppercase tracking-mono text-pink-600 bg-pink-100 dark:bg-pink-950 px-3 py-1 rounded w-max font-bold flex items-center gap-2" data-i18n="hero-tag">
+        <span>[ 03 // SELECTED WORK ]</span>
+        <span>·</span>
+        <span>FINTECH UX RESEARCH & REDESIGN</span>
+      </div>
+
+      <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
+        MOMO TRANSFER — ĐỀ XUẤT CẢI THIỆN ĐỘ RÕ RÀNG & AN TÂM.
+      </h1>
+
+      <p class="case-hero-desc text-xl md:text-2xl text-[var(--text-muted)] max-w-4xl leading-relaxed" data-i18n="hero-desc">
+        Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận giao dịch chuyển tiền cho hơn 40 triệu người dùng MoMo.
+      </p>
+
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-role-val">UI/UX Designer</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-scope-lbl">[ PHẠM VI ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-scope-val">User Research · UX Audit · UI</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-type-lbl">[ LOẠI DỰ ÁN ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-type-val">Concept / Self-initiated</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-time-lbl">[ THỜI GIAN ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-time-val">2025</span>
+        </div>
+      </div>
+
+      <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
+        <img src="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png" alt="MoMo Transfer Showcase" class="w-full h-auto object-cover">
+      </div>
+    </section>
+
+    <!-- 01 / BỐI CẢNH & VẤN ĐỀ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec1-tag">
+        [ 01 // BỐI CẢNH & HIỆN TRẠNG ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">
+            40+ TRIỆU NGƯỜI DÙNG & NỖI BĂN KHOĂN TẠI MÀN HÌNH CHUYỂN TIỀN
+          </h2>
+          <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">
+            MoMo có hơn 40 triệu người dùng theo Decision Lab năm 2024. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.
+          </p>
+          <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">
+            Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn để giúp người dùng đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.
+          </p>
+        </div>
+
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-2 shadow-lg gsap-card">
+            <img src="https://framerusercontent.com/images/ljnYcI4OFZsUWupNyaWwZdpxfhM.png" alt="Màn hình hiện tại 1" class="w-full h-auto rounded-lg">
+          </div>
+          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-2 shadow-lg gsap-card">
+            <img src="https://framerusercontent.com/images/wrI7J9mXD5gQDaYERI1N2eaEpY.png" alt="Màn hình hiện tại 2" class="w-full h-auto rounded-lg">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 / DỮ LIỆU NGHIÊN CỨU THỰC TẾ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec2-tag">
+        [ 02 // USER RESEARCH & DỮ LIỆU ĐỊNH TÍNH ]
+      </div>
+
+      <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec2-desc">
+        Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Kết quả được dùng để phát hiện vấn đề cần kiểm chứng thêm:
+      </p>
+
+      <!-- 4 Data Cards with Counters -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="text-4xl sm:text-5xl font-extrabold font-mono text-pink-600 block">4.27/5</span>
+          <div class="font-bold text-sm uppercase" data-i18n="card1-title">Mức độ hài lòng</div>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card1-desc">Người dùng nhìn chung hài lòng, nhưng vẫn có các điểm gây do dự.</p>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="text-4xl sm:text-5xl font-extrabold font-mono text-amber-500 block">6/11</span>
+          <div class="font-bold text-sm uppercase" data-i18n="card2-title">Chưa sẵn sàng cho bố mẹ</div>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card2-desc">Lý do chính là mật độ thông tin quá dày, chữ nhỏ và quá nhiều nút bấm.</p>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="text-4xl sm:text-5xl font-extrabold font-mono text-emerald-500 block">11/11</span>
+          <div class="font-bold text-sm uppercase" data-i18n="card3-title">Kiểm tra lại trước khi bấm</div>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card3-desc">100% người dùng tự đọc lại tên & SĐT trước khi nhấn xác nhận.</p>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
+          <span class="text-4xl sm:text-5xl font-extrabold font-mono text-blue-500 block">33s</span>
+          <div class="font-bold text-sm uppercase" data-i18n="card4-title">Thời gian quét QR</div>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card4-desc">Mốc đo lường để làm benchmark cải thiện trong vòng usability test tiếp theo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 / 5 PAIN POINTS & HMW -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">
+        [ 03 // 5 ĐIỂM NGHẼN (PAIN POINTS) & CÂU HỎI THIẾT KẾ ]
+      </div>
+
+      <div class="space-y-4">
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp1-tag">[ PAIN POINT 01 ] · THIẾU VISUAL HIERARCHY</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp1-title">3 khu vực hiển thị ngang hàng không có thứ tự ưu tiên</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp1-desc">Gây Choice Overload ngay tại điểm vào. Người dùng bối rối không biết nên bấm đâu trước.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp1-hmw">↳ HMW: Làm sao để người dùng biết ngay bước đầu tiên cần làm gì?</div>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp2-tag">[ PAIN POINT 02 ] · THIẾU TRUST SIGNAL TẠI MÀN XÁC NHẬN</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp2-title">100% người dùng tự đọc lại tên và số tài khoản</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp2-desc">Màn hình xác nhận cần phân cấp thứ tự đối chiếu thông tin nhanh và an tâm nhất.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp2-hmw">↳ HMW: Làm sao để màn hình xác nhận tự nó đủ thuyết phục mà người dùng không cần do dự?</div>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp3-tag">[ PAIN POINT 03 ] · SỐ DƯ VÍ KHÔNG HIỂN THỊ TRONG LUỒNG</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp3-title">Người dùng phải thoát ra trang chủ kiểm tra số dư</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp3-desc">Friction gây đứt gãy luồng chuyển tiền chỉ vì không biết số dư khả dụng có đủ hay không.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp3-hmw">↳ HMW: Làm sao để người dùng biết mình đủ tiền ngay từ bước nhập số tiền?</div>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp4-tag">[ PAIN POINT 04 ] · QR ĐÃ LƯU KHÔNG CÓ TRẠNG THÁI HỢP LỆ</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp4-title">Không rõ mã QR đã lưu trong danh bạ có còn hiệu lực không</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp4-desc">Cần gắn nhãn kiểm tra dữ liệu theo thời gian thực.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp4-hmw">↳ HMW: Làm sao để người dùng biết mã QR cũ có an toàn để chuyển không?</div>
+        </div>
+
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp5-tag">[ PAIN POINT 05 ] · GIAO DIỆN QUÁ PHỨC TẠP VỚI NGƯỜI LỚN TUỔI</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp5-title">6/11 người không sẵn sàng giới thiệu MoMo cho phụ huynh</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp5-desc">Chữ nhỏ, quá nhiều tính năng bổ trợ làm người lớn tuổi sợ bấm sai tiền.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp5-hmw">↳ HMW: Làm sao để luồng đủ đơn giản cho người lần đầu?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 / HỆ THỐNG THIẾT KẾ MOMO BRANDBOOK -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-brand-tag">
+        [ 04 // HỆ THỐNG THIẾT KẾ (MOMO BRANDBOOK OFFICIAL) ]
+      </div>
+
+      <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec4-brand-desc">
+        Giữ nguyên bản sắc nhận diện thương hiệu của MoMo dựa trên Brandbook chính thức, đồng thời chuẩn hóa font chữ <strong>MoMo Trust Sans</strong> xuyên suốt.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-xs gsap-card">
+        <div class="p-4 rounded-xl hairline-all bg-[#A50064] text-white shadow-md">
+          <span class="font-bold block">#A50064</span>
+          <span class="block mt-2 uppercase">MOMO PINK</span>
+          <span class="text-[10px] text-pink-200">CTA Chính, Hero</span>
+        </div>
+        <div class="p-4 rounded-xl hairline-all bg-[#F95396] text-white shadow-md">
+          <span class="font-bold block">#F95396</span>
+          <span class="block mt-2 uppercase">PINK +1</span>
+          <span class="text-[10px] text-pink-100">CTA Phụ</span>
+        </div>
+        <div class="p-4 rounded-xl hairline-all bg-[#FFEFF4] text-[#A50064] shadow-md">
+          <span class="font-bold block">#FFEFF4</span>
+          <span class="block mt-2 uppercase">PINK -2</span>
+          <span class="text-[10px]">Background tint</span>
+        </div>
+        <div class="p-4 rounded-xl hairline-all bg-[#19AC9A] text-white shadow-md">
+          <span class="font-bold block">#19AC9A</span>
+          <span class="block mt-2 uppercase">TURQUOISE</span>
+          <span class="text-[10px] text-emerald-100">Số dư, Badge</span>
+        </div>
+        <div class="p-4 rounded-xl hairline-all bg-[#F6C315] text-black shadow-md">
+          <span class="font-bold block">#F6C315</span>
+          <span class="block mt-2 uppercase">YELLOW +1</span>
+          <span class="text-[10px]">Cảnh báo QR</span>
+        </div>
+        <div class="p-4 rounded-xl hairline-all bg-[#3F8FED] text-white shadow-md">
+          <span class="font-bold block">#3F8FED</span>
+          <span class="block mt-2 uppercase">BLUE</span>
+          <span class="text-[10px] text-blue-100">Security Badge</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / CÁC QUYẾT ĐỊNH UI THEO TỪNG MÀN HÌNH -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec5-screens-tag">
+        [ 05 // CÁC QUYẾT ĐỊNH UI CỐT LÕI (SCREEN BY SCREEN) ]
+      </div>
+
+      <div class="rounded-xl overflow-hidden hairline-all shadow-xl mb-8 gsap-card">
+        <img src="https://framerusercontent.com/images/qBHmrgOQILWIgNHvy0qqL7HoWbY.png" alt="Tổng quan UI Redesign MoMo" class="w-full h-auto">
+      </div>
+
+      <div class="space-y-12">
+        
+        <!-- Màn 01 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+          <div class="md:col-span-4 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/nzF3gWmBBvfy6NdaG6pDtZtxk.png" alt="Màn 01 Chọn phương thức" class="max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="md:col-span-8 space-y-4">
+            <span class="font-mono text-xs uppercase text-pink-600 font-bold" data-i18n="scr1-tag">[ MÀN 01 ] · GIẢI QUYẾT PAIN POINT 01 + 05</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr1-title">CHỌN PHƯƠNG THỨC CHUYỂN TIỀN</h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr1-desc">
+              Search bar viền hồng là Primary Action to rõ nhất màn hình. Số dư ví luôn được hiển thị nổi bật ở góc trên. Dropdown 10 icon rối rắm của bản cũ bị loại bỏ hoàn toàn để tuân thủ triệt để nguyên tắc <strong>One Task Per Screen</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Màn 02 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+          <div class="md:col-span-4 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/c6GBFugUqOxbeaTrt9kxY2ZIMT0.png" alt="Màn 02 QR Validation" class="max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="md:col-span-8 space-y-4">
+            <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="scr2-tag">[ MÀN 02 ] · GIẢI QUYẾT PAIN POINT 04</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr2-title">QR VALIDATION THEO NGỮ CẢNH</h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr2-desc">
+              Thiết lập 3 trạng thái rõ ràng: <strong>Hợp lệ</strong> → tiếp tục; <strong>QR cũ > 30 ngày</strong> → cảnh báo vàng; <strong>Không hợp lệ</strong> → báo lỗi cụ thể. Người dùng không bị chặn đứng bất ngờ mà được nhắc nhở đúng lúc.
+            </p>
+          </div>
+        </div>
+
+        <!-- Màn 03 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+          <div class="md:col-span-4 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/q4MTJb6KBI1HePqN5AHGW0XrsT8.png" alt="Màn 03 Nhập số tiền" class="max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="md:col-span-8 space-y-4">
+            <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="scr3-tag">[ MÀN 03 ] · GIẢI QUYẾT PAIN POINT 03</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr3-title">NHẬP SỐ TIỀN & ĐỐI CHIẾU SỐ DƯ TỨC THÌ</h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr3-desc">
+              Thẻ số dư hiển thị đồng thời 2 giá trị: <em>"Khả dụng"</em> và <em>"Còn lại sau giao dịch"</em> được tính toán theo thời gian thực (real-time). Người dùng có thể chọn đổi nguồn tiền (Ví MoMo, Túi Thần Tài, Thẻ ngân hàng) ngay tại điểm nhập số tiền.
+            </p>
+          </div>
+        </div>
+
+        <!-- Màn 04 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+          <div class="md:col-span-4 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/WCpESoEAcYkaZNFC2waCMXYeGfg.png" alt="Màn 04 Xác nhận giao dịch" class="max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="md:col-span-8 space-y-4">
+            <span class="font-mono text-xs uppercase text-blue-500 font-bold" data-i18n="scr4-tag">[ MÀN 04 ] · GIẢI QUYẾT PAIN POINT 02</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr4-title">MÀN HÌNH XÁC NHẬN VỚI TRUST SIGNALS</h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr4-desc">
+              Avatar, Tên người nhận viết hoa có kiểm duyệt, Logo ngân hàng thụ hưởng, Số tiền và Nguồn tiền được sắp xếp theo đúng thứ tự mắt quét của người dùng. Giúp đối chiếu thông tin trong 3 giây mà không phải nhẩm lại nhiều lần.
+            </p>
+          </div>
+        </div>
+
+        <!-- Màn 05 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+          <div class="md:col-span-4 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
+            <img src="https://framerusercontent.com/images/H0p6XhyM48TmYUb1i3xwmnv8RCg.png" alt="Màn 05 Thành công cho thu ngân" class="max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="md:col-span-8 space-y-4">
+            <span class="font-mono text-xs uppercase text-purple-500 font-bold" data-i18n="scr5-tag">[ MÀN 05 ] · QUYẾT ĐỊNH ĐẶC BIỆT</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr5-title">MÀN HÌNH THÀNH CÔNG CHO THU NGÂN / NGƯỜI BÁN</h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr5-desc">
+              Khi thanh toán tại quầy không có loa báo, người mua thường giơ màn hình cho người bán xem từ xa. Màn hình thành công được tối ưu 3 tín hiệu: <strong>Màu hồng MoMo</strong> (nhận ra thương hiệu), <strong>Hiệu ứng Confetti</strong> (xác nhận thành công), và <strong>Số tiền cỡ 52px</strong> to nhất màn hình để người bán đọc được ngay từ khoảng cách 1 mét.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 06 / BÀI HỌC VÀ KẾT LUẬN -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-learn-tag">
+        [ 06 // KẾT LUẬN & BÀI HỌC CRAFT ]
+      </div>
+
+      <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-4 gsap-card">
+        <h3 class="text-2xl font-bold uppercase" data-i18n="sec6-learn-title">CHÚ Ý ĐẾN NHỮNG THAO TÁC NGẦM CỦA NGƯỜI DÙNG</h3>
+        <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec6-learn-desc">
+          Case study giúp tôi nhận ra những thao tác nhỏ mà người dùng tự thêm vào quy trình (như đọc lại tên người nhận 2 lần hoặc đưa màn hình cho người bán nhìn). Những hành vi này không đơn thuần là thói quen mà chính là tín hiệu cho thấy giao diện chưa đủ trust signals. Là Product Designer, nhiệm vụ của tôi là biến những quan sát đời thường đó thành các giải pháp thiết kế chính xác và tự tin.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER NAV -->
+    <section class="pt-12 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono">
+      <a href="iq-myth.html" class="flex items-center gap-2 hover:underline magnetic-btn">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span data-i18n="foot-prev">DỰ ÁN TRƯỚC: IQ MYTH</span>
+      </a>
+      <a href="yen.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn">
+        <span data-i18n="foot-first">VỀ DỰ ÁN ĐẦU TIÊN: YÊN</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / scrollTotal) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // 3. Hero Entrance Animations
+    gsap.from('.case-hero-title', {
+      y: 60,
+      opacity: 0,
+      duration: 1.1,
+      ease: 'power4.out',
+      delay: 0.1
+    });
+    gsap.from('.case-hero-desc', {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.25
+    });
+    gsap.from('.case-hero-img', {
+      scale: 0.95,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      delay: 0.35
+    });
+
+    // 4. ScrollTrigger Card Reveals
+    gsap.utils.toArray('.gsap-card').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+    });
+
+    // 5. Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // Theme Switcher
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('tru_theme', t);
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === t) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.remove('text-[var(--text-muted)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.add('text-[var(--text-muted)]');
+        }
+      });
+    }
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // Bilingual Translation System
+    const translations = {
+      vi: {
+        'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
+        'top-case-num': 'CASE 03 / 03',
+        'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
+        'btn-contact': 'Liên hệ',
+        'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
+        'hero-title': 'MOMO TRANSFER — ĐỀ XUẤT CẢI THIỆN ĐỘ RÕ RÀNG & AN TÂM.',
+        'hero-desc': 'Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận giao dịch chuyển tiền cho hơn 40 triệu người dùng MoMo.',
+        'meta-role-lbl': '[ VAI TRÒ ]',
+        'meta-role-val': 'UI/UX Designer',
+        'meta-scope-lbl': '[ PHẠM VI ]',
+        'meta-scope-val': 'User Research · UX Audit · UI',
+        'meta-type-lbl': '[ LOẠI DỰ ÁN ]',
+        'meta-type-val': 'Concept / Self-initiated',
+        'meta-time-lbl': '[ THỜI GIAN ]',
+        'meta-time-val': '2025',
+        'sec1-tag': '[ 01 // BỐI CẢNH & HIỆN TRẠNG ]',
+        'sec1-title': '40+ TRIỆU NGƯỜI DÙNG & NỖI BĂN KHOĂN TẠI MÀN HÌNH CHUYỂN TIỀN',
+        'sec1-desc1': 'MoMo có hơn 40 triệu người dùng theo Decision Lab năm 2024. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.',
+        'sec1-desc2': 'Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn để giúp người dùng đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.',
+        'sec2-tag': '[ 02 // USER RESEARCH & DỮ LIỆU ĐỊNH TÍNH ]',
+        'sec2-desc': 'Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Kết quả được dùng để phát hiện vấn đề cần kiểm chứng thêm:',
+        'card1-title': 'Mức độ hài lòng',
+        'card1-desc': 'Người dùng nhìn chung hài lòng, nhưng vẫn có các điểm gây do dự.',
+        'card2-title': 'Chưa sẵn sàng cho bố mẹ',
+        'card2-desc': 'Lý do chính là mật độ thông tin quá dày, chữ nhỏ và quá nhiều nút bấm.',
+        'card3-title': 'Kiểm tra lại trước khi bấm',
+        'card3-desc': '100% người dùng tự đọc lại tên & SĐT trước khi nhấn xác nhận.',
+        'card4-title': 'Thời gian quét QR',
+        'card4-desc': 'Mốc đo lường để làm benchmark cải thiện trong vòng usability test tiếp theo.',
+        'sec3-tag': '[ 03 // 5 ĐIỂM NGHẼN (PAIN POINTS) & CÂU HỎI THIẾT KẾ ]',
+        'pp1-tag': '[ PAIN POINT 01 ] · THIẾU VISUAL HIERARCHY',
+        'pp1-title': '3 khu vực hiển thị ngang hàng không có thứ tự ưu tiên',
+        'pp1-desc': 'Gây Choice Overload ngay tại điểm vào. Người dùng bối rối không biết nên bấm đâu trước.',
+        'pp1-hmw': '↳ HMW: Làm sao để người dùng biết ngay bước đầu tiên cần làm gì?',
+        'pp2-tag': '[ PAIN POINT 02 ] · THIẾU TRUST SIGNAL TẠI MÀN XÁC NHẬN',
+        'pp2-title': '100% người dùng tự đọc lại tên và số tài khoản',
+        'pp2-desc': 'Màn hình xác nhận cần phân cấp thứ tự đối chiếu thông tin nhanh và an tâm nhất.',
+        'pp2-hmw': '↳ HMW: Làm sao để màn hình xác nhận tự nó đủ thuyết phục mà người dùng không cần do dự?',
+        'pp3-tag': '[ PAIN POINT 03 ] · SỐ DƯ VÍ KHÔNG HIỂN THỊ TRONG LUỒNG',
+        'pp3-title': 'Người dùng phải thoát ra trang chủ kiểm tra số dư',
+        'pp3-desc': 'Friction gây đứt gãy luồng chuyển tiền chỉ vì không biết số dư khả dụng có đủ hay không.',
+        'pp3-hmw': '↳ HMW: Làm sao để người dùng biết mình đủ tiền ngay từ bước nhập số tiền?',
+        'pp4-tag': '[ PAIN POINT 04 ] · QR ĐÃ LƯU KHÔNG CÓ TRẠNG THÁI HỢP LỆ',
+        'pp4-title': 'Không rõ mã QR đã lưu trong danh bạ có còn hiệu lực không',
+        'pp4-desc': 'Cần gắn nhãn kiểm tra dữ liệu theo thời gian thực.',
+        'pp4-hmw': '↳ HMW: Làm sao để người dùng biết mã QR cũ có an toàn để chuyển không?',
+        'pp5-tag': '[ PAIN POINT 05 ] · GIAO DIỆN QUÁ PHỨC TẠP VỚI NGƯỜI LỚN TUỔI',
+        'pp5-title': '6/11 người không sẵn sàng giới thiệu MoMo cho phụ huynh',
+        'pp5-desc': 'Chữ nhỏ, quá nhiều tính năng bổ trợ làm người lớn tuổi sợ bấm sai tiền.',
+        'pp5-hmw': '↳ HMW: Làm sao để luồng đủ đơn giản cho người lần đầu?',
+        'sec4-brand-tag': '[ 04 // HỆ THỐNG THIẾT KẾ (MOMO BRANDBOOK OFFICIAL) ]',
+        'sec4-brand-desc': 'Giữ nguyên bản sắc nhận diện thương hiệu của MoMo dựa trên Brandbook chính thức, đồng thời chuẩn hóa font chữ <strong>MoMo Trust Sans</strong> xuyên suốt.',
+        'sec5-screens-tag': '[ 05 // CÁC QUYẾT ĐỊNH UI CỐT LÕI (SCREEN BY SCREEN) ]',
+        'scr1-tag': '[ MÀN 01 ] · GIẢI QUYẾT PAIN POINT 01 + 05',
+        'scr1-title': 'CHỌN PHƯƠNG THỨC CHUYỂN TIỀN',
+        'scr1-desc': 'Search bar viền hồng là Primary Action to rõ nhất màn hình. Số dư ví luôn được hiển thị nổi bật ở góc trên. Dropdown 10 icon rối rắm của bản cũ bị loại bỏ hoàn toàn để tuân thủ triệt để nguyên tắc <strong>One Task Per Screen</strong>.',
+        'scr2-tag': '[ MÀN 02 ] · GIẢI QUYẾT PAIN POINT 04',
+        'scr2-title': 'QR VALIDATION THEO NGỮ CẢNH',
+        'scr2-desc': 'Thiết lập 3 trạng thái rõ ràng: <strong>Hợp lệ</strong> → tiếp tục; <strong>QR cũ > 30 ngày</strong> → cảnh báo vàng; <strong>Không hợp lệ</strong> → báo lỗi cụ thể. Người dùng không bị chặn đứng bất ngờ mà được nhắc nhở đúng lúc.',
+        'scr3-tag': '[ MÀN 03 ] · GIẢI QUYẾT PAIN POINT 03',
+        'scr3-title': 'NHẬP SỐ TIỀN & ĐỐI CHIẾU SỐ DƯ TỨC THÌ',
+        'scr3-desc': 'Thẻ số dư hiển thị đồng thời 2 giá trị: <em>"Khả dụng"</em> và <em>"Còn lại sau giao dịch"</em> được tính toán theo thời gian thực (real-time). Người dùng có thể chọn đổi nguồn tiền (Ví MoMo, Túi Thần Tài, Thẻ ngân hàng) ngay tại điểm nhập số tiền.',
+        'scr4-tag': '[ MÀN 04 ] · GIẢI QUYẾT PAIN POINT 02',
+        'scr4-title': 'MÀN HÌNH XÁC NHẬN VỚI TRUST SIGNALS',
+        'scr4-desc': 'Avatar, Tên người nhận viết hoa có kiểm duyệt, Logo ngân hàng thụ hưởng, Số tiền và Nguồn tiền được sắp xếp theo đúng thứ tự mắt quét của người dùng. Giúp đối chiếu thông tin trong 3 giây mà không phải nhẩm lại nhiều lần.',
+        'scr5-tag': '[ MÀN 05 ] · QUYẾT ĐỊNH ĐẶC BIỆT',
+        'scr5-title': 'MÀN HÌNH THÀNH CÔNG CHO THU NGÂN / NGƯỜI BÁN',
+        'scr5-desc': 'Khi thanh toán tại quầy không có loa báo, người mua thường giơ màn hình cho người bán xem từ xa. Màn hình thành công được tối ưu 3 tín hiệu: <strong>Màu hồng MoMo</strong> (nhận ra thương hiệu), <strong>Hiệu ứng Confetti</strong> (xác nhận thành công), và <strong>Số tiền cỡ 52px</strong> to nhất màn hình để người bán đọc được ngay từ khoảng cách 1 mét.',
+        'sec6-learn-tag': '[ 06 // KẾT LUẬN & BÀI HỌC CRAFT ]',
+        'sec6-learn-title': 'CHÚ Ý ĐẾN NHỮNG THAO TÁC NGẦM CỦA NGƯỜI DÙNG',
+        'sec6-learn-desc': 'Case study giúp tôi nhận ra những thao tác nhỏ mà người dùng tự thêm vào quy trình (như đọc lại tên người nhận 2 lần hoặc đưa màn hình cho người bán nhìn). Những hành vi này không đơn thuần là thói quen mà chính là tín hiệu cho thấy giao diện chưa đủ trust signals. Là Product Designer, nhiệm vụ của tôi là biến những quan sát đời thường đó thành các giải pháp thiết kế chính xác và tự tin.',
+        'foot-prev': 'DỰ ÁN TRƯỚC: IQ MYTH',
+        'foot-first': 'VỀ DỰ ÁN ĐẦU TIÊN: YÊN'
+      },
+      en: {
+        'top-back': 'BACK TO PROJECT LIST',
+        'top-case-num': 'CASE 03 / 03',
+        'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
+        'btn-contact': 'Get in touch',
+        'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
+        'hero-title': 'MOMO TRANSFER — CLARITY & PEACE OF MIND AT SCALE.',
+        'hero-desc': 'A targeted UX case study clarifying pre-transfer verification checkpoints for over 40 million MoMo users.',
+        'meta-role-lbl': '[ ROLE ]',
+        'meta-role-val': 'UI/UX Designer',
+        'meta-scope-lbl': '[ SCOPE ]',
+        'meta-scope-val': 'User Research · UX Audit · UI',
+        'meta-type-lbl': '[ PROJECT TYPE ]',
+        'meta-type-val': 'Concept / Self-initiated',
+        'meta-time-lbl': '[ TIMELINE ]',
+        'meta-time-val': '2025',
+        'sec1-tag': '[ 01 // CONTEXT & PROBLEM SPACE ]',
+        'sec1-title': '40M+ USERS & HESITATION AT THE TRANSFER INTERFACE',
+        'sec1-desc1': 'MoMo serves over 40 million users (Decision Lab 2024). I initiated this case study observing competing functional groups on the transfer landing screen. Despite being a frequent user, I regularly paused to orient myself.',
+        'sec1-desc2': 'From that friction, I hypothesized that visual hierarchy could be significantly clarified to help users cross-verify recipients, amounts, and source balances faster with higher confidence.',
+        'sec2-tag': '[ 02 // USER RESEARCH & QUALITATIVE DATA ]',
+        'sec2-desc': 'I surveyed 11 active users via Google Forms, performed end-to-end transfer audits, and mapped UI interactions across screenshots:',
+        'card1-title': 'General Satisfaction',
+        'card1-desc': 'Generally positive, yet plagued by persistent hesitation points.',
+        'card2-title': 'Hesitant for Parents',
+        'card2-desc': 'Information density, small typography, and visual noise deter elderly family adoption.',
+        'card3-title': 'Re-verify Before Submitting',
+        'card3-desc': '100% of participants manually read recipient name & phone aloud before hitting confirm.',
+        'card4-title': 'QR Scan Completion Time',
+        'card4-desc': 'Baseline benchmark to optimize in subsequent usability iterations.',
+        'sec3-tag': '[ 03 // 5 PAIN POINTS & DESIGN QUESTIONS ]',
+        'pp1-tag': '[ PAIN POINT 01 ] · LACK OF VISUAL HIERARCHY',
+        'pp1-title': 'Three competing zones with equal visual prominence',
+        'pp1-desc': 'Causes Choice Overload at entry; users hesitate over where to tap first.',
+        'pp1-hmw': '↳ HMW: How might users intuitively know the exact first action?',
+        'pp2-tag': '[ PAIN POINT 02 ] · INSUFFICIENT TRUST SIGNALS AT CONFIRMATION',
+        'pp2-title': '100% of users re-read name and account numbers',
+        'pp2-desc': 'Confirmation screens require clear scanning hierarchy for fast, confident verification.',
+        'pp2-hmw': '↳ HMW: How might confirmation screens provide instant reassurance without hesitation?',
+        'pp3-tag': '[ PAIN POINT 03 ] · BALANCE HIDDEN DURING FLOW',
+        'pp3-title': 'Users exit flow to check available balance on home',
+        'pp3-desc': 'Friction derails transfer completion over uncertain available funds.',
+        'pp3-hmw': '↳ HMW: How might users verify balance sufficiency right at amount input?',
+        'pp4-tag': '[ PAIN POINT 04 ] · SAVED QR CODES LACK REAL-TIME VALIDITY',
+        'pp4-title': 'Uncertain validity of saved QR codes in address book',
+        'pp4-desc': 'Requires real-time contextual validity badges.',
+        'pp4-hmw': '↳ HMW: How might users immediately know if a saved QR is safe to pay?',
+        'pp5-tag': '[ PAIN POINT 05 ] · HIGH COMPLEXITY FOR SENIORS',
+        'pp5-title': '6/11 users hesitate recommending MoMo to parents',
+        'pp5-desc': 'Small typography and adjacent promo clutter provoke fears of financial error.',
+        'pp5-hmw': '↳ HMW: How might the core transfer flow feel effortless for first-timers?',
+        'sec4-brand-tag': '[ 04 // DESIGN SYSTEM (MOMO OFFICIAL BRANDBOOK) ]',
+        'sec4-brand-desc': 'Preserves core MoMo brand equity using the official Brandbook guidelines, standardizing typography with <strong>MoMo Trust Sans</strong>.',
+        'sec5-screens-tag': '[ 05 // CORE UI DECISIONS (SCREEN BY SCREEN) ]',
+        'scr1-tag': '[ SCREEN 01 ] · SOLVING PAIN POINT 01 + 05',
+        'scr1-title': 'TRANSFER METHOD SELECTION',
+        'scr1-desc': 'Pink-bordered search bar acts as clear primary action. Live wallet balance anchors top corner. Ten cluttered legacy icons eliminated to enforce <strong>One Task Per Screen</strong>.',
+        'scr2-tag': '[ SCREEN 02 ] · SOLVING PAIN POINT 04',
+        'scr2-title': 'CONTEXTUAL QR VALIDATION',
+        'scr2-desc': 'Three explicit tiers: <strong>Valid</strong> → proceed; <strong>Legacy QR > 30 days</strong> → yellow warning; <strong>Invalid</strong> → explicit error guidance. Users are guided rather than abruptly blocked.',
+        'scr3-tag': '[ SCREEN 03 ] · SOLVING PAIN POINT 03',
+        'scr3-title': 'AMOUNT INPUT & INSTANT BALANCE RECONCILIATION',
+        'scr3-desc': 'Balance card computes real-time <em>"Available"</em> and <em>"Post-Transfer Remainder"</em>. Switch funding sources (MoMo Wallet, Fortune Bag, Bank Card) directly at amount input.',
+        'scr4-tag': '[ SCREEN 04 ] · SOLVING PAIN POINT 02',
+        'scr4-title': 'CONFIRMATION SCREEN WITH TRUST SIGNALS',
+        'scr4-desc': 'Avatar, uppercase verified recipient name, bank logo, amount, and source are structured to natural eye-tracking paths. Complete verification in 3 seconds flat.',
+        'scr5-tag': '[ SCREEN 05 ] · SPECIAL FEATURE FOR MERCHANTS',
+        'scr5-title': 'SUCCESS SCREEN FOR CASHIERS & STREET VENDORS',
+        'scr5-desc': 'At speaker-less stalls, buyers flash phone screens to cashiers. Screen optimized with 3 cues: <strong>Signature MoMo Pink</strong>, <strong>Confetti celebration</strong>, and an <strong>extra-large 52px amount</strong> readable from 1 meter away.',
+        'sec6-learn-tag': '[ 06 // CONCLUSION & CRAFT LESSONS ]',
+        'sec6-learn-title': 'OBSERVING UNWRITTEN USER BEHAVIORS',
+        'sec6-learn-desc': 'This case study revealed implicit compensating behaviors users invent (re-reading names twice, turning screens toward cashiers). These aren\'t quirks—they signal missing trust signals. As a Product Designer, my role is transforming everyday observations into confident, precise design answers.',
+        'foot-prev': 'PREVIOUS PROJECT: IQ MYTH',
+        'foot-first': 'BACK TO FIRST PROJECT: YÊN'
+      }
+    };
+
+    function setLang(lang) {
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+    }
+
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+  </script>
+</body>
+</html>

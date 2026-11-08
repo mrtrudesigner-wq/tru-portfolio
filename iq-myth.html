@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IQ MYTH — Thiết Kế Trải Nghiệm Kiểm Tra Trí Tuệ | Case Study · Trứ</title>
+  <meta name="description" content="Case study chi tiết IQ Myth — Tối ưu hóa luồng làm bài test IQ từ trang giới thiệu đến màn hình kết quả, giảm điểm phân tâm và giải quyết drop-off pricing. UI/UX Designer: Trứ.">
+  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EAEAE4;
+      --text-primary: #0E0E0E;
+      --text-muted: #666660;
+      --border-color: rgba(14, 14, 14, 0.14);
+      --accent: #B9FF06;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0C0C0D;
+      --bg-secondary: #161618;
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.14);
+      --accent: #B9FF06;
+    }
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.2);
+      --accent: #121212;
+    }
+
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #B9FF06, #10B981);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- TOP BAR -->
+  <div class="hairline-b font-mono text-[11px] tracking-mono uppercase py-2.5 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-secondary)]">
+    <a href="index.html" class="flex items-center gap-2 hover:underline font-bold magnetic-btn">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span data-i18n="top-back">QUAY LẠI DANH SÁCH DỰ ÁN</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 02 / 03</span>
+      <span class="font-bold text-[#B9FF06] bg-black px-2 py-0.5 rounded" data-i18n="top-case-tag">IQ MYTH — EDTECH & WEB APP</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <span class="font-extrabold text-2xl uppercase font-sans">TRỨ</span>
+        <span class="font-mono text-xs text-[var(--text-muted)] border border-[var(--border-color)] px-2 py-0.5 rounded">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- LANGUAGE TOGGLE -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- Theme Switchers -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase" data-target="pink">Pink</button>
+        </div>
+        <a href="index.html#contact" class="font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
+          Liên hệ
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-24 space-y-20 md:space-y-32">
+
+    <!-- HERO HEADER -->
+    <section class="space-y-8">
+      <div class="font-mono text-xs uppercase tracking-mono text-[#B9FF06] bg-black px-3 py-1 rounded w-max font-bold flex items-center gap-2" data-i18n="hero-tag">
+        <span>[ 02 // SELECTED WORK ]</span>
+        <span>·</span>
+        <span>EDTECH · UI/UX & PROTOTYPING</span>
+      </div>
+
+      <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
+        IQ MYTH — TRẢI NGHIỆM BÀI TEST TỪ LANDING ĐẾN KẾT QUẢ.
+      </h1>
+
+      <p class="case-hero-desc text-xl md:text-2xl text-[var(--text-muted)] max-w-4xl leading-relaxed" data-i18n="hero-desc">
+        Dự án tập trung giảm thiểu các điểm gây phân tâm trước khi làm bài và làm rõ lộ trình thanh toán nhận kết quả trong ít hơn 2 bước.
+      </p>
+
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-role-val">UI/UX Designer</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-scope-lbl">[ PHẠM VI ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-scope-val">Competitor Audit · UI · Prototype</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-client-lbl">[ KHÁCH HÀNG ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-client-val">IQ Myth (Web App)</span>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-time-lbl">[ THỜI GIAN ]</span>
+          <span class="font-bold text-sm" data-i18n="meta-time-val">2025</span>
+        </div>
+      </div>
+
+      <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
+        <img src="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png" alt="IQ Myth Showcase" class="w-full h-auto object-cover">
+      </div>
+    </section>
+
+    <!-- 01 / BỐI CẢNH & VẤN ĐỀ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec1-tag">
+        [ 01 // BỐI CẢNH & KHOẢNG TRỐNG THỊ TRƯỜNG ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">
+            SẢN PHẨM MỚI, CHƯA CÓ DESIGN SYSTEM KẾ THỪA
+          </h2>
+          <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc">
+            Tôi phụ trách trải nghiệm toàn diện từ trang giới thiệu (Landing Page), luồng làm bài test đến màn hình nhận kết quả và thanh toán. Khi phân tích các đối thủ cùng phân khúc như MyIQ, tôi nhận thấy CTA bắt đầu bài test khá rõ nhưng trang đích đồng thời nhồi nhét Testimonial, Bảng giá, Danh sách tính năng và FAQ.
+          </p>
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 border-l-4 border-l-amber-500 gsap-card">
+            <h4 class="font-mono text-xs uppercase tracking-mono font-bold text-amber-500 mb-2" data-i18n="hypo-lbl">[ GIẢ THUYẾT THIẾT KẾ ]</h4>
+            <p class="text-sm sm:text-base leading-relaxed" data-i18n="hypo-desc">
+              Lượng thông tin phụ dày đặc ngay tại trang giới thiệu làm phân tán sự chú ý khỏi hành động chính: Bắt đầu làm bài kiểm tra.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 shadow-xl gsap-card">
+          <img src="https://framerusercontent.com/images/BBeVMTnDmr4nZKW5dkD2iiqiOg.png" alt="Phân tích đối thủ" class="w-full h-auto rounded-lg">
+          <span class="font-mono text-[10px] uppercase text-neutral-400 block text-center mt-2" data-i18n="comp-caption">Ảnh phân tích cấu trúc đối thủ MyIQ</span>
+        </div>
+      </div>
+
+      <!-- Core HMW -->
+      <div class="p-8 md:p-12 rounded-2xl hairline-all bg-[var(--bg-secondary)] border-l-8 border-l-[#B9FF06] gsap-card">
+        <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="hmw-lbl">
+          [ CÂU HỎI THIẾT KẾ CỐT LÕI (HOW MIGHT WE) ]
+        </span>
+        <blockquote class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-snug" data-i18n="hmw-quote">
+          "Làm thế nào để người dùng bắt đầu bài kiểm tra nhanh, duy trì sự tập trung và hiểu rõ nội dung họ nhận được trước khi thanh toán?"
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 02 / BẢNG SO SÁNH ĐỐI THỦ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec2-tag">
+        [ 02 // COMPETITOR AUDIT: MYIQ VS IQ MYTH ]
+      </div>
+
+      <div class="overflow-x-auto gsap-card">
+        <table class="w-full text-left font-mono text-xs uppercase hairline-all rounded-xl overflow-hidden shadow-lg">
+          <thead class="bg-[var(--bg-secondary)] hairline-b">
+            <tr>
+              <th class="p-4 w-1/4" data-i18n="th-criteria">[ TIÊU CHÍ ]</th>
+              <th class="p-4 w-3/8 text-amber-600" data-i18n="th-myiq">[ MYIQ (ĐỐI THỦ) ]</th>
+              <th class="p-4 w-3/8 text-emerald-600 font-bold" data-i18n="th-iqmyth">[ IQ MYTH (MỤC TIÊU) ]</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border-color)]">
+            <tr>
+              <td class="p-4 font-bold text-[var(--text-muted)]" data-i18n="td-str-lbl">Điểm mạnh</td>
+              <td class="p-4" data-i18n="td-str-myiq">CTA nổi bật ở Hero, có social proof, pricing rõ ràng.</td>
+              <td class="p-4 font-semibold text-emerald-500" data-i18n="td-str-iqmyth">Tối giản, one-task-per-screen, dẫn dắt mượt mà vào test.</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-[var(--text-muted)]" data-i18n="td-wk-lbl">Điểm yếu</td>
+              <td class="p-4 text-amber-700" data-i18n="td-wk-myiq">Layout rối, quá nhiều thông tin cùng lúc, không tạo được sự tập trung.</td>
+              <td class="p-4 text-[var(--text-muted)]" data-i18n="td-wk-iqmyth">Cần xây dựng hoàn toàn mới từ đầu, chưa có dữ liệu quá khứ.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 03 / HỆ THỐNG THIẾT KẾ -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">
+        [ 03 // HỆ THỐNG THIẾT KẾ & USER FLOW ]
+      </div>
+
+      <!-- Flow SVG -->
+      <div class="space-y-4 gsap-card">
+        <h3 class="text-2xl font-bold uppercase" data-i18n="flow-title">USER FLOW TỐI GIẢN (DƯỚI 2 BƯỚC)</h3>
+        <p class="text-sm text-[var(--text-muted)]" data-i18n="flow-desc">Luồng được thiết kế đưa người dùng từ trang đích đến câu hỏi đầu tiên với số lần nhấp chuột tối thiểu.</p>
+        <div class="p-6 rounded-xl hairline-all bg-white flex justify-center shadow-lg">
+          <img src="https://framerusercontent.com/images/cYp9HWiKM9vjsvmK9c7PphEWTE.svg" alt="User flow IQ Myth" class="w-full max-w-4xl h-auto">
+        </div>
+      </div>
+
+      <!-- Color Tokens Grid -->
+      <div class="space-y-4 pt-6 gsap-card">
+        <h3 class="text-2xl font-bold uppercase" data-i18n="color-title">COLOR SYSTEM</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-xl hairline-all space-y-3 bg-[#B9FF06] text-black shadow-md">
+            <span class="font-mono text-xs font-bold block">#B9FF06</span>
+            <div class="font-bold text-lg uppercase">PRIMARY / ACCENT</div>
+            <p class="text-xs" data-i18n="color1-desc">Illustrations, Highlight text, bứt phá năng lượng</p>
+          </div>
+          <div class="p-5 rounded-xl hairline-all space-y-3 bg-[#013613] text-white shadow-md">
+            <span class="font-mono text-xs font-bold block">#013613</span>
+            <div class="font-bold text-lg uppercase">ACTION / CTA</div>
+            <p class="text-xs" data-i18n="color2-desc">Nút CTA, Background Footer, đảm bảo Accessible</p>
+          </div>
+          <div class="p-5 rounded-xl hairline-all space-y-3 bg-[#D8502D] text-white shadow-md">
+            <span class="font-mono text-xs font-bold block">#D8502D</span>
+            <div class="font-bold text-lg uppercase">DANGER / FOMO</div>
+            <p class="text-xs" data-i18n="color3-desc">Cảnh báo hết hạn kết quả, pop-up kích hoạt</p>
+          </div>
+          <div class="p-5 rounded-xl hairline-all space-y-3 bg-[#F4F7F5] text-black shadow-md">
+            <span class="font-mono text-xs font-bold block">#F4F7F5</span>
+            <div class="font-bold text-lg uppercase">SURFACE</div>
+            <p class="text-xs" data-i18n="color4-desc">Card background, Input field, nền làm bài test</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 / CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-tag">
+        [ 04 // CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI ]
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4 gsap-card">
+          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="sec4-email-tag">[ THU THẬP EMAIL ]</span>
+          <h3 class="text-2xl sm:text-3xl font-bold uppercase" data-i18n="sec4-email-title">ỨNG DỤNG LABOR ILLUSION VÀ FOMO</h3>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-email-desc">
+            Sau khi hoàn thành bài test, người dùng được xem animation phân tích trí tuệ nhân tạo (<strong>Labor Illusion</strong> — tạo cảm giác kết quả đang được tính toán sâu và cá nhân hoá). Đi kèm đồng hồ đếm ngược (<strong>FOMO</strong>) trước khi chuyển qua bước nhập email để nhận phân tích chi tiết.
+          </p>
+        </div>
+        <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
+          <img src="https://framerusercontent.com/images/trBCKNvgkVvWmGaWu20hFH67mu4.png" alt="Email collection screen" class="w-full h-auto">
+        </div>
+      </div>
+
+      <!-- Illustrations -->
+      <div class="space-y-4 pt-6 gsap-card">
+        <h3 class="text-2xl font-bold uppercase" data-i18n="sec4-illus-title">HỆ THỐNG MINH HỌA ĐỒNG BỘ</h3>
+        <p class="text-sm text-[var(--text-muted)]" data-i18n="sec4-illus-desc">Bộ minh họa đen trắng kết hợp điểm nhấn xanh neon tạo cảm giác hiện đại, giảm bớt căng thẳng khi làm bài test IQ.</p>
+        <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 shadow-xl">
+          <img src="https://framerusercontent.com/images/agVEm9X4NsCMcfsRPa4CftCuhnM.png" alt="Minh họa IQ Myth" class="w-full h-auto rounded-lg">
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / BEFORE & AFTER PRICING SCREEN -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec5-tag">
+        [ 05 // THỬ NGHIỆM VÀ CẢI TIẾN TRANG BẢNG GIÁ (PRICING) ]
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Bản cũ -->
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-4 gsap-card">
+          <div class="flex items-center justify-between font-mono text-xs uppercase">
+            <span class="text-red-500 font-bold" data-i18n="old-pricing-tag">[ BẢN CŨ: CHOÁNG NGỢP ]</span>
+            <span data-i18n="old-pricing-sub">DROP-OFF CAO</span>
+          </div>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="old-pricing-desc">
+            Hiển thị cùng lúc 3 gói cước ngang hàng với quá nhiều điều khoản khiến người dùng phân vân, do dự và tỷ lệ thoát trang rất cao.
+          </p>
+          <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
+            <img src="https://framerusercontent.com/images/lLLYDMuepYEpS47MSGASQpmHn8.png" alt="Bản cũ pricing" class="max-w-xs h-auto">
+          </div>
+        </div>
+
+        <!-- Bản mới -->
+        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-4 gsap-card">
+          <div class="flex items-center justify-between font-mono text-xs uppercase">
+            <span class="text-emerald-500 font-bold" data-i18n="new-pricing-tag">[ BẢN MỚI: TẬP TRUNG ]</span>
+            <span data-i18n="new-pricing-sub">TỐI ƯU CONVERSION</span>
+          </div>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="new-pricing-desc">
+            Làm nổi bật duy nhất 1 gói đề xuất chính với quyền lợi rõ ràng tại điểm quyết định, các gói bổ sung được thu gọn bên dưới.
+          </p>
+          <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
+            <img src="https://framerusercontent.com/images/9ypBTK2njnMG4Lm4owEmFWrkKg.png" alt="Bản mới pricing" class="max-w-xs h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER NAV -->
+    <section class="pt-12 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono">
+      <a href="yen.html" class="flex items-center gap-2 hover:underline magnetic-btn">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span data-i18n="foot-prev">DỰ ÁN TRƯỚC: YÊN</span>
+      </a>
+      <a href="momo.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn">
+        <span data-i18n="foot-next">DỰ ÁN TIẾP THEO: MOMO TRANSFER</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / scrollTotal) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // 3. Hero Entrance Animations
+    gsap.from('.case-hero-title', {
+      y: 60,
+      opacity: 0,
+      duration: 1.1,
+      ease: 'power4.out',
+      delay: 0.1
+    });
+    gsap.from('.case-hero-desc', {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.25
+    });
+    gsap.from('.case-hero-img', {
+      scale: 0.95,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      delay: 0.35
+    });
+
+    // 4. ScrollTrigger Card Reveals
+    gsap.utils.toArray('.gsap-card').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+    });
+
+    // 5. Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // Theme Switcher
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('tru_theme', t);
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === t) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.remove('text-[var(--text-muted)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.add('text-[var(--text-muted)]');
+        }
+      });
+    }
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // Bilingual Translation System
+    const translations = {
+      vi: {
+        'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
+        'top-case-num': 'CASE 02 / 03',
+        'top-case-tag': 'IQ MYTH — EDTECH & WEB APP',
+        'btn-contact': 'Liên hệ',
+        'hero-tag': '<span>[ 02 // SELECTED WORK ]</span><span>·</span><span>EDTECH · UI/UX & PROTOTYPING</span>',
+        'hero-title': 'IQ MYTH — TRẢI NGHIỆM BÀI TEST TỪ LANDING ĐẾN KẾT QUẢ.',
+        'hero-desc': 'Dự án tập trung giảm thiểu các điểm gây phân tâm trước khi làm bài và làm rõ lộ trình thanh toán nhận kết quả trong ít hơn 2 bước.',
+        'meta-role-lbl': '[ VAI TRÒ ]',
+        'meta-role-val': 'UI/UX Designer',
+        'meta-scope-lbl': '[ PHẠM VI ]',
+        'meta-scope-val': 'Competitor Audit · UI · Prototype',
+        'meta-client-lbl': '[ KHÁCH HÀNG ]',
+        'meta-client-val': 'IQ Myth (Web App)',
+        'meta-time-lbl': '[ THỜI GIAN ]',
+        'meta-time-val': '2025',
+        'sec1-tag': '[ 01 // BỐI CẢNH & KHOẢNG TRỐNG THỊ TRƯỜNG ]',
+        'sec1-title': 'SẢN PHẨM MỚI, CHƯA CÓ DESIGN SYSTEM KẾ THỪA',
+        'sec1-desc': 'Tôi phụ trách trải nghiệm toàn diện từ trang giới thiệu (Landing Page), luồng làm bài test đến màn hình nhận kết quả và thanh toán. Khi phân tích các đối thủ cùng phân khúc như MyIQ, tôi nhận thấy CTA bắt đầu bài test khá rõ nhưng trang đích đồng thời nhồi nhét Testimonial, Bảng giá, Danh sách tính năng và FAQ.',
+        'hypo-lbl': '[ GIẢ THUYẾT THIẾT KẾ ]',
+        'hypo-desc': 'Lượng thông tin phụ dày đặc ngay tại trang giới thiệu làm phân tán sự chú ý khỏi hành động chính: Bắt đầu làm bài kiểm tra.',
+        'comp-caption': 'Ảnh phân tích cấu trúc đối thủ MyIQ',
+        'hmw-lbl': '[ CÂU HỎI THIẾT KẾ CỐT LÕI (HOW MIGHT WE) ]',
+        'hmw-quote': '"Làm thế nào để người dùng bắt đầu bài kiểm tra nhanh, duy trì sự tập trung và hiểu rõ nội dung họ nhận được trước khi thanh toán?"',
+        'sec2-tag': '[ 02 // COMPETITOR AUDIT: MYIQ VS IQ MYTH ]',
+        'th-criteria': '[ TIÊU CHÍ ]',
+        'th-myiq': '[ MYIQ (ĐỐI THỦ) ]',
+        'th-iqmyth': '[ IQ MYTH (MỤC TIÊU) ]',
+        'td-str-lbl': 'Điểm mạnh',
+        'td-str-myiq': 'CTA nổi bật ở Hero, có social proof, pricing rõ ràng.',
+        'td-str-iqmyth': 'Tối giản, one-task-per-screen, dẫn dắt mượt mà vào test.',
+        'td-wk-lbl': 'Điểm yếu',
+        'td-wk-myiq': 'Layout rối, quá nhiều thông tin cùng lúc, không tạo được sự tập trung.',
+        'td-wk-iqmyth': 'Cần xây dựng hoàn toàn mới từ đầu, chưa có dữ liệu quá khứ.',
+        'sec3-tag': '[ 03 // HỆ THỐNG THIẾT KẾ & USER FLOW ]',
+        'flow-title': 'USER FLOW TỐI GIẢN (DƯỚI 2 BƯỚC)',
+        'flow-desc': 'Luồng được thiết kế đưa người dùng từ trang đích đến câu hỏi đầu tiên với số lần nhấp chuột tối thiểu.',
+        'color-title': 'COLOR SYSTEM',
+        'color1-desc': 'Illustrations, Highlight text, bứt phá năng lượng',
+        'color2-desc': 'Nút CTA, Background Footer, đảm bảo Accessible',
+        'color3-desc': 'Cảnh báo hết hạn kết quả, pop-up kích hoạt',
+        'color4-desc': 'Card background, Input field, nền làm bài test',
+        'sec4-tag': '[ 04 // CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI ]',
+        'sec4-email-tag': '[ THU THẬP EMAIL ]',
+        'sec4-email-title': 'ỨNG DỤNG LABOR ILLUSION VÀ FOMO',
+        'sec4-email-desc': 'Sau khi hoàn thành bài test, người dùng được xem animation phân tích trí tuệ nhân tạo (<strong>Labor Illusion</strong> — tạo cảm giác kết quả đang được tính toán sâu và cá nhân hoá). Đi kèm đồng hồ đếm ngược (<strong>FOMO</strong>) trước khi chuyển qua bước nhập email để nhận phân tích chi tiết.',
+        'sec4-illus-title': 'HỆ THỐNG MINH HỌA ĐỒNG BỘ',
+        'sec4-illus-desc': 'Bộ minh họa đen trắng kết hợp điểm nhấn xanh neon tạo cảm giác hiện đại, giảm bớt căng thẳng khi làm bài test IQ.',
+        'sec5-tag': '[ 05 // THỬ NGHIỆM VÀ CẢI TIẾN TRANG BẢNG GIÁ (PRICING) ]',
+        'old-pricing-tag': '[ BẢN CŨ: CHOÁNG NGỢP ]',
+        'old-pricing-sub': 'DROP-OFF CAO',
+        'old-pricing-desc': 'Hiển thị cùng lúc 3 gói cước ngang hàng với quá nhiều điều khoản khiến người dùng phân vân, do dự và tỷ lệ thoát trang rất cao.',
+        'new-pricing-tag': '[ BẢN MỚI: TẬP TRUNG ]',
+        'new-pricing-sub': 'TỐI ƯU CONVERSION',
+        'new-pricing-desc': 'Làm nổi bật duy nhất 1 gói đề xuất chính với quyền lợi rõ ràng tại điểm quyết định, các gói bổ sung được thu gọn bên dưới.',
+        'foot-prev': 'DỰ ÁN TRƯỚC: YÊN',
+        'foot-next': 'DỰ ÁN TIẾP THEO: MOMO TRANSFER'
+      },
+      en: {
+        'top-back': 'BACK TO PROJECT LIST',
+        'top-case-num': 'CASE 02 / 03',
+        'top-case-tag': 'IQ MYTH — EDTECH & WEB APP',
+        'btn-contact': 'Get in touch',
+        'hero-tag': '<span>[ 02 // SELECTED WORK ]</span><span>·</span><span>EDTECH · UI/UX & PROTOTYPING</span>',
+        'hero-title': 'IQ MYTH — STREAMLINED TEST EXPERIENCE FROM LANDING TO RESULTS.',
+        'hero-desc': 'Focused on eliminating distractions prior to test entry and clarifying the monetization funnel in under two steps.',
+        'meta-role-lbl': '[ ROLE ]',
+        'meta-role-val': 'UI/UX Designer',
+        'meta-scope-lbl': '[ SCOPE ]',
+        'meta-scope-val': 'Competitor Audit · UI · Prototype',
+        'meta-client-lbl': '[ CLIENT ]',
+        'meta-client-val': 'IQ Myth (Web App)',
+        'meta-time-lbl': '[ TIMELINE ]',
+        'meta-time-val': '2025',
+        'sec1-tag': '[ 01 // CONTEXT & MARKET OPPORTUNITY ]',
+        'sec1-title': 'NEW PRODUCT, ZERO LEGACY DESIGN SYSTEM',
+        'sec1-desc': 'I owned the end-to-end experience spanning marketing landing page, core testing flow, paywall, and final diagnostic deliverables. Auditing key competitor MyIQ highlighted prominent CTAs diluted by concurrent testimonials, rigid pricing grids, feature dumps, and dense FAQs.',
+        'hypo-lbl': '[ DESIGN HYPOTHESIS ]',
+        'hypo-desc': 'Excessive secondary information on landing pages distracts from the core call-to-action: beginning the assessment.',
+        'comp-caption': 'Structural analysis of competitor MyIQ',
+        'hmw-lbl': '[ CORE DESIGN QUESTION (HOW MIGHT WE) ]',
+        'hmw-quote': '"How might users start the test with zero friction, sustain deep engagement, and clearly understand what they receive before paying?"',
+        'sec2-tag': '[ 02 // COMPETITOR AUDIT: MYIQ VS IQ MYTH ]',
+        'th-criteria': '[ CRITERIA ]',
+        'th-myiq': '[ MYIQ (COMPETITOR) ]',
+        'th-iqmyth': '[ IQ MYTH (GOAL) ]',
+        'td-str-lbl': 'Strengths',
+        'td-str-myiq': 'Prominent hero CTA, active social proof, explicit pricing.',
+        'td-str-iqmyth': 'Minimalist, one-task-per-screen, frictionless test entry.',
+        'td-wk-lbl': 'Weaknesses',
+        'td-wk-myiq': 'Visual clutter, excessive competing elements, weak focus.',
+        'td-wk-iqmyth': 'Built from scratch, no pre-existing analytics baseline.',
+        'sec3-tag': '[ 03 // DESIGN SYSTEM & USER FLOW ]',
+        'flow-title': 'STREAMLINED USER FLOW (SUB-2 STEPS)',
+        'flow-desc': 'Engineered to transport users from the landing page to question #1 with minimum clicks, deferring signup friction.',
+        'color-title': 'COLOR SYSTEM',
+        'color1-desc': 'Illustrations, highlighted text, energetic tech aesthetic',
+        'color2-desc': 'Primary CTAs, footer surfaces, accessible high-contrast',
+        'color3-desc': 'Expiring result timers, high-conversion exit modals',
+        'color4-desc': 'Card backgrounds, input fields, test workspace canvas',
+        'sec4-tag': '[ 04 // UI DECISIONS & BEHAVIORAL PSYCHOLOGY ]',
+        'sec4-email-tag': '[ EMAIL CAPTURE ]',
+        'sec4-email-title': 'LEVERAGING LABOR ILLUSION & FOMO',
+        'sec4-email-desc': 'Post-test animated calculation sequences (<strong>Labor Illusion</strong> — conveying deep algorithmic processing and personalized evaluation), coupled with countdown urgency (<strong>FOMO</strong>) before the lead-capture step.',
+        'sec4-illus-title': 'COHESIVE ILLUSTRATION SYSTEM',
+        'sec4-illus-desc': 'Monochrome illustrations with neon green accents instill modern EdTech credibility while easing cognitive test tension.',
+        'sec5-tag': '[ 05 // PRICING SCREEN AUDIT & OPTIMIZATION ]',
+        'old-pricing-tag': '[ LEGACY: OVERWHELMING ]',
+        'old-pricing-sub': 'HIGH DROP-OFF',
+        'old-pricing-desc': 'Simultaneous 3-tier presentation with lengthy feature matrices created decision paralysis and abandonment.',
+        'new-pricing-tag': '[ REDESIGN: FOCUSED ]',
+        'new-pricing-sub': 'OPTIMIZED CONVERSION',
+        'new-pricing-desc': 'Anchors 1 primary recommended plan with tangible benefits at the decision node; secondary plans collapse below.',
+        'foot-prev': 'PREVIOUS PROJECT: YÊN',
+        'foot-next': 'NEXT PROJECT: MOMO TRANSFER'
+      }
+    };
+
+    function setLang(lang) {
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+    }
+
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+  </script>
+</body>
+</html>

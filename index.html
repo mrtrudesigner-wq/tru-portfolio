@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRỨ — Product Designer · Portfolio</title>
+  <meta name="description" content="Portfolio của Trứ — Product Designer tại Việt Nam. Craft-focused, intentional systems, eliminating fluff.">
+  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+
+  <!-- Google Fonts: Bricolage Grotesque & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            ll: {
+              offWhite: '#F5F5F0',
+              paper: '#EFEFEA',
+              dark: '#0C0C0D',
+              darkElevated: '#161618',
+              hairline: 'rgba(0, 0, 0, 0.12)',
+              hairlineDark: 'rgba(255, 255, 255, 0.12)',
+              accentLime: '#C4FF00',
+              accentPink: '#FF5E8E',
+              accentBlue: '#2D5BFF',
+            }
+          },
+          letterSpacing: {
+            tighter: '-0.045em',
+            tight: '-0.025em',
+            mono: '0.06em'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* CSS Variables for Dynamic Themes (Light, Dark, Pink) */
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EBEBE5;
+      --text-primary: #0E0E0E;
+      --text-muted: #62625C;
+      --border-color: rgba(14, 14, 14, 0.12);
+      --accent: #0E0E0E;
+      --accent-highlight: #10B981;
+      --badge-bg: #E3E3DC;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0A0A0B;
+      --bg-secondary: #141416;
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.12);
+      --accent: #C4FF00;
+      --accent-highlight: #C4FF00;
+      --badge-bg: #1E1E22;
+    }
+
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.18);
+      --accent: #121212;
+      --accent-highlight: #121212;
+      --badge-bg: #FFA4BD;
+    }
+
+    /* Lenis Smooth Scroll Recommended Styles */
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      overflow-x: hidden;
+    }
+
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-l { border-left: 1px solid var(--border-color); }
+    .hairline-r { border-right: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    /* Bracket hover reveal animation */
+    .bracket-hover::before {
+      content: '[';
+      margin-right: 4px;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .bracket-hover::after {
+      content: ']';
+      margin-left: 4px;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .bracket-hover:hover::before,
+    .bracket-hover:hover::after {
+      opacity: 1;
+      color: var(--accent-highlight);
+    }
+
+    /* Floating Image Preview (GSAP Driven) */
+    #cursor-preview {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 440px;
+      height: 290px;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+      transform-origin: center center;
+      will-change: transform, opacity;
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Marquee Animation */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 28s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10B981, #C4FF00, #FF5E8E);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s ease-out;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); }
+
+    /* Case Drawer & Menu Overlay Scrollbar & Scrolling */
+    #menu-overlay,
+    #case-drawer-scroll-body,
+    #case-drawer-panel {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-color) var(--bg-secondary);
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    #menu-overlay::-webkit-scrollbar,
+    #case-drawer-scroll-body::-webkit-scrollbar,
+    #case-drawer-panel::-webkit-scrollbar { width: 6px; }
+    #menu-overlay::-webkit-scrollbar-track,
+    #case-drawer-scroll-body::-webkit-scrollbar-track,
+    #case-drawer-panel::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    #menu-overlay::-webkit-scrollbar-thumb,
+    #case-drawer-scroll-body::-webkit-scrollbar-thumb,
+    #case-drawer-panel::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 9999px; }
+    #menu-overlay::-webkit-scrollbar-thumb:hover,
+    #case-drawer-scroll-body::-webkit-scrollbar-thumb:hover,
+    #case-drawer-panel::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+  </style>
+</head>
+<body class="selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- FLOATING CURSOR IMAGE PREVIEW (Enhanced GSAP Thumbnail) -->
+  <div id="cursor-preview" class="rounded-2xl overflow-hidden border hairline-all bg-black hidden lg:block backdrop-blur-md">
+    <img id="cursor-preview-img" src="" alt="Case Preview" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5 text-white">
+      <div class="flex items-center justify-between">
+        <span id="cursor-preview-tag" class="font-mono text-[10px] uppercase tracking-mono bg-white/20 backdrop-blur-md px-2.5 py-1 rounded">
+          FEATURED CASE
+        </span>
+        <span class="font-mono text-[11px] text-emerald-400 font-bold uppercase flex items-center gap-1">
+          <span>EXPLORE</span> <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </span>
+      </div>
+      <h4 id="cursor-preview-title" class="font-extrabold text-lg uppercase tracking-tight mt-1 text-white">
+        Case Title
+      </h4>
+    </div>
+  </div>
+
+  <!-- TOP BAR (TICKER & LANGUAGE SWITCHER) -->
+  <div class="hairline-b font-mono text-[11px] tracking-mono uppercase py-2.5 px-6 md:px-12 flex items-center justify-between bg-[var(--bg-secondary)] transition-colors">
+    <div class="flex items-center gap-3">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      <span class="font-semibold text-[var(--text-primary)]" data-i18n="status-available">
+        AVAILABLE FOR PRODUCT DESIGN ROLES
+      </span>
+      <span class="hidden sm:inline text-neutral-400">/</span>
+      <span class="hidden sm:inline text-[var(--text-muted)]">HANOI · VIETNAM (GMT+7)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <span id="live-time" class="text-[var(--text-muted)] font-mono hidden md:inline">00:00:00 GMT+7</span>
+      <div class="hidden md:block h-3 w-[1px] bg-[var(--border-color)]"></div>
+      
+      <a href="https://drive.google.com/uc?export=download&id=1xl6vr3kEeqVdDirFAsta81IieVaBpPrB" target="_blank" class="hover:underline flex items-center gap-1 font-semibold text-[var(--text-primary)] magnetic-btn">
+        <span>RESUME</span> <i data-lucide="arrow-down-right" class="w-3 h-3"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION (Sticky & Always Visible at top) -->
+  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b transition-colors">
+    <div class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 h-20 md:h-24 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <span class="font-extrabold text-2xl md:text-3xl tracking-tighter uppercase font-sans">
+          TRỨ
+        </span>
+        <span class="font-mono text-[11px] text-[var(--text-muted)] tracking-mono uppercase hidden sm:inline-block border border-[var(--border-color)] px-2.5 py-1 rounded">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <!-- Sticky Controls: Language Switcher + Theme Switcher + Contact Button + Fullscreen Menu -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        
+        <!-- LANGUAGE TOGGLE (Sticky & Always Visible while scrolling) -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- 3-Theme Switchers: Light / Dark / Pink -->
+        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="pink">Pink</button>
+        </div>
+
+        <a href="#contact" class="hidden sm:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn">
+          <span data-i18n="btn-contact">Get in touch</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+
+        <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
+        <button onclick="openMenuOverlay()" class="font-mono text-xs uppercase tracking-mono px-3.5 sm:px-4 py-2 sm:py-2.5 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-2.5 magnetic-btn cursor-pointer" title="Open Menu">
+          <span data-i18n="btn-menu">MENU</span>
+          <div class="w-3.5 h-3 flex flex-col justify-between">
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION (Increased Whitespace & Bold Editorial Typography) -->
+  <section class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 pt-20 md:pt-36 pb-24 md:pb-40 hairline-b">
+    
+    <div class="flex items-center justify-between font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12">
+      <span class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>[ IDENTITY & DISCIPLINE ]</span>
+      </span>
+      <span class="hidden md:inline">[ CRAFT · INTENTION · SYSTEMS ]</span>
+      <span>01 / 04</span>
+    </div>
+
+    <!-- Mega Hero Typography with GSAP Reveal Target -->
+    <div class="space-y-3 md:space-y-4 hero-title-container">
+      <div class="overflow-hidden">
+        <h1 class="hero-line text-4xl sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] text-[var(--text-primary)]" data-i18n="hero-h1">
+          DESIGN WITHOUT
+        </h1>
+      </div>
+      <div class="overflow-hidden">
+        <h1 class="hero-line text-4xl sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] flex flex-wrap items-center gap-4 md:gap-8 text-[var(--text-primary)]">
+          <span data-i18n="hero-h2">THE FLUFF.</span>
+          <span class="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-mono font-normal tracking-normal text-[var(--text-muted)] lowercase italic">
+            (craft-driven)
+          </span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Manifesto Row with Generous Spacing -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-16 md:mt-28 pt-12 hairline-t items-start">
+      
+      <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] space-y-4">
+        <div>
+          <span class="text-[var(--text-primary)] font-bold block mb-1">[ POSITION & ROLES ]</span>
+          <p class="leading-relaxed">
+            UI/UX DESIGNER @ MARCHI LAB<br>
+            PREVIOUSLY @ HIVELAB VINA<br>
+            CORE: PRODUCT DISCOVERY, UX AUDIT & PROTOTYPING
+          </p>
+        </div>
+        <div class="pt-4 hairline-t">
+          <span class="text-[var(--text-primary)] font-bold block mb-1">[ FOCUS AREAS ]</span>
+          <p class="leading-relaxed">HEALTHCARE, EDTECH, FINTECH & SYSTEM SCALING</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8 space-y-8">
+        <p class="text-2xl sm:text-3xl md:text-4xl font-medium leading-relaxed tracking-tight" data-i18n="hero-quote">
+          "Tôi tin rằng một thiết kế xuất sắc là khi những yếu tố dư thừa được loại bỏ, nhường chỗ cho sự tinh tế và tập trung hoàn toàn vào giá trị cốt lõi của trải nghiệm người dùng."
+        </p>
+        
+        <p class="text-base sm:text-xl text-[var(--text-muted)] leading-relaxed max-w-4xl" data-i18n="hero-desc">
+          Xuất phát từ nền tảng Graphic Design, tôi rèn luyện tư duy Product Design để hiểu tường tận điều gì xảy ra sau khi người dùng nhìn vào màn hình: họ hiểu gì, chọn gì và gặp rào cản ở đâu. Mỗi quyết định giao diện tôi đưa ra đều có lý do xác đáng và sẵn sàng cùng Engineering biến thành sản phẩm hoàn chỉnh.
+        </p>
+
+        <!-- Technical Skill Pills -->
+        <div class="flex flex-wrap gap-2.5 pt-4 font-mono text-xs uppercase tracking-mono">
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ USER FLOW ]</span>
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ INFO ARCHITECTURE ]</span>
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ DESIGN SYSTEMS ]</span>
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ NO-CODE FRAMER ]</span>
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ RIVE ANIMATION ]</span>
+          <span class="px-3.5 py-2 rounded hairline-all bg-[var(--bg-secondary)]">[ AI AUTOMATION ]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFINITE RUNNING MARQUEE (Aesthetic Agency Ticker) -->
+  <div class="py-6 bg-[var(--bg-secondary)] hairline-b overflow-hidden select-none">
+    <div class="animate-marquee font-mono text-xs uppercase tracking-mono whitespace-nowrap text-[var(--text-muted)] font-semibold">
+      <span class="mx-6">PRODUCT DISCOVERY ✦</span>
+      <span class="mx-6">INFORMATION ARCHITECTURE ✦</span>
+      <span class="mx-6">ONE-TASK-PER-SCREEN ✦</span>
+      <span class="mx-6">SYSTEM CRAFT & SPACING ✦</span>
+      <span class="mx-6">INTERACTIVE FRAMER PROTOTYPES ✦</span>
+      <span class="mx-6">USER RESEARCH AUDIT ✦</span>
+      <span class="mx-6">RIVE MICRO-INTERACTIONS ✦</span>
+      <span class="mx-6">AI AUGMENTED DESIGN ✦</span>
+      <span class="mx-6">ACCESSIBILITY & USABILITY ✦</span>
+      <!-- Duplicate for infinite seamless loop -->
+      <span class="mx-6">PRODUCT DISCOVERY ✦</span>
+      <span class="mx-6">INFORMATION ARCHITECTURE ✦</span>
+      <span class="mx-6">ONE-TASK-PER-SCREEN ✦</span>
+      <span class="mx-6">SYSTEM CRAFT & SPACING ✦</span>
+      <span class="mx-6">INTERACTIVE FRAMER PROTOTYPES ✦</span>
+      <span class="mx-6">USER RESEARCH AUDIT ✦</span>
+      <span class="mx-6">RIVE MICRO-INTERACTIONS ✦</span>
+      <span class="mx-6">AI AUGMENTED DESIGN ✦</span>
+      <span class="mx-6">ACCESSIBILITY & USABILITY ✦</span>
+    </div>
+  </div>
+
+  <!-- SELECTED WORK SECTION (Spacious Interactive Case Index with Hover Preview) -->
+  <section id="work" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+    
+    <!-- Section Header & Filter Tabs -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24">
+      <div class="space-y-3">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>[ 01 // SELECTED WORK ]</span>
+        </div>
+        <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter" data-i18n="work-heading">
+          PROJECT INDEX
+        </h2>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-2.5 font-mono text-xs uppercase tracking-mono" id="case-filters">
+        <button onclick="filterCases('all')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold" data-filter="all">
+          [ ALL (3) ]
+        </button>
+        <button onclick="filterCases('product')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors" data-filter="product">
+          [ PRODUCT DISCOVERY ]
+        </button>
+        <button onclick="filterCases('research')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors" data-filter="research">
+          [ UX RESEARCH & AUDIT ]
+        </button>
+      </div>
+    </div>
+
+    <!-- Case Table / List with Generous Row Height -->
+    <div class="divide-y divide-[var(--border-color)] hairline-t hairline-b">
+
+      <!-- CASE 01: YÊN -->
+      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+           data-category="product"
+           data-case="yen"
+           data-url="yen.html"
+           data-image="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png"
+           data-title="Yên — Chăm Sóc Bố Mẹ Từ Xa"
+           data-tag="AGING-TECH · HEALTHCARE DUAL APP"
+           onclick="openCaseDrawer('yen')">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Number & Project Title -->
+          <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">
+              01/
+            </span>
+            <div>
+              <button type="button" onclick="openCaseDrawer('yen')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+                YÊN
+              </button>
+              <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="yen-subtitle">
+                CHĂM SÓC BỐ MẸ, KỂ CẢ KHI Ở XA
+              </p>
+            </div>
+          </div>
+
+          <!-- Metadata & Scope -->
+          <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+              <span>PRODUCT DISCOVERY · UX/UI DESIGN</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+              <span data-i18n="yen-type">CONCEPT CÁ NHÂN · DUAL-APP EXPERIENCE</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+              <span>2026</span>
+            </div>
+          </div>
+
+          <!-- Action Button: Open Summary Drawer -->
+          <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CASE 02: IQ MYTH -->
+      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+           data-category="product"
+           data-case="iq"
+           data-url="iq-myth.html"
+           data-image="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png"
+           data-title="IQ Myth — Trải Nghiệm Kiểm Tra Trí Tuệ"
+           data-tag="EDTECH · WEB APP · CONVERSION DESIGN"
+           onclick="openCaseDrawer('iq')">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[#B9FF06] font-bold transition-colors">
+              02/
+            </span>
+            <div>
+              <button type="button" onclick="openCaseDrawer('iq')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+                IQ MYTH
+              </button>
+              <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="iq-subtitle">
+                TỐI ƯU HOÁ HÀNH TRÌNH TỪ LANDING ĐẾN KẾT QUẢ
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+              <span>COMPETITOR AUDIT · UI DESIGN · PROTOTYPING</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+              <span data-i18n="iq-type">EDTECH PRODUCT · WEB APP DESIGN</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+              <span>2025</span>
+            </div>
+          </div>
+
+          <!-- Action Button: Open Summary Drawer -->
+          <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CASE 03: MOMO TRANSFER -->
+      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+           data-category="research"
+           data-case="momo"
+           data-url="momo.html"
+           data-image="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png"
+           data-title="MoMo Transfer — Tái Cấu Trúc Luồng Chuyển Tiền"
+           data-tag="FINTECH REDESIGN · 40M+ USERS AUDIT"
+           onclick="openCaseDrawer('momo')">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-pink-500 font-bold transition-colors">
+              03/
+            </span>
+            <div>
+              <button type="button" onclick="openCaseDrawer('momo')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+                MOMO TRANSFER
+              </button>
+              <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="momo-subtitle">
+                LÀM RÕ THỨ BẬC & GIA TĂNG CẢM GIÁC AN TÂM (40M+ USERS)
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+              <span>USER RESEARCH · UX AUDIT · UI REDESIGN</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+              <span data-i18n="momo-type">FINTECH REDESIGN · SELF-INITIATED</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+              <span>2025</span>
+            </div>
+          </div>
+
+          <!-- Action Button: Open Summary Drawer -->
+          <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PRODUCT CRAFT & METHODOLOGY (Spacious 3-Column Editorial Grid) -->
+  <section id="craft" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+    
+    <div class="flex items-center justify-between font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12">
+      <span class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>[ 02 // PRODUCT CRAFT ]</span>
+      </span>
+      <span>DISCIPLINE & EXECUTION</span>
+      <span>02 / 04</span>
+    </div>
+
+    <div class="mb-16 md:mb-24 space-y-3">
+      <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter" data-i18n="craft-heading">
+        HOW I THINK & OPERATE
+      </h2>
+      <p class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="craft-sub">
+        BA TRỤ CỘT ĐỊNH HÌNH CÁCH TÔI XÂY DỰNG TRẢI NGHIỆM SẢN PHẨM SỐ
+      </p>
+    </div>
+
+    <!-- 3-Column Grid with Deep Padding -->
+    <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border-color)] hairline-all rounded-2xl overflow-hidden bg-[var(--bg-secondary)]/30">
+      
+      <!-- Col 1 -->
+      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+        <div class="space-y-6">
+          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+            [ PILLAR 01 ]
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-1-title">
+            PRODUCT DISCOVERY & REASONING
+          </h3>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-1-desc">
+            Tôi thường bắt đầu bằng việc làm rõ mục tiêu kinh doanh, giới hạn kỹ thuật và các giả thuyết chưa có dữ liệu. Không thiết kế theo cảm tính cá nhân: các quyết định giao diện cần có lý do rõ ràng, đồng thời đủ thực tế để trao đổi và triển khai cùng Product Manager và Engineering.
+          </p>
+        </div>
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] pt-6 hairline-t">
+          FOCUS: HMW Framework, Qualitative Research, Audit
+        </div>
+      </div>
+
+      <!-- Col 2 -->
+      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+        <div class="space-y-6">
+          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+            [ PILLAR 02 ]
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-2-title">
+            VISUAL CRAFT & SYSTEMS
+          </h3>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-2-desc">
+            Xuất thân từ Graphic Design cho tôi sự nhạy bén đặc biệt với Typography, phân cấp thông tin (Hierarchy) và tỷ lệ không gian. Tôi xây dựng Component System thực dụng, gọn nhẹ, có cấu trúc token rõ ràng giúp đội ngũ phát triển bàn giao và mở rộng sản phẩm mà không bị phân mảnh.
+          </p>
+        </div>
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] pt-6 hairline-t">
+          FOCUS: Design Tokens, Micro-spacing, Strict Contrast
+        </div>
+      </div>
+
+      <!-- Col 3 -->
+      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+        <div class="space-y-6">
+          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+            [ PILLAR 03 ]
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-3-title">
+            RAPID PROTOTYPE & AI AUGMENTATION
+          </h3>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-3-desc">
+            Tôi không dừng lại ở bản vẽ tĩnh trên Figma. Tôi khai thác Framer và Rive để biến layout thành những trải nghiệm tương tác chân thực có thể chạm và dùng thử. Đồng thời ứng dụng AI vào các tác vụ phân tích, tổng hợp thông tin để dành nhiều thời gian hơn cho việc giải quyết bài toán cốt lõi.
+          </p>
+        </div>
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] pt-6 hairline-t">
+          FOCUS: Interactive Framer, Rive Motion, AI Workflows
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- EXPERIENCE & TIMELINE -->
+  <section id="experience" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      
+      <div class="lg:col-span-4 space-y-4">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>[ 03 // TRACK RECORD ]</span>
+        </div>
+        <h2 class="text-4xl sm:text-6xl font-extrabold uppercase tracking-tighter" data-i18n="exp-heading">
+          EXPERIENCE & TIMELINE
+        </h2>
+        <p class="text-base text-[var(--text-muted)] leading-relaxed pt-2" data-i18n="exp-sub">
+          Tôi phát huy năng lực tốt nhất trong các đội ngũ khuyến khích phản biện thẳng thắn, thử nghiệm sớm và phối hợp chặt chẽ giữa Design, Product và Engineering.
+        </p>
+      </div>
+
+      <div class="lg:col-span-8 divide-y divide-[var(--border-color)] hairline-t hairline-b">
+        
+        <!-- Role 1 -->
+        <div class="py-10 flex flex-col sm:flex-row sm:items-baseline justify-between gap-6">
+          <div class="space-y-2">
+            <div class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold">
+              [ 07/2024 — PRESENT ]
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold uppercase">
+              UI/UX DESIGNER
+            </h3>
+            <p class="text-base text-[var(--text-muted)] max-w-xl" data-i18n="exp-r1">
+              Marchi Lab · Thiết kế giao diện và tối ưu trải nghiệm các giải pháp phần mềm số đa nền tảng
+            </p>
+          </div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold">
+            VIETNAM · FULL-TIME
+          </span>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="py-10 flex flex-col sm:flex-row sm:items-baseline justify-between gap-6">
+          <div class="space-y-2">
+            <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
+              [ 06/2023 — 06/2024 ]
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold uppercase">
+              UI/UX DESIGNER
+            </h3>
+            <p class="text-base text-[var(--text-muted)] max-w-xl" data-i18n="exp-r2">
+              HIVELAB VINA · Tham gia thiết kế hệ thống sản phẩm số quy mô lớn và hợp tác cùng đội ngũ kỹ sư quốc tế
+            </p>
+          </div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold">
+            VIETNAM · 1 YEAR
+          </span>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="py-10 flex flex-col sm:flex-row sm:items-baseline justify-between gap-6">
+          <div class="space-y-2">
+            <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
+              [ FOUNDATION ]
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold uppercase">
+              GRAPHIC DESIGN → PRODUCT TRANSITION
+            </h3>
+            <p class="text-base text-[var(--text-muted)] max-w-xl" data-i18n="exp-r3">
+              Xây dựng nền móng thị giác vững chắc trước khi bước sâu vào hành vi người dùng, luồng thao tác và kiến trúc sản phẩm
+            </p>
+          </div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold">
+            ROOTS
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- STORY & ETHOS SECTION ("Chuyện là...") -->
+  <section id="story" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      
+      <!-- Portrait / Visual Card with Parallax -->
+      <div class="lg:col-span-5 relative">
+        <div class="rounded-2xl overflow-hidden hairline-all relative bg-neutral-900 group shadow-2xl">
+          <img id="story-img" src="assets/tru-portrait.png" onerror="this.src='https://framerusercontent.com/images/5GNAMQrKiYWFVMKW5klkynCA20.png'" alt="Trứ Portrait" class="w-full h-[520px] md:h-[620px] object-cover object-[center_20%] grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+            <span class="font-mono text-xs uppercase tracking-mono text-neutral-400">
+              TRỨ // HANOI, VIETNAM
+            </span>
+            <p class="text-lg font-bold uppercase tracking-tight mt-1" data-i18n="story-quote">
+              "Tập trung vào giá trị cốt lõi thay vì sự hào nhoáng rỗng tuếch."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Narrative -->
+      <div class="lg:col-span-7 space-y-8">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span data-i18n="story-tag">[ 04 // CHUYỆN LÀ... ]</span>
+        </div>
+        
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter" data-i18n="story-h2">
+          TỪ BẢN VẼ TĨNH ĐẾN TRẢI NGHIỆM SỐNG ĐỘNG
+        </h2>
+
+        <div class="space-y-5 text-lg md:text-xl text-[var(--text-muted)] leading-relaxed">
+          <p data-i18n="story-p1">
+            Tôi bắt đầu từ Graphic Design và chuyển sang UI/UX vì muốn hiểu điều gì thực sự xảy ra sau khi một người nhìn thấy giao diện: họ hiểu gì, chọn gì và gặp khó khăn ở đâu.
+          </p>
+          <p data-i18n="story-p2">
+            Từ nền tảng đó, tôi đang học cách biến những layout trên Figma thành trải nghiệm thực tế với <strong class="text-[var(--text-primary)]">Framer</strong>. Biết mình chưa giỏi tất cả, tôi chọn cách kiên trì vọc vạch thêm <strong class="text-[var(--text-primary)]">Rive</strong> và <strong class="text-[var(--text-primary)]">AI</strong>.
+          </p>
+          <p class="text-[var(--text-primary)] font-medium" data-i18n="story-p3">
+            Mục tiêu của tôi không có gì to tát: chỉ là muốn mỗi pixel mình đặt xuống đều thực sự có ích cho người dùng trong vai trò Product Designer.
+          </p>
+        </div>
+
+        <div class="pt-6 flex flex-wrap items-center gap-4">
+          <a href="https://drive.google.com/uc?export=download&id=1xl6vr3kEeqVdDirFAsta81IieVaBpPrB" target="_blank" class="px-8 py-4 rounded-xl hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs uppercase tracking-mono font-bold hover:opacity-90 transition-all flex items-center gap-3 magnetic-btn">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span data-i18n="btn-download-cv">TẢI VỀ CV CỦA TÔI (PDF)</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER & CONTACT -->
+  <footer id="contact" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-40 pb-20">
+    
+    <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span>[ GET IN TOUCH // LET'S TALK ]</span>
+    </div>
+
+    <!-- Mega Big Title -->
+    <div class="space-y-4 mb-16 md:mb-20">
+      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9]" data-i18n="footer-h1">
+        BẮT ĐẦU BẰNG
+      </h2>
+      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9] flex flex-wrap items-center gap-6 text-emerald-500" data-i18n="footer-h2">
+        <span>MỘT BUỔI TRÀ ĐÁ.</span>
+      </h2>
+    </div>
+
+    <p class="text-xl sm:text-2xl text-[var(--text-muted)] max-w-3xl leading-relaxed mb-16" data-i18n="footer-desc">
+      Nếu bạn đang xây dựng một sản phẩm số và cần người cùng làm rõ trải nghiệm, hãy liên hệ với tôi. Tôi luôn sẵn sàng cho các cơ hội hợp tác mới.
+    </p>
+
+    <!-- Interactive Contact Grid with Deep Padding -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+      
+      <!-- Email Card with Copy button -->
+      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between group">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-email-lbl">
+            [ EMAIL LIÊN HỆ ]
+          </span>
+          <span id="email-text" class="text-lg sm:text-xl font-bold font-mono break-all text-[var(--text-primary)]">
+            mr.tru.designer@gmail.com
+          </span>
+        </div>
+        <button onclick="copyEmail()" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
+          <i data-lucide="copy" class="w-4 h-4"></i>
+          <span id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+        </button>
+      </div>
+
+      <!-- Phone Card -->
+      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-phone-lbl">
+            [ SỐ ĐIỆN THOẠI ]
+          </span>
+          <span class="text-lg sm:text-xl font-bold font-mono text-[var(--text-primary)]">
+            (+84) 357 458 457
+          </span>
+        </div>
+        <a href="tel:+84357458457" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
+          <i data-lucide="phone" class="w-4 h-4"></i>
+          <span data-i18n="btn-call">Gọi điện trực tiếp</span>
+        </a>
+      </div>
+
+      <!-- Location / Status -->
+      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-location-lbl">
+            [ ĐỊA ĐIỂM ]
+          </span>
+          <span class="text-lg sm:text-xl font-bold text-[var(--text-primary)]" data-i18n="contact-location-val">
+            Hà Nội, Việt Nam
+          </span>
+          <p class="text-xs text-[var(--text-muted)] mt-2 font-mono uppercase" data-i18n="location-sub">
+            Hỗ trợ làm việc On-site hoặc Remote
+          </p>
+        </div>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span data-i18n="contact-site-val">TRỨ // PORTFOLIO CHÍNH THỨC (2026)</span>
+          <i data-lucide="arrow-up" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Bottom sub-bar -->
+    <div class="pt-10 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]">
+      <span>© 2026 TRỨ. DESIGNED & CRAFTED WITH INTENTION.</span>
+      <button onclick="lenis.scrollTo(0)" class="hover:text-[var(--text-primary)] flex items-center gap-1 font-bold">
+        <span data-i18n="btn-top">VỀ ĐẦU TRANG</span>
+        <i data-lucide="arrow-up" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+  </footer>
+
+  <!-- FULL SCREEN OVERLAY MENU (EDITORIAL NEO-GROTESQUE) -->
+  <div id="menu-overlay" data-lenis-prevent="true" class="fixed inset-0 z-50 bg-[var(--bg-primary)] hidden flex-col justify-between overflow-y-auto overscroll-contain transition-colors">
+    
+    <!-- Top Bar inside Menu Overlay -->
+    <div class="hairline-b px-6 md:px-12 lg:px-16 py-6 flex items-center justify-between flex-shrink-0 bg-[var(--bg-primary)] sticky top-0 z-20">
+      <div class="flex items-center gap-4">
+        <a href="#" onclick="closeMenuOverlay()" class="font-extrabold text-2xl md:text-3xl tracking-tighter uppercase font-sans">
+          TRỨ
+        </a>
+        <span class="font-mono text-xs text-[var(--text-muted)] tracking-mono uppercase hidden sm:inline-block border border-[var(--border-color)] px-2.5 py-1 rounded">
+          NAVIGATION OVERVIEW
+        </span>
+      </div>
+
+      <div class="flex items-center gap-4 sm:gap-6">
+        <span class="font-mono text-xs text-[var(--text-muted)] tracking-mono hidden md:inline">
+          HANOI · VIETNAM (GMT+7)
+        </span>
+        <button onclick="closeMenuOverlay()" class="px-5 py-2.5 rounded-full hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2.5 magnetic-btn cursor-pointer group">
+          <span data-i18n="menu-close">ĐÓNG (ESC)</span>
+          <i data-lucide="x" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Body (Split Layout) -->
+    <div class="max-w-[1680px] w-full mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      
+      <!-- Primary Large Nav Links (Col 7) -->
+      <nav class="lg:col-span-7 space-y-4 md:space-y-6">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span data-i18n="menu-sec-title">[ MAIN SECTIONS // CHUYÊN MỤC ]</span>
+        </div>
+
+        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
+          <a href="#work" onclick="navigateToSection('#work')" class="group flex items-baseline justify-between cursor-pointer">
+            <div class="flex items-baseline gap-4 sm:gap-8">
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">01/</span>
+              <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-work">
+                Selected Work
+              </span>
+            </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+          </a>
+        </div>
+
+        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
+          <a href="#craft" onclick="navigateToSection('#craft')" class="group flex items-baseline justify-between cursor-pointer">
+            <div class="flex items-baseline gap-4 sm:gap-8">
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">02/</span>
+              <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-craft">
+                Product Craft
+              </span>
+            </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+          </a>
+        </div>
+
+        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
+          <a href="#experience" onclick="navigateToSection('#experience')" class="group flex items-baseline justify-between cursor-pointer">
+            <div class="flex items-baseline gap-4 sm:gap-8">
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">03/</span>
+              <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-experience">
+                Experience
+              </span>
+            </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+          </a>
+        </div>
+
+        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
+          <a href="#story" onclick="navigateToSection('#story')" class="group flex items-baseline justify-between cursor-pointer">
+            <div class="flex items-baseline gap-4 sm:gap-8">
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">04/</span>
+              <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-story">
+                Story
+              </span>
+            </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+          </a>
+        </div>
+
+        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
+          <a href="#contact" onclick="navigateToSection('#contact')" class="group flex items-baseline justify-between cursor-pointer">
+            <div class="flex items-baseline gap-4 sm:gap-8">
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">05/</span>
+              <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="btn-contact">
+                Get in touch
+              </span>
+            </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Secondary Info & Direct Case Study Access (Col 5) -->
+      <div class="lg:col-span-5 space-y-8 menu-right-col">
+        
+        <!-- Case Studies Quick Jump -->
+        <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)] space-y-4">
+          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold flex items-center justify-between">
+            <span data-i18n="menu-case-title">[ DỰ ÁN CASE STUDY ]</span>
+            <span class="text-emerald-500 font-mono">03 CASES</span>
+          </div>
+
+          <div class="space-y-2.5 font-mono text-xs uppercase">
+            <button onclick="closeMenuOverlay(() => openCaseDrawer('yen'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
+              <div>
+                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">01. YÊN</span>
+                <span class="text-[11px] text-[var(--text-muted)] normal-case">Aging-Tech · Healthcare Dual App</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </button>
+
+            <button onclick="closeMenuOverlay(() => openCaseDrawer('iq'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
+              <div>
+                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">02. IQ MYTH</span>
+                <span class="text-[11px] text-[var(--text-muted)] normal-case">EdTech Web App · Conversion Design</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </button>
+
+            <button onclick="closeMenuOverlay(() => openCaseDrawer('momo'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
+              <div>
+                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">03. MOMO TRANSFER</span>
+                <span class="text-[11px] text-[var(--text-muted)] normal-case">Fintech Redesign · 40M+ Users Audit</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Direct Contact Channels -->
+        <div class="space-y-3 font-mono text-xs uppercase tracking-mono p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50">
+          <div class="text-[var(--text-muted)] font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span data-i18n="menu-contact-title">[ TRỰC TIẾP LIÊN HỆ ]</span>
+          </div>
+          <div class="space-y-2 text-sm font-sans">
+            <a href="mailto:mr.tru.designer@gmail.com" class="block font-bold hover:underline hover:text-emerald-500 transition-colors">
+              mr.tru.designer@gmail.com ↗
+            </a>
+            <a href="tel:0357458457" class="block text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+              (+84) 357 458 457
+            </a>
+          </div>
+          <div class="pt-2">
+            <a href="https://drive.google.com/uc?export=download&id=1xl6vr3kEeqVdDirFAsta81IieVaBpPrB" target="_blank" class="inline-flex items-center gap-1.5 font-bold text-xs underline hover:text-emerald-500 transition-colors">
+              <span>TẢI VỀ RESUME (PDF)</span>
+              <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar inside Menu Overlay -->
+    <div class="hairline-t px-6 md:px-12 lg:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 bg-[var(--bg-secondary)]/40">
+      <div>
+        <span>TRỨ — PRODUCT DESIGNER · HANOI, VIETNAM</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>© 2026 TRỨ. CRAFTED WITH INTENTION.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FULLSCREEN CASE STUDY DRAWER (QUICK PREVIEW MODAL) -->
+  <div id="case-drawer" data-lenis-prevent="true" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end transition-opacity">
+    <div id="case-drawer-panel"
+         data-lenis-prevent="true"
+         class="w-full max-w-4xl h-full max-h-screen bg-[var(--bg-primary)] hairline-l transform translate-x-full transition-transform duration-500 ease-out relative flex flex-col overflow-hidden">
+      
+      <!-- Drawer Top Bar (Fixed Header at top of panel, solid bg, 100% opaque, no text can ever bleed above it) -->
+      <div class="px-6 sm:px-12 py-5 hairline-b bg-[var(--bg-primary)] flex items-center justify-between flex-shrink-0 z-30 transition-colors shadow-sm">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>[ QUICK SUMMARY // TRỨ PORTFOLIO ]</span>
+        </div>
+        <button onclick="closeCaseDrawer()" class="p-2 px-3 rounded-full hairline-all hover:bg-[var(--bg-secondary)] transition-all flex items-center gap-2 font-mono text-xs uppercase cursor-pointer">
+          <span class="hidden sm:inline" data-i18n="drawer-close">Đóng (ESC)</span>
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Scrollable Body: Content scrolls underneath the fixed header cleanly -->
+      <div id="case-drawer-scroll-body" data-lenis-prevent="true" class="flex-grow overflow-y-auto px-6 sm:px-12 py-8 overscroll-contain">
+        <div id="case-drawer-content" data-lenis-prevent="true" class="pb-16">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: GSAP, Lenis, Interactive Cursor Preview, Bilingual Dictionary -->
+  <script>
+    // 1. Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 2. Initialize Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / scrollTotal) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // 3. GSAP Entrance Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Reveal Hero Title Lines
+    gsap.from('.hero-line', {
+      y: 90,
+      opacity: 0,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: 'power4.out',
+      delay: 0.2
+    });
+
+    // Animate Craft Columns on scroll
+    gsap.from('.craft-col', {
+      scrollTrigger: {
+        trigger: '#craft',
+        start: 'top 75%'
+      },
+      y: 60,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: 'power3.out'
+    });
+
+    // 4. GSAP FLOATING THUMBNAIL PREVIEW (Buttery Smooth Inertia + Dynamic Tilt)
+    const cursorPreview = document.getElementById('cursor-preview');
+    const cursorPreviewImg = document.getElementById('cursor-preview-img');
+    const cursorPreviewTitle = document.getElementById('cursor-preview-title');
+    const cursorPreviewTag = document.getElementById('cursor-preview-tag');
+
+    // Quick setters for performance
+    const setX = gsap.quickTo(cursorPreview, 'x', { duration: 0.35, ease: 'power3.out' });
+    const setY = gsap.quickTo(cursorPreview, 'y', { duration: 0.35, ease: 'power3.out' });
+    const setRot = gsap.quickTo(cursorPreview, 'rotation', { duration: 0.45, ease: 'power3.out' });
+
+    let lastMouseX = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX + 240;
+      const mouseY = e.clientY;
+
+      // Calculate tilt based on movement velocity
+      const velocityX = e.clientX - lastMouseX;
+      lastMouseX = e.clientX;
+      const tilt = Math.max(-8, Math.min(8, velocityX * 0.4));
+
+      // Keep inside screen bounds
+      const boundedX = Math.min(window.innerWidth - 240, Math.max(240, mouseX));
+      const boundedY = Math.min(window.innerHeight - 180, Math.max(160, mouseY));
+
+      setX(boundedX);
+      setY(boundedY);
+      setRot(tilt);
+    });
+
+    // Bind hover states to all case rows
+    document.querySelectorAll('.case-row').forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        const img = row.getAttribute('data-image');
+        const title = row.getAttribute('data-title');
+        const tag = row.getAttribute('data-tag') || 'FEATURED CASE';
+
+        cursorPreviewImg.src = img;
+        cursorPreviewTitle.textContent = title;
+        cursorPreviewTag.textContent = tag;
+
+        gsap.to(cursorPreview, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.35,
+          ease: 'back.out(1.5)',
+          overwrite: 'auto'
+        });
+      });
+
+      row.addEventListener('mouseleave', () => {
+        gsap.to(cursorPreview, {
+          opacity: 0,
+          scale: 0.82,
+          rotation: 0,
+          duration: 0.25,
+          ease: 'power2.in',
+          overwrite: 'auto'
+        });
+      });
+    });
+
+    function handleRowClick(e, caseKey) {
+      if (caseKey && !caseKey.includes('.html')) {
+        openCaseDrawer(caseKey);
+      } else {
+        if (caseKey && caseKey.includes('yen')) openCaseDrawer('yen');
+        else if (caseKey && caseKey.includes('iq')) openCaseDrawer('iq');
+        else if (caseKey && caseKey.includes('momo')) openCaseDrawer('momo');
+      }
+    }
+
+    // 5. Magnetic Button Effect (GSAP)
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // 6. Live Clock Hanoi / Vietnam (GMT+7)
+    function updateClock() {
+      const now = new Date();
+      const options = { timeZone: 'Asia/Ho_Chi_Minh', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const timeStr = now.toLocaleTimeString('en-GB', options);
+      const el = document.getElementById('live-time');
+      if (el) el.textContent = `${timeStr} (GMT+7)`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 7. Theme Switcher (light, dark, pink)
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('tru_theme', theme);
+
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === theme) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.remove('text-[var(--text-muted)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.add('text-[var(--text-muted)]');
+        }
+      });
+    }
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // 8. BILINGUAL DICTIONARY (VI / EN)
+    const translations = {
+      vi: {
+        'status-available': 'AVAILABLE FOR PRODUCT DESIGN ROLES',
+        'nav-work': 'Selected Work',
+        'nav-craft': 'Product Craft',
+        'nav-experience': 'Kinh nghiệm',
+        'nav-story': 'Chuyện là...',
+        'btn-contact': 'Liên hệ',
+        'hero-h1': 'DESIGN WITHOUT',
+        'hero-h2': 'THE FLUFF.',
+        'hero-quote': '"Tôi tin rằng một thiết kế xuất sắc là khi những yếu tố dư thừa được loại bỏ, nhường chỗ cho sự tinh tế và tập trung hoàn toàn vào giá trị cốt lõi của trải nghiệm người dùng."',
+        'hero-desc': 'Xuất phát từ nền tảng Graphic Design, tôi rèn luyện tư duy Product Design để hiểu tường tận điều gì xảy ra sau khi người dùng nhìn vào màn hình: họ hiểu gì, chọn gì và gặp rào cản ở đâu. Mỗi quyết định giao diện tôi đưa ra đều có lý do xác đáng và sẵn sàng cùng Engineering biến thành sản phẩm hoàn chỉnh.',
+        'work-heading': 'PROJECT INDEX',
+        'yen-subtitle': 'CHĂM SÓC BỐ MẸ, KỂ CẢ KHI Ở XA',
+        'yen-type': 'CONCEPT CÁ NHÂN · DUAL-APP EXPERIENCE',
+        'iq-subtitle': 'TỐI ƯU HOÁ HÀNH TRÌNH TỪ LANDING ĐẾN KẾT QUẢ',
+        'iq-type': 'EDTECH PRODUCT · WEB APP DESIGN',
+        'momo-subtitle': 'LÀM RÕ THỨ BẬC & GIA TĂNG CẢM GIÁC AN TÂM (40M+ USERS)',
+        'momo-type': 'FINTECH REDESIGN · SELF-INITIATED',
+        'btn-open-drawer': 'XEM TÓM TẮT DỰ ÁN',
+        'btn-menu': 'MENU',
+        'menu-close': 'ĐÓNG (ESC)',
+        'btn-quick-view': 'Xem nhanh',
+        'btn-case-detail': 'XEM CHI TIẾT',
+        'craft-heading': 'HOW I THINK & OPERATE',
+        'craft-sub': 'BA TRỤ CỘT ĐỊNH HÌNH CÁCH TÔI XÂY DỰNG TRẢI NGHIỆM SẢN PHẨM SỐ',
+        'pillar-1-title': 'PRODUCT DISCOVERY & REASONING',
+        'pillar-1-desc': 'Tôi thường bắt đầu bằng việc làm rõ mục tiêu kinh doanh, giới hạn kỹ thuật và các giả thuyết chưa có dữ liệu. Không thiết kế theo cảm tính cá nhân: các quyết định giao diện cần có lý do rõ ràng, đồng thời đủ thực tế để trao đổi và triển khai cùng Product Manager và Engineering.',
+        'pillar-2-title': 'VISUAL CRAFT & SYSTEMS',
+        'pillar-2-desc': 'Xuất thân từ Graphic Design cho tôi sự nhạy bén đặc biệt với Typography, phân cấp thông tin (Hierarchy) và tỷ lệ không gian. Tôi xây dựng Component System thực dụng, gọn nhẹ, có cấu trúc token rõ ràng giúp đội ngũ phát triển bàn giao và mở rộng sản phẩm mà không bị phân mảnh.',
+        'pillar-3-title': 'RAPID PROTOTYPE & AI AUGMENTATION',
+        'pillar-3-desc': 'Tôi không dừng lại ở bản vẽ tĩnh trên Figma. Tôi khai thác Framer và Rive để biến layout thành những trải nghiệm tương tác chân thực có thể chạm và dùng thử. Đồng thời ứng dụng AI vào các tác vụ phân tích, tổng hợp thông tin để dành nhiều thời gian hơn cho việc giải quyết bài toán cốt lõi.',
+        'exp-heading': 'EXPERIENCE & TIMELINE',
+        'exp-sub': 'Tôi phát huy năng lực tốt nhất trong các đội ngũ khuyến khích phản biện thẳng thắn, thử nghiệm sớm và phối hợp chặt chẽ giữa Design, Product và Engineering.',
+        'exp-r1': 'Marchi Lab · Thiết kế giao diện và tối ưu trải nghiệm các giải pháp phần mềm số đa nền tảng',
+        'exp-r2': 'HIVELAB VINA · Tham gia thiết kế hệ thống sản phẩm số quy mô lớn và hợp tác cùng đội ngũ kỹ sư quốc tế',
+        'exp-r3': 'Xây dựng nền móng thị giác vững chắc trước khi bước sâu vào hành vi người dùng, luồng thao tác và kiến trúc sản phẩm',
+        'story-tag': '[ 04 // CHUYỆN LÀ... ]',
+        'story-quote': '"Tập trung vào giá trị cốt lõi thay vì sự hào nhoáng rỗng tuếch."',
+        'story-h2': 'TỪ BẢN VẼ TĨNH ĐẾN TRẢI NGHIỆM SỐNG ĐỘNG',
+        'story-p1': 'Tôi bắt đầu từ Graphic Design và chuyển sang UI/UX vì muốn hiểu điều gì thực sự xảy ra sau khi một người nhìn thấy giao diện: họ hiểu gì, chọn gì và gặp khó khăn ở đâu.',
+        'story-p2': 'Từ nền tảng đó, tôi đang học cách biến những layout trên Figma thành trải nghiệm thực tế với <strong class="text-[var(--text-primary)]">Framer</strong>. Biết mình chưa giỏi tất cả, tôi chọn cách kiên trì vọc vạch thêm <strong class="text-[var(--text-primary)]">Rive</strong> và <strong class="text-[var(--text-primary)]">AI</strong>.',
+        'story-p3': 'Mục tiêu của tôi không có gì to tát: chỉ là muốn mỗi pixel mình đặt xuống đều thực sự có ích cho người dùng trong vai trò Product Designer.',
+        'btn-download-cv': 'TẢI VỀ CV CỦA TÔI (PDF)',
+        'contact-email-lbl': '[ EMAIL LIÊN HỆ ]',
+        'contact-phone-lbl': '[ SỐ ĐIỆN THOẠI ]',
+        'contact-location-lbl': '[ ĐỊA ĐIỂM ]',
+        'contact-location-val': 'Hà Nội, Việt Nam',
+        'contact-site-val': 'TRỨ // PORTFOLIO CHÍNH THỨC (2026)',
+        'drawer-close': 'Đóng (ESC)',
+        'menu-sec-title': '[ CHUYÊN MỤC CHÍNH ]',
+        'menu-case-title': '[ DỰ ÁN CASE STUDY ]',
+        'menu-contact-title': '[ TRỰC TIẾP LIÊN HỆ ]',
+        'footer-h1': 'BẮT ĐẦU BẰNG',
+        'footer-h2': 'MỘT BUỔI TRÀ ĐÁ.',
+        'footer-desc': 'Nếu bạn đang xây dựng một sản phẩm số và cần người cùng làm rõ trải nghiệm, hãy liên hệ với tôi. Tôi luôn sẵn sàng cho các cơ hội hợp tác mới.',
+        'btn-copy-email': 'Sao chép địa chỉ email',
+        'btn-call': 'Gọi điện trực tiếp',
+        'location-sub': 'Hỗ trợ làm việc On-site hoặc Remote',
+        'btn-top': 'VỀ ĐẦU TRANG'
+      },
+      en: {
+        'status-available': 'AVAILABLE FOR PRODUCT DESIGN ROLES',
+        'nav-work': 'Selected Work',
+        'nav-craft': 'Product Craft',
+        'nav-experience': 'Experience',
+        'nav-story': 'My Story',
+        'btn-contact': 'Get in touch',
+        'hero-h1': 'DESIGN WITHOUT',
+        'hero-h2': 'THE FLUFF.',
+        'hero-quote': '"Great design eliminates the unnecessary, giving space to clarity and focusing purely on the core value of user experience."',
+        'hero-desc': 'Grounded in Graphic Design and refined in digital product environments, I bridge the gap between abstract requirements and usable reality. Every pixel and interaction decision is backed by clear rationale and prepared for seamless engineering handoff.',
+        'work-heading': 'PROJECT INDEX',
+        'yen-subtitle': 'ELDERCARE FROM AFAR, HONORING PRIVACY',
+        'yen-type': 'SELF-INITIATED CONCEPT · DUAL-APP EXPERIENCE',
+        'iq-subtitle': 'OPTIMIZED INTELLIGENCE TEST USER FLOW',
+        'iq-type': 'EDTECH WEB APP · CONVERSION AUDIT',
+        'momo-subtitle': 'HIERARCHY CLARITY & REASSURANCE (40M+ USERS)',
+        'momo-type': 'FINTECH REDESIGN · SELF-INITIATED',
+        'btn-open-drawer': 'VIEW SUMMARY',
+        'btn-menu': 'MENU',
+        'menu-close': 'CLOSE (ESC)',
+        'btn-quick-view': 'Quick View',
+        'btn-case-detail': 'EXPLORE CASE',
+        'craft-heading': 'HOW I THINK & OPERATE',
+        'craft-sub': 'THREE PILLARS DEFINING HOW I BUILD DIGITAL EXPERIENCES',
+        'pillar-1-title': 'PRODUCT DISCOVERY & REASONING',
+        'pillar-1-desc': 'I start by clarifying business outcomes, engineering constraints, and unverified assumptions. No design decisions based on mere personal intuition: choices are justified and practical for product and tech collaboration.',
+        'pillar-2-title': 'VISUAL CRAFT & SYSTEMS',
+        'pillar-2-desc': 'My graphic design foundation ensures sharp typography, rigorous spacing tokens, and visual hierarchy. I build practical design systems that scale effortlessly without design debt or fragmented components.',
+        'pillar-3-title': 'RAPID PROTOTYPE & AI AUGMENTATION',
+        'pillar-3-desc': 'I do not stop at static Figma frames. Leveraging Framer and Rive, I turn wireframes into tangible, interactive prototypes. I augment repetitive workflows with AI to invest more time into core UX problem-solving.',
+        'exp-heading': 'EXPERIENCE & TIMELINE',
+        'exp-sub': 'I thrive in teams that celebrate candid feedback, early testing, and tight collaboration between Design, Product, and Engineering.',
+        'exp-r1': 'Marchi Lab · Designing user interfaces and optimizing multi-platform software solutions',
+        'exp-r2': 'HIVELAB VINA · Designing scalable digital design systems in collaboration with global teams',
+        'exp-r3': 'Built strong visual foundations before transitioning into user behavior, flows, and product architecture',
+        'story-tag': '[ 04 // MY STORY ]',
+        'story-quote': '"Focusing on core value rather than superficial embellishments."',
+        'story-h2': 'FROM STATIC FRAMES TO LIVING EXPERIENCES',
+        'story-p1': 'I started in Graphic Design and moved into UI/UX out of a desire to understand what truly happens when someone encounters an interface: what they comprehend, what they select, and where they face roadblocks.',
+        'story-p2': 'From that foundation, I bridge Figma layouts into living realities with <strong class="text-[var(--text-primary)]">Framer</strong>. Knowing there is always more to learn, I stay relentlessly curious with <strong class="text-[var(--text-primary)]">Rive</strong> micro-interactions and <strong class="text-[var(--text-primary)]">AI</strong> acceleration.',
+        'story-p3': 'My goal is simple: ensuring every single pixel I place serves an intentional, valuable purpose for the user as a Product Designer.',
+        'btn-download-cv': 'DOWNLOAD RESUME (PDF)',
+        'contact-email-lbl': '[ CONTACT EMAIL ]',
+        'contact-phone-lbl': '[ DIRECT PHONE ]',
+        'contact-location-lbl': '[ LOCATION ]',
+        'contact-location-val': 'Ho Chi Minh City, Vietnam',
+        'drawer-close': 'Close (ESC)',
+        'menu-sec-title': '[ MAIN SECTIONS ]',
+        'menu-case-title': '[ CASE STUDIES ]',
+        'menu-contact-title': '[ DIRECT CONTACT ]',
+        'footer-h1': 'STARTING OVER',
+        'footer-h2': 'A CUP OF "TRÀ ĐÁ".',
+        'footer-desc': 'Building a digital product and looking for someone to clarify the experience? Reach out anytime. I am always open to new product conversations.',
+        'btn-copy-email': 'Copy Email Address',
+        'btn-call': 'Direct Phone Call',
+        'location-sub': 'Available for On-site (Hanoi) or Remote',
+        'btn-top': 'BACK TO TOP'
+      }
+    };
+
+    function setLang(lang) {
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = translations[lang][key];
+          } else {
+            el.innerHTML = translations[lang][key];
+          }
+        }
+      });
+
+      // Update active pill button across all language switchers
+      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+      if (document.getElementById('lang-btn-vi')) {
+        document.getElementById('lang-btn-vi').className = (lang === 'vi') ? viActive : viInactive;
+      }
+      if (document.getElementById('lang-btn-en')) {
+        document.getElementById('lang-btn-en').className = (lang === 'en') ? enActive : enInactive;
+      }
+    }
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+
+    // 9. Case Study Filtering
+    function filterCases(category) {
+      document.querySelectorAll('.case-filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === category) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]', 'font-semibold');
+          btn.classList.remove('bg-[var(--bg-secondary)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]', 'font-semibold');
+          btn.classList.add('bg-[var(--bg-secondary)]');
+        }
+      });
+
+      document.querySelectorAll('.case-row').forEach(row => {
+        const cat = row.getAttribute('data-category');
+        if (category === 'all' || cat === category) {
+          row.style.display = 'block';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      ScrollTrigger.refresh();
+    }
+
+    // 10. Copy Email
+    function copyEmail() {
+      const email = 'mr.tru.designer@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const text = document.getElementById('copy-btn-text');
+        const orig = text.textContent;
+        text.textContent = '✓ Copied to clipboard!';
+        text.style.color = '#10B981';
+        setTimeout(() => {
+          text.textContent = orig;
+          text.style.color = '';
+        }, 2500);
+      });
+    }
+
+    // 11. Quick Drawer Data (Bilingual VI / EN)
+    const drawerData = {
+      yen: {
+        pageUrl: 'yen.html',
+        number: '01 / 03',
+        heroImg: 'https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png',
+        vi: {
+          tag: 'AGING-TECH · HEALTHCARE DUAL APP',
+          scope: 'Product Discovery · UX/UI Design · Dual-App Experience',
+          title: 'YÊN — CHĂM SÓC BỐ MẸ, KỂ CẢ KHI Ở XA',
+          problem: 'Khi sống xa nhà, con cái khó biết một cuộc gọi không được bắt máy chỉ là do bố mẹ đang bận hay là dấu hiệu cần hỗ trợ khẩn cấp. Trong khi đó, bố mẹ vẫn muốn duy trì sinh hoạt bình thường và không muốn bị cảm giác kiểm soát hay liên tục phải báo cáo tình trạng của mình.',
+          hmw: '"Làm thế nào để con cái nhận được thông tin cần thiết khi có sự cố, trong khi bố mẹ vẫn giữ được sự chủ động và riêng tư trong sinh hoạt hằng ngày?"',
+          pillars: [
+            { title: '01 / PHÁT HIỆN TÉ NGÃ', desc: 'Ghi nhận tín hiệu va chạm mạnh từ gia tốc kế. Hỏi bố mẹ trước bằng giao diện chữ lớn, chỉ gửi cảnh báo đến con nếu sau khoảng thời gian cài đặt (30s) không có phản hồi.' },
+            { title: '02 / NHẬN DIỆN LỪA ĐẢO BẰNG AI', desc: 'Bố mẹ có thể gửi tin nhắn hoặc cuộc gọi khả nghi; hệ thống AI hỗ trợ con kiểm tra nội dung và đưa ra cảnh báo kịp thời.' },
+            { title: '03 / LỊCH NHẮC THUỐC TỪ XA', desc: 'Con cái có thể cài đặt lịch uống thuốc từ xa; điện thoại bố mẹ hiển thị lời nhắc trực quan kèm một nút xác nhận duy nhất.' }
+          ],
+          execution: 'Trải nghiệm được chia thành 2 ứng dụng riêng biệt: Bên Con cái (Ưu tiên việc cần xử lý, mức pin, thời gian báo cáo) và Bên Bố mẹ (Giao diện chữ lớn, câu ngắn, một hành động chính trên mỗi màn hình).',
+          btnDetail: 'XEM CHI TIẾT DỰ ÁN',
+          btnDetailFull: 'XEM TOÀN BỘ CASE STUDY CHI TIẾT (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Quay lại danh sách dự án'
+        },
+        en: {
+          tag: 'AGING-TECH · HEALTHCARE DUAL APP',
+          scope: 'Product Discovery · UX/UI Design · Dual-App Experience',
+          title: 'YÊN — ELDERCARE FROM AFAR, HONORING PRIVACY',
+          problem: 'When living far apart, adult children struggle to know if an unanswered call is just parents being busy or an urgent medical crisis. Meanwhile, elderly parents desire independence and reject feeling monitored or micro-managed.',
+          hmw: '"How might we provide children with critical emergency alerts, while preserving parents\' autonomy and daily privacy in their routine?"',
+          pillars: [
+            { title: '01 / FALL DETECTION (30s GRACE)', desc: 'Detects impact via accelerometer. Prompts parent first with high-contrast UI; notifies adult children only if unanswered after 30 seconds.' },
+            { title: '02 / AI SCAM DETECTION', desc: 'Parents forward suspicious calls or messages; AI classifies danger level so children can quickly verify and protect them.' },
+            { title: '03 / REMOTE MEDICATION REMINDER', desc: 'Children configure schedules remotely; parents receive visual reminders with a single, clear confirmation button.' }
+          ],
+          execution: 'Structured as two dedicated apps: Child App (urgent incident triage, battery telemetry) and Parent App (high legibility, single key action per screen).',
+          btnDetail: 'VIEW FULL CASE STUDY',
+          btnDetailFull: 'VIEW COMPREHENSIVE CASE STUDY (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Back to project list'
+        }
+      },
+      iq: {
+        pageUrl: 'iq-myth.html',
+        number: '02 / 03',
+        heroImg: 'https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png',
+        vi: {
+          tag: 'EDTECH · WEB APP · CONVERSION DESIGN',
+          scope: 'Competitor Audit · UI Design · Conversion Psychology',
+          title: 'IQ MYTH — TRẢI NGHIỆM BÀI TEST TỪ LANDING ĐẾN KẾT QUẢ',
+          problem: 'Các đối thủ trên thị trường như MyIQ nhồi nhét quá nhiều banner và thông tin rườm rà khiến người dùng mất tập trung trước CTA bắt đầu làm bài. Đồng thời, bảng giá cuối bài test hiển thị 3 gói dịch vụ ngang hàng gây Choice Overload làm tỷ lệ chuyển đổi sụt giảm.',
+          hmw: '"Làm thế nào để người dùng bắt đầu bài test trong dưới 2 bước và cảm nhận rõ giá trị chứng chỉ trước khi quyết định thanh toán?"',
+          pillars: [
+            { title: '01 / USER FLOW DƯỚI 2 BƯỚC', desc: 'Từ Landing Page vào thẳng câu hỏi đầu tiên với số lần click tối thiểu, loại bỏ biểu mẫu đăng ký rườm rà ở bước mở đầu.' },
+            { title: '02 / LABOR ILLUSION & FOMO', desc: 'Ứng dụng hiệu ứng tâm lý học: màn hình chờ phân tích dữ liệu AI để gia tăng giá trị cảm nhận của chứng chỉ.' },
+            { title: '03 / CẢI TIẾN BẢNG GIÁ PRICING', desc: 'Loại bỏ việc hiển thị 3 gói ngang hàng gây drop-off cao; tập trung vào 1 gói đề xuất chủ đạo với Social Proof rõ ràng.' }
+          ],
+          execution: 'Ngôn ngữ thiết kế Neo-Grotesque hiện đại với tông màu Neon Green (#B9FF06) phối Dark Navy (#060814) tạo cảm giác khoa học và công nghệ cao.',
+          btnDetail: 'XEM CHI TIẾT DỰ ÁN',
+          btnDetailFull: 'XEM TOÀN BỘ CASE STUDY CHI TIẾT (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Quay lại danh sách dự án'
+        },
+        en: {
+          tag: 'EDTECH · WEB APP · CONVERSION DESIGN',
+          scope: 'Competitor Audit · UI Design · Conversion Psychology',
+          title: 'IQ MYTH — OPTIMIZED TEST FLOW & CHECKOUT CONVERSION',
+          problem: 'Competitors like MyIQ overwhelm visitors with noisy banners, distracting from the primary CTA. At checkout, presenting 3 competing plans equally triggered analysis paralysis and checkout abandonment.',
+          hmw: '"How might we guide users into the test in under 2 steps and clarify the certificate\'s value before asking for payment?"',
+          pillars: [
+            { title: '01 / SUB-2 STEP USER FLOW', desc: 'Direct leap from Landing Page to the first question with minimal clicks, deferring signup friction.' },
+            { title: '02 / LABOR ILLUSION & FOMO', desc: 'Simulated AI calculation screens demonstrating computational effort to boost perceived certificate worth.' },
+            { title: '03 / RE-ARCHITECTED PRICING', desc: 'Replaced 3 equal tier cards with 1 high-converting featured recommendation backed by social proof.' }
+          ],
+          execution: 'Modern technical aesthetic combining Neon Green (#B9FF06) with Dark Navy (#060814) for high-craft EdTech credibility.',
+          btnDetail: 'VIEW FULL CASE STUDY',
+          btnDetailFull: 'VIEW COMPREHENSIVE CASE STUDY (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Back to project list'
+        }
+      },
+      momo: {
+        pageUrl: 'momo.html',
+        number: '03 / 03',
+        heroImg: 'https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png',
+        vi: {
+          tag: 'FINTECH REDESIGN · 40M+ USERS AUDIT',
+          scope: 'User Research (11 người) · UX Audit · UI Redesign',
+          title: 'MOMO TRANSFER — TÁI CẤU TRÚC ĐỘ RÕ RÀNG & AN TÂM (40M+ USERS)',
+          problem: 'Khảo sát thực tế với 11 người dùng cho thấy màn hình chuyển tiền MoMo nhồi nhét tới 10 icon ngang hàng gây Choice Overload. 100% người dùng tự đọc nhẩm lại tên người nhận vì thiếu dấu hiệu bảo chứng an tâm.',
+          hmw: '"Làm thế nào để màn hình xác nhận tự nó đủ thuyết phục, giúp người dùng đối chiếu người nhận, số tiền và nguồn tiền chỉ trong 3 giây?"',
+          pillars: [
+            { title: '01 / ONE TASK PER SCREEN', desc: 'Loại bỏ dropdown 10 icon phức tạp, đưa thanh tìm kiếm thông minh và số dư khả dụng lên vị trí trung tâm.' },
+            { title: '02 / QR VALIDATION 3 CẤP ĐỘ', desc: 'Phân loại mã QR: Hợp lệ (Xanh), Cảnh báo QR cá nhân cũ > 30 ngày (Vàng), và Báo lỗi sai định dạng (Đỏ).' },
+            { title: '03 / MÀN HÌNH THU NGÂN 52PX', desc: 'Số tiền 52px to nhất màn hình giúp người bán nhận biết thanh toán thành công rõ ràng từ khoảng cách 1 mét.' }
+          ],
+          execution: 'Tuân thủ chặt chẽ Brandbook MoMo (#A50064, #D82D8B) cùng hệ thống micro-copy chuẩn mực, gia tăng độ tin cậy tuyệt đối.',
+          btnDetail: 'XEM CHI TIẾT DỰ ÁN',
+          btnDetailFull: 'XEM TOÀN BỘ CASE STUDY CHI TIẾT (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Quay lại danh sách dự án'
+        },
+        en: {
+          tag: 'FINTECH REDESIGN · 40M+ USERS AUDIT',
+          scope: 'User Research (11 Users) · UX Audit · UI Redesign',
+          title: 'MOMO TRANSFER — HIERARCHY CLARITY & REASSURANCE (40M+ USERS)',
+          problem: 'Qualitative testing with 11 users showed 10 competing icon shortcuts causing severe Choice Overload. 100% of tested users had to double-read recipient names aloud due to lack of confirmation reassurance.',
+          hmw: '"How might the confirmation screen be self-reassuring, allowing users to verify recipient, amount, and source in under 3 seconds?"',
+          pillars: [
+            { title: '01 / ONE TASK PER SCREEN', desc: 'Streamlined homepage eliminating 10 icon clutter; prioritizing smart search and real-time available balance.' },
+            { title: '02 / 3-TIER QR VALIDATION', desc: 'Status checks: Verified (Green), Warning for personal QR > 30 days old (Yellow), and Invalid format (Red).' },
+            { title: '03 / 52PX CASHIER SCREEN', desc: 'Extra-large 52px transaction figure visible to busy street food merchants from 1 meter away.' }
+          ],
+          execution: 'Aligned with MoMo brand identity tokens (#A50064, #D82D8B) and clear financial micro-copy.',
+          btnDetail: 'VIEW FULL CASE STUDY',
+          btnDetailFull: 'VIEW COMPREHENSIVE CASE STUDY (FULL MOCKUPS & RESEARCH)',
+          backToList: 'Back to project list'
+        }
+      }
+    };
+
+    function openCaseDrawer(caseKey) {
+      const item = drawerData[caseKey];
+      if (!item) return;
+
+      const currentLang = localStorage.getItem('tru_lang') || 'vi';
+      const data = item[currentLang] || item['vi'];
+      const isVi = currentLang === 'vi';
+
+      const content = document.getElementById('case-drawer-content');
+      content.innerHTML = `
+        <div class="space-y-8">
+          <!-- Top Metadata & Direct Case Study Link Button -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 hairline-b">
+            <div class="font-mono text-xs uppercase text-emerald-500 font-bold tracking-mono">
+              [ ${item.number} ] · ${data.scope}
+            </div>
+            <a href="${item.pageUrl}" class="self-start sm:self-auto px-5 py-2.5 rounded-lg hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2 hover:opacity-90 hover:scale-105 transition-all shadow-md group">
+              <span>${data.btnDetail}</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </a>
+          </div>
+
+          <!-- Project Title & Scope -->
+          <div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-[var(--text-primary)] leading-tight">
+              ${data.title}
+            </h2>
+            <div class="mt-3 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]">
+              <span>[ TAG ]: ${data.tag}</span>
+              <span>[ TIMELINE ]: 2025 – 2026</span>
+            </div>
+          </div>
+
+          <!-- Hero Mockup Frame -->
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-xl bg-neutral-900/10">
+            <img src="${item.heroImg}" alt="${data.title}" class="w-full h-auto object-cover max-h-[480px]">
+          </div>
+
+          <!-- Context & Problem -->
+          <div class="space-y-3">
+            <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
+              [ ${isVi ? 'BỐI CẢNH & VẤN ĐỀ' : 'CONTEXT & PROBLEM'} ]
+            </h4>
+            <p class="text-base sm:text-lg text-[var(--text-primary)]/90 leading-relaxed font-sans">
+              ${data.problem}
+            </p>
+          </div>
+
+          <!-- Core HMW Callout Box -->
+          <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)] border-l-4 border-l-emerald-500 shadow-sm">
+            <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-2.5 font-bold">
+              [ ${isVi ? 'CÂU HỎI THIẾT KẾ CỐT LÕI (HMW)' : 'CORE HOW MIGHT WE'} ]
+            </h4>
+            <p class="text-lg sm:text-xl font-bold leading-snug text-[var(--text-primary)]">
+              ${data.hmw}
+            </p>
+          </div>
+
+          <!-- Key Pillars -->
+          <div class="space-y-4">
+            <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
+              [ ${isVi ? 'GIẢI PHÁP TRỌNG TÂM' : 'CORE PILLARS'} ]
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              ${data.pillars.map(p => `
+                <div class="p-5 rounded-xl hairline-all bg-[var(--bg-secondary)]/60 hover:bg-[var(--bg-secondary)] transition-colors">
+                  <h5 class="font-bold text-xs uppercase mb-2 text-[var(--text-primary)] tracking-tight">${p.title}</h5>
+                  <p class="text-xs text-[var(--text-muted)] leading-relaxed">${p.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Execution Highlights -->
+          <div class="space-y-3">
+            <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
+              [ ${isVi ? 'CHI TIẾT THỰC THI TRẢI NGHIỆM' : 'EXECUTION HIGHLIGHTS'} ]
+            </h4>
+            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
+              ${data.execution}
+            </p>
+          </div>
+
+          <!-- KEY CTA: VIEW FULL CASE STUDY BUTTON -->
+          <div class="pt-6 pb-2">
+            <a href="${item.pageUrl}" class="w-full py-5 px-6 sm:px-8 rounded-2xl hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs sm:text-sm uppercase tracking-mono font-extrabold flex items-center justify-between hover:opacity-95 hover:shadow-2xl transition-all group">
+              <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>${data.btnDetailFull}</span>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center group-hover:translate-x-2 transition-transform">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </a>
+          </div>
+
+          <!-- Footer of Drawer -->
+          <div class="pt-8 hairline-t flex items-center justify-between font-mono text-xs uppercase tracking-mono">
+            <span class="text-[var(--text-muted)]">TRỨ — PRODUCT DESIGNER</span>
+            <button onclick="closeCaseDrawer()" class="font-bold underline hover:text-[var(--text-primary)] transition-colors flex items-center gap-1.5 cursor-pointer">
+              <span>${data.backToList}</span>
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+      const drawer = document.getElementById('case-drawer');
+      const panel = document.getElementById('case-drawer-panel');
+      const scrollBody = document.getElementById('case-drawer-scroll-body');
+      drawer.classList.remove('hidden');
+      if (scrollBody) scrollBody.scrollTop = 0;
+      if (panel) panel.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+      if (typeof cursorPreview !== 'undefined') gsap.to(cursorPreview, { opacity: 0, duration: 0.1 });
+
+      setTimeout(() => {
+        panel.classList.remove('translate-x-full');
+      }, 10);
+      lucide.createIcons();
+    }
+
+    function closeCaseDrawer() {
+      const panel = document.getElementById('case-drawer-panel');
+      const drawer = document.getElementById('case-drawer');
+      panel.classList.add('translate-x-full');
+      setTimeout(() => {
+        drawer.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (typeof lenis !== 'undefined' && lenis) lenis.start();
+      }, 400);
+    }
+
+    // Stop wheel & touch event propagation to window so Lenis never intercepts drawer scrolling
+    const scrollBodyEl = document.getElementById('case-drawer-scroll-body');
+    const casePanel = document.getElementById('case-drawer-panel');
+    [scrollBodyEl, casePanel].forEach(el => {
+      if (el) {
+        el.addEventListener('wheel', (e) => {
+          e.stopPropagation();
+        }, { passive: true });
+        el.addEventListener('touchmove', (e) => {
+          e.stopPropagation();
+        }, { passive: true });
+      }
+    });
+
+    document.getElementById('case-drawer').addEventListener('click', (e) => {
+      if (e.target.id === 'case-drawer') closeCaseDrawer();
+    });
+
+    // 12. Full Screen Menu Overlay Controller
+    let isMenuOpen = false;
+
+    function openMenuOverlay() {
+      const overlay = document.getElementById('menu-overlay');
+      if (!overlay) return;
+
+      isMenuOpen = true;
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+      overlay.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+      if (typeof cursorPreview !== 'undefined') gsap.to(cursorPreview, { opacity: 0, duration: 0.1 });
+
+      gsap.fromTo('#menu-overlay', 
+        { y: '-100%' }, 
+        { y: '0%', duration: 0.55, ease: 'power4.out' }
+      );
+
+      gsap.from('#menu-overlay .menu-link-row', {
+        y: 65,
+        opacity: 0,
+        duration: 0.55,
+        stagger: 0.06,
+        ease: 'power3.out',
+        delay: 0.16
+      });
+
+      gsap.from('#menu-overlay .menu-right-col', {
+        y: 35,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        delay: 0.28
+      });
+
+      lucide.createIcons();
+    }
+
+    function closeMenuOverlay(callback) {
+      const overlay = document.getElementById('menu-overlay');
+      if (!overlay || !isMenuOpen) {
+        if (typeof callback === 'function') callback();
+        return;
+      }
+
+      gsap.to('#menu-overlay', {
+        y: '-100%',
+        duration: 0.4,
+        ease: 'power3.in',
+        onComplete: () => {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('flex');
+          isMenuOpen = false;
+          document.body.style.overflow = '';
+          if (typeof lenis !== 'undefined' && lenis) lenis.start();
+          if (typeof callback === 'function') callback();
+        }
+      });
+    }
+
+    function navigateToSection(targetHash) {
+      closeMenuOverlay(() => {
+        setTimeout(() => {
+          if (typeof lenis !== 'undefined' && lenis) {
+            lenis.scrollTo(targetHash, { offset: -70 });
+          } else {
+            const target = document.querySelector(targetHash);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 60);
+      });
+    }
+
+    // Stop wheel & touch event propagation on menu overlay
+    const menuOverlayEl = document.getElementById('menu-overlay');
+    if (menuOverlayEl) {
+      menuOverlayEl.addEventListener('wheel', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
+      menuOverlayEl.addEventListener('touchmove', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isMenuOpen) {
+          closeMenuOverlay();
+        } else {
+          closeCaseDrawer();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
