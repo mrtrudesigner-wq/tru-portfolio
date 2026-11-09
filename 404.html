@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 — Toạ độ không tồn tại · TRỨ</title>
-  <meta name="description" content="Trang bạn tìm kiếm không tồn tại trong hệ thống — Trứ Product Designer Portfolio.">
+  <title>404 — Không tìm thấy trang · TRỨ</title>
+  <meta name="description" content="Trang bạn tìm kiếm không tồn tại — Trứ Product Designer Portfolio.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -59,7 +59,6 @@
       --accent: #0E0E0E;
       --accent-highlight: #10B981;
       --badge-bg: #E3E3DC;
-      --wireframe-stroke: rgba(14, 14, 14, 0.2);
     }
 
     [data-theme="dark"] {
@@ -71,7 +70,6 @@
       --accent: #C4FF00;
       --accent-highlight: #C4FF00;
       --badge-bg: #1E1E22;
-      --wireframe-stroke: rgba(255, 255, 255, 0.2);
     }
 
     [data-theme="pink"] {
@@ -83,7 +81,6 @@
       --accent: #121212;
       --accent-highlight: #121212;
       --badge-bg: #FFA4BD;
-      --wireframe-stroke: rgba(18, 18, 18, 0.25);
     }
 
     html {
@@ -125,26 +122,6 @@
     .bracket-hover:hover::after {
       opacity: 1;
       color: var(--accent-highlight);
-    }
-
-    /* Dashed Wireframe Blueprint Box */
-    .wireframe-box {
-      background-image: repeating-linear-gradient(0deg, var(--wireframe-stroke), var(--wireframe-stroke) 1px, transparent 1px, transparent 16px),
-                        repeating-linear-gradient(90deg, var(--wireframe-stroke), var(--wireframe-stroke) 1px, transparent 1px, transparent 16px);
-      background-size: 16px 16px;
-    }
-
-    /* Glitch shake keyframes */
-    @keyframes glitch-anim {
-      0% { transform: translate(0) }
-      20% { transform: translate(-3px, 3px) }
-      40% { transform: translate(-3px, -3px) }
-      60% { transform: translate(3px, 3px) }
-      80% { transform: translate(3px, -3px) }
-      100% { transform: translate(0) }
-    }
-    .glitching {
-      animation: glitch-anim 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
   </style>
 </head>
@@ -191,216 +168,138 @@
     </div>
   </header>
 
-  <!-- MAIN 404 CONTENT -->
-  <main class="flex-grow max-w-[1400px] w-full mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col justify-center">
+  <!-- MAIN 404 CONTENT (SWISS MODERNIST MINIMALISM - OPTION C) -->
+  <main class="flex-grow max-w-[1400px] w-full mx-auto px-4 md:px-8 py-12 md:py-24 flex flex-col justify-center">
 
-    <div class="space-y-10 md:space-y-14">
+    <!-- HERO SECTION (CENTERED & REFINED) -->
+    <div class="max-w-4xl mx-auto text-center space-y-8 md:space-y-10">
       
-      <!-- TOP STATUS TAG -->
+      <!-- STATUS BADGE -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-xs uppercase tracking-mono font-bold hairline-all bg-[var(--bg-secondary)]/70 text-[var(--text-muted)]" data-i18n="status-tag">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>[ 404 // KHÔNG TÌM THẤY TRANG ]</span>
+      </div>
+
+      <!-- MASSIVE 404 NUMBER -->
+      <div class="select-none">
+        <h1 class="text-8xl sm:text-[12rem] md:text-[15rem] lg:text-[18rem] font-extrabold tracking-tighter leading-none text-[var(--text-primary)] opacity-95">
+          404
+        </h1>
+      </div>
+
+      <!-- HEADLINE & DESCRIPTION -->
+      <div class="space-y-4 max-w-2xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-tight" data-i18n="h1-title">
+          TRANG NÀY KHÔNG TỒN TẠI.
+        </h2>
+        <p class="text-base sm:text-lg md:text-xl text-[var(--text-muted)] leading-relaxed" data-i18n="h1-desc">
+          Đường dẫn bạn vừa truy cập có thể đã được đổi tên, chuyển vị trí hoặc chưa từng được tạo. Bạn có thể quay về trang chủ hoặc khám phá trực tiếp các dự án chọn lọc của tôi bên dưới.
+        </p>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <!-- Return Home -->
+        <a href="index.html" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold font-mono text-xs uppercase tracking-mono hover:scale-105 transition-all shadow-lg group">
+          <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+          <span data-i18n="btn-home">Về trang chủ</span>
+        </a>
+
+        <!-- Surprise Me / Case Study Roulette -->
+        <button onclick="spinRoulette()" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full hairline-all bg-emerald-500/10 text-emerald-700 dark:text-[#B9FF06] border-emerald-500/30 font-mono text-xs uppercase tracking-mono font-bold hover:bg-emerald-500 hover:text-black transition-all group">
+          <span class="text-base group-hover:rotate-180 transition-transform">🎲</span>
+          <span id="roulette-btn-text" data-i18n="btn-surprise">Xem dự án ngẫu nhiên</span>
+        </button>
+
+        <!-- Previous Page -->
+        <button onclick="window.history.length > 1 ? window.history.back() : window.location.href='index.html'" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full hairline-all bg-[var(--bg-secondary)] text-[var(--text-primary)] font-mono text-xs uppercase tracking-mono hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all">
+          <i data-lucide="corner-up-left" class="w-4 h-4"></i>
+          <span data-i18n="btn-back">Trang trước</span>
+        </button>
+      </div>
+
+      <!-- Subtle Shortcut Hint -->
+      <div class="text-xs font-mono text-[var(--text-muted)] pt-2" data-i18n="shortcut-hint">
+        Mẹo: Bấm <kbd class="px-2 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> để về trang chủ
+      </div>
+
+    </div>
+
+    <!-- SELECTED WORKS DIRECTORY (CLEAN 3-COLUMN CARDS) -->
+    <div class="mt-20 md:mt-28 pt-12 md:pt-16 space-y-8 hairline-t">
       <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-rose-600 dark:text-rose-400 bg-rose-500/10 px-3.5 py-1.5 rounded-full inline-flex items-center gap-2 font-bold hairline-all border-rose-500/20" data-i18n="status-tag">
-          <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-          <span>[ 404 // LỖI ĐỊNH TUYẾN · BẠN VỪA BƯỚC VÀO VÙNG KHÔNG CÓ THIẾT KẾ ]</span>
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2" data-i18n="works-tag">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]</span>
         </div>
+        <a href="index.html#selected-work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
+          Xem tất cả dự án trên trang chủ
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- Live Cursor Coordinates Radar -->
-        <div class="font-mono text-[11px] text-[var(--text-muted)] flex items-center gap-2 bg-[var(--bg-secondary)]/50 px-3 py-1 rounded-full hairline-all">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-          <span id="cursor-tracker">CURSOR: X: -- · Y: --</span>
-        </div>
-      </div>
-
-      <!-- MAIN DISPLAY: BIG 404 & INTERACTIVE WIREFRAME PLAYGROUND -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-        
-        <!-- Left Column: Big 404 & Typography -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="relative inline-block cursor-pointer select-none group" onclick="triggerGlitch()" title="Click vào số 404 để tương tác">
-            <span id="big-404" class="block text-7xl sm:text-9xl md:text-[11rem] lg:text-[13rem] font-extrabold tracking-tighter leading-none text-[var(--text-primary)] transition-transform group-hover:scale-[1.02]">
-              404
-            </span>
-            <span class="absolute -bottom-2 right-2 font-mono text-[10px] uppercase tracking-mono text-[var(--text-muted)] bg-[var(--bg-secondary)] px-2 py-0.5 rounded hairline-all opacity-80 group-hover:opacity-100 group-hover:text-emerald-500 transition-all">
-              ⚡ CLICK TO DEBUG
-            </span>
+        <!-- Work 01: Yên — Chăm Sóc Bố Mẹ Từ Xa -->
+        <a href="yen.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
+              <span data-i18n="w1-tag">[ 01 // AGING-TECH ] · DUAL APP</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
+            </div>
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w1-title">
+              Yên — Chăm Sóc Bố Mẹ Từ Xa
+            </h3>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w1-desc">
+              Hai ứng dụng kết nối bố mẹ và con cái qua ba nhu cầu cốt lõi: phát hiện té ngã, cảnh báo lừa đảo bằng AI và lịch nhắc thuốc trực quan.
+            </p>
           </div>
-
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-[1.05]" data-i18n="h1-title">
-            ĐỊA CHỈ NÀY KHÔNG TỒN TẠI TRONG DESIGN SYSTEM.
-          </h1>
-
-          <p class="text-base sm:text-lg md:text-xl text-[var(--text-muted)] max-w-2xl leading-relaxed" data-i18n="h1-desc">
-            Toạ độ bạn đang tìm kiếm có thể đã bị xóa khi dọn dẹp layer thừa, đổi URL hoặc chưa từng được thiết kế. Nhưng đừng lo, mọi sản phẩm chọn lọc và bằng chứng năng lực thực tế của tôi vẫn đang hoạt động ổn định bên dưới.
-          </p>
-
-          <!-- Interactive Control Buttons -->
-          <div class="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-            <!-- Return Home -->
-            <a href="index.html" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold font-mono text-xs uppercase tracking-mono hover:scale-105 transition-all shadow-lg group">
-              <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
-              <span data-i18n="btn-home">Về trang chủ</span>
-            </a>
-
-            <!-- Surprise Me / Case Study Roulette -->
-            <button onclick="spinRoulette()" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full hairline-all bg-emerald-500/10 text-emerald-700 dark:text-[#B9FF06] border-emerald-500/30 font-mono text-xs uppercase tracking-mono font-bold hover:bg-emerald-500 hover:text-black transition-all group">
-              <span class="text-base group-hover:rotate-180 transition-transform">🎲</span>
-              <span id="roulette-btn-text" data-i18n="btn-surprise">Dự án ngẫu nhiên</span>
-            </button>
-
-            <!-- Previous Page -->
-            <button onclick="window.history.length > 1 ? window.history.back() : window.location.href='index.html'" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full hairline-all bg-[var(--bg-secondary)] text-[var(--text-primary)] font-mono text-xs uppercase tracking-mono hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all">
-              <i data-lucide="corner-up-left" class="w-4 h-4"></i>
-              <span data-i18n="btn-back">Trang trước</span>
-            </button>
+          <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w1-meta">
+            <span>AGING-TECH · HEALTHCARE DUAL APP</span>
+            <span>2026</span>
           </div>
-        </div>
+        </a>
 
-        <!-- Right Column: Interactive Design Diagnostics & Blueprint -->
-        <div class="lg:col-span-5 space-y-4">
-          
-          <!-- Diagnostics Box -->
-          <div class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 backdrop-blur-sm space-y-4 font-mono text-xs shadow-sm">
-            <div class="flex items-center justify-between pb-3 hairline-b text-[var(--text-muted)]">
-              <span class="flex items-center gap-2 uppercase tracking-mono font-bold">
-                <i data-lucide="terminal" class="w-4 h-4 text-emerald-500"></i>
-                <span data-i18n="diag-title">DESIGN_DEBUGGER // CONSOLE</span>
-              </span>
-              <button onclick="triggerGlitch()" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/15 hover:bg-emerald-500/30 px-2 py-0.5 rounded transition-colors" title="Chạy chẩn đoán">
-                RUN_DIAGNOSTIC ⟳
-              </button>
+        <!-- Work 02: IQ Myth -->
+        <a href="iq-myth.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
+              <span data-i18n="w2-tag">[ 02 // EDTECH ] · BEHAVIORAL UI</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
             </div>
-
-            <!-- Terminal Stream Logs -->
-            <div id="debug-log-container" class="space-y-2 text-[var(--text-muted)] leading-relaxed font-mono text-[11px] sm:text-xs">
-              <div class="flex justify-between items-start gap-2">
-                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-url-lbl">TARGET_URI:</span>
-                <span id="requested-path" class="text-rose-500 dark:text-rose-400 font-bold break-all text-right">/404</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-status-lbl">HTTP_STATUS:</span>
-                <span class="font-bold text-[var(--text-primary)]">404 NOT_FOUND</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-engine-lbl">DESIGN_AUDIT:</span>
-                <span class="text-emerald-600 dark:text-[#B9FF06] font-bold">ZERO_FLUFF_VERIFIED ✓</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-time-lbl">TIMESTAMP:</span>
-                <span id="live-timestamp" class="text-[var(--text-primary)] font-mono">--:--:-- UTC</span>
-              </div>
-            </div>
-
-            <!-- Interactive Blueprint Mockup -->
-            <div class="pt-3 hairline-t">
-              <div class="wireframe-box p-4 rounded-xl border border-dashed border-[var(--border-color)] space-y-3 bg-[var(--bg-primary)]/40 relative overflow-hidden">
-                <div class="flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono uppercase">
-                  <span>[ WIREFRAME_PREVIEW ]</span>
-                  <span class="text-rose-500 font-bold animate-pulse">● 0 COMPONENTS LOADED</span>
-                </div>
-                
-                <!-- Skeleton placeholder lines -->
-                <div class="space-y-2 py-1">
-                  <div class="h-3 w-3/4 bg-[var(--border-color)] rounded animate-pulse"></div>
-                  <div class="h-2 w-full bg-[var(--border-color)]/60 rounded"></div>
-                  <div class="h-2 w-5/6 bg-[var(--border-color)]/60 rounded"></div>
-                  <div class="h-8 w-1/2 border border-dashed border-rose-400/50 rounded flex items-center justify-center text-[10px] text-rose-500 font-mono mt-3">
-                    [ ! ] MISSING_CANVAS
-                  </div>
-                </div>
-
-                <div class="flex justify-between items-center text-[10px] text-[var(--text-muted)] pt-2 hairline-t">
-                  <span data-i18n="wireframe-note">Khung dây rỗng — Không có nội dung để hiển thị</span>
-                  <span class="font-bold text-[var(--text-primary)]">NULL</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-1 text-[11px] text-[var(--text-muted)] flex items-center justify-between">
-              <span data-i18n="diag-shortcut-hint">Phím tắt: Nhấn <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> về Home · <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">R</kbd> xem dự án ngẫu nhiên</span>
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            </div>
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w2-title">
+              IQ Myth — Trải Nghiệm Bài Test
+            </h3>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w2-desc">
+              Thiết kế trải nghiệm làm bài test tập trung từ trang giới thiệu đến màn hình bài thi ma trận và luồng phân tích nhận kết quả qua email.
+            </p>
           </div>
+          <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w2-meta">
+            <span>EDTECH · UI/UX & PROTOTYPING</span>
+            <span>2024</span>
+          </div>
+        </a>
 
-        </div>
+        <!-- Work 03: MoMo -->
+        <a href="momo.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-[10px] text-pink-600 font-bold uppercase tracking-mono">
+              <span data-i18n="w3-tag">[ 03 // FINTECH ] · USER RESEARCH</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
+            </div>
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-pink-600 transition-colors leading-tight" data-i18n="w3-title">
+              MoMo Transfer Redesign
+            </h3>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w3-desc">
+              Đề xuất cấu trúc lại luồng xác nhận chuyển tiền nhằm giảm 33 giây do dự và loại bỏ nỗi sợ chuyển nhầm cho hơn 40 triệu người dùng MoMo.
+            </p>
+          </div>
+          <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w3-meta">
+            <span>FINTECH · UX RESEARCH & REDESIGN</span>
+            <span>2025</span>
+          </div>
+        </a>
 
       </div>
-
-      <!-- SELECTED WORKS DIRECTORY (ACCURATE SUBTITLES & RESCUE PATHS) -->
-      <div class="pt-12 md:pt-16 space-y-6 hairline-t">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2" data-i18n="works-tag">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>[ KHÁM PHÁ CÁC CASE STUDY CHÍNH // DIRECTORY ]</span>
-          </div>
-          <a href="index.html#selected-work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
-            Xem tất cả dự án trên trang chủ
-          </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <!-- Work 01: Yên — Chăm Sóc Bố Mẹ Từ Xa -->
-          <a href="yen.html" class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-5 shadow-sm">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
-                <span data-i18n="w1-tag">[ 01 // AGING-TECH ] · DUAL APP</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
-              </div>
-              <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w1-title">
-                Yên — Chăm Sóc Bố Mẹ Từ Xa
-              </h3>
-              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w1-desc">
-                Hai ứng dụng kết nối bố mẹ và con cái qua ba nhu cầu cốt lõi: phát hiện té ngã, cảnh báo lừa đảo bằng AI và lịch nhắc thuốc trực quan.
-              </p>
-            </div>
-            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w1-meta">
-              <span>AGING-TECH · HEALTHCARE DUAL APP</span>
-              <span>2026</span>
-            </div>
-          </a>
-
-          <!-- Work 02: IQ Myth -->
-          <a href="iq-myth.html" class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-5 shadow-sm">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
-                <span data-i18n="w2-tag">[ 02 // EDTECH ] · BEHAVIORAL UI</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
-              </div>
-              <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w2-title">
-                IQ Myth — Trải Nghiệm Bài Test
-              </h3>
-              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w2-desc">
-                Thiết kế trải nghiệm làm bài test tập trung từ trang giới thiệu đến màn hình bài thi ma trận và luồng phân tích nhận kết quả qua email.
-              </p>
-            </div>
-            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w2-meta">
-              <span>EDTECH · UI/UX & PROTOTYPING</span>
-              <span>2024</span>
-            </div>
-          </a>
-
-          <!-- Work 03: MoMo -->
-          <a href="momo.html" class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-5 shadow-sm">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between font-mono text-[10px] text-pink-600 font-bold uppercase tracking-mono">
-                <span data-i18n="w3-tag">[ 03 // FINTECH ] · USER RESEARCH</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
-              </div>
-              <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-pink-600 transition-colors leading-tight" data-i18n="w3-title">
-                MoMo Transfer Redesign
-              </h3>
-              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w3-desc">
-                Đề xuất cấu trúc lại luồng xác nhận chuyển tiền nhằm giảm 33 giây do dự và loại bỏ nỗi sợ chuyển nhầm cho hơn 40 triệu người dùng MoMo.
-              </p>
-            </div>
-            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w3-meta">
-              <span>FINTECH · UX RESEARCH & REDESIGN</span>
-              <span>2025</span>
-            </div>
-          </a>
-
-        </div>
-      </div>
-
     </div>
 
   </main>
@@ -421,66 +320,20 @@
     </div>
   </footer>
 
-  <!-- TRANSLATION, THEME & INTERACTIVE SCRIPTS -->
+  <!-- TRANSLATION, THEME & SCRIPTS -->
   <script>
-    // 1. Live Requested URI
-    const pathEl = document.getElementById('requested-path');
-    if (pathEl) {
-      pathEl.textContent = window.location.pathname || '/404.html';
-    }
-
-    // 2. Live UTC Clock
-    function updateTime() {
-      const el = document.getElementById('live-timestamp');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-      }
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-
-    // 3. Live Mouse Coordinate Tracker
-    const trackerEl = document.getElementById('cursor-tracker');
-    window.addEventListener('mousemove', (e) => {
-      if (trackerEl) {
-        trackerEl.textContent = `CURSOR: X: ${e.clientX}px · Y: ${e.clientY}px`;
+    // 1. Escape shortcut to Home
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.location.href = 'index.html';
       }
     });
 
-    // 4. Glitch Effect & Diagnostic Simulator
-    function triggerGlitch() {
-      const num = document.getElementById('big-404');
-      if (num) {
-        num.classList.add('glitching');
-        setTimeout(() => num.classList.remove('glitching'), 350);
-      }
-
-      // Add dynamic log message in terminal
-      const logs = [
-        '> Scanning system tokens... [100% OK]',
-        '> Searching for missing layout... [NOT FOUND]',
-        '> Fluff detected: 0 bytes (Clean design)',
-        '> Suggestion: Chọn 1 dự án bên dưới để khám phá tiếp!'
-      ];
-      const logContainer = document.getElementById('debug-log-container');
-      if (logContainer) {
-        const rand = logs[Math.floor(Math.random() * logs.length)];
-        const newLog = document.createElement('div');
-        newLog.className = 'text-[11px] font-mono text-emerald-500 font-bold';
-        newLog.textContent = rand;
-        logContainer.appendChild(newLog);
-        if (logContainer.children.length > 7) {
-          logContainer.removeChild(logContainer.children[4]);
-        }
-      }
-    }
-
-    // 5. Case Study Roulette (Surprise Me)
+    // 2. Case Study Roulette (Surprise Me)
     const projects = [
-      { name: 'Yên Ecosystem', url: 'yen.html' },
-      { name: 'IQ Myth Test', url: 'iq-myth.html' },
-      { name: 'MoMo Transfer', url: 'momo.html' }
+      { name: 'Yên — Chăm Sóc Bố Mẹ Từ Xa', url: 'yen.html' },
+      { name: 'IQ Myth — Trải Nghiệm Bài Test', url: 'iq-myth.html' },
+      { name: 'MoMo Transfer Redesign', url: 'momo.html' }
     ];
 
     function spinRoulette() {
@@ -490,12 +343,12 @@
       let count = 0;
       const interval = setInterval(() => {
         const pick = projects[count % projects.length];
-        btn.textContent = `Đang chọn: ${pick.name}...`;
+        btn.textContent = `Đang chọn: ${pick.name.split('—')[0].trim()}...`;
         count++;
         if (count > 6) {
           clearInterval(interval);
           const finalPick = projects[Math.floor(Math.random() * projects.length)];
-          btn.textContent = `Đang mở: ${finalPick.name}!`;
+          btn.textContent = `Đang mở: ${finalPick.name.split('—')[0].trim()}!`;
           setTimeout(() => {
             window.location.href = finalPick.url;
           }, 350);
@@ -503,18 +356,7 @@
       }, 100);
     }
 
-    // 6. Keyboard Shortcuts: ESC (Home), R (Roulette), D (Debug)
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        window.location.href = 'index.html';
-      } else if (e.key === 'r' || e.key === 'R') {
-        spinRoulette();
-      } else if (e.key === 'd' || e.key === 'D') {
-        triggerGlitch();
-      }
-    });
-
-    // 7. Theme Management (Light, Dark, Pink)
+    // 3. Theme Management (Light, Dark, Pink)
     const themeOrder = ['light', 'dark', 'pink'];
     const mobileThemeMeta = {
       light: { icon: '☀️', text: 'LGT' },
@@ -558,24 +400,18 @@
     const savedTheme = localStorage.getItem('tru_theme') || 'light';
     setTheme(savedTheme);
 
-    // 8. Bilingual Translations Dictionary
+    // 4. Bilingual Translations Dictionary
     const translations = {
       vi: {
-        'status-tag': '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span><span>[ 404 // LỖI ĐỊNH TUYẾN · BẠN VỪA BƯỚC VÀO VÙNG KHÔNG CÓ THIẾT KẾ ]</span>',
-        'h1-title': 'ĐỊA CHỈ NÀY KHÔNG TỒN TẠI TRONG DESIGN SYSTEM.',
-        'h1-desc': 'Toạ độ bạn đang tìm kiếm có thể đã bị xóa khi dọn dẹp layer thừa, đổi URL hoặc chưa từng được thiết kế. Nhưng đừng lo, mọi sản phẩm chọn lọc và bằng chứng năng lực thực tế của tôi vẫn đang hoạt động ổn định bên dưới.',
+        'status-tag': '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>[ 404 // KHÔNG TÌM THẤY TRANG ]</span>',
+        'h1-title': 'TRANG NÀY KHÔNG TỒN TẠI.',
+        'h1-desc': 'Đường dẫn bạn vừa truy cập có thể đã được đổi tên, chuyển vị trí hoặc chưa từng được tạo. Bạn có thể quay về trang chủ hoặc khám phá trực tiếp các dự án chọn lọc của tôi bên dưới.',
         'btn-home': 'Về trang chủ',
-        'btn-surprise': 'Dự án ngẫu nhiên',
+        'btn-surprise': 'Xem dự án ngẫu nhiên',
         'btn-back': 'Trang trước',
         'btn-contact': 'Liên hệ',
-        'diag-title': 'DESIGN_DEBUGGER // CONSOLE',
-        'diag-url-lbl': 'TARGET_URI:',
-        'diag-status-lbl': 'HTTP_STATUS:',
-        'diag-engine-lbl': 'DESIGN_AUDIT:',
-        'diag-time-lbl': 'TIMESTAMP:',
-        'wireframe-note': 'Khung dây rỗng — Không có nội dung để hiển thị',
-        'diag-shortcut-hint': 'Phím tắt: Nhấn <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> về Home · <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">R</kbd> xem ngẫu nhiên',
-        'works-tag': '[ KHÁM PHÁ CÁC CASE STUDY CHÍNH // DIRECTORY ]',
+        'shortcut-hint': 'Mẹo: Bấm <kbd class="px-2 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> để về trang chủ',
+        'works-tag': '[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]',
         'btn-view-all': 'Xem tất cả dự án trên trang chủ',
         'w1-tag': '[ 01 // AGING-TECH ] · DUAL APP',
         'w1-title': 'Yên — Chăm Sóc Bố Mẹ Từ Xa',
@@ -592,21 +428,15 @@
         'foot-home': 'Về trang chủ'
       },
       en: {
-        'status-tag': '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span><span>[ 404 // ROUTE_NOT_FOUND · YOU JUST ENTERED AN UNDESIGNED ZONE ]</span>',
-        'h1-title': 'THIS ROUTE DOES NOT EXIST IN THE DESIGN SYSTEM.',
-        'h1-desc': 'The coordinates you are navigating to might have been pruned during design cleanup, reorganized, or never drafted. No worries — all core case studies and proof-of-work are active below.',
+        'status-tag': '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>[ 404 // PAGE NOT FOUND ]</span>',
+        'h1-title': 'THIS PAGE DOES NOT EXIST.',
+        'h1-desc': 'The link you followed may have been moved, renamed, or never created. You can return to the homepage or explore my selected case studies directly below.',
         'btn-home': 'Return to Homepage',
         'btn-surprise': 'Surprise Project',
         'btn-back': 'Previous Page',
         'btn-contact': 'Contact',
-        'diag-title': 'DESIGN_DEBUGGER // CONSOLE',
-        'diag-url-lbl': 'TARGET_URI:',
-        'diag-status-lbl': 'HTTP_STATUS:',
-        'diag-engine-lbl': 'DESIGN_AUDIT:',
-        'diag-time-lbl': 'TIMESTAMP:',
-        'wireframe-note': 'Empty wireframe — No components found on this route',
-        'diag-shortcut-hint': 'Shortcuts: Press <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> for Home · <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">R</kbd> for Random',
-        'works-tag': '[ EXPLORE SELECTED CASE STUDIES // DIRECTORY ]',
+        'shortcut-hint': 'Tip: Press <kbd class="px-2 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> to return Home',
+        'works-tag': '[ SELECTED CASE STUDIES // DIRECTORY ]',
         'btn-view-all': 'View All Projects on Homepage',
         'w1-tag': '[ 01 // AGING-TECH ] · DUAL APP',
         'w1-title': 'Yên — Caring for Parents from Afar',
