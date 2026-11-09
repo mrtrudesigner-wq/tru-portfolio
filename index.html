@@ -107,12 +107,19 @@
       pointer-events: none;
     }
 
+    html {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
     body {
       background-color: var(--bg-primary);
       color: var(--text-primary);
       transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-      overflow-x: hidden;
+      overflow-x: clip;
+      max-width: 100%;
+      position: relative;
     }
 
     .hairline-b { border-bottom: 1px solid var(--border-color); }
@@ -234,20 +241,20 @@
   </div>
 
   <!-- TOP BAR (TICKER & LANGUAGE SWITCHER) -->
-  <div class="hairline-b font-mono text-[11px] tracking-mono uppercase py-2.5 px-6 md:px-12 flex items-center justify-between bg-[var(--bg-secondary)] transition-colors">
-    <div class="flex items-center gap-3">
-      <span class="relative flex h-2 w-2">
+  <div class="hairline-b font-mono text-[10px] sm:text-[11px] tracking-mono uppercase py-2 sm:py-2.5 px-4 sm:px-6 md:px-12 flex items-center justify-between bg-[var(--bg-secondary)] transition-colors gap-2 overflow-hidden">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0 truncate">
+      <span class="relative flex h-2 w-2 shrink-0">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
       </span>
-      <span class="font-semibold text-[var(--text-primary)]" data-i18n="status-available">
+      <span class="font-semibold text-[var(--text-primary)] truncate" data-i18n="status-available">
         AVAILABLE FOR PRODUCT DESIGN ROLES
       </span>
       <span class="hidden sm:inline text-neutral-400">/</span>
       <span class="hidden sm:inline text-[var(--text-muted)]">HANOI · VIETNAM (GMT+7)</span>
     </div>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3 sm:gap-4 shrink-0">
       <span id="live-time" class="text-[var(--text-muted)] font-mono hidden md:inline">00:00:00 GMT+7</span>
       <div class="hidden md:block h-3 w-[1px] bg-[var(--border-color)]"></div>
       
@@ -259,47 +266,53 @@
 
   <!-- MAIN NAVIGATION (Sticky & Always Visible at top) -->
   <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b transition-colors">
-    <div class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 h-20 md:h-24 flex items-center justify-between">
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 h-16 sm:h-20 md:h-24 flex items-center justify-between gap-2">
       
       <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <span class="font-extrabold text-2xl md:text-3xl tracking-tighter uppercase font-sans">
+      <a href="#" class="flex items-center gap-2 group shrink-0">
+        <span class="font-extrabold text-xl sm:text-2xl md:text-3xl tracking-tighter uppercase font-sans">
           TRỨ
         </span>
-        <span class="font-mono text-[11px] text-[var(--text-muted)] tracking-mono uppercase hidden sm:inline-block border border-[var(--border-color)] px-2.5 py-1 rounded">
+        <span class="font-mono text-[10px] sm:text-[11px] text-[var(--text-muted)] tracking-mono uppercase hidden md:inline-block border border-[var(--border-color)] px-2.5 py-1 rounded">
           PRODUCT DESIGNER
         </span>
       </a>
 
       <!-- Sticky Controls: Language Switcher + Theme Switcher + Contact Button + Fullscreen Menu -->
-      <div class="flex items-center gap-3 sm:gap-4">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         
         <!-- LANGUAGE TOGGLE (Sticky & Always Visible while scrolling) -->
-        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
-          <button onclick="setLang('vi')" class="lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+        <div class="flex items-center p-0.5 sm:p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-0.5 sm:gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
             VI
           </button>
-          <button onclick="setLang('en')" class="lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+          <button onclick="setLang('en')" class="lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
             EN
           </button>
         </div>
 
-        <!-- 3-Theme Switchers: Light / Dark / Pink -->
-        <div class="flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
-          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="light">Light</button>
-          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="dark">Dark</button>
-          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="pink">Pink</button>
+        <!-- 3-Theme Switchers: Desktop (sm+) -->
+        <div class="hidden sm:flex items-center p-0.5 sm:p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-0.5 sm:gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] uppercase transition-all" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] uppercase transition-all" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] uppercase transition-all" data-target="pink">Pink</button>
         </div>
 
-        <a href="#contact" class="hidden sm:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn">
+        <!-- Single-Click Theme Cycle Button: Mobile only (<sm) -->
+        <button onclick="cycleTheme()" class="sm:hidden flex items-center gap-1 px-2 py-1 rounded-full hairline-all bg-[var(--bg-secondary)] font-mono text-[9px] uppercase tracking-mono hover:text-[var(--text-primary)] transition-all" title="Đổi giao diện (Light / Dark / Pink)">
+          <span id="mobile-theme-icon">☀️</span>
+          <span id="mobile-theme-text" class="font-bold">LGT</span>
+        </button>
+
+        <a href="#contact" class="hidden md:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn">
           <span data-i18n="btn-contact">Get in touch</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
 
         <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
-        <button onclick="openMenuOverlay()" class="font-mono text-xs uppercase tracking-mono px-3.5 sm:px-4 py-2 sm:py-2.5 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-2.5 magnetic-btn cursor-pointer" title="Open Menu">
+        <button onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2.5 magnetic-btn cursor-pointer" title="Open Menu">
           <span data-i18n="btn-menu">MENU</span>
-          <div class="w-3.5 h-3 flex flex-col justify-between">
+          <div class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between">
             <span class="w-full h-[1.5px] bg-current"></span>
             <span class="w-full h-[1.5px] bg-current"></span>
             <span class="w-full h-[1.5px] bg-current"></span>
@@ -310,9 +323,9 @@
   </header>
 
   <!-- HERO SECTION (Increased Whitespace & Bold Editorial Typography) -->
-  <section class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 pt-20 md:pt-36 pb-24 md:pb-40 hairline-b">
+  <section class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-16 sm:pt-20 md:pt-36 pb-20 sm:pb-24 md:pb-40 hairline-b">
     
-    <div class="flex items-center justify-between font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12">
+    <div class="flex items-center justify-between font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] mb-10 sm:mb-12">
       <span class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span>[ IDENTITY & DISCIPLINE ]</span>
@@ -324,14 +337,14 @@
     <!-- Mega Hero Typography with GSAP Reveal Target -->
     <div class="space-y-3 md:space-y-4 hero-title-container">
       <div class="overflow-hidden">
-        <h1 class="hero-line text-4xl sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] text-[var(--text-primary)]" data-i18n="hero-h1">
+        <h1 class="hero-line text-[2.1rem] sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] text-[var(--text-primary)]" data-i18n="hero-h1">
           DESIGN WITHOUT
         </h1>
       </div>
       <div class="overflow-hidden">
-        <h1 class="hero-line text-4xl sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] flex flex-wrap items-center gap-4 md:gap-8 text-[var(--text-primary)]">
+        <h1 class="hero-line text-[2.1rem] sm:text-6xl md:text-8xl lg:text-[7.8rem] font-extrabold uppercase tracking-tighter leading-[0.92] flex flex-wrap items-center gap-2 sm:gap-4 md:gap-8 text-[var(--text-primary)]">
           <span data-i18n="hero-h2">THE FLUFF.</span>
-          <span class="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-mono font-normal tracking-normal text-[var(--text-muted)] lowercase italic">
+          <span class="text-lg sm:text-3xl md:text-5xl lg:text-6xl font-mono font-normal tracking-normal text-[var(--text-muted)] lowercase italic">
             (craft-driven)
           </span>
         </h1>
@@ -341,10 +354,10 @@
     <!-- Manifesto Row with Generous Spacing -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-16 md:mt-28 pt-12 hairline-t items-start">
       
-      <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] space-y-4">
+      <div class="lg:col-span-4 font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] space-y-4">
         <div>
           <span class="text-[var(--text-primary)] font-bold block mb-1">[ POSITION & ROLES ]</span>
-          <p class="leading-relaxed">
+          <p class="leading-relaxed break-words">
             UI/UX DESIGNER @ MARCHI LAB<br>
             PREVIOUSLY @ HIVELAB VINA<br>
             CORE: PRODUCT DISCOVERY, UX AUDIT & PROTOTYPING
@@ -352,7 +365,7 @@
         </div>
         <div class="pt-4 hairline-t">
           <span class="text-[var(--text-primary)] font-bold block mb-1">[ FOCUS AREAS ]</span>
-          <p class="leading-relaxed">HEALTHCARE, EDTECH, FINTECH & SYSTEM SCALING</p>
+          <p class="leading-relaxed break-words">HEALTHCARE, EDTECH, FINTECH & SYSTEM SCALING</p>
         </div>
       </div>
 
@@ -404,7 +417,7 @@
   </div>
 
   <!-- SELECTED WORK SECTION (Spacious Interactive Case Index with Hover Preview) -->
-  <section id="work" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+  <section id="work" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-20 sm:py-24 md:py-40 hairline-b">
     
     <!-- Section Header & Filter Tabs -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24">
@@ -436,7 +449,7 @@
     <div class="divide-y divide-[var(--border-color)] hairline-t hairline-b">
 
       <!-- CASE 01: YÊN -->
-      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="product"
            data-case="yen"
            data-url="yen.html"
@@ -464,16 +477,16 @@
 
           <!-- Metadata & Scope -->
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ SCOPE ]:</span>
               <span>PRODUCT DISCOVERY · UX/UI DESIGN</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ TYPE ]:</span>
               <span data-i18n="yen-type">CONCEPT CÁ NHÂN · DUAL-APP EXPERIENCE</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ YEAR ]:</span>
               <span>2026</span>
             </div>
           </div>
@@ -492,7 +505,7 @@
       </div>
 
       <!-- CASE 02: IQ MYTH -->
-      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="product"
            data-case="iq"
            data-url="iq-myth.html"
@@ -518,16 +531,16 @@
           </div>
 
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ SCOPE ]:</span>
               <span>COMPETITOR AUDIT · UI DESIGN · PROTOTYPING</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ TYPE ]:</span>
               <span data-i18n="iq-type">EDTECH PRODUCT · WEB APP DESIGN</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ YEAR ]:</span>
               <span>2025</span>
             </div>
           </div>
@@ -546,7 +559,7 @@
       </div>
 
       <!-- CASE 03: MOMO TRANSFER -->
-      <div class="case-row group relative py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-6 md:px-10 -mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="research"
            data-case="momo"
            data-url="momo.html"
@@ -572,16 +585,16 @@
           </div>
 
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ SCOPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ SCOPE ]:</span>
               <span>USER RESEARCH · UX AUDIT · UI REDESIGN</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ TYPE ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ TYPE ]:</span>
               <span data-i18n="momo-type">FINTECH REDESIGN · SELF-INITIATED</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[var(--text-primary)] font-semibold">[ YEAR ]:</span>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ YEAR ]:</span>
               <span>2025</span>
             </div>
           </div>
@@ -604,7 +617,7 @@
   </section>
 
   <!-- PRODUCT CRAFT & METHODOLOGY (Spacious 3-Column Editorial Grid) -->
-  <section id="craft" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+  <section id="craft" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-20 sm:py-24 md:py-40 hairline-b">
     
     <div class="flex items-center justify-between font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12">
       <span class="flex items-center gap-2">
@@ -686,7 +699,7 @@
   </section>
 
   <!-- EXPERIENCE & TIMELINE -->
-  <section id="experience" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+  <section id="experience" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-20 sm:py-24 md:py-40 hairline-b">
     
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
       
@@ -766,7 +779,7 @@
   </section>
 
   <!-- STORY & ETHOS SECTION ("Chuyện là...") -->
-  <section id="story" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 py-24 md:py-40 hairline-b">
+  <section id="story" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-20 sm:py-24 md:py-40 hairline-b">
     
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
       
@@ -821,7 +834,7 @@
   </section>
 
   <!-- FOOTER & CONTACT -->
-  <footer id="contact" class="max-w-[1680px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-40 pb-20">
+  <footer id="contact" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-20 sm:pt-24 md:pt-40 pb-20">
     
     <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12 flex items-center gap-2">
       <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -846,61 +859,61 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
       
       <!-- Email Card with Copy button -->
-      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between group">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between group">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-email-lbl">
             [ EMAIL LIÊN HỆ ]
           </span>
-          <span id="email-text" class="text-lg sm:text-xl font-bold font-mono break-all text-[var(--text-primary)]">
+          <span id="email-text" class="text-base sm:text-xl font-bold font-mono break-all text-[var(--text-primary)]">
             mr.tru.designer@gmail.com
           </span>
         </div>
-        <button onclick="copyEmail()" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
+        <button onclick="copyEmail()" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
           <i data-lucide="copy" class="w-4 h-4"></i>
           <span id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
         </button>
       </div>
 
       <!-- Phone Card -->
-      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-phone-lbl">
             [ SỐ ĐIỆN THOẠI ]
           </span>
-          <span class="text-lg sm:text-xl font-bold font-mono text-[var(--text-primary)]">
+          <span class="text-base sm:text-xl font-bold font-mono text-[var(--text-primary)]">
             (+84) 357 458 457
           </span>
         </div>
-        <a href="tel:+84357458457" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
+        <a href="tel:+84357458457" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
           <i data-lucide="phone" class="w-4 h-4"></i>
           <span data-i18n="btn-call">Gọi điện trực tiếp</span>
         </a>
       </div>
 
       <!-- Location / Status -->
-      <div class="p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-location-lbl">
             [ ĐỊA ĐIỂM ]
           </span>
-          <span class="text-lg sm:text-xl font-bold text-[var(--text-primary)]" data-i18n="contact-location-val">
+          <span class="text-base sm:text-xl font-bold text-[var(--text-primary)]" data-i18n="contact-location-val">
             Hà Nội, Việt Nam
           </span>
           <p class="text-xs text-[var(--text-muted)] mt-2 font-mono uppercase" data-i18n="location-sub">
             Hỗ trợ làm việc On-site hoặc Remote
           </p>
         </div>
-        <a href="https://mrtrudesigner.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span data-i18n="contact-site-val">mrtrudesigner.vercel.app</span>
-          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity"></i>
+        <a href="https://mrtrudesigner.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+          <span data-i18n="contact-site-val" class="truncate">mrtrudesigner.vercel.app</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity shrink-0"></i>
         </a>
       </div>
 
     </div>
 
     <!-- Bottom sub-bar -->
-    <div class="pt-10 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]">
+    <div class="pt-8 sm:pt-10 hairline-t flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 font-mono text-[10px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] text-center sm:text-left">
       <span>© 2026 TRỨ. DESIGNED & CRAFTED WITH INTENTION.</span>
       <button onclick="lenis.scrollTo(0)" class="hover:text-[var(--text-primary)] flex items-center gap-1 font-bold">
         <span data-i18n="btn-top">VỀ ĐẦU TRANG</span>
@@ -914,7 +927,7 @@
   <div id="menu-overlay" data-lenis-prevent="true" class="fixed inset-0 z-50 bg-[var(--bg-primary)] hidden flex-col justify-between overflow-y-auto overscroll-contain transition-colors">
     
     <!-- Top Bar inside Menu Overlay -->
-    <div class="hairline-b px-6 md:px-12 lg:px-16 py-6 flex items-center justify-between flex-shrink-0 bg-[var(--bg-primary)] sticky top-0 z-20">
+    <div class="hairline-b px-4 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-6 flex items-center justify-between flex-shrink-0 bg-[var(--bg-primary)] sticky top-0 z-20">
       <div class="flex items-center gap-4">
         <a href="#" onclick="closeMenuOverlay()" class="font-extrabold text-2xl md:text-3xl tracking-tighter uppercase font-sans">
           TRỨ
@@ -924,11 +937,14 @@
         </span>
       </div>
 
-      <div class="flex items-center gap-4 sm:gap-6">
-        <span class="font-mono text-xs text-[var(--text-muted)] tracking-mono hidden md:inline">
-          HANOI · VIETNAM (GMT+7)
-        </span>
-        <button onclick="closeMenuOverlay()" class="px-5 py-2.5 rounded-full hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2.5 magnetic-btn cursor-pointer group">
+      <div class="flex items-center gap-2 sm:gap-6">
+        <!-- Theme Switchers inside Menu -->
+        <div class="flex items-center p-0.5 sm:p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-0.5 sm:gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-mono text-[10px] uppercase transition-all" data-target="pink">Pink</button>
+        </div>
+        <button onclick="closeMenuOverlay()" class="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2 magnetic-btn cursor-pointer group">
           <span data-i18n="menu-close">ĐÓNG (ESC)</span>
           <i data-lucide="x" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
         </button>
@@ -936,7 +952,7 @@
     </div>
 
     <!-- Main Navigation Body (Split Layout) -->
-    <div class="max-w-[1680px] w-full mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+    <div class="max-w-[1680px] w-full mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-8 sm:py-12 md:py-20 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-center">
       
       <!-- Primary Large Nav Links (Col 7) -->
       <nav class="lg:col-span-7 space-y-4 md:space-y-6">
@@ -1070,7 +1086,7 @@
     </div>
 
     <!-- Bottom Bar inside Menu Overlay -->
-    <div class="hairline-t px-6 md:px-12 lg:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 bg-[var(--bg-secondary)]/40">
+    <div class="hairline-t px-4 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 bg-[var(--bg-secondary)]/40">
       <div>
         <span>TRỨ — PRODUCT DESIGNER · HANOI, VIETNAM</span>
       </div>
@@ -1283,6 +1299,27 @@
           btn.classList.add('text-[var(--text-muted)]');
         }
       });
+
+      const iconEl = document.getElementById('mobile-theme-icon');
+      const textEl = document.getElementById('mobile-theme-text');
+      if (iconEl && textEl) {
+        if (theme === 'dark') {
+          iconEl.textContent = '🌙';
+          textEl.textContent = 'DRK';
+        } else if (theme === 'pink') {
+          iconEl.textContent = '🌸';
+          textEl.textContent = 'PNK';
+        } else {
+          iconEl.textContent = '☀️';
+          textEl.textContent = 'LGT';
+        }
+      }
+    }
+
+    function cycleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : (current === 'dark' ? 'pink' : 'light');
+      setTheme(next);
     }
     const savedTheme = localStorage.getItem('tru_theme') || 'light';
     setTheme(savedTheme);
