@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Không tìm thấy trang · TRỨ</title>
+  <meta name="description" content="Trang bạn tìm kiếm không tồn tại hoặc đã được di chuyển — Trứ Product Designer Portfolio.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
+  <script>
+    (function() {
+      const isDark = (localStorage.getItem('tru_theme') === 'dark') ||
+        (!localStorage.getItem('tru_theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon && isDark) {
+        favicon.href = 'favicon-dark.png';
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Bricolage Grotesque & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- GSAP 3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          letterSpacing: {
+            tighter: '-0.045em',
+            tight: '-0.025em',
+            mono: '0.06em'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EBEBE5;
+      --text-primary: #0E0E0E;
+      --text-muted: #62625C;
+      --border-color: rgba(14, 14, 14, 0.12);
+      --accent: #0E0E0E;
+      --accent-highlight: #10B981;
+      --badge-bg: #E3E3DC;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0A0A0B;
+      --bg-secondary: #141416;
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.12);
+      --accent: #C4FF00;
+      --accent-highlight: #C4FF00;
+      --badge-bg: #1E1E22;
+    }
+
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.18);
+      --accent: #121212;
+      --accent-highlight: #121212;
+      --badge-bg: #FFA4BD;
+    }
+
+    html {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      overflow-x: clip;
+      max-width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-col: column;
+    }
+
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-l { border-left: 1px solid var(--border-color); }
+    .hairline-r { border-right: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    .bracket-hover::before {
+      content: '[';
+      margin-right: 4px;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .bracket-hover::after {
+      content: ']';
+      margin-left: 4px;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .bracket-hover:hover::before,
+    .bracket-hover:hover::after {
+      opacity: 1;
+      color: var(--accent-highlight);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
+      <a href="index.html" class="flex items-center gap-2 group shrink-0">
+        <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
+        <span class="font-mono text-xs text-[var(--text-muted)] border border-[var(--border-color)] px-2 py-0.5 rounded hidden sm:inline-block">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- LANGUAGE TOGGLE -->
+        <div class="flex items-center p-0.5 sm:p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-0.5 sm:gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- Theme Switchers: Desktop -->
+        <div class="hidden sm:flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2 py-1 rounded-full font-mono text-[10px] uppercase" data-target="pink">Pink</button>
+        </div>
+
+        <!-- Theme Switcher: Mobile Cycle Button -->
+        <button onclick="cycleTheme()" class="sm:hidden flex items-center gap-1 px-2 py-1 rounded-full hairline-all bg-[var(--bg-secondary)] font-mono text-[9px] uppercase tracking-mono hover:text-[var(--text-primary)] transition-all" title="Đổi giao diện">
+          <span id="mobile-theme-icon">☀️</span>
+          <span id="mobile-theme-text" class="font-bold">LGT</span>
+        </button>
+
+        <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold" data-i18n="btn-contact">
+          Liên hệ
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN 404 CONTENT -->
+  <main class="flex-grow max-w-[1400px] w-full mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col justify-center">
+
+    <!-- HERO 404 SECTION -->
+    <div class="space-y-8 md:space-y-12">
+      
+      <!-- STATUS TAG -->
+      <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-rose-600 dark:text-rose-400 bg-rose-500/10 px-3 py-1.5 rounded-full inline-flex items-center gap-2 font-bold w-fit hairline-all border-rose-500/20" data-i18n="status-tag">
+        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+        <span>[ 404 // LỖI ĐỊNH TUYẾN · KHÔNG TÌM THẤY TRANG ]</span>
+      </div>
+
+      <!-- MAIN DISPLAY: BIG 404 & TERMINAL INSPECTOR -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+        
+        <!-- Big Number & Title -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="relative">
+            <span class="block text-7xl sm:text-9xl md:text-[11rem] lg:text-[13rem] font-extrabold tracking-tighter leading-none select-none text-[var(--text-primary)] opacity-95">
+              404
+            </span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-[1.05]" data-i18n="h1-title">
+            ĐỊA CHỈ NÀY KHÔNG TỒN TẠI TRONG HỆ THỐNG.
+          </h1>
+
+          <p class="text-base sm:text-lg md:text-xl text-[var(--text-muted)] max-w-2xl leading-relaxed" data-i18n="h1-desc">
+            Toạ độ bạn đang tìm kiếm có thể đã được đổi tên, chuyển vị trí hoặc chưa từng được thiết lập. Nhưng đừng lo, mọi dự án chọn lọc và thông tin của tôi vẫn đang hoạt động ổn định.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="pt-4 flex flex-wrap items-center gap-4">
+            <a href="index.html" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold font-mono text-xs uppercase tracking-mono hover:opacity-90 transition-all shadow-lg group">
+              <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+              <span data-i18n="btn-home">Quay lại trang chủ</span>
+            </a>
+            <button onclick="window.history.length > 1 ? window.history.back() : window.location.href='index.html'" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full hairline-all bg-[var(--bg-secondary)] text-[var(--text-primary)] font-mono text-xs uppercase tracking-mono hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all">
+              <i data-lucide="corner-up-left" class="w-4 h-4"></i>
+              <span data-i18n="btn-back">Trang trước đó</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Diagnostics Inspector Box -->
+        <div class="lg:col-span-5">
+          <div class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 backdrop-blur-sm space-y-4 font-mono text-xs shadow-sm">
+            <div class="flex items-center justify-between pb-3 hairline-b text-[var(--text-muted)]">
+              <span class="flex items-center gap-2 uppercase tracking-mono font-bold">
+                <i data-lucide="terminal" class="w-4 h-4 text-emerald-500"></i>
+                <span data-i18n="diag-title">SYSTEM_DIAGNOSTICS</span>
+              </span>
+              <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
+                RESOLVER_ONLINE
+              </span>
+            </div>
+
+            <div class="space-y-2.5 text-[var(--text-muted)] leading-relaxed">
+              <div class="flex justify-between items-start gap-2">
+                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-url-lbl">REQUESTED_URI:</span>
+                <span id="requested-path" class="text-rose-500 dark:text-rose-400 font-bold break-all text-right">/404</span>
+              </div>
+              <div class="flex justify-between items-center gap-2">
+                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-status-lbl">STATUS_CODE:</span>
+                <span class="font-bold text-[var(--text-primary)]">404 NOT_FOUND</span>
+              </div>
+              <div class="flex justify-between items-center gap-2">
+                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-engine-lbl">DESIGN_ENGINE:</span>
+                <span class="text-[var(--text-primary)]">TRU_CRAFT_CORE v2.4</span>
+              </div>
+              <div class="flex justify-between items-center gap-2">
+                <span class="text-[var(--text-primary)] font-semibold" data-i18n="diag-time-lbl">TIMESTAMP:</span>
+                <span id="live-timestamp" class="text-[var(--text-primary)] font-mono">--:--:-- UTC</span>
+              </div>
+            </div>
+
+            <div class="pt-3 hairline-t text-[11px] text-[var(--text-muted)] flex items-center justify-between">
+              <span data-i18n="diag-shortcut-hint">Mẹo: Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> để về Home</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SELECTED WORKS DIRECTORY -->
+      <div class="pt-12 md:pt-16 space-y-6 hairline-t">
+        <div class="flex items-center justify-between">
+          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="works-tag">
+            [ KHÁM PHÁ CÁC CASE STUDY CHÍNH // DIRECTORY ]
+          </div>
+          <a href="index.html#selected-work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover hidden sm:inline" data-i18n="btn-view-all">
+            Xem tất cả dự án
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Work 01: Yen -->
+          <a href="yen.html" class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 hover:bg-[var(--bg-secondary)]/70 transition-all group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
+                <span>[ 01 // HEALTHCARE ]</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+              </div>
+              <h3 class="font-bold text-xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors" data-i18n="w1-title">
+                Hệ Sinh Thái Y tế Yên
+              </h3>
+              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed line-clamp-2" data-i18n="w1-desc">
+                Cấu trúc lại luồng đặt khám và hồ sơ bệnh án số đa nền tảng (B2C & B2B).
+              </p>
+            </div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-2 hairline-t">
+              MEDTECH · DESIGN SYSTEM · 2024
+            </div>
+          </a>
+
+          <!-- Work 02: IQ Myth -->
+          <a href="iq-myth.html" class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 hover:bg-[var(--bg-secondary)]/70 transition-all group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
+                <span>[ 02 // EDTECH ]</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+              </div>
+              <h3 class="font-bold text-xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors" data-i18n="w2-title">
+                IQ Myth Test Flow
+              </h3>
+              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed line-clamp-2" data-i18n="w2-desc">
+                Thiết kế trải nghiệm làm bài test tập trung từ landing đến màn hình phân tích kết quả.
+              </p>
+            </div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-2 hairline-t">
+              EDTECH · UI/UX & PROTOTYPING · 2024
+            </div>
+          </a>
+
+          <!-- Work 03: MoMo -->
+          <a href="momo.html" class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 hover:bg-[var(--bg-secondary)]/70 transition-all group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between font-mono text-[10px] text-pink-600 font-bold uppercase tracking-mono">
+                <span>[ 03 // FINTECH ]</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+              </div>
+              <h3 class="font-bold text-xl uppercase group-hover:text-pink-600 transition-colors" data-i18n="w3-title">
+                MoMo Transfer Redesign
+              </h3>
+              <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed line-clamp-2" data-i18n="w3-desc">
+                Đề xuất cải thiện độ an tâm và tốc độ xác nhận giao dịch chuyển tiền cho 40M+ users.
+              </p>
+            </div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-2 hairline-t">
+              FINTECH · USER RESEARCH · 2025
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="max-w-[1400px] w-full mx-auto px-4 md:px-8 py-8 hairline-t flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[var(--text-muted)]">
+    <div class="flex items-center gap-2">
+      <span class="font-bold text-[var(--text-primary)]">TRỨ</span>
+      <span>·</span>
+      <span>PRODUCT DESIGNER</span>
+      <span>·</span>
+      <span>VIỆT NAM</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="mailto:mr.tru.designer@gmail.com" class="hover:text-[var(--text-primary)] transition-colors">mr.tru.designer@gmail.com</a>
+      <span>·</span>
+      <a href="index.html" class="hover:text-[var(--text-primary)] transition-colors" data-i18n="foot-home">Về trang chủ</a>
+    </div>
+  </footer>
+
+  <!-- TRANSLATION & THEME LOGIC -->
+  <script>
+    // Live Diagnostics Info
+    const pathEl = document.getElementById('requested-path');
+    if (pathEl) {
+      pathEl.textContent = window.location.pathname || '/404.html';
+    }
+
+    function updateTime() {
+      const el = document.getElementById('live-timestamp');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+      }
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Escape shortcut to Home
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Theme Management
+    const themeOrder = ['light', 'dark', 'pink'];
+    const mobileThemeMeta = {
+      light: { icon: '☀️', text: 'LGT' },
+      dark:  { icon: '🌙', text: 'DRK' },
+      pink:  { icon: '🌸', text: 'PNK' }
+    };
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('tru_theme', theme);
+
+      // Favicon auto-update
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon) {
+        favicon.href = (theme === 'dark') ? 'favicon-dark.png' : 'favicon-light.png';
+      }
+
+      // Desktop Theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        const isActive = btn.dataset.target === theme;
+        btn.classList.toggle('bg-[var(--text-primary)]', isActive);
+        btn.classList.toggle('text-[var(--bg-primary)]', isActive);
+        btn.classList.toggle('text-[var(--text-muted)]', !isActive);
+      });
+
+      // Mobile cycle button update
+      const iconEl = document.getElementById('mobile-theme-icon');
+      const textEl = document.getElementById('mobile-theme-text');
+      if (iconEl && textEl && mobileThemeMeta[theme]) {
+        iconEl.textContent = mobileThemeMeta[theme].icon;
+        textEl.textContent = mobileThemeMeta[theme].text;
+      }
+    }
+
+    function cycleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = themeOrder[(themeOrder.indexOf(current) + 1) % themeOrder.length];
+      setTheme(next);
+    }
+
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // Translations Dictionary
+    const translations = {
+      vi: {
+        'status-tag': '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span><span>[ 404 // LỖI ĐỊNH TUYẾN · KHÔNG TÌM THẤY TRANG ]</span>',
+        'h1-title': 'ĐỊA CHỈ NÀY KHÔNG TỒN TẠI TRONG HỆ THỐNG.',
+        'h1-desc': 'Toạ độ bạn đang tìm kiếm có thể đã được đổi tên, chuyển vị trí hoặc chưa từng được thiết lập. Nhưng đừng lo, mọi dự án chọn lọc và thông tin của tôi vẫn đang hoạt động ổn định.',
+        'btn-home': 'Quay lại trang chủ',
+        'btn-back': 'Trang trước đó',
+        'btn-contact': 'Liên hệ',
+        'diag-title': 'SYSTEM_DIAGNOSTICS',
+        'diag-url-lbl': 'REQUESTED_URI:',
+        'diag-status-lbl': 'STATUS_CODE:',
+        'diag-engine-lbl': 'DESIGN_ENGINE:',
+        'diag-time-lbl': 'TIMESTAMP:',
+        'diag-shortcut-hint': 'Mẹo: Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> để về Home',
+        'works-tag': '[ KHÁM PHÁ CÁC CASE STUDY CHÍNH // DIRECTORY ]',
+        'btn-view-all': 'Xem tất cả dự án',
+        'w1-title': 'Hệ Sinh Thái Y tế Yên',
+        'w1-desc': 'Cấu trúc lại luồng đặt khám và hồ sơ bệnh án số đa nền tảng (B2C & B2B).',
+        'w2-title': 'IQ Myth Test Flow',
+        'w2-desc': 'Thiết kế trải nghiệm làm bài test tập trung từ landing đến màn hình phân tích kết quả.',
+        'w3-title': 'MoMo Transfer Redesign',
+        'w3-desc': 'Đề xuất cải thiện độ an tâm và tốc độ xác nhận giao dịch chuyển tiền cho 40M+ users.',
+        'foot-home': 'Về trang chủ'
+      },
+      en: {
+        'status-tag': '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span><span>[ 404 // ROUTE_NOT_FOUND · SYSTEM EXCEPTION ]</span>',
+        'h1-title': 'THIS ROUTE DOES NOT EXIST IN THE SYSTEM.',
+        'h1-desc': 'The coordinates you are navigating to might have been reorganized, renamed, or never existed in the index. All core case studies and contact channels remain accessible.',
+        'btn-home': 'Return to Homepage',
+        'btn-back': 'Previous Page',
+        'btn-contact': 'Contact',
+        'diag-title': 'SYSTEM_DIAGNOSTICS',
+        'diag-url-lbl': 'REQUESTED_URI:',
+        'diag-status-lbl': 'STATUS_CODE:',
+        'diag-engine-lbl': 'DESIGN_ENGINE:',
+        'diag-time-lbl': 'TIMESTAMP:',
+        'diag-shortcut-hint': 'Tip: Press <kbd class="px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> to return Home',
+        'works-tag': '[ EXPLORE SELECTED CASE STUDIES // DIRECTORY ]',
+        'btn-view-all': 'View All Projects',
+        'w1-title': 'Yên Healthcare Ecosystem',
+        'w1-desc': 'Restructuring cross-platform booking flows and patient records for MedTech.',
+        'w2-title': 'IQ Myth Test Flow',
+        'w2-desc': 'Focus-driven cognitive testing flow from landing conversion to result analysis.',
+        'w3-title': 'MoMo Transfer Redesign',
+        'w3-desc': 'Auditing trust signals and reducing cognitive load for 40M+ transaction users.',
+        'foot-home': 'Return to Home'
+      }
+    };
+
+    function setLang(lang) {
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+    }
+
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
