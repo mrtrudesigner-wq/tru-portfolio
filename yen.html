@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YÊN — Chăm Sóc Bố Mẹ, Kể CẢ Khi Ở Xa | Case Study · Trứ</title>
   <meta name="description" content="Case study chi tiết Yên — Hệ thống kết nối bố mẹ và con cái qua 3 bài toán: phát hiện té ngã, AI nhận diện lừa đảo và nhắc thuốc. Product Designer: Trứ.">
-  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
+  <script>
+    (function() {
+      const isDark = (localStorage.getItem('tru_theme') === 'dark') ||
+        (!localStorage.getItem('tru_theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon && isDark) {
+        favicon.href = 'favicon-dark.png';
+      }
+    })();
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -306,8 +317,8 @@
           </div>
         </div>
 
-        <div class="rounded-xl overflow-hidden hairline-all flex justify-center bg-neutral-900 p-8 shadow-2xl gsap-card">
-          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện màn hình con cái" class="max-w-xs h-auto rounded-xl shadow-2xl gsap-scrub-img">
+        <div class="rounded-xl overflow-hidden hairline-all flex justify-center bg-[var(--bg-secondary)]/40 p-8 shadow-sm gsap-card">
+          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện màn hình con cái" class="max-w-xs h-auto rounded-xl drop-shadow-2xl gsap-scrub-img">
         </div>
       </div>
     </section>
@@ -324,8 +335,8 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
-            <img src="https://framerusercontent.com/images/MasQsRgkW4uvuGvYtNJc0m5I3Y.png" alt="Bố mẹ xác nhận" class="w-full h-auto rounded-lg">
+          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/MasQsRgkW4uvuGvYtNJc0m5I3Y.png" alt="Bố mẹ xác nhận" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step1-title">
             01 / Bố mẹ xác nhận tình trạng
@@ -333,8 +344,8 @@
         </div>
 
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
-            <img src="https://framerusercontent.com/images/ktz2hgjT8MXhjpRVV7ywEhxMxw.png" alt="Con nhận cảnh báo" class="w-full h-auto rounded-lg">
+          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/ktz2hgjT8MXhjpRVV7ywEhxMxw.png" alt="Con nhận cảnh báo" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step2-title">
             02 / Con nhận cảnh báo khẩn cấp
@@ -342,8 +353,8 @@
         </div>
 
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 flex justify-center shadow-lg">
-            <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" class="w-full h-auto rounded-lg">
+          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step3-title">
             03 / Cập nhật trạng thái an toàn
@@ -540,6 +551,11 @@
           iconEl.textContent = '☀️';
           textEl.textContent = 'LGT';
         }
+      }
+
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon) {
+        favicon.href = (t === 'dark') ? 'favicon-dark.png' : 'favicon-light.png';
       }
     }
 

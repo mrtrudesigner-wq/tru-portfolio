@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRỨ — Product Designer · Portfolio</title>
   <meta name="description" content="Portfolio của Trứ — Product Designer tại Việt Nam. Craft-focused, intentional systems, eliminating fluff.">
-  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
+  <script>
+    (function() {
+      const isDark = (localStorage.getItem('tru_theme') === 'dark') ||
+        (!localStorage.getItem('tru_theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon && isDark) {
+        favicon.href = 'favicon-dark.png';
+      }
+    })();
+  </script>
 
   <!-- Google Fonts: Bricolage Grotesque & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1313,6 +1324,11 @@
           iconEl.textContent = '☀️';
           textEl.textContent = 'LGT';
         }
+      }
+
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon) {
+        favicon.href = (theme === 'dark') ? 'favicon-dark.png' : 'favicon-light.png';
       }
     }
 

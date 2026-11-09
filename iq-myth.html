@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IQ MYTH — Thiết Kế Trải Nghiệm Kiểm Tra Trí Tuệ | Case Study · Trứ</title>
   <meta name="description" content="Case study chi tiết IQ Myth — Tối ưu hóa luồng làm bài test IQ từ trang giới thiệu đến màn hình kết quả, giảm điểm phân tâm và giải quyết drop-off pricing. UI/UX Designer: Trứ.">
-  <link rel="icon" href="https://framerusercontent.com/images/DdZLxFmEWi75YoAY2vb6icgHPc.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
+  <script>
+    (function() {
+      const isDark = (localStorage.getItem('tru_theme') === 'dark') ||
+        (!localStorage.getItem('tru_theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon && isDark) {
+        favicon.href = 'favicon-dark.png';
+      }
+    })();
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -217,9 +228,9 @@
           </div>
         </div>
 
-        <div class="lg:col-span-5 rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 shadow-xl gsap-card">
+        <div class="lg:col-span-5 rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 shadow-sm gsap-card">
           <img src="https://framerusercontent.com/images/BBeVMTnDmr4nZKW5dkD2iiqiOg.png" alt="Phân tích đối thủ" class="w-full h-auto rounded-lg">
-          <span class="font-mono text-[10px] uppercase text-neutral-400 block text-center mt-2" data-i18n="comp-caption">Ảnh phân tích cấu trúc đối thủ MyIQ</span>
+          <span class="font-mono text-[10px] uppercase text-[var(--text-muted)] block text-center mt-2" data-i18n="comp-caption">Ảnh phân tích cấu trúc đối thủ MyIQ</span>
         </div>
       </div>
 
@@ -262,6 +273,34 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Ba nhận định ban đầu -->
+      <div class="space-y-4 pt-6">
+        <h3 class="text-xl sm:text-2xl font-bold uppercase" data-i18n="sec2-insights-title">BA NHẬN ĐỊNH BAN ĐẦU</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+            <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="insight1-tag">[ 01 // ƯU TIÊN HÀNH ĐỘNG CHÍNH ]</span>
+            <h4 class="font-bold text-base uppercase" data-i18n="insight1-title">Bắt Đầu Bài Test Ngay</h4>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight1-desc">
+              Người truy cập trang có thể muốn bắt đầu bài kiểm tra ngay. Các nội dung bổ trợ nên được sắp xếp để không cạnh tranh với CTA chính.
+            </p>
+          </div>
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+            <span class="font-mono text-xs font-bold text-amber-500" data-i18n="insight2-tag">[ 02 // CÁC BƯỚC SAU BÀI TEST ]</span>
+            <h4 class="font-bold text-base uppercase" data-i18n="insight2-title">Xem Kỹ Điểm Chạm Nhạy Cảm</h4>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight2-desc">
+              Thu thập email và giới thiệu gói trả phí là những bước có khả năng tạo thêm do dự. Tôi dành nhiều thời gian hơn cho thứ tự thông tin và cách diễn đạt tại đây.
+            </p>
+          </div>
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+            <span class="font-mono text-xs font-bold text-blue-500" data-i18n="insight3-tag">[ 03 // PHONG CÁCH GIAO DIỆN ]</span>
+            <h4 class="font-bold text-base uppercase" data-i18n="insight3-title">Phù Hợp Chủ Đề Khoa Học & Giải Trí</h4>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight3-desc">
+              Hệ thống hình ảnh được xây theo hướng rõ ràng và hiện đại, đồng thời tránh tạo cảm giác quá nặng nề cho một bài kiểm tra mang tính giải trí.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -306,33 +345,135 @@
           </div>
         </div>
       </div>
+
+      <!-- Typography System -->
+      <div class="space-y-6 pt-6 gsap-card">
+        <div class="space-y-2">
+          <h3 class="text-2xl font-bold uppercase" data-i18n="type-title">TYPOGRAPHY — BRICOLAGE GROTESQUE</h3>
+          <p class="text-base text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="type-desc">
+            Bricolage Grotesque được lựa chọn bởi đường nét sắc bén, tự tin nhưng không hề khô khan — sự dung hòa hoàn hảo cho một sản phẩm mang tính khoa học nhưng vẫn cần giao tiếp gần gũi với đại chúng.
+          </p>
+        </div>
+        
+        <div class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-6">
+          <div class="space-y-2 pb-6 border-b border-[var(--border-color)]">
+            <span class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono" data-i18n="type-h1-lbl">Heading 1 / Bold / 64px</span>
+            <div class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">Only the 1%</div>
+          </div>
+          <div class="space-y-2 pb-6 border-b border-[var(--border-color)]">
+            <span class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono" data-i18n="type-h2-lbl">Heading 2 / Semi-Bold / 32px</span>
+            <div class="text-2xl sm:text-3xl font-bold tracking-tight">Analyze your results</div>
+          </div>
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono" data-i18n="type-body-lbl">Body Text / Regular / 16px</span>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed max-w-2xl" data-i18n="type-body-val">
+              A single font throughout the system reduces cognitive load and maintains consistency.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 04 / CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI -->
     <section class="space-y-8 pt-8 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-tag">
-        [ 04 // CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI ]
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div class="space-y-4 gsap-card">
-          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="sec4-email-tag">[ THU THẬP EMAIL ]</span>
-          <h3 class="text-2xl sm:text-3xl font-bold uppercase" data-i18n="sec4-email-title">ỨNG DỤNG LABOR ILLUSION VÀ FOMO</h3>
-          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-email-desc">
-            Sau khi hoàn thành bài test, người dùng được xem animation phân tích trí tuệ nhân tạo (<strong>Labor Illusion</strong> — tạo cảm giác kết quả đang được tính toán sâu và cá nhân hoá). Đi kèm đồng hồ đếm ngược (<strong>FOMO</strong>) trước khi chuyển qua bước nhập email để nhận phân tích chi tiết.
-          </p>
-        </div>
-        <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
-          <img src="https://framerusercontent.com/images/trBCKNvgkVvWmGaWu20hFH67mu4.png" alt="Email collection screen" class="w-full h-auto">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-tag">
+          [ 04 // CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI ]
         </div>
       </div>
 
-      <!-- Illustrations -->
-      <div class="space-y-4 pt-6 gsap-card">
-        <h3 class="text-2xl font-bold uppercase" data-i18n="sec4-illus-title">HỆ THỐNG MINH HỌA ĐỒNG BỘ</h3>
-        <p class="text-sm text-[var(--text-muted)]" data-i18n="sec4-illus-desc">Bộ minh họa đen trắng kết hợp điểm nhấn xanh neon tạo cảm giác hiện đại, giảm bớt căng thẳng khi làm bài test IQ.</p>
-        <div class="rounded-xl overflow-hidden hairline-all bg-neutral-900 p-4 shadow-xl">
-          <img src="https://framerusercontent.com/images/agVEm9X4NsCMcfsRPa4CftCuhnM.png" alt="Minh họa IQ Myth" class="w-full h-auto rounded-lg">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]" data-i18n="sec4-heading">
+        04. Các quyết định UI chính
+      </h2>
+
+      <div class="space-y-8">
+        <!-- 01 / Hero Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+          <div class="lg:col-span-5 space-y-4">
+            <span class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-mono" data-i18n="sec4-hero-tag">[ 01 // HERO SECTION ] · ĐỊNH VỊ HÀNH ĐỘNG</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-hero-title">
+              Hero Section
+            </h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-hero-desc">
+              Hero sử dụng một câu thách thức ngắn và một CTA chính. Khoảng trắng và thứ bậc thị giác giúp người dùng nhận ra ngay điểm bắt đầu bài kiểm tra.
+            </p>
+          </div>
+          <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black">
+            <video autoplay loop muted playsinline class="w-full h-auto block rounded-xl">
+              <source src="assets/iq-myth/iq-myth-hero.mp4" type="video/mp4">
+              <source src="https://framerusercontent.com/assets/hS3nmjCrW1wzlI1MdHe2BaGF0.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- 02 / Màn hình bài test -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+          <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black order-2 lg:order-1">
+            <video autoplay loop muted playsinline class="w-full h-auto block rounded-xl">
+              <source src="assets/iq-myth/iq-myth-test.mp4" type="video/mp4">
+              <source src="https://framerusercontent.com/assets/gqFhNS01ueZzQ3F7pSWwQ8Co5w.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="lg:col-span-5 space-y-4 order-1 lg:order-2">
+            <span class="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-mono" data-i18n="sec4-test-tag">[ 02 // MÀN HÌNH BÀI TEST ] · ONE TASK PER SCREEN</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-test-title">
+              Màn hình bài test
+            </h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-test-desc">
+              Mỗi màn hình hiển thị một câu hỏi và loại bỏ các thành phần điều hướng không cần thiết. Cách bố trí này nhằm giúp người dùng tập trung vào tác vụ hiện tại.
+            </p>
+          </div>
+        </div>
+
+        <!-- 03 / Thu thập Email -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+          <div class="lg:col-span-5 space-y-4">
+            <span class="font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 font-bold tracking-mono" data-i18n="sec4-email-tag">[ 03 // THU THẬP EMAIL ] · TÂM LÝ HỌC HÀNH VI</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight leading-snug" data-i18n="sec4-email-title">
+              Thu thập Email — Giải thích quá trình xử lý và thời điểm nhận kết quả
+            </h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-email-desc">
+              Sau test, tôi áp dụng 2 kỹ thuật tâm lý: <strong>Labor Illusion</strong> (Animation AI đang phân tích tạo giá trị kết quả) và <strong>FOMO</strong> (Cảnh báo kết quả hết hạn). Ngay sau đó là Social Proof để chốt niềm tin trước khi nhập email nhận phân tích chi tiết.
+            </p>
+          </div>
+          <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black">
+            <video autoplay loop muted playsinline class="w-full h-auto block rounded-xl">
+              <source src="assets/iq-myth/iq-myth-email.mp4" type="video/mp4">
+              <source src="https://framerusercontent.com/assets/hS91qYCd2mJ3czZjDrikY1Li9A8.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- 04 / Mobile-first & Leaderboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+          <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black order-2 lg:order-1">
+            <img src="assets/iq-myth/iq-myth-mobile.png" alt="Mobile-first & Leaderboard" class="w-full h-auto block rounded-xl" loading="lazy">
+          </div>
+          <div class="lg:col-span-5 space-y-4 order-1 lg:order-2">
+            <span class="font-mono text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-mono" data-i18n="sec4-mobile-tag">[ 04 // MOBILE-FIRST & LEADERBOARD ]</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-mobile-title">
+              Mobile-first &amp; Leaderboard
+            </h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-mobile-desc">
+              Mobile được ưu tiên vì bài kiểm tra cần dễ sử dụng trên màn hình nhỏ. Layout dọc giữ câu hỏi và lựa chọn trong vùng đọc thuận tiện; leaderboard được rút gọn để tránh làm trang trở nên chật chội.
+            </p>
+          </div>
+        </div>
+
+        <!-- 05 / Minh họa -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+          <div class="lg:col-span-5 space-y-4">
+            <span class="font-mono text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-mono" data-i18n="sec4-illus-tag">[ 05 // MINH HỌA ĐỒNG BỘ ]</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-illus-title">
+              Minh họa
+            </h3>
+            <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-illus-desc">
+              Bộ minh họa đen trắng kết hợp xanh neon tạo nhận diện riêng cho sản phẩm. Hình ảnh có sắc thái nhẹ nhàng để cân bằng cảm giác căng thẳng mà một số người có thể gặp khi làm bài kiểm tra.
+            </p>
+          </div>
+          <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black">
+            <img src="assets/iq-myth/iq-myth-illus.png" alt="Minh họa IQ Myth" class="w-full h-auto block rounded-xl" loading="lazy">
+          </div>
         </div>
       </div>
     </section>
@@ -351,7 +492,7 @@
             <span data-i18n="old-pricing-sub">DROP-OFF CAO</span>
           </div>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="old-pricing-desc">
-            Hiển thị cùng lúc 3 gói cước ngang hàng với quá nhiều điều khoản khiến người dùng phân vân, do dự và tỷ lệ thoát trang rất cao.
+            Trang pricing ban đầu hiển thị đồng thời nhiều gói cước → người dùng bị choáng ngợp, phải so sánh quá nhiều thông tin ngay sau khi hoàn thành bài test dẫn đến tỷ lệ bỏ trang (drop-off) tại bước thanh toán rất cao.
           </p>
           <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
             <img src="https://framerusercontent.com/images/lLLYDMuepYEpS47MSGASQpmHn8.png" alt="Bản cũ pricing" class="max-w-xs h-auto">
@@ -365,12 +506,35 @@
             <span data-i18n="new-pricing-sub">TỐI ƯU CONVERSION</span>
           </div>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="new-pricing-desc">
-            Làm nổi bật duy nhất 1 gói đề xuất chính với quyền lợi rõ ràng tại điểm quyết định, các gói bổ sung được thu gọn bên dưới.
+            Phiên bản mới làm nổi bật gói cơ bản nhưng vẫn cho phép người dùng xem và so sánh các lựa chọn khác. Giá, quyền lợi và điều kiện thanh toán được trình bày ngay tại điểm quyết định.
           </p>
           <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
             <img src="https://framerusercontent.com/images/9ypBTK2njnMG4Lm4owEmFWrkKg.png" alt="Bản mới pricing" class="max-w-xs h-auto">
           </div>
         </div>
+      </div>
+
+      <!-- Cách kiểm chứng -->
+      <div class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 border-l-4 border-l-emerald-500 space-y-2 gsap-card">
+        <span class="font-mono text-xs uppercase tracking-mono font-bold text-emerald-600 dark:text-emerald-400" data-i18n="verify-lbl">[ CÁCH KIỂM CHỨNG GIẢ THUYẾT ]</span>
+        <h4 class="font-bold text-lg uppercase" data-i18n="verify-title">ĐO LƯỜNG TỶ LỆ CHUYỂN ĐỔI THỰC TẾ</h4>
+        <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="verify-desc">
+          Cần theo dõi tỷ lệ tiếp tục, tỷ lệ quay lại so sánh gói và phản hồi về mức độ rõ ràng trước khi kết luận phương án mới hiệu quả hơn.
+        </p>
+      </div>
+    </section>
+
+    <!-- 06 / KẾT LUẬN & BÀI HỌC CRAFT -->
+    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-tag">
+        [ 06 // KẾT LUẬN & BÀI HỌC CRAFT ]
+      </div>
+
+      <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-4 gsap-card">
+        <h3 class="text-2xl font-bold uppercase" data-i18n="sec6-title">TÁCH RÕ DỮ LIỆU QUAN SÁT KHỎI GIẢ ĐỊNH THIẾT KẾ</h3>
+        <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec6-desc">
+          Việc phân tích đối thủ giúp tôi nhận ra các pattern quen thuộc của thị trường và xác định điểm cần thử nghiệm trong IQ Myth. Bài học quan trọng nhất là tách rõ điều đã quan sát được khỏi giả định của người thiết kế, sau đó dùng thử nghiệm để kiểm tra giả định đó.
+        </p>
       </div>
     </section>
 
@@ -496,6 +660,11 @@
           textEl.textContent = 'LGT';
         }
       }
+
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon) {
+        favicon.href = (t === 'dark') ? 'favicon-dark.png' : 'favicon-light.png';
+      }
     }
 
     function cycleTheme() {
@@ -543,6 +712,16 @@
         'td-wk-lbl': 'Điểm yếu',
         'td-wk-myiq': 'Layout rối, quá nhiều thông tin cùng lúc, không tạo được sự tập trung.',
         'td-wk-iqmyth': 'Cần xây dựng hoàn toàn mới từ đầu, chưa có dữ liệu quá khứ.',
+        'sec2-insights-title': 'BA NHẬN ĐỊNH BAN ĐẦU',
+        'insight1-tag': '[ 01 // ƯU TIÊN HÀNH ĐỘNG CHÍNH ]',
+        'insight1-title': 'Bắt Đầu Bài Test Ngay',
+        'insight1-desc': 'Người truy cập trang có thể muốn bắt đầu bài kiểm tra ngay. Các nội dung bổ trợ nên được sắp xếp để không cạnh tranh với CTA chính.',
+        'insight2-tag': '[ 02 // CÁC BƯỚC SAU BÀI TEST ]',
+        'insight2-title': 'Xem Kỹ Điểm Chạm Nhạy Cảm',
+        'insight2-desc': 'Thu thập email và giới thiệu gói trả phí là những bước có khả năng tạo thêm do dự. Tôi dành nhiều thời gian hơn cho thứ tự thông tin và cách diễn đạt tại đây.',
+        'insight3-tag': '[ 03 // PHONG CÁCH GIAO DIỆN ]',
+        'insight3-title': 'Phù Hợp Chủ Đề Khoa Học & Giải Trí',
+        'insight3-desc': 'Hệ thống hình ảnh được xây theo hướng rõ ràng và hiện đại, đồng thời tránh tạo cảm giác quá nặng nề cho một bài kiểm tra mang tính giải trí.',
         'sec3-tag': '[ 03 // HỆ THỐNG THIẾT KẾ & USER FLOW ]',
         'flow-title': 'USER FLOW TỐI GIẢN (DƯỚI 2 BƯỚC)',
         'flow-desc': 'Luồng được thiết kế đưa người dùng từ trang đích đến câu hỏi đầu tiên với số lần nhấp chuột tối thiểu.',
@@ -551,19 +730,42 @@
         'color2-desc': 'Nút CTA, Background Footer, đảm bảo Accessible',
         'color3-desc': 'Cảnh báo hết hạn kết quả, pop-up kích hoạt',
         'color4-desc': 'Card background, Input field, nền làm bài test',
+        'type-title': 'TYPOGRAPHY — BRICOLAGE GROTESQUE',
+        'type-desc': 'Bricolage Grotesque được lựa chọn bởi đường nét sắc bén, tự tin nhưng không hề khô khan — sự dung hòa hoàn hảo cho một sản phẩm mang tính khoa học nhưng vẫn cần giao tiếp gần gũi với đại chúng.',
+        'type-h1-lbl': 'Heading 1 / Bold / 64px',
+        'type-h2-lbl': 'Heading 2 / Semi-Bold / 32px',
+        'type-body-lbl': 'Body Text / Regular / 16px',
+        'type-body-val': 'A single font throughout the system reduces cognitive load and maintains consistency.',
         'sec4-tag': '[ 04 // CÁC QUYẾT ĐỊNH UI & TÂM LÝ HỌC HÀNH VI ]',
-        'sec4-email-tag': '[ THU THẬP EMAIL ]',
-        'sec4-email-title': 'ỨNG DỤNG LABOR ILLUSION VÀ FOMO',
-        'sec4-email-desc': 'Sau khi hoàn thành bài test, người dùng được xem animation phân tích trí tuệ nhân tạo (<strong>Labor Illusion</strong> — tạo cảm giác kết quả đang được tính toán sâu và cá nhân hoá). Đi kèm đồng hồ đếm ngược (<strong>FOMO</strong>) trước khi chuyển qua bước nhập email để nhận phân tích chi tiết.',
-        'sec4-illus-title': 'HỆ THỐNG MINH HỌA ĐỒNG BỘ',
-        'sec4-illus-desc': 'Bộ minh họa đen trắng kết hợp điểm nhấn xanh neon tạo cảm giác hiện đại, giảm bớt căng thẳng khi làm bài test IQ.',
+        'sec4-heading': '04. Các quyết định UI chính',
+        'sec4-hero-tag': '[ 01 // HERO SECTION ] · ĐỊNH VỊ HÀNH ĐỘNG',
+        'sec4-hero-title': 'Hero Section',
+        'sec4-hero-desc': 'Hero sử dụng một câu thách thức ngắn và một CTA chính. Khoảng trắng và thứ bậc thị giác giúp người dùng nhận ra ngay điểm bắt đầu bài kiểm tra.',
+        'sec4-test-tag': '[ 02 // MÀN HÌNH BÀI TEST ] · ONE TASK PER SCREEN',
+        'sec4-test-title': 'Màn hình bài test',
+        'sec4-test-desc': 'Mỗi màn hình hiển thị một câu hỏi và loại bỏ các thành phần điều hướng không cần thiết. Cách bố trí này nhằm giúp người dùng tập trung vào tác vụ hiện tại.',
+        'sec4-email-tag': '[ 03 // THU THẬP EMAIL ] · TÂM LÝ HỌC HÀNH VI',
+        'sec4-email-title': 'Thu thập Email — Giải thích quá trình xử lý và thời điểm nhận kết quả',
+        'sec4-email-desc': 'Sau test, tôi áp dụng 2 kỹ thuật tâm lý: <strong>Labor Illusion</strong> (Animation AI đang phân tích tạo giá trị kết quả) và <strong>FOMO</strong> (Cảnh báo kết quả hết hạn). Ngay sau đó là Social Proof để chốt niềm tin trước khi nhập email nhận phân tích chi tiết.',
+        'sec4-mobile-tag': '[ 04 // MOBILE-FIRST & LEADERBOARD ]',
+        'sec4-mobile-title': 'Mobile-first & Leaderboard',
+        'sec4-mobile-desc': 'Mobile được ưu tiên vì bài kiểm tra cần dễ sử dụng trên màn hình nhỏ. Layout dọc giữ câu hỏi và lựa chọn trong vùng đọc thuận tiện; leaderboard được rút gọn để tránh làm trang trở nên chật chội.',
+        'sec4-illus-tag': '[ 05 // MINH HỌA ĐỒNG BỘ ]',
+        'sec4-illus-title': 'Minh họa',
+        'sec4-illus-desc': 'Bộ minh họa đen trắng kết hợp xanh neon tạo nhận diện riêng cho sản phẩm. Hình ảnh có sắc thái nhẹ nhàng để cân bằng cảm giác căng thẳng mà một số người có thể gặp khi làm bài kiểm tra.',
         'sec5-tag': '[ 05 // THỬ NGHIỆM VÀ CẢI TIẾN TRANG BẢNG GIÁ (PRICING) ]',
         'old-pricing-tag': '[ BẢN CŨ: CHOÁNG NGỢP ]',
         'old-pricing-sub': 'DROP-OFF CAO',
-        'old-pricing-desc': 'Hiển thị cùng lúc 3 gói cước ngang hàng với quá nhiều điều khoản khiến người dùng phân vân, do dự và tỷ lệ thoát trang rất cao.',
+        'old-pricing-desc': 'Trang pricing ban đầu hiển thị đồng thời nhiều gói cước → người dùng bị choáng ngợp, phải so sánh quá nhiều thông tin ngay sau khi hoàn thành bài test dẫn đến tỷ lệ bỏ trang (drop-off) tại bước thanh toán rất cao.',
         'new-pricing-tag': '[ BẢN MỚI: TẬP TRUNG ]',
         'new-pricing-sub': 'TỐI ƯU CONVERSION',
-        'new-pricing-desc': 'Làm nổi bật duy nhất 1 gói đề xuất chính với quyền lợi rõ ràng tại điểm quyết định, các gói bổ sung được thu gọn bên dưới.',
+        'new-pricing-desc': 'Phiên bản mới làm nổi bật gói cơ bản nhưng vẫn cho phép người dùng xem và so sánh các lựa chọn khác. Giá, quyền lợi và điều kiện thanh toán được trình bày ngay tại điểm quyết định.',
+        'verify-lbl': '[ CÁCH KIỂM CHỨNG GIẢ THUYẾT ]',
+        'verify-title': 'ĐO LƯỜNG TỶ LỆ CHUYỂN ĐỔI THỰC TẾ',
+        'verify-desc': 'Cần theo dõi tỷ lệ tiếp tục, tỷ lệ quay lại so sánh gói và phản hồi về mức độ rõ ràng trước khi kết luận phương án mới hiệu quả hơn.',
+        'sec6-tag': '[ 06 // KẾT LUẬN & BÀI HỌC CRAFT ]',
+        'sec6-title': 'TÁCH RÕ DỮ LIỆU QUAN SÁT KHỎI GIẢ ĐỊNH THIẾT KẾ',
+        'sec6-desc': 'Việc phân tích đối thủ giúp tôi nhận ra các pattern quen thuộc của thị trường và xác định điểm cần thử nghiệm trong IQ Myth. Bài học quan trọng nhất là tách rõ điều đã quan sát được khỏi giả định của người thiết kế, sau đó dùng thử nghiệm để kiểm tra giả định đó.',
         'foot-prev': 'DỰ ÁN TRƯỚC: YÊN',
         'foot-next': 'DỰ ÁN TIẾP THEO: MOMO TRANSFER'
       },
@@ -602,6 +804,16 @@
         'td-wk-lbl': 'Weaknesses',
         'td-wk-myiq': 'Visual clutter, excessive competing elements, weak focus.',
         'td-wk-iqmyth': 'Built from scratch, no pre-existing analytics baseline.',
+        'sec2-insights-title': 'THREE INITIAL INSIGHTS',
+        'insight1-tag': '[ 01 // PRIORITIZE CORE ACTION ]',
+        'insight1-title': 'Immediate Test Entry',
+        'insight1-desc': 'Visitors arrive seeking to take the test right away. Supplementary proof points should never compete with the primary hero CTA.',
+        'insight2-tag': '[ 02 // SENSITIVE POST-TEST FUNNEL ]',
+        'insight2-title': 'Examine High-Friction Nodes',
+        'insight2-desc': 'Lead capture and monetization are the peak hesitation moments. I concentrated on information staging and reassuring micro-copy here.',
+        'insight3-tag': '[ 03 // BALANCED VISUAL TONE ]',
+        'insight3-title': 'Scientific Yet Accessible Aesthetic',
+        'insight3-desc': 'The visual system was engineered to feel modern and authoritative without inducing the clinical anxiety of academic evaluations.',
         'sec3-tag': '[ 03 // DESIGN SYSTEM & USER FLOW ]',
         'flow-title': 'STREAMLINED USER FLOW (SUB-2 STEPS)',
         'flow-desc': 'Engineered to transport users from the landing page to question #1 with minimum clicks, deferring signup friction.',
@@ -610,12 +822,29 @@
         'color2-desc': 'Primary CTAs, footer surfaces, accessible high-contrast',
         'color3-desc': 'Expiring result timers, high-conversion exit modals',
         'color4-desc': 'Card backgrounds, input fields, test workspace canvas',
+        'type-title': 'TYPOGRAPHY — BRICOLAGE GROTESQUE',
+        'type-desc': 'Selected for its crisp, confident geometry balanced by warm human quirks — harmonizing analytical scientific authority with approachable consumer dialogue.',
+        'type-h1-lbl': 'Heading 1 / Bold / 64px',
+        'type-h2-lbl': 'Heading 2 / Semi-Bold / 32px',
+        'type-body-lbl': 'Body Text / Regular / 16px',
+        'type-body-val': 'A single font throughout the system reduces cognitive load and maintains consistency.',
         'sec4-tag': '[ 04 // UI DECISIONS & BEHAVIORAL PSYCHOLOGY ]',
-        'sec4-email-tag': '[ EMAIL CAPTURE ]',
-        'sec4-email-title': 'LEVERAGING LABOR ILLUSION & FOMO',
-        'sec4-email-desc': 'Post-test animated calculation sequences (<strong>Labor Illusion</strong> — conveying deep algorithmic processing and personalized evaluation), coupled with countdown urgency (<strong>FOMO</strong>) before the lead-capture step.',
-        'sec4-illus-title': 'COHESIVE ILLUSTRATION SYSTEM',
-        'sec4-illus-desc': 'Monochrome illustrations with neon green accents instill modern EdTech credibility while easing cognitive test tension.',
+        'sec4-heading': '04. Key UI Decisions',
+        'sec4-hero-tag': '[ 01 // HERO SECTION ] · ACTION ORIENTATION',
+        'sec4-hero-title': 'Hero Section',
+        'sec4-hero-desc': 'The hero uses a punchy teaser headline and a single focal CTA. Negative space and clean visual hierarchy help users instantly identify the test entry point.',
+        'sec4-test-tag': '[ 02 // TEST WORKSPACE ] · ONE TASK PER SCREEN',
+        'sec4-test-title': 'Test Screen',
+        'sec4-test-desc': 'Each screen isolates a single cognitive question while stripping unnecessary navigation clutter. This layout maximizes test-taker focus on the immediate challenge.',
+        'sec4-email-tag': '[ 03 // EMAIL CAPTURE ] · BEHAVIORAL PSYCHOLOGY',
+        'sec4-email-title': 'Email Capture — Explaining the Processing Pipeline & Result Timing',
+        'sec4-email-desc': 'Post-test, I applied 2 behavioral psychology principles: <strong>Labor Illusion</strong> (AI analysis animation creating perceived outcome value) and <strong>FOMO</strong> (expiring result countdown). Paired with social proof to anchor confidence before email submission.',
+        'sec4-mobile-tag': '[ 04 // MOBILE-FIRST & LEADERBOARD ]',
+        'sec4-mobile-title': 'Mobile-first & Leaderboard',
+        'sec4-mobile-desc': 'Mobile takes precedence for universal responsiveness. Vertical question stacking fits thumb reading zones; the leaderboard is streamlined to prevent visual cramming.',
+        'sec4-illus-tag': '[ 05 // COHESIVE ILLUSTRATIONS ]',
+        'sec4-illus-title': 'Illustrations',
+        'sec4-illus-desc': 'Monochrome line illustrations paired with neon green accents establish distinctive product branding while diffusing high-stakes test anxiety.',
         'sec5-tag': '[ 05 // PRICING SCREEN AUDIT & OPTIMIZATION ]',
         'old-pricing-tag': '[ LEGACY: OVERWHELMING ]',
         'old-pricing-sub': 'HIGH DROP-OFF',
@@ -623,6 +852,12 @@
         'new-pricing-tag': '[ REDESIGN: FOCUSED ]',
         'new-pricing-sub': 'OPTIMIZED CONVERSION',
         'new-pricing-desc': 'Anchors 1 primary recommended plan with tangible benefits at the decision node; secondary plans collapse below.',
+        'verify-lbl': '[ HYPOTHESIS VALIDATION ]',
+        'verify-title': 'QUANTITATIVE CONVERSION MEASUREMENT',
+        'verify-desc': 'Requires tracking checkout continuation rates, plan comparison toggle frequency, and clarity feedback before concluding statistical significance.',
+        'sec6-tag': '[ 06 // CONCLUSION & CRAFT LESSONS ]',
+        'sec6-title': 'DISENTANGLING OBSERVATION FROM DESIGN ASSUMPTION',
+        'sec6-desc': 'Auditing market peers revealed familiar design tropes and isolated exact hypotheses to challenge in IQ Myth. The decisive craft takeaway is cleanly separating observable user friction from designer intuition, using live iterative testing to validate assumptions.',
         'foot-prev': 'PREVIOUS PROJECT: YÊN',
         'foot-next': 'NEXT PROJECT: MOMO TRANSFER'
       }
