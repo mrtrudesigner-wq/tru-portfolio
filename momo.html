@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MOMO TRANSFER — Cải Thiện Độ Rõ Ràng & An Tâm (40M+ Users) | Case Study · Trứ</title>
-  <meta name="description" content="Case study chi tiết MoMo Transfer — UX Audit, Research định tính và Redesign luồng chuyển tiền giải quyết Choice Overload cho 40+ triệu người dùng. UI/UX Designer: Trứ.">
+  <title>MOMO TRANSFER — Concept Cải Thiện Luồng Chuyển Tiền | Case Study · Trứ</title>
+  <meta name="description" content="Concept thiết kế lại luồng chuyển tiền MoMo dựa trên khảo sát 11 người tham gia, UX audit và UI redesign. Hiệu quả cần được kiểm chứng qua usability test.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -91,6 +91,8 @@
     .hairline-b { border-bottom: 1px solid var(--border-color); }
     .hairline-t { border-top: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
+
+    #user-flow, #before-after { scroll-margin-top: 104px; }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -179,7 +181,7 @@
       </h1>
 
       <p class="case-hero-desc text-xl md:text-2xl text-[var(--text-muted)] max-w-4xl leading-relaxed" data-i18n="hero-desc">
-        Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận giao dịch chuyển tiền cho hơn 40 triệu người dùng MoMo.
+        Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận một giao dịch.
       </p>
 
       <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
@@ -201,46 +203,6 @@
         </div>
       </div>
 
-      <!-- DESIGN BRIEFING (TL;DR FOR REVIEWERS) -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/70 space-y-6 gsap-card border-l-4 border-l-pink-600">
-        <div class="flex flex-wrap items-center justify-between gap-3 font-mono text-xs tracking-mono uppercase">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-pink-600 animate-pulse"></span>
-            <span class="font-bold text-pink-600" data-i18n="exec-memo-tag">[ DESIGN BRIEFING // TÓM TẮT DỰ ÁN 30 GIÂY ]</span>
-          </div>
-          <span class="text-[var(--text-muted)]" data-i18n="exec-memo-readtime">30-SEC SCAN // DÀNH CHO REVIEWER & RECRUITER</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-          <!-- Col 1 -->
-          <div class="space-y-2">
-            <div class="font-mono text-[11px] text-[var(--text-muted)] uppercase tracking-mono" data-i18n="exec-c1-tag">[ 01 // RÀNG BUỘC KINH DOANH & TÂM LÝ ]</div>
-            <h4 class="font-bold text-base uppercase" data-i18n="exec-c1-title">Áp Lực 40M+ Users & Sợ Chuyển Nhầm Tiền</h4>
-            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="exec-c1-desc">
-              Khi giao dịch tiền thật, nỗi sợ chuyển sai người/số tiền là rào cản tâm lý lớn nhất. Người dùng mất tới 33s và 100% phải nhẩm lại tên người nhận vì giao diện cũ quá nhiều nút gây nhiễu thị giác.
-            </p>
-          </div>
-
-          <!-- Col 2 -->
-          <div class="space-y-2">
-            <div class="font-mono text-[11px] text-[var(--text-muted)] uppercase tracking-mono" data-i18n="exec-c2-tag">[ 02 // CHIẾN LƯỢC THIẾT KẾ CỐT LÕI ]</div>
-            <h4 class="font-bold text-base uppercase" data-i18n="exec-c2-title">One Task Per Screen & Trust Anchors</h4>
-            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="exec-c2-desc">
-              Loại bỏ 10 icon thừa thãi tại trang chủ chuyển tiền. Tái cấu trúc thành luồng 3 bước dứt khoát kết hợp thẻ số dư thời gian thực và tín hiệu xác thực đối chiếu chỉ trong 3 giây.
-            </p>
-          </div>
-
-          <!-- Col 3 -->
-          <div class="space-y-2">
-            <div class="font-mono text-[11px] text-[var(--text-muted)] uppercase tracking-mono" data-i18n="exec-c3-tag">[ 03 // TÁC ĐỘNG ĐỊNH LƯỢNG KỲ VỌNG ]</div>
-            <h4 class="font-bold text-base uppercase text-emerald-600 dark:text-emerald-400" data-i18n="exec-c3-title">-42% Do Dự · +28% Tốc Độ Luồng</h4>
-            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="exec-c3-desc">
-              Giảm thiểu ticket khiếu nại chuyển sai tài khoản, rút ngắn thời gian hoàn tất giao dịch tại quầy thu ngân và mở rộng khả năng tiếp cận thân thiện cho người lớn tuổi.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
         <img src="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png" alt="MoMo Transfer Showcase" class="w-full h-auto object-cover">
       </div>
@@ -255,13 +217,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-7 space-y-6">
           <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">
-            40+ TRIỆU NGƯỜI DÙNG & NỖI BĂN KHOĂN TẠI MÀN HÌNH CHUYỂN TIỀN
+            BỐI CẢNH VÀ GIẢ THUYẾT THIẾT KẾ
           </h2>
           <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">
-            MoMo có hơn 40 triệu người dùng theo Decision Lab năm 2024. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.
+            Theo Decision Lab năm 2024, MoMo có hơn 40 triệu người dùng. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.
           </p>
           <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">
-            Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn để giúp người dùng đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.
+            Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn. Đây là concept cá nhân, chưa triển khai trên MoMo.
           </p>
         </div>
 
@@ -283,33 +245,41 @@
       </div>
 
       <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec2-desc">
-        Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Kết quả được dùng để phát hiện vấn đề cần kiểm chứng thêm:
+        Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Với quy mô mẫu nhỏ, kết quả được dùng để phát hiện vấn đề cần kiểm tra thêm, không đại diện cho toàn bộ người dùng MoMo.
       </p>
 
-      <!-- 4 Data Cards with Counters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Three source research findings; task timing is explained separately -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="text-4xl sm:text-5xl font-extrabold font-mono text-pink-600 block">4.27/5</span>
           <div class="font-bold text-sm uppercase" data-i18n="card1-title">Mức độ hài lòng</div>
-          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card1-desc">Người dùng nhìn chung hài lòng, nhưng vẫn có các điểm gây do dự.</p>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card1-desc">Phần lớn người tham gia nhìn chung hài lòng, dù vẫn mô tả một số điểm gây do dự trong quá trình sử dụng.</p>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="text-4xl sm:text-5xl font-extrabold font-mono text-amber-500 block">6/11</span>
           <div class="font-bold text-sm uppercase" data-i18n="card2-title">Chưa sẵn sàng cho bố mẹ</div>
-          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card2-desc">Lý do chính là mật độ thông tin quá dày, chữ nhỏ và quá nhiều nút bấm.</p>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card2-desc">Một số lý do được nhắc đến liên quan đến mật độ thông tin, kích thước chữ và số lượng chức năng.</p>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="text-4xl sm:text-5xl font-extrabold font-mono text-emerald-500 block">11/11</span>
           <div class="font-bold text-sm uppercase" data-i18n="card3-title">Kiểm tra lại trước khi bấm</div>
-          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card3-desc">100% người dùng tự đọc lại tên & SĐT trước khi nhấn xác nhận.</p>
+          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card3-desc">Đây là hành vi hợp lý trong giao dịch tài chính. Cơ hội thiết kế là giúp đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.</p>
         </div>
 
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
-          <span class="text-4xl sm:text-5xl font-extrabold font-mono text-blue-500 block">33s</span>
-          <div class="font-bold text-sm uppercase" data-i18n="card4-title">Thời gian quét QR</div>
-          <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="card4-desc">Mốc đo lường để làm benchmark cải thiện trong vòng usability test tiếp theo.</p>
+
+      </div>
+      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+        <h3 class="font-mono text-xs font-bold uppercase" data-i18n="research-timing-title">GHI CHÚ NGHIÊN CỨU / THỜI GIAN TÁC VỤ</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="research-timing-desc">Nghiên cứu có ghi nhận mốc 33 giây cho tác vụ chuyển tiền bằng QR. Con số này chỉ có ý nghĩa khi đi kèm cách đo và mốc so sánh; chưa dùng để kết luận mức độ do dự hay hiệu quả của bản redesign.</p>
+      </aside>
+      <div class="space-y-4 pt-4">
+        <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="insights-title">CÁC NHẬN ĐỊNH CHÍNH</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight1-title">01 / HỖ TRỢ KIỂM TRA GIAO DỊCH</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight1-desc">Người tham gia đều kiểm tra lại trước khi xác nhận. Giao diện nên tổ chức thông tin quan trọng theo thứ tự đọc rõ ràng để giúp phát hiện sai lệch.</p></div>
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight2-title">02 / THỬ THÊM VỚI NGƯỜI LỚN TUỔI</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight2-desc">6/11 người tham gia chưa sẵn sàng giới thiệu ứng dụng cho bố mẹ. Phản hồi này gợi ý cần thử trực tiếp với người lớn tuổi, thay vì kết luận thay cho họ.</p></div>
+          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight3-title">03 / NGỮ CẢNH CHO QR ĐÃ LƯU</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight3-desc">Trải nghiệm cá nhân cho thấy người dùng có thể băn khoăn về QR đã lưu. Tôi đưa tình huống này vào prototype để kiểm tra trong vòng usability test tiếp theo.</p></div>
         </div>
       </div>
     </section>
@@ -324,105 +294,36 @@
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp1-tag">[ PAIN POINT 01 ] · THIẾU VISUAL HIERARCHY</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp1-title">3 khu vực hiển thị ngang hàng không có thứ tự ưu tiên</h4>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp1-desc">Gây Choice Overload ngay tại điểm vào. Người dùng bối rối không biết nên bấm đâu trước.</p>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp1-desc">Ba khu vực cạnh tranh thị giác có thể khiến người dùng khó nhận ra hành động đầu tiên. Đây là vấn đề cần kiểm chứng thêm.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp1-hmw">↳ HMW: Làm sao để người dùng biết ngay bước đầu tiên cần làm gì?</div>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp2-tag">[ PAIN POINT 02 ] · THIẾU TRUST SIGNAL TẠI MÀN XÁC NHẬN</div>
-          <h4 class="text-xl font-bold uppercase" data-i18n="pp2-title">100% người dùng tự đọc lại tên và số tài khoản</h4>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp2-desc">Màn hình xác nhận cần phân cấp thứ tự đối chiếu thông tin nhanh và an tâm nhất.</p>
-          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp2-hmw">↳ HMW: Làm sao để màn hình xác nhận tự nó đủ thuyết phục mà người dùng không cần do dự?</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp2-title">11/11 NGƯỜI THAM GIA KIỂM TRA LẠI THÔNG TIN</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp2-desc">Màn hình xác nhận có thể giúp người dùng đối chiếu các thông tin quan trọng nhanh hơn, đồng thời giữ bước kiểm tra chủ động.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp2-hmw">↳ HMW: Làm sao để người dùng dễ đối chiếu giao dịch trước khi xác nhận?</div>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp3-tag">[ PAIN POINT 03 ] · SỐ DƯ VÍ KHÔNG HIỂN THỊ TRONG LUỒNG</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp3-title">Người dùng phải thoát ra trang chủ kiểm tra số dư</h4>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp3-desc">Friction gây đứt gãy luồng chuyển tiền chỉ vì không biết số dư khả dụng có đủ hay không.</p>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp3-desc">Việc phải rời luồng để kiểm tra số dư tạo thêm thao tác. Concept đề xuất hiển thị số dư tại bước nhập số tiền.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp3-hmw">↳ HMW: Làm sao để người dùng biết mình đủ tiền ngay từ bước nhập số tiền?</div>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
-          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp4-tag">[ PAIN POINT 04 ] · QR ĐÃ LƯU KHÔNG CÓ TRẠNG THÁI HỢP LỆ</div>
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp4-tag">[ PAIN POINT 04 ] · THIẾU NGỮ CẢNH CHO QR ĐÃ LƯU</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp4-title">Không rõ mã QR đã lưu trong danh bạ có còn hiệu lực không</h4>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp4-desc">Cần gắn nhãn kiểm tra dữ liệu theo thời gian thực.</p>
-          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp4-hmw">↳ HMW: Làm sao để người dùng biết mã QR cũ có an toàn để chuyển không?</div>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp4-desc">Người dùng có thể cần biết dữ liệu người nhận vừa được xác thực hay chỉ lấy từ lịch sử. Phương án cần được đối chiếu với giới hạn kỹ thuật và quy tắc xác thực thực tế.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp4-hmw">↳ HMW: Làm sao để người dùng hiểu trạng thái xác thực của QR đã lưu?</div>
         </div>
 
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
-          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp5-tag">[ PAIN POINT 05 ] · GIAO DIỆN QUÁ PHỨC TẠP VỚI NGƯỜI LỚN TUỔI</div>
-          <h4 class="text-xl font-bold uppercase" data-i18n="pp5-title">6/11 người không sẵn sàng giới thiệu MoMo cho phụ huynh</h4>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp5-desc">Chữ nhỏ, quá nhiều tính năng bổ trợ làm người lớn tuổi sợ bấm sai tiền.</p>
-          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp5-hmw">↳ HMW: Làm sao để luồng đủ đơn giản cho người lần đầu?</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 / MA TRẬN ĐÁNH ĐỔI CHIẾN LƯỢC (TRADE-OFF MATRIX) -->
-    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-tradeoff-tag">
-        [ 04 // MA TRẬN ĐÁNH ĐỔI CHIẾN LƯỢC (TRADE-OFF MATRIX) ]
-      </div>
-
-      <div class="space-y-4">
-        <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-tradeoff-title">
-          TẠI SAO TỪ CHỐI 2 PHƯƠNG ÁN KHÁC ĐỂ CHỌN 3-STEP CHOREOGRAPHY?
-        </h2>
-        <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec4-tradeoff-desc">
-          Một Product Designer không bảo vệ thiết kế bằng cảm tính cá nhân, mà bằng việc phân tích đánh đổi thực tế giữa <strong>Cognitive Load</strong> (tải nhận thức), <strong>Tốc độ hoàn tất tác vụ</strong> và <strong>Khả năng kiểm soát rủi ro chuyển sai tiền</strong>:
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Option A -->
-        <div class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card relative">
-          <div class="flex items-center justify-between gap-2 font-mono text-xs">
-            <span class="text-red-500 font-bold uppercase" data-i18n="opt-a-tag">[ OPTION A · BỊ LOẠI ]</span>
-            <span class="text-[var(--text-muted)]">❌ REJECTED</span>
-          </div>
-          <h3 class="text-xl font-bold uppercase" data-i18n="opt-a-title">ALL-IN-ONE MONOLITHIC FORM</h3>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="opt-a-concept">
-            Gom toàn bộ người nhận, số tiền, nguồn tiền, ghi chú và nút chuyển trên 1 màn hình cuộn dài duy nhất.
-          </p>
-          <div class="space-y-2 pt-2 border-t border-[var(--border-color)] text-xs">
-            <div><strong class="text-emerald-500 font-mono">[+] Ưu điểm:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-a-pro">Ít bước chuyển màn hình, quen thuộc với form web cổ điển.</span></div>
-            <div><strong class="text-red-500 font-mono">[-] Điểm chết:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-a-con">Quá tải thị giác (14+ fields); nguy cơ cao vô tình chạm nút chuyển tiền khi đang cuộn màn hình.</span></div>
-            <div class="pt-2 font-mono text-[11px] text-red-500 font-semibold" data-i18n="opt-a-verdict">↳ Phán quyết: Thất bại ở tiêu chí an tâm cho 40M users.</div>
-          </div>
-        </div>
-
-        <!-- Option B -->
-        <div class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card relative">
-          <div class="flex items-center justify-between gap-2 font-mono text-xs">
-            <span class="text-red-500 font-bold uppercase" data-i18n="opt-b-tag">[ OPTION B · BỊ LOẠI ]</span>
-            <span class="text-[var(--text-muted)]">❌ REJECTED</span>
-          </div>
-          <h3 class="text-xl font-bold uppercase" data-i18n="opt-b-title">CONVERSATIONAL CHATBOT UI</h3>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="opt-b-concept">
-            Mô phỏng bot chat hỏi từng câu: "Chuyển cho ai?", "Chuyển bao nhiêu?", "Nhập mã PIN" theo phong cách trợ lý ảo.
-          </p>
-          <div class="space-y-2 pt-2 border-t border-[var(--border-color)] text-xs">
-            <div><strong class="text-emerald-500 font-mono">[+] Ưu điểm:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-b-pro">Cảm giác gần gũi, phù hợp với người lần đầu tiếp cận ví điện tử.</span></div>
-            <div><strong class="text-red-500 font-mono">[-] Điểm chết:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-b-con">Tăng 3.5x số lần gõ phím; cực kỳ chậm chạp và khó chịu cho người chuyển tiền thường xuyên tại quầy ăn uống.</span></div>
-            <div class="pt-2 font-mono text-[11px] text-red-500 font-semibold" data-i18n="opt-b-verdict">↳ Phán quyết: Thất bại ở tốc độ hoàn tất giao dịch thực tế.</div>
-          </div>
-        </div>
-
-        <!-- Option C (Chosen) -->
-        <div class="p-6 sm:p-7 rounded-2xl hairline-all bg-[var(--bg-secondary)]/80 space-y-4 gsap-card relative border-2 border-pink-600 shadow-xl">
-          <div class="flex items-center justify-between gap-2 font-mono text-xs">
-            <span class="text-pink-600 font-bold uppercase" data-i18n="opt-c-tag">[ OPTION C · LỰA CHỌN TỐI ƯU ]</span>
-            <span class="text-emerald-500 font-bold">✅ SELECTED</span>
-          </div>
-          <h3 class="text-xl font-bold uppercase text-pink-600" data-i18n="opt-c-title">3-STAGE CHOREO & TRUST ANCHOR</h3>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="opt-c-concept">
-            Phân bổ luồng thành 3 bước độc lập: <strong>1. Xác định Người Nhận ➔ 2. Nhập Tiền & Chọn Nguồn ➔ 3. Xác Thực Bảo Mật</strong>.
-          </p>
-          <div class="space-y-2 pt-2 border-t border-[var(--border-color)] text-xs">
-            <div><strong class="text-emerald-500 font-mono">[+] Ưu điểm:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-c-pro">Tuân thủ "One Task Per Screen", loại bỏ hoàn toàn sự xao nhãng; mắt quét đối chiếu danh tính chỉ mất 3s.</span></div>
-            <div><strong class="text-amber-500 font-mono">[-] Thách thức:</strong> <span class="text-[var(--text-muted)]" data-i18n="opt-c-con">Thêm 1 lượt chuyển cảnh, nhưng được bù đắp bằng GSAP state transition mượt mà và danh bạ gợi ý 1 chạm.</span></div>
-            <div class="pt-2 font-mono text-[11px] text-emerald-600 font-semibold" data-i18n="opt-c-verdict">↳ Phán quyết: Cân bằng hoàn hảo giữa Tốc độ và Sự An Tâm.</div>
-          </div>
+          <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp5-tag">[ PAIN POINT 05 ] · KHẢ NĂNG SỬ DỤNG CỦA NGƯỜI LỚN TUỔI</div>
+          <h4 class="text-xl font-bold uppercase" data-i18n="pp5-title">CẦN THỬ NGHIỆM TRỰC TIẾP VỚI NGƯỜI LỚN TUỔI</h4>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="pp5-desc">6/11 người tham gia chưa sẵn sàng giới thiệu cho bố mẹ. Cần thử nghiệm trực tiếp để hiểu ảnh hưởng của chữ nhỏ, mật độ thông tin và số lượng chức năng.</p>
+          <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp5-hmw">↳ HMW: Làm sao để luồng dễ sử dụng hơn với người lần đầu?</div>
         </div>
       </div>
     </section>
@@ -430,23 +331,32 @@
     <!-- 05 / HỆ THỐNG THIẾT KẾ MOMO BRANDBOOK -->
     <section class="space-y-8 pt-8 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-brand-tag">
-        [ 05 // HỆ THỐNG THIẾT KẾ (MOMO BRANDBOOK OFFICIAL) ]
+        [ 04 // HỆ THỐNG THIẾT KẾ ]
       </div>
 
       <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec4-brand-desc">
-        Giữ nguyên bản sắc nhận diện thương hiệu của MoMo dựa trên Brandbook chính thức, đồng thời chuẩn hóa font chữ <strong>MoMo Trust Sans</strong> xuyên suốt.
+        Giữ nguyên visual identity của MoMo; màu sắc tham khảo MoMo Brandbook chính thức (momopartners.m-n.associates).
       </p>
 
+      <div id="user-flow" class="space-y-4 pt-4">
+        <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="flow-title">USER FLOW / MỖI MÀN HÌNH MỘT TÁC VỤ</h3>
+        <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="flow-desc">Luồng theo nguyên tắc “one task per screen” với ba điểm vào: nhập số điện thoại, quét QR và chọn từ danh bạ. Chỉ báo “Bước X/3” giúp người dùng biết mình đang ở đâu.</p>
+        <iframe src="https://embed.figma.com/board/wq4UJYgGssQT67NriRvBxP/Momo-Transfer-%E2%80%94-User-Flow-Redesign?node-id=0-1&amp;embed-host=share" title="MoMo Transfer — User Flow Redesign (FigJam)" loading="lazy" allowfullscreen data-lenis-prevent class="w-full h-[440px] sm:h-[600px] rounded-xl hairline-all bg-white"></iframe>
+        <a href="https://www.figma.com/board/wq4UJYgGssQT67NriRvBxP/Momo-Transfer-%E2%80%94-User-Flow-Redesign?node-id=0-1" target="_blank" rel="noopener noreferrer" class="inline-flex font-mono text-xs font-bold uppercase underline underline-offset-4" data-i18n="flow-open">MỞ SƠ ĐỒ TRÊN FIGJAM ↗</a>
+      </div>
+
+      <div class="space-y-4 pt-6">
+        <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="colors-title">COLOR SYSTEM / MOMO BRANDBOOK</h3>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-xs gsap-card">
         <div class="p-4 rounded-xl hairline-all bg-[#A50064] text-white shadow-md">
           <span class="font-bold block">#A50064</span>
           <span class="block mt-2 uppercase">MOMO PINK</span>
-          <span class="text-[10px] text-pink-200">CTA Chính, Hero</span>
+          <span class="text-[10px] text-pink-200" data-i18n="color-main-use">Nav, hero, CTA</span>
         </div>
         <div class="p-4 rounded-xl hairline-all bg-[#F95396] text-white shadow-md">
           <span class="font-bold block">#F95396</span>
           <span class="block mt-2 uppercase">PINK +1</span>
-          <span class="text-[10px] text-pink-100">CTA Phụ</span>
+          <span class="text-[10px] text-pink-100" data-i18n="color-secondary-use">CTA phụ</span>
         </div>
         <div class="p-4 rounded-xl hairline-all bg-[#FFEFF4] text-[#A50064] shadow-md">
           <span class="font-bold block">#FFEFF4</span>
@@ -456,12 +366,12 @@
         <div class="p-4 rounded-xl hairline-all bg-[#19AC9A] text-white shadow-md">
           <span class="font-bold block">#19AC9A</span>
           <span class="block mt-2 uppercase">TURQUOISE</span>
-          <span class="text-[10px] text-emerald-100">Số dư, Badge</span>
+          <span class="text-[10px] text-emerald-100" data-i18n="color-balance-use">Số dư, badge</span>
         </div>
         <div class="p-4 rounded-xl hairline-all bg-[#F6C315] text-black shadow-md">
           <span class="font-bold block">#F6C315</span>
           <span class="block mt-2 uppercase">YELLOW +1</span>
-          <span class="text-[10px]">Cảnh báo QR</span>
+          <span class="text-[10px]" data-i18n="color-warning-use">Cảnh báo QR</span>
         </div>
         <div class="p-4 rounded-xl hairline-all bg-[#3F8FED] text-white shadow-md">
           <span class="font-bold block">#3F8FED</span>
@@ -469,12 +379,17 @@
           <span class="text-[10px] text-blue-100">Security Badge</span>
         </div>
       </div>
+      </div>
+      <div class="space-y-3 pt-6">
+        <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="typography-title">TYPOGRAPHY / MOMO TRUST SANS</h3>
+        <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="typography-desc">MoMo Trust Sans được sử dụng xuyên suốt, tham khảo Design System công bố của MoMo.</p>
+      </div>
     </section>
 
     <!-- 06 / CÁC QUYẾT ĐỊNH UI THEO TỪNG MÀN HÌNH -->
     <section class="space-y-8 pt-8 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec5-screens-tag">
-        [ 06 // CÁC QUYẾT ĐỊNH UI CỐT LÕI (SCREEN BY SCREEN) ]
+        [ 05 // CÁC QUYẾT ĐỊNH UI CHÍNH ]
       </div>
 
       <div class="rounded-xl overflow-hidden hairline-all shadow-xl mb-8 gsap-card">
@@ -492,7 +407,7 @@
             <span class="font-mono text-xs uppercase text-pink-600 font-bold" data-i18n="scr1-tag">[ MÀN 01 ] · GIẢI QUYẾT PAIN POINT 01 + 05</span>
             <h3 class="text-2xl font-bold uppercase" data-i18n="scr1-title">CHỌN PHƯƠNG THỨC CHUYỂN TIỀN</h3>
             <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr1-desc">
-              Search bar viền hồng là Primary Action to rõ nhất màn hình. Số dư ví luôn được hiển thị nổi bật ở góc trên. Dropdown 10 icon rối rắm của bản cũ bị loại bỏ hoàn toàn để tuân thủ triệt để nguyên tắc <strong>One Task Per Screen</strong>.
+              Search bar viền hồng là hành động chính; số dư được hiển thị trong luồng. Nhóm dropdown 10 icon của phiên bản cũ được bỏ khỏi phương án thiết kế để tập trung vào tác vụ chuyển tiền.
             </p>
           </div>
         </div>
@@ -506,7 +421,7 @@
             <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="scr2-tag">[ MÀN 02 ] · GIẢI QUYẾT PAIN POINT 04</span>
             <h3 class="text-2xl font-bold uppercase" data-i18n="scr2-title">QR VALIDATION THEO NGỮ CẢNH</h3>
             <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr2-desc">
-              Thiết lập 3 trạng thái rõ ràng: <strong>Hợp lệ</strong> → tiếp tục; <strong>QR cũ > 30 ngày</strong> → cảnh báo vàng; <strong>Không hợp lệ</strong> → báo lỗi cụ thể. Người dùng không bị chặn đứng bất ngờ mà được nhắc nhở đúng lúc.
+              Prototype thể hiện ba trạng thái: <strong>hợp lệ</strong>, <strong>QR đã lưu trên 30 ngày cần kiểm tra</strong> và <strong>không hợp lệ</strong>. Quy tắc xác thực và ngưỡng cảnh báo cần được kiểm chứng cùng đội ngũ kỹ thuật.
             </p>
           </div>
         </div>
@@ -518,9 +433,9 @@
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="scr3-tag">[ MÀN 03 ] · GIẢI QUYẾT PAIN POINT 03</span>
-            <h3 class="text-2xl font-bold uppercase" data-i18n="scr3-title">NHẬP SỐ TIỀN & ĐỐI CHIẾU SỐ DƯ TỨC THÌ</h3>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="scr3-title">NHẬP SỐ TIỀN & CHỌN NGUỒN TIỀN</h3>
             <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr3-desc">
-              Thẻ số dư hiển thị đồng thời 2 giá trị: <em>"Khả dụng"</em> và <em>"Còn lại sau giao dịch"</em> được tính toán theo thời gian thực (real-time). Người dùng có thể chọn đổi nguồn tiền (Ví MoMo, Túi Thần Tài, Thẻ ngân hàng) ngay tại điểm nhập số tiền.
+              Trong prototype, thẻ số dư hiển thị “Khả dụng” và “Còn lại sau giao dịch” theo số tiền nhập. Lựa chọn nguồn tiền được đặt tại bước này để người dùng có đủ ngữ cảnh.
             </p>
           </div>
         </div>
@@ -534,7 +449,7 @@
             <span class="font-mono text-xs uppercase text-blue-500 font-bold" data-i18n="scr4-tag">[ MÀN 04 ] · GIẢI QUYẾT PAIN POINT 02</span>
             <h3 class="text-2xl font-bold uppercase" data-i18n="scr4-title">MÀN HÌNH XÁC NHẬN VỚI TRUST SIGNALS</h3>
             <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr4-desc">
-              Avatar, Tên người nhận viết hoa có kiểm duyệt, Logo ngân hàng thụ hưởng, Số tiền và Nguồn tiền được sắp xếp theo đúng thứ tự mắt quét của người dùng. Giúp đối chiếu thông tin trong 3 giây mà không phải nhẩm lại nhiều lần.
+              Avatar, tên người nhận, số điện thoại hoặc số tài khoản, số tiền và nguồn tiền được nhóm theo thứ tự đối chiếu. Mục tiêu là giúp người dùng kiểm tra nhanh mà vẫn duy trì bước xác nhận chủ động.
             </p>
           </div>
         </div>
@@ -548,7 +463,7 @@
             <span class="font-mono text-xs uppercase text-purple-500 font-bold" data-i18n="scr5-tag">[ MÀN 05 ] · QUYẾT ĐỊNH ĐẶC BIỆT</span>
             <h3 class="text-2xl font-bold uppercase" data-i18n="scr5-title">MÀN HÌNH THÀNH CÔNG CHO THU NGÂN / NGƯỜI BÁN</h3>
             <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="scr5-desc">
-              Khi thanh toán tại quầy không có loa báo, người mua thường giơ màn hình cho người bán xem từ xa. Màn hình thành công được tối ưu 3 tín hiệu: <strong>Màu hồng MoMo</strong> (nhận ra thương hiệu), <strong>Hiệu ứng Confetti</strong> (xác nhận thành công), và <strong>Số tiền cỡ 52px</strong> to nhất màn hình để người bán đọc được ngay từ khoảng cách 1 mét.
+              Khi thanh toán ở nơi không có loa thông báo, tôi thường đưa màn hình cho người bán xem ở khoảng cách gần. Thiết kế ưu tiên màu hồng MoMo, trạng thái thành công với confetti và số tiền cỡ 52px. Khả năng đọc cần được thử ở các khoảng cách và điều kiện ánh sáng khác nhau.
             </p>
           </div>
         </div>
@@ -556,61 +471,38 @@
       </div>
     </section>
 
-    <!-- 07 / KỊCH BẢN LỖI & EDGE CASES (RESILIENCE ARCHITECTURE) -->
-    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-edge-tag">
-        [ 07 // XỬ LÝ LỖI & KỊCH BẢN BIÊN (EDGE CASES & RESILIENCE) ]
-      </div>
-
-      <div class="space-y-4">
-        <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec7-edge-title">
-          THIẾT KẾ CHO NHỮNG KỊCH BẢN XẤU NHẤT TRONG FINTECH
-        </h2>
-        <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec7-edge-desc">
-          Sản phẩm tài chính phục vụ 40M+ người dùng được định nghĩa bằng cách nó xử lý sự cố khi xảy ra bất trắc. Thiết kế sản phẩm cần chủ động tính toán trước kịch bản mất kết nối mạng hoặc đối tác ngân hàng bảo trì:
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Edge 1 -->
-        <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
-          <div class="font-mono text-xs text-red-500 font-bold uppercase" data-i18n="edge1-tag">[ EDGE 01 · DOUBLE CHARGE PREVENTION ]</div>
-          <h4 class="font-bold text-lg uppercase" data-i18n="edge1-title">Mất Mạng Khi Đang Bấm Xác Thực OTP</h4>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="edge1-desc">
-            Khi mạng 4G chập chờn, người dùng có xu hướng bấm liên tục nút "Xác nhận". Hệ thống khóa cứng nút CTA bằng <strong>Idempotency Token</strong> độc bản, hiển thị màn hình chờ có đếm ngược 10s: <em>"Giao dịch đang được bảo lưu an toàn. Xin đừng bấm lại"</em>.
-          </p>
+    <!-- 06 / BEFORE AND AFTER -->
+    <section id="before-after" class="space-y-6 pt-8 hairline-t">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="comparison-tag">[ 06 // BEFORE / AFTER ]</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="comparison-title">SO SÁNH PHƯƠNG ÁN THIẾT KẾ</h2>
+      <figure class="space-y-4 max-w-5xl mx-auto">
+        <div id="momo-comparison" class="relative overflow-hidden rounded-xl hairline-all aspect-[2208/1349]" style="--comparison-position: 50%;">
+          <img src="assets/momo/transfer-after.png" alt="MoMo transfer concept redesign" width="2208" height="1349" class="block w-full h-full object-contain" loading="lazy">
+          <img id="comparison-before-image" src="assets/momo/transfer-before.png" alt="MoMo transfer current interface" width="2208" height="1349" class="absolute inset-0 w-full h-full object-contain" style="clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);" loading="lazy">
+          <div aria-hidden="true" class="absolute inset-y-0 w-0.5 bg-white shadow" style="left: var(--comparison-position);"></div>
+          <div class="absolute inset-x-0 top-0 flex justify-between gap-2 p-3 sm:p-5 pointer-events-none font-mono text-[9px] sm:text-xs uppercase font-bold">
+            <span class="bg-white text-black px-2 py-1 rounded shadow" data-i18n="comparison-before">BẢN HIỆN TẠI</span>
+            <span class="bg-white text-black px-2 py-1 rounded shadow" data-i18n="comparison-after">CONCEPT ĐỀ XUẤT</span>
+          </div>
         </div>
-
-        <!-- Edge 2 -->
-        <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
-          <div class="font-mono text-xs text-amber-500 font-bold uppercase" data-i18n="edge2-tag">[ EDGE 02 · GRACEFUL DEGRADATION ]</div>
-          <h4 class="font-bold text-lg uppercase" data-i18n="edge2-title">Ngân Hàng Thụ Hưởng Bảo Trì Napas</h4>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="edge2-desc">
-            Thay vì để người dùng nhập đầy đủ thông tin rồi mới báo lỗi ở bước cuối, hệ thống ping trạng thái cổng Napas theo thời gian thực. Nếu ngân hàng bảo trì, badge cảnh báo vàng xuất hiện ngay khi gõ số tài khoản kèm gợi ý chuyển sang số ví MoMo.
-          </p>
+        <div class="rounded-xl hairline-all p-4 sm:p-6 space-y-2 bg-[var(--bg-secondary)]/40">
+          <label for="comparison-range" class="block font-mono text-xs uppercase font-bold" data-i18n="comparison-control">Kéo để so sánh hoặc dùng phím mũi tên</label>
+          <input id="comparison-range" type="range" min="0" max="100" value="50" aria-controls="momo-comparison" class="w-full min-h-[44px] cursor-ew-resize" style="accent-color: #A50064;">
         </div>
-
-        <!-- Edge 3 -->
-        <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
-          <div class="font-mono text-xs text-blue-500 font-bold uppercase" data-i18n="edge3-tag">[ EDGE 03 · LIQUIDITY FALLBACK ]</div>
-          <h4 class="font-bold text-lg uppercase" data-i18n="edge3-title">Không Đủ Tiền Ví Lúc Cần Gấp</h4>
-          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="edge3-desc">
-            Khi số dư ví không đủ, thanh toán không bị chặn đứng (Dead End). UI tự động tính toán số tiền thiếu và đề xuất phương án bù tiền 1 chạm từ <strong>Túi Thần Tài</strong> hoặc <strong>Thẻ ghi nợ liên kết</strong> ngay tại bàn phím số.
-          </p>
-        </div>
-      </div>
+        <figcaption class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="comparison-desc">Phiên bản mới tổ chức lại các thông tin cần đối chiếu và tăng kích thước nội dung quan trọng. Hiệu quả đối với thời gian hoàn thành, tỷ lệ lỗi và mức độ tự tin cần được đo bằng usability test so sánh với phiên bản hiện tại.</figcaption>
+      </figure>
     </section>
 
-    <!-- 08 / BÀI HỌC VÀ KẾT LUẬN -->
+    <!-- 07 / BÀI HỌC VÀ KẾT LUẬN -->
     <section class="space-y-8 pt-8 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-learn-tag">
-        [ 08 // KẾT LUẬN & BÀI HỌC CRAFT ]
+        [ 07 // KẾT LUẬN & BÀI HỌC ]
       </div>
 
       <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-4 gsap-card">
         <h3 class="text-2xl font-bold uppercase" data-i18n="sec6-learn-title">CHÚ Ý ĐẾN NHỮNG THAO TÁC NGẦM CỦA NGƯỜI DÙNG</h3>
         <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec6-learn-desc">
-          Case study giúp tôi nhận ra những thao tác nhỏ mà người dùng tự thêm vào quy trình (như đọc lại tên người nhận 2 lần hoặc đưa màn hình cho người bán nhìn). Những hành vi này không đơn thuần là thói quen mà chính là tín hiệu cho thấy giao diện chưa đủ trust signals. Là Product Designer, nhiệm vụ của tôi là biến những quan sát đời thường đó thành các giải pháp thiết kế chính xác và tự tin.
+          Case study giúp tôi chú ý hơn đến những thao tác nhỏ mà người dùng tự thêm vào quy trình, như đọc lại tên người nhận hoặc đưa màn hình thành công cho người bán xem. Những hành vi này chưa tự động chứng minh giao diện có vấn đề. Chúng là tín hiệu để đặt câu hỏi, xây dựng prototype và kiểm tra với người dùng trong bước tiếp theo.
         </p>
       </div>
     </section>
@@ -632,6 +524,13 @@
   <script>
     lucide.createIcons();
 
+    // A native range supports pointer, touch, and keyboard comparison.
+    const comparisonRange = document.getElementById('comparison-range');
+    const comparisonView = document.getElementById('momo-comparison');
+    comparisonRange.addEventListener('input', () => {
+      comparisonView.style.setProperty('--comparison-position', `${comparisonRange.value}%`);
+    });
+
     // 1. Lenis Smooth Scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -639,11 +538,7 @@
       orientation: 'vertical',
       smoothWheel: true
     });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // GSAP's ticker below is the single clock for Lenis and ScrollTrigger.
 
     // Sync GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
@@ -755,14 +650,39 @@
     // Bilingual Translation System
     const translations = {
       vi: {
+        'color-main-use': "Nav, hero, CTA",
+        'color-secondary-use': "CTA phụ",
+        'color-balance-use': "Số dư, badge",
+        'color-warning-use': "Cảnh báo QR",
+        'research-timing-title': "GHI CHÚ NGHIÊN CỨU / THỜI GIAN TÁC VỤ",
+        'research-timing-desc': "Nghiên cứu có ghi nhận mốc 33 giây cho tác vụ chuyển tiền bằng QR. Con số này chỉ có ý nghĩa khi đi kèm cách đo và mốc so sánh; chưa dùng để kết luận mức độ do dự hay hiệu quả của bản redesign.",
+        'insights-title': "CÁC NHẬN ĐỊNH CHÍNH",
+        'insight1-title': "01 / HỖ TRỢ KIỂM TRA GIAO DỊCH",
+        'insight1-desc': "Người tham gia đều kiểm tra lại trước khi xác nhận. Giao diện nên tổ chức thông tin quan trọng theo thứ tự đọc rõ ràng để giúp phát hiện sai lệch.",
+        'insight2-title': "02 / THỬ THÊM VỚI NGƯỜI LỚN TUỔI",
+        'insight2-desc': "6/11 người tham gia chưa sẵn sàng giới thiệu ứng dụng cho bố mẹ. Phản hồi này gợi ý cần thử trực tiếp với người lớn tuổi, thay vì kết luận thay cho họ.",
+        'insight3-title': "03 / NGỮ CẢNH CHO QR ĐÃ LƯU",
+        'insight3-desc': "Trải nghiệm cá nhân cho thấy người dùng có thể băn khoăn về QR đã lưu. Tôi đưa tình huống này vào prototype để kiểm tra trong vòng usability test tiếp theo.",
+        'flow-title': "USER FLOW / MỖI MÀN HÌNH MỘT TÁC VỤ",
+        'flow-desc': "Luồng theo nguyên tắc “one task per screen” với ba điểm vào: nhập số điện thoại, quét QR và chọn từ danh bạ. Chỉ báo “Bước X/3” giúp người dùng biết mình đang ở đâu.",
+        'flow-open': "MỞ SƠ ĐỒ TRÊN FIGJAM ↗",
+        'colors-title': "COLOR SYSTEM / MOMO BRANDBOOK",
+        'typography-title': "TYPOGRAPHY / MOMO TRUST SANS",
+        'typography-desc': "MoMo Trust Sans được sử dụng xuyên suốt, tham khảo Design System công bố của MoMo.",
+        'comparison-tag': "[ 06 // BEFORE / AFTER ]",
+        'comparison-title': "SO SÁNH PHƯƠNG ÁN THIẾT KẾ",
+        'comparison-before': "BẢN HIỆN TẠI",
+        'comparison-after': "CONCEPT ĐỀ XUẤT",
+        'comparison-control': "Kéo để so sánh hoặc dùng phím mũi tên",
+        'comparison-desc': "Phiên bản mới tổ chức lại các thông tin cần đối chiếu và tăng kích thước nội dung quan trọng. Hiệu quả đối với thời gian hoàn thành, tỷ lệ lỗi và mức độ tự tin cần được đo bằng usability test so sánh với phiên bản hiện tại.",
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
         'top-case-num': 'CASE 03 / 03',
         'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
         'btn-contact': 'Liên hệ',
         'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
-        'hero-title': 'MOMO TRANSFER — ĐỀ XUẤT CẢI THIỆN ĐỘ RÕ RÀNG & AN TÂM.',
-        'hero-desc': 'Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận giao dịch chuyển tiền cho hơn 40 triệu người dùng MoMo.',
+        'hero-title': "MOMO TRANSFER — ĐỀ XUẤT CẢI THIỆN ĐỘ RÕ RÀNG & AN TÂM.",
+        'hero-desc': "Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận một giao dịch.",
         'meta-role-lbl': '[ VAI TRÒ ]',
         'meta-role-val': 'UI/UX Designer',
         'meta-scope-lbl': '[ PHẠM VI ]',
@@ -772,117 +692,96 @@
         'meta-time-lbl': '[ THỜI GIAN ]',
         'meta-time-val': '2025',
         'sec1-tag': '[ 01 // BỐI CẢNH & HIỆN TRẠNG ]',
-        'sec1-title': '40+ TRIỆU NGƯỜI DÙNG & NỖI BĂN KHOĂN TẠI MÀN HÌNH CHUYỂN TIỀN',
-        'sec1-desc1': 'MoMo có hơn 40 triệu người dùng theo Decision Lab năm 2024. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.',
-        'sec1-desc2': 'Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn để giúp người dùng đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.',
+        'sec1-title': "BỐI CẢNH VÀ GIẢ THUYẾT THIẾT KẾ",
+        'sec1-desc1': "Theo Decision Lab năm 2024, MoMo có hơn 40 triệu người dùng. Tôi bắt đầu case study sau khi nhận thấy màn hình chuyển tiền hiển thị nhiều nhóm chức năng với mức độ nổi bật gần giống nhau. Dù đã sử dụng MoMo nhiều lần, tôi vẫn mất thời gian xác định điểm bắt đầu phù hợp.",
+        'sec1-desc2': "Từ quan sát đó, tôi đặt giả thuyết rằng thứ bậc thông tin của màn hình có thể được làm rõ hơn. Đây là concept cá nhân, chưa triển khai trên MoMo.",
         'sec2-tag': '[ 02 // USER RESEARCH & DỮ LIỆU ĐỊNH TÍNH ]',
-        'sec2-desc': 'Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Kết quả được dùng để phát hiện vấn đề cần kiểm chứng thêm:',
+        'sec2-desc': "Tôi khảo sát 11 người qua Google Forms, tự thực hiện các tác vụ chuyển tiền và phân tích giao diện từ ảnh chụp màn hình. Với quy mô mẫu nhỏ, kết quả được dùng để phát hiện vấn đề cần kiểm tra thêm, không đại diện cho toàn bộ người dùng MoMo.",
         'card1-title': 'Mức độ hài lòng',
-        'card1-desc': 'Người dùng nhìn chung hài lòng, nhưng vẫn có các điểm gây do dự.',
+        'card1-desc': "Phần lớn người tham gia nhìn chung hài lòng, dù vẫn mô tả một số điểm gây do dự trong quá trình sử dụng.",
         'card2-title': 'Chưa sẵn sàng cho bố mẹ',
-        'card2-desc': 'Lý do chính là mật độ thông tin quá dày, chữ nhỏ và quá nhiều nút bấm.',
+        'card2-desc': "Một số lý do được nhắc đến liên quan đến mật độ thông tin, kích thước chữ và số lượng chức năng.",
         'card3-title': 'Kiểm tra lại trước khi bấm',
-        'card3-desc': '100% người dùng tự đọc lại tên & SĐT trước khi nhấn xác nhận.',
-        'card4-title': 'Thời gian quét QR',
-        'card4-desc': 'Mốc đo lường để làm benchmark cải thiện trong vòng usability test tiếp theo.',
+        'card3-desc': "Đây là hành vi hợp lý trong giao dịch tài chính. Cơ hội thiết kế là giúp đối chiếu người nhận, số tiền và nguồn tiền nhanh, chính xác hơn.",
         'sec3-tag': '[ 03 // 5 ĐIỂM NGHẼN (PAIN POINTS) & CÂU HỎI THIẾT KẾ ]',
         'pp1-tag': '[ PAIN POINT 01 ] · THIẾU VISUAL HIERARCHY',
         'pp1-title': '3 khu vực hiển thị ngang hàng không có thứ tự ưu tiên',
-        'pp1-desc': 'Gây Choice Overload ngay tại điểm vào. Người dùng bối rối không biết nên bấm đâu trước.',
+        'pp1-desc': "Ba khu vực cạnh tranh thị giác có thể khiến người dùng khó nhận ra hành động đầu tiên. Đây là vấn đề cần kiểm chứng thêm.",
         'pp1-hmw': '↳ HMW: Làm sao để người dùng biết ngay bước đầu tiên cần làm gì?',
         'pp2-tag': '[ PAIN POINT 02 ] · THIẾU TRUST SIGNAL TẠI MÀN XÁC NHẬN',
-        'pp2-title': '100% người dùng tự đọc lại tên và số tài khoản',
-        'pp2-desc': 'Màn hình xác nhận cần phân cấp thứ tự đối chiếu thông tin nhanh và an tâm nhất.',
-        'pp2-hmw': '↳ HMW: Làm sao để màn hình xác nhận tự nó đủ thuyết phục mà người dùng không cần do dự?',
+        'pp2-title': "11/11 NGƯỜI THAM GIA KIỂM TRA LẠI THÔNG TIN",
+        'pp2-desc': "Màn hình xác nhận có thể giúp người dùng đối chiếu các thông tin quan trọng nhanh hơn, đồng thời giữ bước kiểm tra chủ động.",
+        'pp2-hmw': "↳ HMW: Làm sao để người dùng dễ đối chiếu giao dịch trước khi xác nhận?",
         'pp3-tag': '[ PAIN POINT 03 ] · SỐ DƯ VÍ KHÔNG HIỂN THỊ TRONG LUỒNG',
         'pp3-title': 'Người dùng phải thoát ra trang chủ kiểm tra số dư',
-        'pp3-desc': 'Friction gây đứt gãy luồng chuyển tiền chỉ vì không biết số dư khả dụng có đủ hay không.',
+        'pp3-desc': "Việc phải rời luồng để kiểm tra số dư tạo thêm thao tác. Concept đề xuất hiển thị số dư tại bước nhập số tiền.",
         'pp3-hmw': '↳ HMW: Làm sao để người dùng biết mình đủ tiền ngay từ bước nhập số tiền?',
-        'pp4-tag': '[ PAIN POINT 04 ] · QR ĐÃ LƯU KHÔNG CÓ TRẠNG THÁI HỢP LỆ',
+        'pp4-tag': "[ PAIN POINT 04 ] · THIẾU NGỮ CẢNH CHO QR ĐÃ LƯU",
         'pp4-title': 'Không rõ mã QR đã lưu trong danh bạ có còn hiệu lực không',
-        'pp4-desc': 'Cần gắn nhãn kiểm tra dữ liệu theo thời gian thực.',
-        'pp4-hmw': '↳ HMW: Làm sao để người dùng biết mã QR cũ có an toàn để chuyển không?',
-        'pp5-tag': '[ PAIN POINT 05 ] · GIAO DIỆN QUÁ PHỨC TẠP VỚI NGƯỜI LỚN TUỔI',
-        'pp5-title': '6/11 người không sẵn sàng giới thiệu MoMo cho phụ huynh',
-        'pp5-desc': 'Chữ nhỏ, quá nhiều tính năng bổ trợ làm người lớn tuổi sợ bấm sai tiền.',
-        'pp5-hmw': '↳ HMW: Làm sao để luồng đủ đơn giản cho người lần đầu?',
-        'exec-memo-tag': '[ DESIGN BRIEFING // TÓM TẮT DỰ ÁN 30 GIÂY ]',
-        'exec-memo-readtime': '30-SEC SCAN // DÀNH CHO REVIEWER & RECRUITER',
-        'exec-c1-tag': '[ 01 // RÀNG BUỘC KINH DOANH & TÂM LÝ ]',
-        'exec-c1-title': 'Áp Lực 40M+ Users & Sợ Chuyển Nhầm Tiền',
-        'exec-c1-desc': 'Khi giao dịch tiền thật, nỗi sợ chuyển sai người/số tiền là rào cản tâm lý lớn nhất. Người dùng mất tới 33s và 100% phải nhẩm lại tên người nhận vì giao diện cũ quá nhiều nút gây nhiễu thị giác.',
-        'exec-c2-tag': '[ 02 // CHIẾN LƯỢC THIẾT KẾ CỐT LÕI ]',
-        'exec-c2-title': 'One Task Per Screen & Trust Anchors',
-        'exec-c2-desc': 'Loại bỏ 10 icon thừa thãi tại trang chủ chuyển tiền. Tái cấu trúc thành luồng 3 bước dứt khoát kết hợp thẻ số dư thời gian thực và tín hiệu xác thực đối chiếu chỉ trong 3 giây.',
-        'exec-c3-tag': '[ 03 // TÁC ĐỘNG ĐỊNH LƯỢNG KỲ VỌNG ]',
-        'exec-c3-title': '-42% Do Dự · +28% Tốc Độ Luồng',
-        'exec-c3-desc': 'Giảm thiểu ticket khiếu nại chuyển sai tài khoản, rút ngắn thời gian hoàn tất giao dịch tại quầy thu ngân và mở rộng khả năng tiếp cận thân thiện cho người lớn tuổi.',
-        'sec4-tradeoff-tag': '[ 04 // MA TRẬN ĐÁNH ĐỔI CHIẾN LƯỢC (TRADE-OFF MATRIX) ]',
-        'sec4-tradeoff-title': 'TẠI SAO TỪ CHỐI 2 PHƯƠNG ÁN KHÁC ĐỂ CHỌN 3-STEP CHOREOGRAPHY?',
-        'sec4-tradeoff-desc': 'Một Product Designer không bảo vệ thiết kế bằng cảm tính cá nhân, mà bằng việc phân tích đánh đổi thực tế giữa <strong>Cognitive Load</strong> (tải nhận thức), <strong>Tốc độ hoàn tất tác vụ</strong> và <strong>Khả năng kiểm soát rủi ro chuyển sai tiền</strong>:',
-        'opt-a-tag': '[ OPTION A · BỊ LOẠI ]',
-        'opt-a-title': 'ALL-IN-ONE MONOLITHIC FORM',
-        'opt-a-concept': 'Gom toàn bộ người nhận, số tiền, nguồn tiền, ghi chú và nút chuyển trên 1 màn hình cuộn dài duy nhất.',
-        'opt-a-pro': 'Ít bước chuyển màn hình, quen thuộc với form web cổ điển.',
-        'opt-a-con': 'Quá tải thị giác (14+ fields); nguy cơ cao vô tình chạm nút chuyển tiền khi đang cuộn màn hình.',
-        'opt-a-verdict': '↳ Phán quyết: Thất bại ở tiêu chí an tâm cho 40M users.',
-        'opt-b-tag': '[ OPTION B · BỊ LOẠI ]',
-        'opt-b-title': 'CONVERSATIONAL CHATBOT UI',
-        'opt-b-concept': 'Mô phỏng bot chat hỏi từng câu: "Chuyển cho ai?", "Chuyển bao nhiêu?", "Nhập mã PIN" theo phong cách trợ lý ảo.',
-        'opt-b-pro': 'Cảm giác gần gũi, phù hợp với người lần đầu tiếp cận ví điện tử.',
-        'opt-b-con': 'Tăng 3.5x số lần gõ phím; cực kỳ chậm chạp và khó chịu cho người chuyển tiền thường xuyên tại quầy ăn uống.',
-        'opt-b-verdict': '↳ Phán quyết: Thất bại ở tốc độ hoàn tất giao dịch thực tế.',
-        'opt-c-tag': '[ OPTION C · LỰA CHỌN TỐI ƯU ]',
-        'opt-c-title': '3-STAGE CHOREO & TRUST ANCHOR',
-        'opt-c-concept': 'Phân bổ luồng thành 3 bước độc lập: <strong>1. Xác định Người Nhận ➔ 2. Nhập Tiền & Chọn Nguồn ➔ 3. Xác Thực Bảo Mật</strong>.',
-        'opt-c-pro': 'Tuân thủ "One Task Per Screen", loại bỏ hoàn toàn sự xao nhãng; mắt quét đối chiếu danh tính chỉ mất 3s.',
-        'opt-c-con': 'Thêm 1 lượt chuyển cảnh, nhưng được bù đắp bằng GSAP state transition mượt mà và danh bạ gợi ý 1 chạm.',
-        'opt-c-verdict': '↳ Phán quyết: Cân bằng hoàn hảo giữa Tốc độ và Sự An Tâm.',
-        'sec4-brand-tag': '[ 05 // HỆ THỐNG THIẾT KẾ (MOMO BRANDBOOK OFFICIAL) ]',
-        'sec4-brand-desc': 'Giữ nguyên bản sắc nhận diện thương hiệu của MoMo dựa trên Brandbook chính thức, đồng thời chuẩn hóa font chữ <strong>MoMo Trust Sans</strong> xuyên suốt.',
-        'sec5-screens-tag': '[ 06 // CÁC QUYẾT ĐỊNH UI CỐT LÕI (SCREEN BY SCREEN) ]',
+        'pp4-desc': "Người dùng có thể cần biết dữ liệu người nhận vừa được xác thực hay chỉ lấy từ lịch sử. Phương án cần được đối chiếu với giới hạn kỹ thuật và quy tắc xác thực thực tế.",
+        'pp4-hmw': "↳ HMW: Làm sao để người dùng hiểu trạng thái xác thực của QR đã lưu?",
+        'pp5-tag': "[ PAIN POINT 05 ] · KHẢ NĂNG SỬ DỤNG CỦA NGƯỜI LỚN TUỔI",
+        'pp5-title': "CẦN THỬ NGHIỆM TRỰC TIẾP VỚI NGƯỜI LỚN TUỔI",
+        'pp5-desc': "6/11 người tham gia chưa sẵn sàng giới thiệu cho bố mẹ. Cần thử nghiệm trực tiếp để hiểu ảnh hưởng của chữ nhỏ, mật độ thông tin và số lượng chức năng.",
+        'pp5-hmw': "↳ HMW: Làm sao để luồng dễ sử dụng hơn với người lần đầu?",
+        'sec4-brand-tag': "[ 04 // HỆ THỐNG THIẾT KẾ ]",
+        'sec4-brand-desc': "Giữ nguyên visual identity của MoMo; màu sắc tham khảo MoMo Brandbook chính thức (momopartners.m-n.associates).",
+        'sec5-screens-tag': "[ 05 // CÁC QUYẾT ĐỊNH UI CHÍNH ]",
         'scr1-tag': '[ MÀN 01 ] · GIẢI QUYẾT PAIN POINT 01 + 05',
         'scr1-title': 'CHỌN PHƯƠNG THỨC CHUYỂN TIỀN',
-        'scr1-desc': 'Search bar viền hồng là Primary Action to rõ nhất màn hình. Số dư ví luôn được hiển thị nổi bật ở góc trên. Dropdown 10 icon rối rắm của bản cũ bị loại bỏ hoàn toàn để tuân thủ triệt để nguyên tắc <strong>One Task Per Screen</strong>.',
+        'scr1-desc': "Search bar viền hồng là hành động chính; số dư được hiển thị trong luồng. Nhóm dropdown 10 icon của phiên bản cũ được bỏ khỏi phương án thiết kế để tập trung vào tác vụ chuyển tiền.",
         'scr2-tag': '[ MÀN 02 ] · GIẢI QUYẾT PAIN POINT 04',
         'scr2-title': 'QR VALIDATION THEO NGỮ CẢNH',
-        'scr2-desc': 'Thiết lập 3 trạng thái rõ ràng: <strong>Hợp lệ</strong> → tiếp tục; <strong>QR cũ > 30 ngày</strong> → cảnh báo vàng; <strong>Không hợp lệ</strong> → báo lỗi cụ thể. Người dùng không bị chặn đứng bất ngờ mà được nhắc nhở đúng lúc.',
+        'scr2-desc': "Prototype thể hiện ba trạng thái: <strong>hợp lệ</strong>, <strong>QR đã lưu trên 30 ngày cần kiểm tra</strong> và <strong>không hợp lệ</strong>. Quy tắc xác thực và ngưỡng cảnh báo cần được kiểm chứng cùng đội ngũ kỹ thuật.",
         'scr3-tag': '[ MÀN 03 ] · GIẢI QUYẾT PAIN POINT 03',
-        'scr3-title': 'NHẬP SỐ TIỀN & ĐỐI CHIẾU SỐ DƯ TỨC THÌ',
-        'scr3-desc': 'Thẻ số dư hiển thị đồng thời 2 giá trị: <em>"Khả dụng"</em> và <em>"Còn lại sau giao dịch"</em> được tính toán theo thời gian thực (real-time). Người dùng có thể chọn đổi nguồn tiền (Ví MoMo, Túi Thần Tài, Thẻ ngân hàng) ngay tại điểm nhập số tiền.',
+        'scr3-title': "NHẬP SỐ TIỀN & CHỌN NGUỒN TIỀN",
+        'scr3-desc': "Trong prototype, thẻ số dư hiển thị “Khả dụng” và “Còn lại sau giao dịch” theo số tiền nhập. Lựa chọn nguồn tiền được đặt tại bước này để người dùng có đủ ngữ cảnh.",
         'scr4-tag': '[ MÀN 04 ] · GIẢI QUYẾT PAIN POINT 02',
         'scr4-title': 'MÀN HÌNH XÁC NHẬN VỚI TRUST SIGNALS',
-        'scr4-desc': 'Avatar, Tên người nhận viết hoa có kiểm duyệt, Logo ngân hàng thụ hưởng, Số tiền và Nguồn tiền được sắp xếp theo đúng thứ tự mắt quét của người dùng. Giúp đối chiếu thông tin trong 3 giây mà không phải nhẩm lại nhiều lần.',
+        'scr4-desc': "Avatar, tên người nhận, số điện thoại hoặc số tài khoản, số tiền và nguồn tiền được nhóm theo thứ tự đối chiếu. Mục tiêu là giúp người dùng kiểm tra nhanh mà vẫn duy trì bước xác nhận chủ động.",
         'scr5-tag': '[ MÀN 05 ] · QUYẾT ĐỊNH ĐẶC BIỆT',
         'scr5-title': 'MÀN HÌNH THÀNH CÔNG CHO THU NGÂN / NGƯỜI BÁN',
-        'scr5-desc': 'Khi thanh toán tại quầy không có loa báo, người mua thường giơ màn hình cho người bán xem từ xa. Màn hình thành công được tối ưu 3 tín hiệu: <strong>Màu hồng MoMo</strong> (nhận ra thương hiệu), <strong>Hiệu ứng Confetti</strong> (xác nhận thành công), và <strong>Số tiền cỡ 52px</strong> to nhất màn hình để người bán đọc được ngay từ khoảng cách 1 mét.',
-        'sec7-edge-tag': '[ 07 // XỬ LÝ LỖI & KỊCH BẢN BIÊN (EDGE CASES & RESILIENCE) ]',
-        'sec7-edge-title': 'THIẾT KẾ CHO NHỮNG KỊCH BẢN XẤU NHẤT TRONG FINTECH',
-        'sec7-edge-desc': 'Sản phẩm tài chính phục vụ 40M+ người dùng được định nghĩa bằng cách nó xử lý sự cố khi xảy ra bất trắc. Thiết kế sản phẩm cần chủ động tính toán trước kịch bản mất kết nối mạng hoặc đối tác ngân hàng bảo trì:',
-        'edge1-tag': '[ EDGE 01 · DOUBLE CHARGE PREVENTION ]',
-        'edge1-title': 'Mất Mạng Khi Đang Bấm Xác Thực OTP',
-        'edge1-desc': 'Khi mạng 4G chập chờn, người dùng có xu hướng bấm liên tục nút "Xác nhận". Hệ thống khóa cứng nút CTA bằng <strong>Idempotency Token</strong> độc bản, hiển thị màn hình chờ có đếm ngược 10s: <em>"Giao dịch đang được bảo lưu an toàn. Xin đừng bấm lại"</em>.',
-        'edge2-tag': '[ EDGE 02 · GRACEFUL DEGRADATION ]',
-        'edge2-title': 'Ngân Hàng Thụ Hưởng Bảo Trì Napas',
-        'edge2-desc': 'Thay vì để người dùng nhập đầy đủ thông tin rồi mới báo lỗi ở bước cuối, hệ thống ping trạng thái cổng Napas theo thời gian thực. Nếu ngân hàng bảo trì, badge cảnh báo vàng xuất hiện ngay khi gõ số tài khoản kèm gợi ý chuyển sang số ví MoMo.',
-        'edge3-tag': '[ EDGE 03 · LIQUIDITY FALLBACK ]',
-        'edge3-title': 'Không Đủ Tiền Ví Lúc Cần Gấp',
-        'edge3-desc': 'Khi số dư ví không đủ, thanh toán không bị chặn đứng (Dead End). UI tự động tính toán số tiền thiếu và đề xuất phương án bù tiền 1 chạm từ <strong>Túi Thần Tài</strong> hoặc <strong>Thẻ ghi nợ liên kết</strong> ngay tại bàn phím số.',
-        'sec6-learn-tag': '[ 08 // KẾT LUẬN & BÀI HỌC CRAFT ]',
+        'scr5-desc': "Khi thanh toán ở nơi không có loa thông báo, tôi thường đưa màn hình cho người bán xem ở khoảng cách gần. Thiết kế ưu tiên màu hồng MoMo, trạng thái thành công với confetti và số tiền cỡ 52px. Khả năng đọc cần được thử ở các khoảng cách và điều kiện ánh sáng khác nhau.",
+        'sec6-learn-tag': "[ 07 // KẾT LUẬN & BÀI HỌC ]",
         'sec6-learn-title': 'CHÚ Ý ĐẾN NHỮNG THAO TÁC NGẦM CỦA NGƯỜI DÙNG',
-        'sec6-learn-desc': 'Case study giúp tôi nhận ra những thao tác nhỏ mà người dùng tự thêm vào quy trình (như đọc lại tên người nhận 2 lần hoặc đưa màn hình cho người bán nhìn). Những hành vi này không đơn thuần là thói quen mà chính là tín hiệu cho thấy giao diện chưa đủ trust signals. Là Product Designer, nhiệm vụ của tôi là biến những quan sát đời thường đó thành các giải pháp thiết kế chính xác và tự tin.',
+        'sec6-learn-desc': "Case study giúp tôi chú ý hơn đến những thao tác nhỏ mà người dùng tự thêm vào quy trình, như đọc lại tên người nhận hoặc đưa màn hình thành công cho người bán xem. Những hành vi này chưa tự động chứng minh giao diện có vấn đề. Chúng là tín hiệu để đặt câu hỏi, xây dựng prototype và kiểm tra với người dùng trong bước tiếp theo.",
         'foot-prev': 'DỰ ÁN TRƯỚC: IQ MYTH',
         'foot-first': 'VỀ DỰ ÁN ĐẦU TIÊN: YÊN'
       },
       en: {
+        'color-main-use': "Nav, hero, CTA",
+        'color-secondary-use': "Secondary CTA",
+        'color-balance-use': "Balance, badges",
+        'color-warning-use': "QR warnings",
+        'research-timing-title': "RESEARCH NOTE / TASK TIME",
+        'research-timing-desc': "The research notes a 33-second QR transfer task. This figure needs a measurement method and a comparison baseline; it is not evidence of hesitation or of the redesign’s effectiveness.",
+        'insights-title': "KEY RESEARCH TAKEAWAYS",
+        'insight1-title': "01 / SUPPORT TRANSACTION CHECKS",
+        'insight1-desc': "All participants checked details before confirming. The interface should organize important information in a clear reading order to help people spot discrepancies.",
+        'insight2-title': "02 / TEST WITH OLDER ADULTS",
+        'insight2-desc': "Six of eleven participants were not ready to recommend the app to their parents. This suggests testing directly with older adults rather than drawing conclusions on their behalf.",
+        'insight3-title': "03 / CONTEXT FOR SAVED QR CODES",
+        'insight3-desc': "Personal experience suggested people may be uncertain about saved QR codes. I included this situation in the prototype for the next usability test.",
+        'flow-title': "USER FLOW / ONE TASK PER SCREEN",
+        'flow-desc': "The flow follows “one task per screen” with three entry points: phone number, QR scan, and contacts. A “Step X/3” indicator helps users understand where they are.",
+        'flow-open': "OPEN THE FIGJAM BOARD ↗",
+        'colors-title': "COLOR SYSTEM / MOMO BRANDBOOK",
+        'typography-title': "TYPOGRAPHY / MOMO TRUST SANS",
+        'typography-desc': "MoMo Trust Sans is used throughout the concept, referenced from MoMo’s published design system.",
+        'comparison-tag': "[ 06 // BEFORE / AFTER ]",
+        'comparison-title': "COMPARE THE DESIGN PROPOSAL",
+        'comparison-before': "CURRENT VERSION",
+        'comparison-after': "PROPOSED CONCEPT",
+        'comparison-control': "Drag to compare or use the arrow keys",
+        'comparison-desc': "The new version reorganizes information for verification and enlarges important content. Its effect on completion time, error rate, and confidence needs to be measured through usability testing against the current version.",
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
         'top-case-num': 'CASE 03 / 03',
         'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
         'btn-contact': 'Get in touch',
         'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
-        'hero-title': 'MOMO TRANSFER — CLARITY & PEACE OF MIND AT SCALE.',
-        'hero-desc': 'A targeted UX case study clarifying pre-transfer verification checkpoints for over 40 million MoMo users.',
+        'hero-title': "MOMO TRANSFER — A PROPOSAL FOR CLEARER, MORE REASSURING TRANSFERS.",
+        'hero-desc': "This case study focuses on the information people need to check before confirming a transfer.",
         'meta-role-lbl': '[ ROLE ]',
         'meta-role-val': 'UI/UX Designer',
         'meta-scope-lbl': '[ SCOPE ]',
@@ -892,111 +791,67 @@
         'meta-time-lbl': '[ TIMELINE ]',
         'meta-time-val': '2025',
         'sec1-tag': '[ 01 // CONTEXT & PROBLEM SPACE ]',
-        'sec1-title': '40M+ USERS & HESITATION AT THE TRANSFER INTERFACE',
-        'sec1-desc1': 'MoMo serves over 40 million users (Decision Lab 2024). I initiated this case study observing competing functional groups on the transfer landing screen. Despite being a frequent user, I regularly paused to orient myself.',
-        'sec1-desc2': 'From that friction, I hypothesized that visual hierarchy could be significantly clarified to help users cross-verify recipients, amounts, and source balances faster with higher confidence.',
+        'sec1-title': "CONTEXT AND DESIGN HYPOTHESIS",
+        'sec1-desc1': "According to Decision Lab in 2024, MoMo had more than 40 million users. I began this case study after noticing several groups of functions with similar prominence on the transfer screen. Even as a frequent user, I took time to find the appropriate starting point.",
+        'sec1-desc2': "From this observation, I hypothesized that the screen’s information hierarchy could be clearer. This is a personal concept and has not been implemented in MoMo.",
         'sec2-tag': '[ 02 // USER RESEARCH & QUALITATIVE DATA ]',
-        'sec2-desc': 'I surveyed 11 active users via Google Forms, performed end-to-end transfer audits, and mapped UI interactions across screenshots:',
+        'sec2-desc': "I surveyed 11 people via Google Forms, performed transfer tasks myself, and analyzed screenshots. This small sample helps identify questions for further testing; it does not represent all MoMo users.",
         'card1-title': 'General Satisfaction',
-        'card1-desc': 'Generally positive, yet plagued by persistent hesitation points.',
+        'card1-desc': "Most participants were generally satisfied, while still describing moments of hesitation during use.",
         'card2-title': 'Hesitant for Parents',
-        'card2-desc': 'Information density, small typography, and visual noise deter elderly family adoption.',
+        'card2-desc': "Reasons mentioned included information density, text size, and the number of functions.",
         'card3-title': 'Re-verify Before Submitting',
-        'card3-desc': '100% of participants manually read recipient name & phone aloud before hitting confirm.',
-        'card4-title': 'QR Scan Completion Time',
-        'card4-desc': 'Baseline benchmark to optimize in subsequent usability iterations.',
+        'card3-desc': "Checking details is reasonable in financial transactions. The design opportunity is to make recipient, amount, and funding-source checks clearer and easier.",
         'sec3-tag': '[ 03 // 5 PAIN POINTS & DESIGN QUESTIONS ]',
         'pp1-tag': '[ PAIN POINT 01 ] · LACK OF VISUAL HIERARCHY',
         'pp1-title': 'Three competing zones with equal visual prominence',
-        'pp1-desc': 'Causes Choice Overload at entry; users hesitate over where to tap first.',
+        'pp1-desc': "Three competing visual areas may make the first action harder to identify. This needs further validation.",
         'pp1-hmw': '↳ HMW: How might users intuitively know the exact first action?',
         'pp2-tag': '[ PAIN POINT 02 ] · INSUFFICIENT TRUST SIGNALS AT CONFIRMATION',
-        'pp2-title': '100% of users re-read name and account numbers',
-        'pp2-desc': 'Confirmation screens require clear scanning hierarchy for fast, confident verification.',
-        'pp2-hmw': '↳ HMW: How might confirmation screens provide instant reassurance without hesitation?',
+        'pp2-title': "11/11 PARTICIPANTS RE-CHECKED THE DETAILS",
+        'pp2-desc': "The confirmation screen could make important details easier to verify while preserving a deliberate check.",
+        'pp2-hmw': "↳ HMW: How might we make a transfer easier to verify before confirmation?",
         'pp3-tag': '[ PAIN POINT 03 ] · BALANCE HIDDEN DURING FLOW',
         'pp3-title': 'Users exit flow to check available balance on home',
-        'pp3-desc': 'Friction derails transfer completion over uncertain available funds.',
+        'pp3-desc': "Leaving the flow to check the balance adds steps. The concept proposes showing the balance when entering the amount.",
         'pp3-hmw': '↳ HMW: How might users verify balance sufficiency right at amount input?',
-        'pp4-tag': '[ PAIN POINT 04 ] · SAVED QR CODES LACK REAL-TIME VALIDITY',
+        'pp4-tag': "[ PAIN POINT 04 ] · SAVED QR CONTEXT",
         'pp4-title': 'Uncertain validity of saved QR codes in address book',
-        'pp4-desc': 'Requires real-time contextual validity badges.',
-        'pp4-hmw': '↳ HMW: How might users immediately know if a saved QR is safe to pay?',
-        'pp5-tag': '[ PAIN POINT 05 ] · HIGH COMPLEXITY FOR SENIORS',
-        'pp5-title': '6/11 users hesitate recommending MoMo to parents',
-        'pp5-desc': 'Small typography and adjacent promo clutter provoke fears of financial error.',
-        'pp5-hmw': '↳ HMW: How might the core transfer flow feel effortless for first-timers?',
-        'exec-memo-tag': '[ DESIGN BRIEFING // 30-SEC SCAN ]',
-        'exec-memo-readtime': '30-SEC SCAN // FOR REVIEWERS & RECRUITERS',
-        'exec-c1-tag': '[ 01 // BUSINESS CONSTRAINTS & PSYCHOLOGY ]',
-        'exec-c1-title': '40M+ Users & The Dread of Financial Misdirection',
-        'exec-c1-desc': 'In real-money transactions, misdirection anxiety is the single greatest psychological friction. Users spent up to 33s and 100% recited recipient names because visual clutter created decision fatigue.',
-        'exec-c2-tag': '[ 02 // CORE DESIGN STRATEGY ]',
-        'exec-c2-title': 'One Task Per Screen & Trust Anchors',
-        'exec-c2-desc': 'Eliminated 10 redundant icons from the landing screen. Re-engineered into a resolute 3-stage choreography paired with real-time balance calculations and instant 3-second identity verification anchors.',
-        'exec-c3-tag': '[ 03 // PROJECTED QUANTITATIVE IMPACT ]',
-        'exec-c3-title': '-42% Hesitation · +28% Flow Velocity',
-        'exec-c3-desc': 'Drastically reduces erroneous transaction support tickets, cuts cashier checkout duration, and unlocks elderly-friendly usability at national scale.',
-        'sec4-tradeoff-tag': '[ 04 // STRATEGIC TRADE-OFF MATRIX ]',
-        'sec4-tradeoff-title': 'WHY REJECT TWO ARCHITECTURES IN FAVOR OF 3-STAGE CHOREOGRAPHY?',
-        'sec4-tradeoff-desc': 'Design decisions shouldn\'t rely on subjective intuition, but on clear trade-offs between <strong>Cognitive Load</strong>, <strong>Completion Velocity</strong>, and <strong>Financial Error Risk Mitigation</strong>:',
-        'opt-a-tag': '[ OPTION A · REJECTED ]',
-        'opt-a-title': 'ALL-IN-ONE MONOLITHIC FORM',
-        'opt-a-concept': 'Consolidating recipient, amount, wallet source, note, and CTA onto a single long scrollable view.',
-        'opt-a-pro': 'Zero page transitions; familiar classic web paradigm.',
-        'opt-a-con': 'Severe visual overload (14+ active fields); high risk of accidental transfer triggers while scrolling.',
-        'opt-a-verdict': '↳ Verdict: Fails the psychological safety criteria for 40M mass-market users.',
-        'opt-b-tag': '[ OPTION B · REJECTED ]',
-        'opt-b-title': 'CONVERSATIONAL CHATBOT UI',
-        'opt-b-concept': 'Step-by-step chat prompts: "Who to transfer?", "How much?", "Input PIN" mimicking a conversational assistant.',
-        'opt-b-pro': 'Gentle onboarding feel; friendly for first-time digital wallet users.',
-        'opt-b-con': '3.5x keystroke and interaction overhead; painfully slow and frustrating at busy checkout counters.',
-        'opt-b-verdict': '↳ Verdict: Fails real-world transaction velocity requirements.',
-        'opt-c-tag': '[ OPTION C · SELECTED ARCHITECTURE ]',
-        'opt-c-title': '3-STAGE CHOREO & TRUST ANCHOR',
-        'opt-c-concept': 'Decoupled into 3 distinct atomic steps: <strong>1. Recipient Discovery ➔ 2. Amount & Source ➔ 3. Security Verification</strong>.',
-        'opt-c-pro': 'Strict adherence to "One Task Per Screen"; eliminates distraction; achieves 3s eye-scan identity verification.',
-        'opt-c-con': 'Adds 1 view transition, offset by seamless GSAP state choreography and 1-tap contact smart chips.',
-        'opt-c-verdict': '↳ Verdict: Optimal balance between Transaction Velocity and Psychological Safety.',
-        'sec4-brand-tag': '[ 05 // DESIGN SYSTEM (MOMO OFFICIAL BRANDBOOK) ]',
-        'sec4-brand-desc': 'Preserves core MoMo brand equity using the official Brandbook guidelines, standardizing typography with <strong>MoMo Trust Sans</strong>.',
-        'sec5-screens-tag': '[ 06 // CORE UI DECISIONS (SCREEN BY SCREEN) ]',
+        'pp4-desc': "People may need to know whether recipient details have just been verified or simply retrieved from history. The proposal needs to be checked against technical constraints and actual verification rules.",
+        'pp4-hmw': "↳ HMW: How might people understand the verification status of a saved QR code?",
+        'pp5-tag': "[ PAIN POINT 05 ] · USABILITY FOR OLDER ADULTS",
+        'pp5-title': "DIRECT TESTING WITH OLDER ADULTS IS NEEDED",
+        'pp5-desc': "Six of eleven participants were not ready to recommend the app to their parents. Direct testing is needed to understand the effects of small text, information density, and the number of functions.",
+        'pp5-hmw': "↳ HMW: How might the flow be easier to use for first-time users?",
+        'sec4-brand-tag': "[ 04 // DESIGN SYSTEM ]",
+        'sec4-brand-desc': "The concept preserves MoMo’s visual identity, with colors referenced from the official MoMo Brandbook (momopartners.m-n.associates).",
+        'sec5-screens-tag': "[ 05 // KEY UI DECISIONS ]",
         'scr1-tag': '[ SCREEN 01 ] · SOLVING PAIN POINT 01 + 05',
         'scr1-title': 'TRANSFER METHOD SELECTION',
-        'scr1-desc': 'Pink-bordered search bar acts as clear primary action. Live wallet balance anchors top corner. Ten cluttered legacy icons eliminated to enforce <strong>One Task Per Screen</strong>.',
+        'scr1-desc': "The pink-bordered search bar is the main action, with the balance shown within the flow. The old ten-icon dropdown is omitted from the proposed design to focus on the transfer task.",
         'scr2-tag': '[ SCREEN 02 ] · SOLVING PAIN POINT 04',
         'scr2-title': 'CONTEXTUAL QR VALIDATION',
-        'scr2-desc': 'Three explicit tiers: <strong>Valid</strong> → proceed; <strong>Legacy QR > 30 days</strong> → yellow warning; <strong>Invalid</strong> → explicit error guidance. Users are guided rather than abruptly blocked.',
+        'scr2-desc': "The prototype shows three states: <strong>valid</strong>, <strong>a QR saved over 30 days ago that needs review</strong>, and <strong>invalid</strong>. Verification rules and warning thresholds need validation with engineering.",
         'scr3-tag': '[ SCREEN 03 ] · SOLVING PAIN POINT 03',
-        'scr3-title': 'AMOUNT INPUT & INSTANT BALANCE RECONCILIATION',
-        'scr3-desc': 'Balance card computes real-time <em>"Available"</em> and <em>"Post-Transfer Remainder"</em>. Switch funding sources (MoMo Wallet, Fortune Bag, Bank Card) directly at amount input.',
+        'scr3-title': "AMOUNT ENTRY & FUNDING SOURCE",
+        'scr3-desc': "In the prototype, the balance card shows “Available” and “Remaining after transfer” based on the entered amount. Funding-source selection is placed here to provide the relevant context.",
         'scr4-tag': '[ SCREEN 04 ] · SOLVING PAIN POINT 02',
         'scr4-title': 'CONFIRMATION SCREEN WITH TRUST SIGNALS',
-        'scr4-desc': 'Avatar, uppercase verified recipient name, bank logo, amount, and source are structured to natural eye-tracking paths. Complete verification in 3 seconds flat.',
+        'scr4-desc': "The avatar, recipient name, phone or account number, amount, and funding source are grouped in verification order. The aim is to support efficient checks while maintaining deliberate confirmation.",
         'scr5-tag': '[ SCREEN 05 ] · SPECIAL FEATURE FOR MERCHANTS',
         'scr5-title': 'SUCCESS SCREEN FOR CASHIERS & STREET VENDORS',
-        'scr5-desc': 'At speaker-less stalls, buyers flash phone screens to cashiers. Screen optimized with 3 cues: <strong>Signature MoMo Pink</strong>, <strong>Confetti celebration</strong>, and an <strong>extra-large 52px amount</strong> readable from 1 meter away.',
-        'sec7-edge-tag': '[ 07 // RESILIENCE & EDGE-CASE ARCHITECTURE ]',
-        'sec7-edge-title': 'DESIGNING FOR THE WORST-CASE FINTECH SCENARIOS',
-        'sec7-edge-desc': 'Financial products serving 40M+ users are defined by how gracefully they handle failures. Thoughtful product design anticipates edge cases before networks drop or partner banking gateways go into maintenance:',
-        'edge1-tag': '[ EDGE 01 · DOUBLE CHARGE PREVENTION ]',
-        'edge1-title': 'Network Drop During Biometric / OTP Confirmation',
-        'edge1-desc': 'When 4G flutters, users frantically double-tap CTAs. The system hard-locks the action with an immutable <strong>Idempotency Token</strong>, showing a 10s countdown grace screen: <em>"Transaction securely held. Please do not re-submit."</em>',
-        'edge2-tag': '[ EDGE 02 · GRACEFUL DEGRADATION ]',
-        'edge2-title': 'Beneficiary Bank Napas Gateway Maintenance',
-        'edge2-desc': 'Instead of letting users fill out the entire transfer only to fail at the end, the UI pings Napas health in real-time. If maintenance is detected, an amber warning badge appears upon account entry suggesting instant MoMo wallet transfer.',
-        'edge3-tag': '[ EDGE 03 · LIQUIDITY FALLBACK ]',
-        'edge3-title': 'Insufficient Wallet Funds at Urgent Moments',
-        'edge3-desc': 'Zero dead-ends. When wallet balance falls short, the UI instantly computes the exact deficit and offers a 1-tap seamless bridge from <strong>Fortune Bag (Túi Thần Tài)</strong> or <strong>Linked Debit Card</strong> directly on the numeric keypad.',
-        'sec6-learn-tag': '[ 08 // CONCLUSION & CRAFT LESSONS ]',
+        'scr5-desc': "When paying at places without an audio payment alert, I often show the seller my screen at close range. The design emphasizes MoMo pink, the success state with confetti, and a 52px amount. Readability needs testing at different distances and under different lighting.",
+        'sec6-learn-tag': "[ 07 // CONCLUSION & LESSONS ]",
         'sec6-learn-title': 'OBSERVING UNWRITTEN USER BEHAVIORS',
-        'sec6-learn-desc': 'This case study revealed implicit compensating behaviors users invent (re-reading names twice, turning screens toward cashiers). These aren\'t quirks—they signal missing trust signals. As a Product Designer, my role is transforming everyday observations into confident, precise design answers.',
+        'sec6-learn-desc': "This case study made me pay closer attention to small actions people add to a flow, such as re-reading a recipient’s name or showing a seller the success screen. These behaviors do not automatically prove the interface is flawed. They are signals for asking questions, building prototypes, and testing with users next.",
         'foot-prev': 'PREVIOUS PROJECT: IQ MYTH',
         'foot-first': 'BACK TO FIRST PROJECT: YÊN'
       }
     };
 
     function setLang(lang) {
+      lang = lang === 'en' ? 'en' : 'vi';
+      document.documentElement.lang = lang;
       localStorage.setItem('tru_lang', lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');

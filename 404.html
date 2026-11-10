@@ -232,7 +232,7 @@
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]</span>
         </div>
-        <a href="index.html#selected-work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
+        <a href="index.html#work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
           Xem tất cả dự án trên trang chủ
         </a>
       </div>
@@ -275,7 +275,7 @@
           </div>
           <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w2-meta">
             <span>EDTECH · UI/UX & PROTOTYPING</span>
-            <span>2024</span>
+            <span>2025</span>
           </div>
         </a>
 
@@ -290,7 +290,7 @@
               MoMo Transfer Redesign
             </h3>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w3-desc">
-              Đề xuất cấu trúc lại luồng xác nhận chuyển tiền nhằm giảm 33 giây do dự và loại bỏ nỗi sợ chuyển nhầm cho hơn 40 triệu người dùng MoMo.
+              Concept thiết kế lại luồng chuyển tiền, dựa trên nghiên cứu với 11 người dùng. Tập trung làm rõ người nhận, số dư và bước xác nhận.
             </p>
           </div>
           <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w3-meta">
@@ -420,10 +420,10 @@
         'w2-tag': '[ 02 // EDTECH ] · BEHAVIORAL UI',
         'w2-title': 'IQ Myth — Trải Nghiệm Bài Test',
         'w2-desc': 'Thiết kế trải nghiệm làm bài test tập trung từ trang giới thiệu đến màn hình bài thi ma trận và luồng phân tích nhận kết quả qua email.',
-        'w2-meta': '<span>EDTECH · UI/UX & PROTOTYPING</span><span>2024</span>',
+        'w2-meta': '<span>EDTECH · UI/UX & PROTOTYPING</span><span>2025</span>',
         'w3-tag': '[ 03 // FINTECH ] · USER RESEARCH',
         'w3-title': 'MoMo Transfer Redesign',
-        'w3-desc': 'Đề xuất cấu trúc lại luồng xác nhận chuyển tiền nhằm giảm 33 giây do dự và loại bỏ nỗi sợ chuyển nhầm cho hơn 40 triệu người dùng MoMo.',
+        'w3-desc': "Concept thiết kế lại luồng chuyển tiền, dựa trên nghiên cứu với 11 người dùng. Tập trung làm rõ người nhận, số dư và bước xác nhận.",
         'w3-meta': '<span>FINTECH · UX RESEARCH & REDESIGN</span><span>2025</span>',
         'foot-home': 'Về trang chủ'
       },
@@ -445,16 +445,18 @@
         'w2-tag': '[ 02 // EDTECH ] · BEHAVIORAL UI',
         'w2-title': 'IQ Myth — Streamlined Test Flow',
         'w2-desc': 'Focus-driven cognitive testing flow from landing conversion to the 40-question matrix workspace and result delivery.',
-        'w2-meta': '<span>EDTECH · UI/UX & PROTOTYPING</span><span>2024</span>',
+        'w2-meta': '<span>EDTECH · UI/UX & PROTOTYPING</span><span>2025</span>',
         'w3-tag': '[ 03 // FINTECH ] · USER RESEARCH',
         'w3-title': 'MoMo Transfer Redesign',
-        'w3-desc': 'Restructuring payment confirmation flows to eliminate 33s hesitation and mis-transfer anxiety for 40M+ users.',
+        'w3-desc': "A self-initiated transfer redesign based on research with 11 users, focusing on recipient details, available balance, and confirmation.",
         'w3-meta': '<span>FINTECH · UX RESEARCH & REDESIGN</span><span>2025</span>',
         'foot-home': 'Return to Home'
       }
     };
 
     function setLang(lang) {
+      lang = lang === 'en' ? 'en' : 'vi';
+      document.documentElement.lang = lang;
       localStorage.setItem('tru_lang', lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YÊN — Chăm Sóc Bố Mẹ, Kể CẢ Khi Ở Xa | Case Study · Trứ</title>
-  <meta name="description" content="Case study chi tiết Yên — Hệ thống kết nối bố mẹ và con cái qua 3 bài toán: phát hiện té ngã, AI nhận diện lừa đảo và nhắc thuốc. Product Designer: Trứ.">
+  <title>YÊN — Chăm Sóc Bố Mẹ, Kể Cả Khi Ở Xa | Case Study · Trứ</title>
+  <meta name="description" content="Concept Yên — Hai ứng dụng hỗ trợ bố mẹ và con cái qua cảnh báo té ngã, AI hỗ trợ kiểm tra lừa đảo và nhắc thuốc. Vai trò: Product Designer.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -91,6 +91,52 @@
     .hairline-b { border-bottom: 1px solid var(--border-color); }
     .hairline-t { border-top: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
+
+    #problem-context, #dual-apps, #yen-child-video { scroll-margin-top: 104px; }
+
+    .persona-illustration {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      margin: 0;
+      background-color: #F5F5F0;
+    }
+    .persona-artwork {
+      position: relative;
+      container-type: inline-size;
+    }
+    /* Match each source image's ratio inside the square illustration frame. */
+    .persona-artwork--parent { width: 80.6022%; }
+    .persona-artwork--child { width: 98.3489%; }
+    .persona-dialogue {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      color: #121212;
+      font-size: clamp(11px, 4cqw, 22px);
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      text-wrap: balance;
+    }
+    .persona-dialogue > span { display: block; width: 100%; }
+    @media (max-width: 359px) {
+      #problem-context .persona-card { padding: 8px; }
+    }
+    .persona-dialogue--parent {
+      left: 44%;
+      top: 4.5%;
+      width: 49%;
+      height: 19%;
+    }
+    .persona-dialogue--child {
+      left: 12%;
+      top: 10%;
+      width: 60%;
+      height: 27%;
+    }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -209,33 +255,37 @@
     </section>
 
     <!-- 01 / BỐI CẢNH VÀ VẤN ĐỀ -->
-    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
+    <section id="problem-context" class="space-y-8 pt-8 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec1-tag">
         [ 01 // BỐI CẢNH VÀ XUNG ĐỘT TÂM LÝ ]
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Persona Bố Mẹ -->
-        <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
-          <div class="rounded-lg overflow-hidden h-64 hairline-all">
-            <img src="https://framerusercontent.com/images/ihiHshhjp6ZEy7A6Npwnfx44.png" alt="Bố mẹ cần sự riêng tư" class="w-full h-full object-cover">
-          </div>
-          <div class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p1-tag">[ TÂM LÝ BỐ MẸ ]</div>
-          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="p1-quote">"Biết con quan tâm, nhưng tôi cần không gian riêng."</h3>
+        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+          <figure class="persona-illustration rounded-lg overflow-hidden hairline-all">
+            <div class="persona-artwork persona-artwork--parent">
+              <img src="https://framerusercontent.com/images/ihiHshhjp6ZEy7A6Npwnfx44.png" alt="Minh họa bố mẹ đang suy nghĩ" width="1874" height="2325" class="block w-full h-auto">
+              <blockquote class="persona-dialogue persona-dialogue--parent"><span data-i18n="p1-quote">Biết con quan tâm,<br>nhưng tôi cần<br>không gian riêng.</span></blockquote>
+            </div>
+          </figure>
+          <h3 class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p1-tag">[ TÂM LÝ BỐ MẸ ]</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p1-desc">
             Bố mẹ vẫn muốn duy trì nhịp sống thường nhật, không muốn bị con cái coi như người bệnh hay liên tục phải báo cáo tình trạng từng giờ.
           </p>
         </div>
 
         <!-- Persona Con Cái -->
-        <div class="p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
-          <div class="rounded-lg overflow-hidden h-64 hairline-all">
-            <img src="https://framerusercontent.com/images/qemF9mO9KRaFTtRXSqXAZce5yGg.png" alt="Con cái bất an" class="w-full h-full object-cover">
-          </div>
-          <div class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="p2-tag">[ TÂM LÝ CON CÁI ]</div>
-          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="p2-quote">"Mẹ đang bận, hay có vấn đề gì xảy ra không ta?"</h3>
+        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+          <figure class="persona-illustration rounded-lg overflow-hidden hairline-all">
+            <div class="persona-artwork persona-artwork--child">
+              <img src="https://framerusercontent.com/images/qemF9mO9KRaFTtRXSqXAZce5yGg.png" alt="Minh họa người con đang lo lắng" width="2323" height="2362" class="block w-full h-auto">
+              <blockquote class="persona-dialogue persona-dialogue--child"><span data-i18n="p2-quote">Mẹ đang bận,<br>hay có vấn đề gì không ta?</span></blockquote>
+            </div>
+          </figure>
+          <h3 class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="p2-tag">[ TÂM LÝ CON CÁI ]</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p2-desc">
-            Khi sống xa nhà, con cái khó biết một cuộc gọi nhỡ chỉ đơn thuần là do bố mẹ đang quét sân hay là dấu hiệu cần được hỗ trợ y tế khẩn cấp.
+            Khi sống xa nhà, con cái khó biết một cuộc gọi không được bắt máy là do bố mẹ đang bận hay là dấu hiệu cần hỗ trợ.
           </p>
         </div>
       </div>
@@ -262,9 +312,14 @@
           TẬN DỤNG CHIẾC ĐIỆN THOẠI ĐANG CÓ
         </h2>
         <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec2-desc">
-          Concept sử dụng chính chiếc smartphone mà gia đình đã quen thuộc để hạn chế chi phí và rào cản làm quen với thiết bị chuyên dụng mới. Trải nghiệm được chia thành 2 ứng dụng độc lập với luồng tương tác đo ni đóng giày cho từng bên.
+          Concept sử dụng điện thoại mà gia đình đã quen thuộc để hạn chế chi phí và thời gian làm quen với thiết bị mới. Trải nghiệm được chia thành hai ứng dụng với thông tin và thao tác phù hợp cho từng phía.
         </p>
       </div>
+
+      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+        <h3 class="font-mono text-xs font-bold uppercase" data-i18n="concept-limit-title">GIỚI HẠN CỦA CONCEPT</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="concept-limit-desc">Điện thoại có thể hết pin hoặc không ở cạnh người dùng. Khả năng phát hiện thực tế và độ chính xác của AI cần được kiểm chứng.</p>
+      </aside>
 
       <!-- 3 Pillars Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -272,54 +327,46 @@
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-fall-tag">[ 01 / TÉ NGÃ ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-fall-title">Ghi Nhận Va Chạm</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-fall-desc">
-            Ghi nhận tín hiệu gia tốc kế khi có rơi va đập, hỏi bố mẹ trước và chỉ gửi cảnh báo đến con khi sau thời gian cài đặt không có phản hồi.
+            Concept đề xuất ghi nhận tín hiệu va chạm, hỏi bố mẹ trước và báo con nếu chưa có phản hồi sau thời gian đã đặt.
           </p>
         </div>
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-scam-tag">[ 02 / LỪA ĐẢO ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-scam-title">AI Hỗ Trợ Đánh Giá</h3>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-            Bố mẹ chuyển tiếp tin nhắn, cuộc gọi lạ; hệ thống AI phân tích dấu hiệu và gợi ý lời khuyên trực quan để con kiểm tra trước.
-          </p>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-scam-desc">Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ; AI hỗ trợ con xem lại trước khi gửi hướng dẫn cho bố mẹ.</p>
         </div>
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-med-tag">[ 03 / NHẮC THUỐC ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-med-title">Cài Đặt Từ Xa</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-med-desc">
-            Con cái thiết lập lịch uống thuốc phức tạp từ xa; phía bố mẹ chỉ nhận lời nhắc to rõ kèm một nút bấm "Tôi đã uống" duy nhất.
+            Con cài lịch từ xa; bố mẹ nhận lời nhắc với hai lựa chọn rõ ràng: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”.
           </p>
         </div>
       </div>
     </section>
 
     <!-- 03 / HAI ỨNG DỤNG ĐỘC LẬP -->
-    <section class="space-y-8 pt-8 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">
-        [ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div class="space-y-6">
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-3 gsap-card">
-            <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="child-app-tag">[ PHÍA CON CÁI ]</span>
-            <h3 class="text-2xl font-bold uppercase" data-i18n="child-app-title">VIỆC GÌ CẦN XỬ LÝ?</h3>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-app-desc">
-              Màn hình con cái ưu tiên các sự kiện bất thường cần giải quyết ngay. Mỗi thông báo đi kèm thời gian thực tế, mức pin của điện thoại bố mẹ và bối cảnh để con ra quyết định chính xác.
-            </p>
-          </div>
-
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-3 gsap-card">
-            <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="parent-app-tag">[ PHÍA BỐ MẸ ]</span>
-            <h3 class="text-2xl font-bold uppercase" data-i18n="parent-app-title">TÔI CẦN LÀM GÌ?</h3>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="parent-app-desc">
-              Giao diện bố mẹ dùng chữ cỡ lớn, câu ngắn, loại bỏ toàn bộ icon trừu tượng. Mỗi màn hình chỉ chứa duy nhất một tác vụ chính để triệt tiêu mọi khả năng bấm nhầm.
-            </p>
-          </div>
-        </div>
-
-        <div class="rounded-xl overflow-hidden hairline-all flex justify-center bg-[var(--bg-secondary)]/40 p-8 shadow-sm gsap-card">
-          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện màn hình con cái" class="max-w-xs h-auto rounded-xl drop-shadow-2xl gsap-scrub-img">
-        </div>
+    <section id="dual-apps" class="space-y-8 pt-8 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">[ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]</div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <article class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-5 gsap-card">
+          <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="child-app-tag">[ PHÍA CON CÁI ]</span>
+          <h3 class="text-2xl font-bold uppercase" data-i18n="child-app-title">VIỆC GÌ CẦN XỬ LÝ?</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-app-desc">Màn hình ưu tiên các sự việc cần xử lý. Mỗi cảnh báo đi kèm thời gian, mức pin và thông tin liên quan để người dùng có cơ sở quyết định bước tiếp theo.</p>
+          <figure class="space-y-3">
+            <video id="yen-child-video" controls playsinline preload="metadata" aria-describedby="child-video-caption" class="block w-full max-w-xs mx-auto h-auto rounded-lg">
+              <source src="assets/yen/yen-child-app.mp4" type="video/mp4">
+              <source src="https://framerusercontent.com/assets/oKTqWbF38Pne5TRGl48pMcvdPQ.mp4" type="video/mp4">
+            </video>
+            <figcaption id="child-video-caption" class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-video-caption">Prototype ứng dụng con cái — xem cảnh báo và thông tin cần xử lý.</figcaption>
+          </figure>
+        </article>
+        <article class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-5 gsap-card">
+          <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="parent-app-tag">[ PHÍA BỐ MẸ ]</span>
+          <h3 class="text-2xl font-bold uppercase" data-i18n="parent-app-title">TÔI CẦN LÀM GÌ?</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="parent-app-desc">Giao diện dùng chữ lớn, câu ngắn và nút bấm rõ. Mỗi màn hình tập trung vào một hành động chính để giảm thao tác và hạn chế nhầm lẫn.</p>
+          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện ứng dụng bố mẹ" class="block w-full max-w-xs mx-auto h-auto rounded-xl drop-shadow-xl">
+        </article>
       </div>
     </section>
 
@@ -330,7 +377,7 @@
       </div>
 
       <p class="text-base sm:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="sec4-desc">
-        Va chạm mạnh có thể đến từ một cú ngã thật sự hoặc chỉ do làm rơi điện thoại xuống đệm. Do đó, hệ thống luôn hỏi tình trạng của bố mẹ trước. Nếu không có phản hồi sau 30 giây, cảnh báo khẩn cấp mới được kích hoạt tới con.
+        Va chạm mạnh có thể xuất phát từ một cú ngã hoặc từ việc điện thoại bị rơi. Ứng dụng hỏi tình trạng của bố mẹ trước; nếu không có phản hồi sau thời gian đã đặt mới gửi cảnh báo cho người thân. Mốc 30 giây là giả định thiết kế, cần được thử nghiệm trong tình huống thực tế.
       </p>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
@@ -357,7 +404,7 @@
             <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step3-title">
-            03 / Cập nhật trạng thái an toàn
+            03 / Cập nhật tình trạng
           </div>
         </div>
       </div>
@@ -372,9 +419,10 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- AI Fraud -->
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
-          <h3 class="text-2xl font-bold uppercase" data-i18n="ai-fraud-title">AI NHẬN DIỆN LỪA ĐẢO</h3>
+          <h3 class="text-2xl font-bold uppercase" data-i18n="ai-fraud-title">AI HỖ TRỢ NHẬN DIỆN LỪA ĐẢO</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="ai-fraud-flow">Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ. Hệ thống chỉ ra dấu hiệu cần chú ý để con xem lại và gửi hướng dẫn dễ hiểu cho bố mẹ.</p>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="ai-fraud-desc">
-            Kết quả được phân cấp thành 3 mức minh bạch: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”, tránh tạo ảo tưởng rằng AI là công cụ xác thực tuyệt đối 100%.
+            Kết quả được chia thành ba mức: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”. Cách diễn đạt này tránh tạo cảm giác AI có thể xác nhận tuyệt đối một nội dung an toàn hay nguy hiểm.
           </p>
           <div class="grid grid-cols-3 gap-2">
             <img src="https://framerusercontent.com/images/gtqUWWAxMMx3qOipzJrp4Lxc3ao.png" alt="Bố mẹ gửi tin nhắn" class="rounded-lg hairline-all w-full">
@@ -387,8 +435,9 @@
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
           <h3 class="text-2xl font-bold uppercase" data-i18n="med-remind-title">LỊCH NHẮC THUỐC ĐƠN GIẢN</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="med-remind-desc">
-            Đến giờ uống thuốc, điện thoại bố mẹ chỉ rung chuông kèm 2 lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con cái theo dõi được phản hồi từ xa trong ứng dụng của mình.
+            Đến giờ, bố mẹ nhận lời nhắc với hai lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con xem phản hồi từ xa trong ứng dụng của mình.
           </p>
+<p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="med-status-note">Trạng thái “Đã uống” phản ánh xác nhận trên ứng dụng. Hệ thống không tự kiểm chứng việc uống thuốc; con có thể xem phản hồi và gửi lại lời nhắc khi cần.</p>
           <div class="grid grid-cols-3 gap-2">
             <img src="https://framerusercontent.com/images/hseGNKreVQyEktYVoECWHvku4.png" alt="Cài đặt lịch" class="rounded-lg hairline-all w-full">
             <img src="https://framerusercontent.com/images/W0eFyNLmv74gfKj0aDsa8b9c0gM.png" alt="Lời nhắc bố mẹ" class="rounded-lg hairline-all w-full">
@@ -404,10 +453,15 @@
         [ 06 // BÀI HỌC THIẾT KẾ & BƯỚC TIẾP THEO ]
       </div>
 
+      <div class="space-y-3 max-w-3xl">
+        <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="lesson-title">THÔNG TIN CẦN THIẾT CỦA MỖI PHÍA</h3>
+        <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="lesson-desc">Trong quá trình thiết kế, tôi nhận ra bố mẹ và con cái không cần cùng một lượng thông tin. Bố mẹ cần hiểu và phản hồi nhanh; con cái cần biết sự việc nào cần ưu tiên và có đủ bối cảnh để hỗ trợ.</p>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn1-tag">01 / KHẢ NĂNG SỬ DỤNG</span>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn1-desc">Cần thử nghiệm trực tiếp trên tay người lớn tuổi để xem họ có thể thao tác mà hoàn toàn không cần người khác hướng dẫn.</p>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn1-desc">Bố mẹ có hiểu nút bấm và hoàn thành tác vụ mà không cần hướng dẫn? Cần thử nghiệm trực tiếp với người lớn tuổi.</p>
         </div>
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn2-tag">02 / ĐỘ TRỄ CẢNH BÁO</span>
@@ -415,9 +469,14 @@
         </div>
         <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)] space-y-2 gsap-card">
           <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="learn3-tag">03 / NIỀM TIN VÀO AI</span>
-          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn3-desc">Đảm bảo người dùng hiểu rõ AI chỉ đóng vai trò trợ lý tham khảo, con người vẫn là chốt chặn quyết định cuối cùng.</p>
+          <p class="text-sm text-[var(--text-muted)]" data-i18n="learn3-desc">Kiểm tra xem gia đình có hiểu gợi ý AI và ý nghĩa của lựa chọn “Chưa rõ”, với người thân đưa ra quyết định cuối cùng.</p>
         </div>
       </div>
+
+      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+        <h3 class="font-mono text-xs font-bold uppercase" data-i18n="concept-status-title">TRẠNG THÁI DỰ ÁN / CONCEPT</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="concept-status-desc">Đây vẫn là concept cá nhân. Bước tiếp theo là kiểm tra khả năng đọc và thao tác với người lớn tuổi, sau đó thử các tình huống cảnh báo với cả hai nhóm người dùng.</p>
+      </aside>
 
       <!-- Large Mockup Gallery -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
@@ -454,11 +513,7 @@
       orientation: 'vertical',
       smoothWheel: true
     });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // GSAP's ticker below is the single clock for Lenis and ScrollTrigger.
 
     // Sync GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
@@ -570,6 +625,15 @@
     // Bilingual Translation System
     const translations = {
       vi: {
+        'concept-limit-title': "GIỚI HẠN CỦA CONCEPT",
+        'concept-limit-desc': "Điện thoại có thể hết pin hoặc không ở cạnh người dùng. Khả năng phát hiện thực tế và độ chính xác của AI cần được kiểm chứng.",
+        'child-video-caption': "Prototype ứng dụng con cái — xem cảnh báo và thông tin cần xử lý.",
+        'ai-fraud-flow': "Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ. Hệ thống chỉ ra dấu hiệu cần chú ý để con xem lại và gửi hướng dẫn dễ hiểu cho bố mẹ.",
+        'med-status-note': "Trạng thái “Đã uống” phản ánh xác nhận trên ứng dụng. Hệ thống không tự kiểm chứng việc uống thuốc; con có thể xem phản hồi và gửi lại lời nhắc khi cần.",
+        'lesson-title': "THÔNG TIN CẦN THIẾT CỦA MỖI PHÍA",
+        'lesson-desc': "Trong quá trình thiết kế, tôi nhận ra bố mẹ và con cái không cần cùng một lượng thông tin. Bố mẹ cần hiểu và phản hồi nhanh; con cái cần biết sự việc nào cần ưu tiên và có đủ bối cảnh để hỗ trợ.",
+        'concept-status-title': "TRẠNG THÁI DỰ ÁN / CONCEPT",
+        'concept-status-desc': "Đây vẫn là concept cá nhân. Bước tiếp theo là kiểm tra khả năng đọc và thao tác với người lớn tuổi, sau đó thử các tình huống cảnh báo với cả hai nhóm người dùng.",
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
         'top-case-num': 'CASE 01 / 03',
@@ -588,53 +652,62 @@
         'meta-time-val': '2026',
         'sec1-tag': '[ 01 // BỐI CẢNH VÀ XUNG ĐỘT TÂM LÝ ]',
         'p1-tag': '[ TÂM LÝ BỐ MẸ ]',
-        'p1-quote': '"Biết con quan tâm, nhưng tôi cần không gian riêng."',
+        'p1-quote': "Biết con quan tâm,<br>nhưng tôi cần<br>không gian riêng.",
         'p1-desc': 'Bố mẹ vẫn muốn duy trì nhịp sống thường nhật, không muốn bị con cái coi như người bệnh hay liên tục phải báo cáo tình trạng từng giờ.',
         'p2-tag': '[ TÂM LÝ CON CÁI ]',
-        'p2-quote': '"Mẹ đang bận, hay có vấn đề gì xảy ra không ta?"',
-        'p2-desc': 'Khi sống xa nhà, con cái khó biết một cuộc gọi nhỡ chỉ đơn thuần là do bố mẹ đang quét sân hay là dấu hiệu cần được hỗ trợ y tế khẩn cấp.',
+        'p2-quote': "Mẹ đang bận,<br>hay có vấn đề gì không ta?",
+        'p2-desc': "Khi sống xa nhà, con cái khó biết một cuộc gọi không được bắt máy là do bố mẹ đang bận hay là dấu hiệu cần hỗ trợ.",
         'hmw-tag': '[ CÂU HỎI THIẾT KẾ CỐT LÕI (HOW MIGHT WE) ]',
         'hmw-quote': '"Làm thế nào để con cái nhận được thông tin cần thiết khi có sự cố, trong khi bố mẹ vẫn giữ được sự chủ động và quyền riêng tư trong sinh hoạt hằng ngày?"',
         'sec2-tag': '[ 02 // GIẢI PHÁP TỔNG QUAN ]',
         'sec2-title': 'TẬN DỤNG CHIẾC ĐIỆN THOẠI ĐANG CÓ',
-        'sec2-desc': 'Concept sử dụng chính chiếc smartphone mà gia đình đã quen thuộc để hạn chế chi phí và rào cản làm quen với thiết bị chuyên dụng mới. Trải nghiệm được chia thành 2 ứng dụng độc lập với luồng tương tác đo ni đóng giày cho từng bên.',
+        'sec2-desc': "Concept sử dụng điện thoại mà gia đình đã quen thuộc để hạn chế chi phí và thời gian làm quen với thiết bị mới. Trải nghiệm được chia thành hai ứng dụng với thông tin và thao tác phù hợp cho từng phía.",
         'p-fall-tag': '[ 01 / TÉ NGÃ ]',
         'p-fall-title': 'Ghi Nhận Va Chạm',
-        'p-fall-desc': 'Ghi nhận tín hiệu gia tốc kế khi có rơi va đập, hỏi bố mẹ trước và chỉ gửi cảnh báo đến con khi sau thời gian cài đặt không có phản hồi.',
+        'p-fall-desc': "Concept đề xuất ghi nhận tín hiệu va chạm, hỏi bố mẹ trước và báo con nếu chưa có phản hồi sau thời gian đã đặt.",
         'p-scam-tag': '[ 02 / LỪA ĐẢO ]',
         'p-scam-title': 'AI Hỗ Trợ Đánh Giá',
-        'p-scam-desc': 'Bố mẹ chuyển tiếp tin nhắn, cuộc gọi lạ; hệ thống AI phân tích dấu hiệu và gợi ý lời khuyên trực quan để con kiểm tra trước.',
+        'p-scam-desc': "Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ; AI hỗ trợ con xem lại trước khi gửi hướng dẫn cho bố mẹ.",
         'p-med-tag': '[ 03 / NHẮC THUỐC ]',
         'p-med-title': 'Cài Đặt Từ Xa',
-        'p-med-desc': 'Con cái thiết lập lịch uống thuốc phức tạp từ xa; phía bố mẹ chỉ nhận lời nhắc to rõ kèm một nút bấm "Tôi đã uống" duy nhất.',
-        'sec3-tag': '[ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]',
-        'child-app-tag': '[ PHÍA CON CÁI ]',
-        'child-app-title': 'VIỆC GÌ CẦN XỬ LÝ?',
-        'child-app-desc': 'Màn hình con cái ưu tiên các sự kiện bất thường cần giải quyết ngay. Mỗi thông báo đi kèm thời gian thực tế, mức pin của điện thoại bố mẹ và bối cảnh để con ra quyết định chính xác.',
-        'parent-app-tag': '[ PHÍA BỐ MẸ ]',
-        'parent-app-title': 'TÔI CẦN LÀM GÌ?',
-        'parent-app-desc': 'Giao diện bố mẹ dùng chữ cỡ lớn, câu ngắn, loại bỏ toàn bộ icon trừu tượng. Mỗi màn hình chỉ chứa duy nhất một tác vụ chính để triệt tiêu mọi khả năng bấm nhầm.',
+        'p-med-desc': "Con cài lịch từ xa; bố mẹ nhận lời nhắc với hai lựa chọn rõ ràng: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”.",
+        'sec3-tag': "[ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]",
+        'child-app-tag': "[ PHÍA CON CÁI ]",
+        'child-app-title': "VIỆC GÌ CẦN XỬ LÝ?",
+        'child-app-desc': "Màn hình ưu tiên các sự việc cần xử lý. Mỗi cảnh báo đi kèm thời gian, mức pin và thông tin liên quan để người dùng có cơ sở quyết định bước tiếp theo.",
+        'parent-app-tag': "[ PHÍA BỐ MẸ ]",
+        'parent-app-title': "TÔI CẦN LÀM GÌ?",
+        'parent-app-desc': "Giao diện dùng chữ lớn, câu ngắn và nút bấm rõ. Mỗi màn hình tập trung vào một hành động chính để giảm thao tác và hạn chế nhầm lẫn.",
         'sec4-tag': '[ 04 // PHÁT HIỆN TÉ NGÃ — HỎI BỐ MẸ TRƯỚC KHI BÁO CON ]',
-        'sec4-desc': 'Va chạm mạnh có thể đến từ một cú ngã thật sự hoặc chỉ do làm rơi điện thoại xuống đệm. Do đó, hệ thống luôn hỏi tình trạng của bố mẹ trước. Nếu không có phản hồi sau 30 giây, cảnh báo khẩn cấp mới được kích hoạt tới con.',
+        'sec4-desc': "Va chạm mạnh có thể xuất phát từ một cú ngã hoặc từ việc điện thoại bị rơi. Ứng dụng hỏi tình trạng của bố mẹ trước; nếu không có phản hồi sau thời gian đã đặt mới gửi cảnh báo cho người thân. Mốc 30 giây là giả định thiết kế, cần được thử nghiệm trong tình huống thực tế.",
         'step1-title': '01 / Bố mẹ xác nhận tình trạng',
         'step2-title': '02 / Con nhận cảnh báo khẩn cấp',
-        'step3-title': '03 / Cập nhật trạng thái an toàn',
+        'step3-title': "03 / Cập nhật tình trạng",
         'sec5-tag': '[ 05 // AI CHỐNG LỪA ĐẢO & LỊCH NHẮC THUỐC ]',
-        'ai-fraud-title': 'AI NHẬN DIỆN LỪA ĐẢO',
-        'ai-fraud-desc': 'Kết quả được phân cấp thành 3 mức minh bạch: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”, tránh tạo ảo tưởng rằng AI là công cụ xác thực tuyệt đối 100%.',
+        'ai-fraud-title': "AI HỖ TRỢ NHẬN DIỆN LỪA ĐẢO",
+        'ai-fraud-desc': "Kết quả được chia thành ba mức: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”. Cách diễn đạt này tránh tạo cảm giác AI có thể xác nhận tuyệt đối một nội dung an toàn hay nguy hiểm.",
         'med-remind-title': 'LỊCH NHẮC THUỐC ĐƠN GIẢN',
-        'med-remind-desc': 'Đến giờ uống thuốc, điện thoại bố mẹ chỉ rung chuông kèm 2 lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con cái theo dõi được phản hồi từ xa trong ứng dụng của mình.',
+        'med-remind-desc': "Đến giờ, bố mẹ nhận lời nhắc với hai lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con xem phản hồi từ xa trong ứng dụng của mình.",
         'sec6-tag': '[ 06 // BÀI HỌC THIẾT KẾ & BƯỚC TIẾP THEO ]',
         'learn1-tag': '01 / KHẢ NĂNG SỬ DỤNG',
-        'learn1-desc': 'Cần thử nghiệm trực tiếp trên tay người lớn tuổi để xem họ có thể thao tác mà hoàn toàn không cần người khác hướng dẫn.',
+        'learn1-desc': "Bố mẹ có hiểu nút bấm và hoàn thành tác vụ mà không cần hướng dẫn? Cần thử nghiệm trực tiếp với người lớn tuổi.",
         'learn2-tag': '02 / ĐỘ TRỄ CẢNH BÁO',
         'learn2-desc': 'Mốc thời gian 30 giây cần kiểm chứng trong các tình huống thực tế để tránh báo động giả gây hoang mang.',
         'learn3-tag': '03 / NIỀM TIN VÀO AI',
-        'learn3-desc': 'Đảm bảo người dùng hiểu rõ AI chỉ đóng vai trò trợ lý tham khảo, con người vẫn là chốt chặn quyết định cuối cùng.',
+        'learn3-desc': "Kiểm tra xem gia đình có hiểu gợi ý AI và ý nghĩa của lựa chọn “Chưa rõ”, với người thân đưa ra quyết định cuối cùng.",
         'foot-back': 'VỀ TRANG CHỦ',
         'foot-next': 'DỰ ÁN TIẾP THEO: IQ MYTH'
       },
       en: {
+        'concept-limit-title': "CONCEPT LIMITATIONS",
+        'concept-limit-desc': "The phone may run out of battery or be away from the user. Detection performance and AI accuracy still need validation.",
+        'child-video-caption': "Child app prototype — reviewing alerts and information that needs attention.",
+        'ai-fraud-flow': "Parents send suspicious messages or links. The system highlights signs to review so their children can assess the content and send clear guidance back.",
+        'med-status-note': "“Taken” reflects a confirmation in the app. The system cannot verify that medicine was actually taken; children can review responses and send another reminder when needed.",
+        'lesson-title': "THE INFORMATION EACH SIDE NEEDS",
+        'lesson-desc': "During design, I realized parents and children do not need the same amount of information. Parents need to understand and respond quickly; children need to know what takes priority and have enough context to help.",
+        'concept-status-title': "PROJECT STATUS / CONCEPT",
+        'concept-status-desc': "This remains a personal concept. Next, I plan to check readability and interactions with older adults, then test alert scenarios with both user groups.",
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
         'top-case-num': 'CASE 01 / 03',
@@ -653,55 +726,57 @@
         'meta-time-val': '2026',
         'sec1-tag': '[ 01 // CONTEXT & PSYCHOLOGICAL CONFLICT ]',
         'p1-tag': '[ PARENT MINDSET ]',
-        'p1-quote': '"I appreciate their care, but I need my dignity and space."',
+        'p1-quote': "I know you care,<br>but I need<br>my own space.",
         'p1-desc': 'Parents desire their normal daily rhythm without feeling treated as fragile patients or subjected to invasive hourly check-ins.',
         'p2-tag': '[ ADULT CHILDREN MINDSET ]',
-        'p2-quote': '"Is mom just busy in the yard, or did something happen?"',
-        'p2-desc': 'Living away from home, adult children cannot distinguish an unanswered call from simple garden chores or an urgent medical incident.',
+        'p2-quote': "Is Mom busy,<br>or is something wrong?",
+        'p2-desc': "When living far apart, children cannot easily tell whether an unanswered call means their parents are busy or need help.",
         'hmw-tag': '[ CORE DESIGN QUESTION (HOW MIGHT WE) ]',
         'hmw-quote': '"How might adult children receive essential signals during critical incidents while parents retain daily dignity and privacy?"',
         'sec2-tag': '[ 02 // SOLUTION OVERVIEW ]',
         'sec2-title': 'LEVERAGING FAMILIAR HARDWARE',
-        'sec2-desc': 'Built upon everyday smartphones families already own to eliminate hardware costs and learning hurdles. Segmented into two tailored apps with interaction flows engineered specifically for each generation.',
+        'sec2-desc': "The concept uses phones families already know to reduce costs and time spent learning a new device. Two apps provide information and interactions suited to each side.",
         'p-fall-tag': '[ 01 / FALLS ]',
         'p-fall-title': 'Impact & Fall Detection',
-        'p-fall-desc': 'Monitors accelerometer signals on heavy impact, asks parents first, and alerts children only when no response after 30 seconds.',
+        'p-fall-desc': "The concept proposes detecting impact signals, asking the parent first, and alerting their child after a configured wait without a response.",
         'p-scam-tag': '[ 02 / FRAUD ]',
         'p-scam-title': 'AI Scam Screening',
-        'p-scam-desc': 'Parents forward suspicious calls or messages; AI classifies danger level so children can quickly verify and protect them.',
+        'p-scam-desc': "Parents send suspicious messages or links; AI helps their children review the content before sending guidance back.",
         'p-med-tag': '[ 03 / MEDICATION ]',
         'p-med-title': 'Remote Medication Config',
-        'p-med-desc': 'Children configure complex medication schedules remotely; parents receive high-legibility visual alerts with a single confirmation button.',
-        'sec3-tag': '[ 03 // DUAL APP — PURPOSE-BUILT FOR EACH SIDE ]',
-        'child-app-tag': '[ ADULT CHILD APP ]',
-        'child-app-title': 'WHAT REQUIRES ATTENTION?',
-        'child-app-desc': 'Child dashboard prioritizes urgent exceptions requiring quick action. Every alert includes real-time telemetry, parent battery level, and contextual cues.',
-        'parent-app-tag': '[ PARENT APP ]',
-        'parent-app-title': 'WHAT DO I DO NOW?',
-        'parent-app-desc': 'Senior interface uses oversized high-contrast type, short copy, and zero abstract icons. Exactly one focal action per screen eliminates misclicks.',
+        'p-med-desc': "Children set schedules remotely; parents receive reminders with two clear choices: “I have taken it” or “Remind me in 15 minutes”.",
+        'sec3-tag': "[ 03 // DUAL APP — PURPOSE-BUILT FOR EACH SIDE ]",
+        'child-app-tag': "[ ADULT CHILD APP ]",
+        'child-app-title': "WHAT REQUIRES ATTENTION?",
+        'child-app-desc': "The screen prioritizes events that need attention. Each alert includes a time, battery level, and relevant information to support the next decision.",
+        'parent-app-tag': "[ PARENT APP ]",
+        'parent-app-title': "WHAT DO I DO NOW?",
+        'parent-app-desc': "The interface uses large text, short sentences, and clear buttons. Each screen focuses on one main action to reduce effort and help avoid mistakes.",
         'sec4-tag': '[ 04 // FALL DETECTION — PARENT CONFIRMATION FIRST ]',
-        'sec4-desc': 'Heavy impacts can result from a genuine accident or merely dropping a phone on the couch. The system queries the parent first; emergency escalation triggers only after a 30-second unanswered window.',
+        'sec4-desc': "A strong impact could be a fall or a dropped phone. The app asks the parent first and alerts family only after the configured wait without a response. The 30-second interval is a design assumption that needs testing in real situations.",
         'step1-title': '01 / Parent status confirmation',
         'step2-title': '02 / Child receives incident alert',
-        'step3-title': '03 / Real-time status synced',
+        'step3-title': "03 / Update the status",
         'sec5-tag': '[ 05 // AI FRAUD SCREENING & MEDICATION ROUTINES ]',
-        'ai-fraud-title': 'AI SCAM SCREENING',
-        'ai-fraud-desc': 'Outputs clear, transparent triage tiers: "Suspicious Warning", "Insufficient Data", and "No Immediate Red Flags", avoiding false impressions of 100% AI infallibility.',
+        'ai-fraud-title': "AI-ASSISTED SCAM REVIEW",
+        'ai-fraud-desc': "Results use three levels: “Signs of a scam”, “Insufficient information”, and “No clear signs detected”. This wording avoids implying that AI can conclusively determine whether content is safe or dangerous.",
         'med-remind-title': 'STREAMLINED MEDICATION ROUTINE',
-        'med-remind-desc': 'When time arrives, parent phone rings with 2 clear choices: "I Have Taken It" or "Remind in 15 mins". Children monitor adherence status remotely in their feed.',
+        'med-remind-desc': "At the scheduled time, parents get a reminder with two choices: “I have taken it” or “Remind me in 15 minutes”. Children can review the response remotely in their app.",
         'sec6-tag': '[ 06 // DESIGN LEARNINGS & NEXT STEPS ]',
         'learn1-tag': '01 / USABILITY TESTING',
-        'learn1-desc': 'Field-test directly in senior hands to ensure effortless zero-instruction independence.',
+        'learn1-desc': "Can parents understand the buttons and complete tasks without instructions? This needs direct testing with older adults.",
         'learn2-tag': '02 / ALERT LATENCY',
         'learn2-desc': 'The 30-second grace window must be tested across real environments to prevent anxiety-inducing false alarms.',
         'learn3-tag': '03 / TRUST IN AI',
-        'learn3-desc': 'Ensure families understand AI is strictly an advisory assistant, with human family members making the final judgment.',
+        'learn3-desc': "Check whether families understand AI suggestions and the “Unclear” option, with family members making the final judgment.",
         'foot-back': 'BACK TO HOME',
         'foot-next': 'NEXT PROJECT: IQ MYTH'
       }
     };
 
     function setLang(lang) {
+      lang = lang === 'en' ? 'en' : 'vi';
+      document.documentElement.lang = lang;
       localStorage.setItem('tru_lang', lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
