@@ -273,3 +273,24 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
 * Phạm vi phát hành: nội dung trang chủ VI/EN, ba case study được đối chiếu Framer, tài nguyên Yên/MoMo bổ sung, trang 404 và lời thoại HTML VI/EN trong minh họa Yên.
 * Kiểm tra trước phát hành: cả 5 trang qua kiểm tra thẻ HTML, ID, liên kết/anchor/tài nguyên cục bộ, cú pháp JavaScript, khóa dịch VI/EN và các tuyên bố đã loại bỏ; `git diff --check` sạch. Các kiểm tra giao diện và media được ghi tại mục 9–11.
 * Quy trình phát hành: commit lên `main` của `mrtrudesigner-wq/tru-portfolio`, push `origin main` để Vercel triển khai tại `https://mrtrudesigner.vercel.app`, sau đó kiểm tra mã HTML và tài nguyên trên production.
+* **Kết quả:** Commit `f31ef76` đã được triển khai thành công trên Vercel.
+
+---
+
+## 13. RÀ SOÁT & HOÀN THIỆN COPYWRITING TOÀN TRANG — 11/11/2026
+
+* **Yêu cầu người dùng:** Rà soát lại copywriting toàn bộ trang web và đẩy lên web (deploy lên production).
+* **Kết quả rà soát toàn bộ 5 trang web:**
+  * Giữ vững bản sắc và danh xưng: Product Designer / UI/UX Designer, không nhận vơ danh xưng, không phóng đại số liệu, không tuyên bố thiếu bằng chứng.
+  * Tinh chỉnh câu thông điệp tại Hero (`hero-quote`):
+    * VI: *"Tôi thiết kế sản phẩm số rõ ràng về thông tin, mạch lạc trong thao tác."*
+    * EN: *"I design digital products with clear information architecture and intuitive user flows."*
+  * Tinh chỉnh câu chốt định vị năng lực tại mục Chuyện là... (`story-p3`):
+    * VI: *"Tôi hướng tới những sản phẩm số rõ ràng về trải nghiệm, chỉn chu về thị giác và khả thi khi đưa vào sản xuất."*
+    * EN: *"I aim for digital products that are clear in experience, refined in visual craft, and realistic to implement."*
+  * Đồng bộ phụ đề dự án IQ Myth giữa mã HTML tĩnh và từ điển translations: *"THIẾT KẾ LUỒNG LÀM BÀI VÀ NHẬN KẾT QUẢ"*.
+* **Kiểm tra kỹ thuật trước phát hành:**
+  * Toàn bộ 5 trang HTML qua kiểm tra cân bằng thẻ (HTML parser test).
+  * `git diff --check` sạch hoàn toàn, không có trailing whitespace.
+* **Quy trình triển khai:**
+  * Commit lên `main`, push lên remote `origin main` qua SSH để Vercel tự động build và deploy tới `https://mrtrudesigner.vercel.app`.
