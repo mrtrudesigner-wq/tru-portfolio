@@ -117,6 +117,10 @@
     section[id], #user-flow, #before-after { scroll-margin-top: 104px; }
     h1, h2, h3, blockquote { text-wrap: balance; }
     p, li, figcaption { text-wrap: pretty; }
+    main img:not(#momo-comparison img), main iframe, #momo-comparison {
+      position: relative;
+      z-index: 32;
+    }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -138,7 +142,7 @@
 
   <!-- TOP BAR -->
   <div class="hairline-b font-mono text-[10px] sm:text-[11px] tracking-mono uppercase py-2 sm:py-2.5 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-secondary)] gap-2 overflow-hidden">
-    <a href="index.html" class="flex items-center gap-1.5 hover:underline font-bold magnetic-btn shrink-0">
+    <a href="index.html#work" class="flex items-center gap-1.5 hover:underline font-bold magnetic-btn shrink-0">
       <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
       <span class="hidden sm:inline" data-i18n="top-back">QUAY LẠI DANH SÁCH DỰ ÁN</span>
       <span class="sm:hidden" data-i18n="top-back-mobile">QUAY LẠI</span>
@@ -599,7 +603,8 @@
         opacity: 0,
         duration: 0.75,
         ease: 'power3.out',
-        delay: 0.18
+        delay: 0.18,
+        clearProps: 'transform'
       });
 
       gsap.utils.toArray('.gsap-card').forEach(card => {
@@ -612,7 +617,8 @@
           y: 28,
           opacity: 0,
           duration: 0.7,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          clearProps: 'transform'
         });
       });
     }
@@ -902,5 +908,6 @@
     const savedLang = localStorage.getItem('tru_lang') || 'vi';
     setLang(savedLang);
   </script>
+  <script src="assets/js/interactive-fx.js"></script>
 </body>
 </html>

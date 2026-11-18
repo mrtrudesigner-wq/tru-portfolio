@@ -267,14 +267,14 @@
           <span data-i18n="works-tag">[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]</span>
         </div>
         <a href="index.html#work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
-          Xem tất cả dự án trên trang chủ
+          Xem tất cả dự án
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Work 01: Yên — Chăm Sóc Bố Mẹ Từ Xa -->
-        <a href="yen.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="yen.html" data-cursor-vi="[ ĐỌC CASE STUDY → ]" data-cursor-en="[ READ CASE STUDY → ]" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
               <span data-i18n="w1-tag">[ 01 // AGING-TECH ] · DUAL APP</span>
@@ -294,7 +294,7 @@
         </a>
 
         <!-- Work 02: IQ Myth -->
-        <a href="iq-myth.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="iq-myth.html" data-cursor-vi="[ ĐỌC CASE STUDY → ]" data-cursor-en="[ READ CASE STUDY → ]" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
               <span data-i18n="w2-tag">[ 02 // EDTECH ] · BEHAVIORAL UI</span>
@@ -314,7 +314,7 @@
         </a>
 
         <!-- Work 03: MoMo -->
-        <a href="momo.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="momo.html" data-cursor-vi="[ ĐỌC CASE STUDY → ]" data-cursor-en="[ READ CASE STUDY → ]" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-pink-600 font-bold uppercase tracking-mono">
               <span data-i18n="w3-tag">[ 03 // FINTECH ] · USER RESEARCH</span>
@@ -446,7 +446,7 @@
         'btn-contact': 'Liên hệ',
         'shortcut-hint': 'Mẹo: Bấm <kbd class="px-2 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> để về trang chủ',
         'works-tag': '[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]',
-        'btn-view-all': 'Xem tất cả dự án trên trang chủ',
+        'btn-view-all': 'Xem tất cả dự án',
         'w1-tag': '[ 01 // AGING-TECH ] · DUAL APP',
         'w1-title': 'Yên — Chăm Sóc Bố Mẹ Từ Xa',
         'w1-desc': 'Hai ứng dụng kết nối bố mẹ và con cái qua ba nhu cầu cốt lõi: phát hiện té ngã, cảnh báo lừa đảo bằng AI và lịch nhắc thuốc trực quan.',
@@ -471,7 +471,7 @@
         'btn-contact': 'Contact',
         'shortcut-hint': 'Tip: Press <kbd class="px-2 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--text-primary)] font-bold">ESC</kbd> to return Home',
         'works-tag': '[ SELECTED CASE STUDIES // DIRECTORY ]',
-        'btn-view-all': 'View All Projects on Homepage',
+        'btn-view-all': 'View All Projects',
         'w1-tag': '[ 01 // AGING-TECH ] · DUAL APP',
         'w1-title': 'Yên — Caring for Parents from Afar',
         'w1-desc': 'A dual-app ecosystem connecting parents and adult children across fall detection, AI fraud interception, and visual medication scheduling.',
@@ -518,5 +518,6 @@
     // Initialize Lucide Icons
     lucide.createIcons();
   </script>
+  <script src="assets/js/interactive-fx.js"></script>
 </body>
 </html>

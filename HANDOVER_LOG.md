@@ -305,3 +305,27 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * **Tương phản màu (Contrast) 3 Theme:** Chuẩn hóa `--accent-highlight` (`#047857` đạt chuẩn WCAG AA trên nền Light, `#C4FF00` trên Dark, `#121212` trên Pink), `--accent-display` (`#6B0F2B` trên Pink) và `--status-dot`; sửa lỗi mất chấm trạng thái ở `404.html` khi đổi ngôn ngữ.
   * **Hiệu năng, Điều hướng & Hình ảnh:** Rút ngắn thời gian reveal chữ Hero xuống `~0.75s` kèm hỗ trợ `prefers-reduced-motion`; bổ sung `scroll-margin-top` và offset động theo chiều cao header; dùng bộ ảnh `.webp` nội bộ (`assets/covers/`) kèm preload cho hover preview và Quick Summary Drawer; bổ sung `loading="lazy" decoding="async"` cho ảnh bên dưới màn hình đầu.
 * **Kiểm tra & Triển khai:** Toàn bộ 5 trang qua kiểm tra cân bằng thẻ HTML, cú pháp JS, đầy đủ từ điển `VI / EN` và `git diff --check` sạch; commit và push lên `origin main` để Vercel tự động deploy.
+
+---
+
+## 15. NÂNG CẤP TỔNG THỂ: PIXEL INTRO CURTAIN, HALFTONE CURSOR, DARK FOOTER & CHUẨN HÓA NỘI DUNG — 18/11/2026
+
+* **Bối cảnh & Quyết định thiết kế theo yêu cầu:**
+  * **Kiến trúc Single-Page tinh gọn:** Giữ nguyên cấu trúc trang chủ cuộn mượt (`#work`, `#craft`, `#experience`, `#story`, `#contact`), loại bỏ toàn bộ các trang con dư thừa theo phản hồi của Trứ (*"thôi bỏ các trang con đi, nói nhiều quá không tốt"*). Giữ website tập trung, cô đọng và có sức nặng.
+  * **Dark 50/50 Split Footer (`#141416`):** Triển khai chân trang màu đen tối giản với bố cục chia 50/50 theo đúng chỉ đạo (*"bỏ bản này đi, giữ lại chân trang màu đen là được"*). Nửa trái là Colophon triết lý thiết kế và trạng thái sẵn sàng nhận dự án; nửa phải là Tabular `<dl>` danh bạ trực tiếp (Email, Telegram, LinkedIn, GitHub) và link nhanh tới 3 Case Studies.
+  * **Pixel-Matrix & Noise Intro Curtain (`interactive-fx.js`):** Màn chào mở đầu canvas với monogram `T.` dithered, thanh đếm phần trăm monospaced, hỗ trợ click/phím ESC để skip ngay lập tức, tự động gỡ bỏ khi người dùng bật `prefers-reduced-motion`.
+  * **2D Velocity-Field Halftone Cursor & Magnetic Pill:** Con trỏ tùy biến với vệt hạt dither tính toán theo vector vận tốc chuột (`interactive-fx.js`) và nhãn từ điển song ngữ ngữ cảnh (`[ ĐỌC CASE STUDY → ]`, `[ XEM CHI TIẾT ]`), tự động fallback về con trỏ hệ thống trên thiết bị cảm ứng hoặc khi con trỏ rời màn hình.
+  * **Chuẩn hóa Copy Kinh nghiệm (CV Grounding):** Thay thế đoạn mô tả kinh nghiệm chung chung bằng dữ liệu xác thực từ CV:
+    * **Marchi Lab:** *"Marchi Lab · Thiết kế xuyên suốt từ luồng người dùng đến UI & Prototype cho sản phẩm SaaS, E-commerce, EdTech và Web3; xây dựng Design System và tối ưu phễu chuyển đổi (Onboarding, Quiz, Paywall)."*
+    * **HIVELAB VINA:** *"HIVELAB VINA · Thiết kế giao diện Web/Mobile cho hệ sinh thái Samsung & Naver; xây dựng UI Library theo chuẩn Apple HIG, Material Design và kiểm thử chất lượng hiển thị (Design QA) trước khi go-live."*
+  * **Sửa lỗi bóng thoại minh họa Yên (`yen.html`):** Thiết lập `position: relative; z-index: 2` cho `.persona-dialogue` và giới hạn `main img:not(.persona-artwork img)` để bong bóng thoại không bị ảnh che mất chữ.
+  * **Loại bỏ họa tiết hình tròn:** Đã xóa bỏ hình tròn thử nghiệm ở phần Kinh nghiệm theo phản hồi (*"vòng tròn ở background chán v"*).
+
+* **Kiểm tra kỹ thuật trước phát hành:**
+  * Toàn bộ 5 trang HTML (`index.html`, `yen.html`, `iq-myth.html`, `momo.html`, `404.html`) qua kiểm tra parser cân bằng thẻ (0 unclosed tags, 0 mismatched tags).
+  * Syntax audit: `node --check assets/js/interactive-fx.js` không có lỗi cú pháp.
+  * Kiểm tra từ khóa cấm: 0 từ khóa "Lead Designer", 0 từ khóa template ngoài danh mục.
+  * `git diff --check`: Sạch hoàn toàn, không có trailing whitespace.
+
+* **Quy trình triển khai:**
+  * Commit lên `main`, push lên `origin main` (`git@github.com:mrtrudesigner-wq/tru-portfolio.git`) để Vercel kích hoạt webhook tự động deploy lên `https://mrtrudesigner.vercel.app`.

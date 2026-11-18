@@ -184,6 +184,27 @@
     p, li, figcaption {
       text-wrap: pretty;
     }
+    .menu-link-row {
+      padding-top: 0.35rem;
+    }
+    .hero-title-container .overflow-hidden {
+      padding-top: 0.2em;
+      margin-top: -0.2em;
+      padding-bottom: 0.08em;
+    }
+    html.tru-intro-lock,
+    html.tru-intro-lock body {
+      overflow: hidden !important;
+    }
+    #story .rounded-2xl,
+    .case-row .aspect-\[16\/10\] {
+      position: relative;
+      z-index: 32;
+    }
+    .footer-dark {
+      background-color: #141416;
+      color: #F5F5F0;
+    }
 
     /* Bracket hover reveal animation */
     .bracket-hover::before {
@@ -275,6 +296,24 @@
   </style>
 </head>
 <body class="selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+
+  <!-- SIGNATURE PIXEL-MATRIX INTRO CURTAIN -->
+  <div id="tru-intro-overlay" aria-hidden="true" style="position:fixed;inset:0;z-index:10000;background:#0A0A0B;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;">
+    <canvas id="tru-intro-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+    <div id="tru-intro-hud" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;transform:translateY(108px);pointer-events:none;">
+      <div id="tru-intro-pct" class="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#F5F5F0] tabular-nums">00%</div>
+      <div id="tru-intro-tag" class="font-mono text-[10px] uppercase tracking-mono text-[#8E8E93]">[ TRỨ // PRODUCT DESIGNER ]</div>
+    </div>
+    <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;z-index:2;pointer-events:none;opacity:0.32;" class="font-mono text-[9px] uppercase tracking-mono text-[#F5F5F0]">
+      [ CLICK / ESC ]
+    </div>
+  </div>
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var _io = document.getElementById('tru-intro-overlay');
+      if (_io) _io.remove();
+    }
+  </script>
 
   <!-- SCROLL PROGRESS BAR -->
   <div id="scroll-progress"></div>
@@ -385,10 +424,10 @@
     <div class="flex items-center justify-between font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] mb-10 sm:mb-12">
       <span class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
-        <span>[ IDENTITY & DISCIPLINE ]</span>
+        <span data-hero-scramble>[ IDENTITY & DISCIPLINE ]</span>
       </span>
-      <span class="hidden md:inline">[ CRAFT · INTENTION · SYSTEMS ]</span>
-      <span>01 / 04</span>
+      <span class="hidden md:inline" data-hero-scramble>[ CRAFT · INTENTION · SYSTEMS ]</span>
+      <span data-hero-scramble>01 / 04</span>
     </div>
 
     <!-- Mega Hero Typography with GSAP Reveal Target -->
@@ -413,7 +452,7 @@
       
       <div class="lg:col-span-4 font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] space-y-4">
         <div>
-          <span class="text-[var(--text-primary)] font-bold block mb-1">[ POSITION & ROLES ]</span>
+          <span class="text-[var(--text-primary)] font-bold block mb-1" data-hero-scramble>[ POSITION & ROLES ]</span>
           <p class="leading-relaxed break-words">
             UI/UX DESIGNER @ MARCHI LAB<br>
             PREVIOUSLY @ HIVELAB VINA<br>
@@ -421,7 +460,7 @@
           </p>
         </div>
         <div class="pt-4 hairline-t">
-          <span class="text-[var(--text-primary)] font-bold block mb-1">[ FOCUS AREAS ]</span>
+          <span class="text-[var(--text-primary)] font-bold block mb-1" data-hero-scramble>[ FOCUS AREAS ]</span>
           <p class="leading-relaxed break-words">HEALTHCARE, EDTECH, FINTECH & SYSTEM SCALING</p>
         </div>
       </div>
@@ -561,9 +600,14 @@
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
             <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
-              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="lg:hidden" data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="hidden lg:inline-flex items-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                <span>(&nbsp;</span>
+                <span class="case-hover-scramble inline-block max-w-0 opacity-0 overflow-hidden group-hover:max-w-[165px] group-hover:opacity-100 group-hover:mr-1.5 transition-all duration-300 ease-out">XEM TÓM TẮT</span>
+                <span>+&nbsp;)</span>
+              </span>
               <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45"></i>
               </div>
             </span>
           </div>
@@ -625,9 +669,14 @@
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
             <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
-              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="lg:hidden" data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="hidden lg:inline-flex items-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                <span>(&nbsp;</span>
+                <span class="case-hover-scramble inline-block max-w-0 opacity-0 overflow-hidden group-hover:max-w-[165px] group-hover:opacity-100 group-hover:mr-1.5 transition-all duration-300 ease-out">XEM TÓM TẮT</span>
+                <span>+&nbsp;)</span>
+              </span>
               <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45"></i>
               </div>
             </span>
           </div>
@@ -689,9 +738,14 @@
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
             <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
-              <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="lg:hidden" data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="hidden lg:inline-flex items-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                <span>(&nbsp;</span>
+                <span class="case-hover-scramble inline-block max-w-0 opacity-0 overflow-hidden group-hover:max-w-[165px] group-hover:opacity-100 group-hover:mr-1.5 transition-all duration-300 ease-out">XEM TÓM TẮT</span>
+                <span>+&nbsp;)</span>
+              </span>
               <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45"></i>
               </div>
             </span>
           </div>
@@ -814,11 +868,11 @@
             <h3 class="text-2xl sm:text-3xl font-bold uppercase">
               UI/UX DESIGNER
             </h3>
-            <p class="text-base text-[var(--text-muted)] max-w-xl" data-i18n="exp-r1">
-              Marchi Lab · Thiết kế UI/UX cho sản phẩm SaaS, E-commerce, EdTech và Web3.
+            <p class="text-base text-[var(--text-muted)] max-w-2xl leading-relaxed" data-i18n="exp-r1">
+              Marchi Lab · Thiết kế xuyên suốt từ luồng người dùng đến UI & Prototype cho sản phẩm SaaS, E-commerce, EdTech và Web3; xây dựng Design System và tối ưu phễu chuyển đổi (Onboarding, Quiz, Paywall).
             </p>
           </div>
-          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold">
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold shrink-0">
             VIETNAM · FULL-TIME
           </span>
         </div>
@@ -832,11 +886,11 @@
             <h3 class="text-2xl sm:text-3xl font-bold uppercase">
               UI/UX DESIGNER
             </h3>
-            <p class="text-base text-[var(--text-muted)] max-w-xl" data-i18n="exp-r2">
-              HIVELAB VINA · Thiết kế UI/UX cho hệ sinh thái Samsung và Naver, phối hợp cùng kỹ sư.
+            <p class="text-base text-[var(--text-muted)] max-w-2xl leading-relaxed" data-i18n="exp-r2">
+              HIVELAB VINA · Thiết kế giao diện Web/Mobile cho hệ sinh thái Samsung & Naver; xây dựng UI Library theo chuẩn Apple HIG, Material Design và kiểm thử chất lượng hiển thị (Design QA) trước khi go-live.
             </p>
           </div>
-          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold">
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-semibold shrink-0">
             VIETNAM · 1 YEAR
           </span>
         </div>
@@ -920,94 +974,126 @@
 
   </section>
 
-  <!-- FOOTER & CONTACT -->
-  <footer id="contact" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-20 sm:pt-24 md:pt-40 pb-20">
-    
-    <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12 flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
-      <span>[ GET IN TOUCH // LET'S TALK ]</span>
-    </div>
+  <!-- DARK EDITORIAL FOOTER & CONTACT -->
+  <footer id="contact" class="footer-dark">
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-20 sm:pt-24 md:pt-36 pb-14">
 
-    <!-- Mega Big Title -->
-    <div class="space-y-4 mb-16 md:mb-20">
-      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9]" data-i18n="footer-h1">
-        BẮT ĐẦU BẰNG
-      </h2>
-      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9] flex flex-wrap items-center gap-6 accent-display" data-i18n="footer-h2">
-        <span>MỘT BUỔI TRÀ ĐÁ.</span>
-      </h2>
-    </div>
+      <div class="font-mono text-xs uppercase tracking-mono text-neutral-400 mb-10 flex items-center justify-between gap-4">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#C4FF00] shrink-0"></span>
+          <span>[ GET IN TOUCH // LET'S TALK ]</span>
+        </span>
+        <span class="hidden sm:inline">HANOI · ON-SITE & REMOTE</span>
+      </div>
 
-    <p class="text-xl sm:text-2xl text-[var(--text-muted)] max-w-3xl leading-relaxed mb-16" data-i18n="footer-desc">
-      Bạn đang xây dựng sản phẩm và cần Product Designer? Mình có thể bắt đầu bằng một cuộc trò chuyện.
-    </p>
+      <!-- 50/50 Dark Split -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 border-t border-b border-white/15 py-12 md:py-20">
 
-    <!-- Interactive Contact Grid with Deep Padding -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-      
-      <!-- Email Card with Copy button -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between group">
-        <div>
-          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-email-lbl">
-            [ EMAIL LIÊN HỆ ]
-          </span>
-          <span id="email-text" class="text-base sm:text-xl font-bold font-mono break-all text-[var(--text-primary)]">
-            mr.tru.designer@gmail.com
-          </span>
+        <!-- Left Half: Mega Invitation + Brand Mark -->
+        <div class="lg:col-span-6 lg:pr-12 flex flex-col justify-between space-y-12">
+          <div class="space-y-6">
+            <div class="space-y-2">
+              <h2 class="text-4xl sm:text-6xl xl:text-7xl font-extrabold uppercase tracking-tighter leading-[0.94] text-[#F5F5F0]" data-i18n="footer-h1">
+                BẮT ĐẦU BẰNG
+              </h2>
+              <h2 class="text-4xl sm:text-6xl xl:text-7xl font-extrabold uppercase tracking-tighter leading-[0.94] text-[#C4FF00]" data-i18n="footer-h2">
+                MỘT BUỔI TRÀ ĐÁ.
+              </h2>
+            </div>
+
+            <p class="text-lg sm:text-xl text-neutral-300 max-w-xl leading-relaxed" data-i18n="footer-desc">
+              Bạn đang xây dựng sản phẩm và cần Product Designer? Mình có thể bắt đầu bằng một cuộc trò chuyện.
+            </p>
+          </div>
+
+          <div class="hidden lg:flex items-baseline gap-3 pt-4">
+            <span class="text-6xl xl:text-7xl font-extrabold tracking-tighter uppercase text-[#F5F5F0] leading-none">TRỨ.</span>
+            <span class="font-mono text-xs uppercase tracking-mono text-neutral-400">PRODUCT DESIGNER</span>
+          </div>
         </div>
-        <button onclick="copyEmail()" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
-          <i data-lucide="copy" class="w-4 h-4"></i>
-          <span id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+
+        <!-- Right Half: Tabular Contact Directory -->
+        <div class="lg:col-span-6 lg:pl-12 lg:border-l lg:border-white/15 flex flex-col justify-between">
+          <dl class="divide-y divide-white/15 border-t border-b border-white/15">
+            <!-- Email -->
+            <div class="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-mono text-neutral-400 mb-1" data-i18n="contact-email-lbl">
+                  [ EMAIL LIÊN HỆ ]
+                </dt>
+                <dd>
+                  <a href="mailto:mr.tru.designer@gmail.com" id="email-text" class="text-lg sm:text-xl font-bold font-mono break-all text-[#F5F5F0] hover:text-[#C4FF00] underline underline-offset-4 transition-colors">
+                    mr.tru.designer@gmail.com
+                  </a>
+                </dd>
+              </div>
+              <button onclick="copyEmail()" class="self-start sm:self-center px-4 py-2 rounded-lg border border-white/25 hover:bg-[#F5F5F0] hover:text-[#141416] transition-colors font-mono text-[11px] uppercase tracking-mono font-bold flex items-center gap-2 cursor-pointer shrink-0">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+              </button>
+            </div>
+
+            <!-- Phone -->
+            <div class="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-mono text-neutral-400 mb-1" data-i18n="contact-phone-lbl">
+                  [ SỐ ĐIỆN THOẠI ]
+                </dt>
+                <dd class="text-lg sm:text-xl font-bold font-mono text-[#F5F5F0]">
+                  (+84) 357 458 457
+                </dd>
+              </div>
+              <a href="tel:+84357458457" class="self-start sm:self-center px-4 py-2 rounded-lg border border-white/25 hover:bg-[#F5F5F0] hover:text-[#141416] transition-colors font-mono text-[11px] uppercase tracking-mono font-bold flex items-center gap-2 shrink-0">
+                <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                <span data-i18n="btn-call">Gọi điện trực tiếp</span>
+              </a>
+            </div>
+
+            <!-- Location & Resume -->
+            <div class="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-mono text-neutral-400 mb-1" data-i18n="contact-location-lbl">
+                  [ ĐỊA ĐIỂM ]
+                </dt>
+                <dd class="text-lg sm:text-xl font-bold text-[#F5F5F0]" data-i18n="contact-location-val">
+                  Hà Nội, Việt Nam
+                </dd>
+                <p class="text-xs text-neutral-400 mt-1 font-mono uppercase" data-i18n="location-sub">
+                  Hỗ trợ làm việc On-site hoặc Remote
+                </p>
+              </div>
+              <a href="assets/TRU_Product_Designer_CV.pdf" target="_blank" class="self-start sm:self-center px-4 py-2 rounded-lg bg-[#C4FF00] text-[#141416] hover:opacity-90 transition-opacity font-mono text-[11px] uppercase tracking-mono font-extrabold flex items-center gap-2 shrink-0">
+                <span>RESUME PDF</span>
+                <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </dl>
+
+          <!-- Direct Case Study Links -->
+          <div class="grid grid-cols-3 gap-2 pt-6 font-mono text-[10px] sm:text-[11px] uppercase tracking-mono">
+            <a href="yen.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
+              <span class="truncate">01. YÊN</span><span>↗</span>
+            </a>
+            <a href="iq-myth.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
+              <span class="truncate">02. IQ MYTH</span><span>↗</span>
+            </a>
+            <a href="momo.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
+              <span class="truncate">03. MOMO</span><span>↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom sub-bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[10px] sm:text-xs uppercase tracking-mono text-neutral-400 text-center sm:text-left">
+        <span>© 2026 TRỨ. DESIGNED & CRAFTED WITH INTENTION.</span>
+        <button onclick="lenis.scrollTo(0)" class="hover:text-[#C4FF00] text-[#F5F5F0] transition-colors flex items-center gap-1.5 font-bold cursor-pointer">
+          <span data-i18n="btn-top">VỀ ĐẦU TRANG</span>
+          <i data-lucide="arrow-up" class="w-4 h-4"></i>
         </button>
       </div>
-
-      <!-- Phone Card -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between">
-        <div>
-          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-phone-lbl">
-            [ SỐ ĐIỆN THOẠI ]
-          </span>
-          <span class="text-base sm:text-xl font-bold font-mono text-[var(--text-primary)]">
-            (+84) 357 458 457
-          </span>
-        </div>
-        <a href="tel:+84357458457" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-xs uppercase tracking-mono text-[var(--text-primary)] hover:underline font-bold">
-          <i data-lucide="phone" class="w-4 h-4"></i>
-          <span data-i18n="btn-call">Gọi điện trực tiếp</span>
-        </a>
-      </div>
-
-      <!-- Location / Status -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between">
-        <div>
-          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-location-lbl">
-            [ ĐỊA ĐIỂM ]
-          </span>
-          <span class="text-base sm:text-xl font-bold text-[var(--text-primary)]" data-i18n="contact-location-val">
-            Hà Nội, Việt Nam
-          </span>
-          <p class="text-xs text-[var(--text-muted)] mt-2 font-mono uppercase" data-i18n="location-sub">
-            Hỗ trợ làm việc On-site hoặc Remote
-          </p>
-        </div>
-        <a href="https://mrtrudesigner.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group">
-          <span class="w-2 h-2 rounded-full status-dot animate-pulse shrink-0"></span>
-          <span data-i18n="contact-site-val" class="truncate">mrtrudesigner.vercel.app</span>
-          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity shrink-0"></i>
-        </a>
-      </div>
-
     </div>
-
-    <!-- Bottom sub-bar -->
-    <div class="pt-8 sm:pt-10 hairline-t flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 font-mono text-[10px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] text-center sm:text-left">
-      <span>© 2026 TRỨ. DESIGNED & CRAFTED WITH INTENTION.</span>
-      <button onclick="lenis.scrollTo(0)" class="hover:text-[var(--text-primary)] flex items-center gap-1 font-bold">
-        <span data-i18n="btn-top">VỀ ĐẦU TRANG</span>
-        <i data-lucide="arrow-up" class="w-4 h-4"></i>
-      </button>
-    </div>
-
   </footer>
 
   <!-- FULL SCREEN OVERLAY MENU (EDITORIAL NEO-GROTESQUE) -->
@@ -1245,21 +1331,11 @@
       document.getElementById('scroll-progress').style.width = `${progress}%`;
     });
 
-    // 3. GSAP Entrance Animations
+    // 3. GSAP Entrance Animations (Hero entrance is orchestrated by interactive-fx.js after pixel intro)
     gsap.registerPlugin(ScrollTrigger);
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion) {
-      // Reveal Hero Title Lines (Snappy, responsive settle without prolonged clipping)
-      gsap.from('.hero-line', {
-        y: 36,
-        opacity: 0,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power3.out',
-        delay: 0.04
-      });
-
       // Animate Craft Columns on scroll
       gsap.from('.craft-col', {
         scrollTrigger: {
@@ -1458,8 +1534,8 @@
         'pillar-3-desc': "Tôi dựng prototype bằng Framer, thử chuyển động với Rive và dùng AI để hỗ trợ tổng hợp thông tin. Mục đích là kiểm tra ý tưởng trước khi phát triển.",
         'exp-heading': "KINH NGHIỆM",
         'exp-sub': "Thiết kế UI/UX và phối hợp cùng Product, Engineering để đưa ý tưởng vào sản phẩm.",
-        'exp-r1': "Marchi Lab · Thiết kế UI/UX cho sản phẩm SaaS, E-commerce, EdTech và Web3.",
-        'exp-r2': "HIVELAB VINA · Thiết kế UI/UX cho hệ sinh thái Samsung và Naver, phối hợp cùng kỹ sư.",
+        'exp-r1': "Marchi Lab · Thiết kế xuyên suốt từ luồng người dùng đến UI & Prototype cho sản phẩm SaaS, E-commerce, EdTech và Web3; xây dựng Design System và tối ưu phễu chuyển đổi (Onboarding, Quiz, Paywall).",
+        'exp-r2': "HIVELAB VINA · Thiết kế giao diện Web/Mobile cho hệ sinh thái Samsung & Naver; xây dựng UI Library theo chuẩn Apple HIG, Material Design và kiểm thử chất lượng hiển thị (Design QA) trước khi go-live.",
         'exp-r3': "Nền tảng typography, bố cục và màu sắc trước khi chuyển sang thiết kế sản phẩm số.",
         'story-tag': '[ 04 // CHUYỆN LÀ... ]',
         'story-quote': "Thiết kế rõ ràng, mỗi quyết định đều có lý do.",
@@ -1518,8 +1594,8 @@
         'pillar-3-desc': "I build prototypes in Framer, explore motion with Rive, and use AI to help synthesize information. The goal is to test ideas before development.",
         'exp-heading': "EXPERIENCE",
         'exp-sub': "UI/UX design in collaboration with Product and Engineering, from ideas to implementation.",
-        'exp-r1': "Marchi Lab · UI/UX design for SaaS, E-commerce, EdTech, and Web3 products.",
-        'exp-r2': "HIVELAB VINA · UI/UX design for the Samsung and Naver ecosystems, working with engineers.",
+        'exp-r1': "Marchi Lab · End-to-end user flows, UI, and prototypes across SaaS, E-commerce, EdTech, and Web3 — building Figma Design Systems and optimizing Onboarding-to-Paywall conversion funnels.",
+        'exp-r2': "HIVELAB VINA · Web/Mobile UI/UX for the Samsung & Naver ecosystems — building UI Libraries under Apple HIG & Material Design and running Design QA through go-live.",
         'exp-r3': "A foundation in typography, layout, and color before moving into digital product design.",
         'story-tag': '[ 04 // MY STORY ]',
         'story-quote': "Clear design, with a reason behind each decision.",
@@ -1621,7 +1697,7 @@
         const text = document.getElementById('copy-btn-text');
         const lang = localStorage.getItem('tru_lang') || 'vi';
         text.textContent = lang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';
-        text.style.color = 'var(--accent-highlight)';
+        text.style.color = '#34D399';
         setTimeout(() => {
           const activeLang = localStorage.getItem('tru_lang') || 'vi';
           text.textContent = translations[activeLang]['btn-copy-email'];
@@ -2018,5 +2094,6 @@
       }
     });
   </script>
+  <script src="assets/js/interactive-fx.js"></script>
 </body>
 </html>
