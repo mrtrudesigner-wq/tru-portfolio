@@ -53,33 +53,45 @@
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EBEBE5;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --surface-subtle: rgba(235, 235, 229, 0.55);
+      --surface-hover: rgba(235, 235, 229, 0.85);
       --text-primary: #0E0E0E;
       --text-muted: #62625C;
       --border-color: rgba(14, 14, 14, 0.12);
       --accent: #0E0E0E;
-      --accent-highlight: #10B981;
+      --accent-highlight: #047857;
+      --status-dot: #10B981;
       --badge-bg: #E3E3DC;
     }
 
     [data-theme="dark"] {
       --bg-primary: #0A0A0B;
       --bg-secondary: #141416;
+      --header-bg: rgba(10, 10, 11, 0.94);
+      --surface-subtle: rgba(20, 20, 22, 0.72);
+      --surface-hover: rgba(28, 28, 32, 0.88);
       --text-primary: #F5F5F0;
       --text-muted: #8E8E93;
       --border-color: rgba(245, 245, 240, 0.12);
       --accent: #C4FF00;
       --accent-highlight: #C4FF00;
+      --status-dot: #C4FF00;
       --badge-bg: #1E1E22;
     }
 
     [data-theme="pink"] {
       --bg-primary: #FF7096;
       --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --surface-subtle: rgba(255, 133, 167, 0.62);
+      --surface-hover: rgba(255, 164, 189, 0.58);
       --text-primary: #121212;
       --text-muted: #3D1220;
       --border-color: rgba(18, 18, 18, 0.18);
       --accent: #121212;
       --accent-highlight: #121212;
+      --status-dot: #121212;
       --badge-bg: #FFA4BD;
     }
 
@@ -106,6 +118,28 @@
     .hairline-r { border-right: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
 
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    .surface-card {
+      background-color: var(--surface-subtle);
+    }
+    .surface-card:hover {
+      background-color: var(--surface-hover);
+    }
+    .status-dot {
+      background-color: var(--status-dot);
+    }
+    [data-theme="pink"] .text-emerald-600,
+    [data-theme="pink"] .text-emerald-700,
+    [data-theme="pink"] .text-pink-600 {
+      color: #121212 !important;
+    }
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+
     .bracket-hover::before {
       content: '[';
       margin-right: 4px;
@@ -128,7 +162,7 @@
 <body class="flex flex-col min-h-screen">
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+  <header class="sticky top-0 z-40 site-header hairline-b">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
       <a href="index.html" class="flex items-center gap-2 group shrink-0">
         <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
@@ -175,8 +209,8 @@
     <div class="max-w-4xl mx-auto text-center space-y-8 md:space-y-10">
       
       <!-- STATUS BADGE -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-xs uppercase tracking-mono font-bold hairline-all bg-[var(--bg-secondary)]/70 text-[var(--text-muted)]" data-i18n="status-tag">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-xs uppercase tracking-mono font-bold hairline-all surface-card text-[var(--text-muted)]" data-i18n="status-tag">
+        <span class="w-2 h-2 rounded-full status-dot animate-pulse shrink-0"></span>
         <span>[ 404 // KHÔNG TÌM THẤY TRANG ]</span>
       </div>
 
@@ -228,9 +262,9 @@
     <!-- SELECTED WORKS DIRECTORY (CLEAN 3-COLUMN CARDS) -->
     <div class="mt-20 md:mt-28 pt-12 md:pt-16 space-y-8 hairline-t">
       <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2" data-i18n="works-tag">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]</span>
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
+          <span data-i18n="works-tag">[ CÁC CASE STUDY CHỌN LỌC // SELECTED WORK ]</span>
         </div>
         <a href="index.html#work" class="font-mono text-xs uppercase tracking-mono hover:text-[var(--accent-highlight)] transition-colors bracket-hover" data-i18n="btn-view-all">
           Xem tất cả dự án trên trang chủ
@@ -240,13 +274,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Work 01: Yên — Chăm Sóc Bố Mẹ Từ Xa -->
-        <a href="yen.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="yen.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
               <span data-i18n="w1-tag">[ 01 // AGING-TECH ] · DUAL APP</span>
               <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
             </div>
-            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w1-title">
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-[var(--accent-highlight)] transition-colors leading-tight" data-i18n="w1-title">
               Yên — Chăm Sóc Bố Mẹ Từ Xa
             </h3>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w1-desc">
@@ -260,13 +294,13 @@
         </a>
 
         <!-- Work 02: IQ Myth -->
-        <a href="iq-myth.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="iq-myth.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-mono">
               <span data-i18n="w2-tag">[ 02 // EDTECH ] · BEHAVIORAL UI</span>
               <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
             </div>
-            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-emerald-600 dark:group-hover:text-[#B9FF06] transition-colors leading-tight" data-i18n="w2-title">
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-[var(--accent-highlight)] transition-colors leading-tight" data-i18n="w2-title">
               IQ Myth — Trải Nghiệm Bài Test
             </h3>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w2-desc">
@@ -280,7 +314,7 @@
         </a>
 
         <!-- Work 03: MoMo -->
-        <a href="momo.html" class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/35 hover:bg-[var(--bg-secondary)]/80 hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+        <a href="momo.html" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
           <div class="space-y-3">
             <div class="flex items-center justify-between font-mono text-[10px] text-pink-600 font-bold uppercase tracking-mono">
               <span data-i18n="w3-tag">[ 03 // FINTECH ] · USER RESEARCH</span>
@@ -403,7 +437,7 @@
     // 4. Bilingual Translations Dictionary
     const translations = {
       vi: {
-        'status-tag': '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>[ 404 // KHÔNG TÌM THẤY TRANG ]</span>',
+        'status-tag': '<span class="w-2 h-2 rounded-full status-dot animate-pulse shrink-0"></span><span>[ 404 // KHÔNG TÌM THẤY TRANG ]</span>',
         'h1-title': 'TRANG NÀY KHÔNG TỒN TẠI.',
         'h1-desc': 'Đường dẫn bạn vừa truy cập có thể đã được đổi tên, chuyển vị trí hoặc chưa từng được tạo. Bạn có thể quay về trang chủ hoặc khám phá trực tiếp các dự án chọn lọc của tôi bên dưới.',
         'btn-home': 'Về trang chủ',
@@ -428,7 +462,7 @@
         'foot-home': 'Về trang chủ'
       },
       en: {
-        'status-tag': '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>[ 404 // PAGE NOT FOUND ]</span>',
+        'status-tag': '<span class="w-2 h-2 rounded-full status-dot animate-pulse shrink-0"></span><span>[ 404 // PAGE NOT FOUND ]</span>',
         'h1-title': 'THIS PAGE DOES NOT EXIST.',
         'h1-desc': 'The link you followed may have been moved, renamed, or never created. You can return to the homepage or explore my selected case studies directly below.',
         'btn-home': 'Return to Homepage',

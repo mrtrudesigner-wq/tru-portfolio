@@ -50,6 +50,8 @@
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EAEAE4;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --surface-subtle: rgba(234, 234, 228, 0.55);
       --text-primary: #0E0E0E;
       --text-muted: #666660;
       --border-color: rgba(14, 14, 14, 0.14);
@@ -58,6 +60,8 @@
     [data-theme="dark"] {
       --bg-primary: #0C0C0D;
       --bg-secondary: #161618;
+      --header-bg: rgba(12, 12, 13, 0.94);
+      --surface-subtle: rgba(22, 22, 24, 0.72);
       --text-primary: #F5F5F0;
       --text-muted: #8E8E93;
       --border-color: rgba(245, 245, 240, 0.14);
@@ -66,10 +70,12 @@
     [data-theme="pink"] {
       --bg-primary: #FF7096;
       --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --surface-subtle: rgba(255, 133, 167, 0.62);
       --text-primary: #121212;
       --text-muted: #3D1220;
       --border-color: rgba(18, 18, 18, 0.2);
-      --momo-pink: #A50064;
+      --momo-pink: #6B0F2B;
     }
 
     html.lenis, html.lenis body { height: auto; }
@@ -92,7 +98,25 @@
     .hairline-t { border-top: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
 
-    #user-flow, #before-after { scroll-margin-top: 104px; }
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    .surface-card {
+      background-color: var(--surface-subtle);
+    }
+    [data-theme="pink"] .text-emerald-500,
+    [data-theme="pink"] .text-amber-500,
+    [data-theme="pink"] .text-pink-600,
+    [data-theme="pink"] .text-blue-500,
+    [data-theme="pink"] .text-purple-500 {
+      color: #121212 !important;
+    }
+
+    section[id], #user-flow, #before-after { scroll-margin-top: 104px; }
+    h1, h2, h3, blockquote { text-wrap: balance; }
+    p, li, figcaption { text-wrap: pretty; }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -126,7 +150,7 @@
   </div>
 
   <!-- NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+  <header class="sticky top-0 z-40 site-header hairline-b">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
       <a href="index.html" class="flex items-center gap-2 group shrink-0">
         <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
@@ -184,7 +208,7 @@
         Case study tập trung vào những thông tin người dùng cần kiểm tra trước khi xác nhận một giao dịch.
       </p>
 
-      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all surface-card font-mono text-xs uppercase tracking-mono">
         <div>
           <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
           <span class="font-bold text-sm" data-i18n="meta-role-val">UI/UX Designer</span>
@@ -204,7 +228,7 @@
       </div>
 
       <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
-        <img src="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png" alt="MoMo Transfer Showcase" class="w-full h-auto object-cover">
+        <img src="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png" onerror="this.onerror=null;this.src='assets/covers/momo-mobile.webp'" alt="MoMo Transfer Showcase" fetchpriority="high" decoding="async" class="w-full h-auto object-cover">
       </div>
     </section>
 
@@ -229,10 +253,10 @@
 
         <div class="lg:col-span-5 grid grid-cols-2 gap-4">
           <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)] p-2 shadow-sm gsap-card">
-            <img src="https://framerusercontent.com/images/ljnYcI4OFZsUWupNyaWwZdpxfhM.png" alt="Màn hình hiện tại 1" class="w-full h-auto rounded-lg">
+            <img src="https://framerusercontent.com/images/ljnYcI4OFZsUWupNyaWwZdpxfhM.png" alt="Màn hình hiện tại 1" loading="lazy" decoding="async" class="w-full h-auto rounded-lg">
           </div>
           <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)] p-2 shadow-sm gsap-card">
-            <img src="https://framerusercontent.com/images/wrI7J9mXD5gQDaYERI1N2eaEpY.png" alt="Màn hình hiện tại 2" class="w-full h-auto rounded-lg">
+            <img src="https://framerusercontent.com/images/wrI7J9mXD5gQDaYERI1N2eaEpY.png" alt="Màn hình hiện tại 2" loading="lazy" decoding="async" class="w-full h-auto rounded-lg">
           </div>
         </div>
       </div>
@@ -270,16 +294,16 @@
 
 
       </div>
-      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+      <aside class="p-6 rounded-xl hairline-all surface-card space-y-2">
         <h3 class="font-mono text-xs font-bold uppercase" data-i18n="research-timing-title">GHI CHÚ NGHIÊN CỨU / THỜI GIAN TÁC VỤ</h3>
         <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="research-timing-desc">Nghiên cứu có ghi nhận mốc 33 giây cho tác vụ chuyển tiền bằng QR. Con số này chỉ có ý nghĩa khi đi kèm cách đo và mốc so sánh; chưa dùng để kết luận mức độ do dự hay hiệu quả của bản redesign.</p>
       </aside>
       <div class="space-y-4 pt-4">
         <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="insights-title">CÁC NHẬN ĐỊNH CHÍNH</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight1-title">01 / HỖ TRỢ KIỂM TRA GIAO DỊCH</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight1-desc">Người tham gia đều kiểm tra lại trước khi xác nhận. Giao diện nên tổ chức thông tin quan trọng theo thứ tự đọc rõ ràng để giúp phát hiện sai lệch.</p></div>
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight2-title">02 / THỬ THÊM VỚI NGƯỜI LỚN TUỔI</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight2-desc">6/11 người tham gia chưa sẵn sàng giới thiệu ứng dụng cho bố mẹ. Phản hồi này gợi ý cần thử trực tiếp với người lớn tuổi, thay vì kết luận thay cho họ.</p></div>
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight3-title">03 / NGỮ CẢNH CHO QR ĐÃ LƯU</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight3-desc">Trải nghiệm cá nhân cho thấy người dùng có thể băn khoăn về QR đã lưu. Tôi đưa tình huống này vào prototype để kiểm tra trong vòng usability test tiếp theo.</p></div>
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight1-title">01 / HỖ TRỢ KIỂM TRA GIAO DỊCH</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight1-desc">Người tham gia đều kiểm tra lại trước khi xác nhận. Giao diện nên tổ chức thông tin quan trọng theo thứ tự đọc rõ ràng để giúp phát hiện sai lệch.</p></div>
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight2-title">02 / THỬ THÊM VỚI NGƯỜI LỚN TUỔI</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight2-desc">6/11 người tham gia chưa sẵn sàng giới thiệu ứng dụng cho bố mẹ. Phản hồi này gợi ý cần thử trực tiếp với người lớn tuổi, thay vì kết luận thay cho họ.</p></div>
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card"><h3 class="font-mono text-xs font-bold uppercase" data-i18n="insight3-title">03 / NGỮ CẢNH CHO QR ĐÃ LƯU</h3><p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight3-desc">Trải nghiệm cá nhân cho thấy người dùng có thể băn khoăn về QR đã lưu. Tôi đưa tình huống này vào prototype để kiểm tra trong vòng usability test tiếp theo.</p></div>
         </div>
       </div>
     </section>
@@ -291,35 +315,35 @@
       </div>
 
       <div class="space-y-4">
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp1-tag">[ PAIN POINT 01 ] · THIẾU VISUAL HIERARCHY</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp1-title">3 khu vực hiển thị ngang hàng không có thứ tự ưu tiên</h4>
           <p class="text-sm text-[var(--text-muted)]" data-i18n="pp1-desc">Ba khu vực cạnh tranh thị giác có thể khiến người dùng khó nhận ra hành động đầu tiên. Đây là vấn đề cần kiểm chứng thêm.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp1-hmw">↳ HMW: Làm sao để người dùng biết ngay bước đầu tiên cần làm gì?</div>
         </div>
 
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp2-tag">[ PAIN POINT 02 ] · THIẾU TRUST SIGNAL TẠI MÀN XÁC NHẬN</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp2-title">11/11 NGƯỜI THAM GIA KIỂM TRA LẠI THÔNG TIN</h4>
           <p class="text-sm text-[var(--text-muted)]" data-i18n="pp2-desc">Màn hình xác nhận có thể giúp người dùng đối chiếu các thông tin quan trọng nhanh hơn, đồng thời giữ bước kiểm tra chủ động.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp2-hmw">↳ HMW: Làm sao để người dùng dễ đối chiếu giao dịch trước khi xác nhận?</div>
         </div>
 
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp3-tag">[ PAIN POINT 03 ] · SỐ DƯ VÍ KHÔNG HIỂN THỊ TRONG LUỒNG</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp3-title">Người dùng phải thoát ra trang chủ kiểm tra số dư</h4>
           <p class="text-sm text-[var(--text-muted)]" data-i18n="pp3-desc">Việc phải rời luồng để kiểm tra số dư tạo thêm thao tác. Concept đề xuất hiển thị số dư tại bước nhập số tiền.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp3-hmw">↳ HMW: Làm sao để người dùng biết mình đủ tiền ngay từ bước nhập số tiền?</div>
         </div>
 
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp4-tag">[ PAIN POINT 04 ] · THIẾU NGỮ CẢNH CHO QR ĐÃ LƯU</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp4-title">Không rõ mã QR đã lưu trong danh bạ có còn hiệu lực không</h4>
           <p class="text-sm text-[var(--text-muted)]" data-i18n="pp4-desc">Người dùng có thể cần biết dữ liệu người nhận vừa được xác thực hay chỉ lấy từ lịch sử. Phương án cần được đối chiếu với giới hạn kỹ thuật và quy tắc xác thực thực tế.</p>
           <div class="font-mono text-xs text-[var(--text-primary)] font-semibold pt-2" data-i18n="pp4-hmw">↳ HMW: Làm sao để người dùng hiểu trạng thái xác thực của QR đã lưu?</div>
         </div>
 
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-2 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-2 gsap-card">
           <div class="font-mono text-xs text-pink-600 font-bold uppercase" data-i18n="pp5-tag">[ PAIN POINT 05 ] · KHẢ NĂNG SỬ DỤNG CỦA NGƯỜI LỚN TUỔI</div>
           <h4 class="text-xl font-bold uppercase" data-i18n="pp5-title">CẦN THỬ NGHIỆM TRỰC TIẾP VỚI NGƯỜI LỚN TUỔI</h4>
           <p class="text-sm text-[var(--text-muted)]" data-i18n="pp5-desc">6/11 người tham gia chưa sẵn sàng giới thiệu cho bố mẹ. Cần thử nghiệm trực tiếp để hiểu ảnh hưởng của chữ nhỏ, mật độ thông tin và số lượng chức năng.</p>
@@ -393,15 +417,15 @@
       </div>
 
       <div class="rounded-xl overflow-hidden hairline-all shadow-xl mb-8 gsap-card">
-        <img src="https://framerusercontent.com/images/qBHmrgOQILWIgNHvy0qqL7HoWbY.png" alt="Tổng quan UI Redesign MoMo" class="w-full h-auto">
+        <img src="https://framerusercontent.com/images/qBHmrgOQILWIgNHvy0qqL7HoWbY.png" alt="Tổng quan UI Redesign MoMo" loading="lazy" decoding="async" class="w-full h-auto">
       </div>
 
       <div class="space-y-12">
         
         <!-- Màn 01 -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all surface-card gsap-card">
           <div class="md:col-span-4 flex justify-center items-center p-2">
-            <img src="https://framerusercontent.com/images/nzF3gWmBBvfy6NdaG6pDtZtxk.png" alt="Màn 01 Chọn phương thức" class="max-w-xs w-full h-auto drop-shadow-xl">
+            <img src="https://framerusercontent.com/images/nzF3gWmBBvfy6NdaG6pDtZtxk.png" alt="Màn 01 Chọn phương thức" loading="lazy" decoding="async" class="max-w-xs w-full h-auto drop-shadow-xl">
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-pink-600 font-bold" data-i18n="scr1-tag">[ MÀN 01 ] · GIẢI QUYẾT PAIN POINT 01 + 05</span>
@@ -413,9 +437,9 @@
         </div>
 
         <!-- Màn 02 -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all surface-card gsap-card">
           <div class="md:col-span-4 flex justify-center items-center p-2">
-            <img src="https://framerusercontent.com/images/c6GBFugUqOxbeaTrt9kxY2ZIMT0.png" alt="Màn 02 QR Validation" class="max-w-xs w-full h-auto drop-shadow-xl">
+            <img src="https://framerusercontent.com/images/c6GBFugUqOxbeaTrt9kxY2ZIMT0.png" alt="Màn 02 QR Validation" loading="lazy" decoding="async" class="max-w-xs w-full h-auto drop-shadow-xl">
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="scr2-tag">[ MÀN 02 ] · GIẢI QUYẾT PAIN POINT 04</span>
@@ -427,9 +451,9 @@
         </div>
 
         <!-- Màn 03 -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all surface-card gsap-card">
           <div class="md:col-span-4 flex justify-center items-center p-2">
-            <img src="https://framerusercontent.com/images/q4MTJb6KBI1HePqN5AHGW0XrsT8.png" alt="Màn 03 Nhập số tiền" class="max-w-xs w-full h-auto drop-shadow-xl">
+            <img src="https://framerusercontent.com/images/q4MTJb6KBI1HePqN5AHGW0XrsT8.png" alt="Màn 03 Nhập số tiền" loading="lazy" decoding="async" class="max-w-xs w-full h-auto drop-shadow-xl">
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="scr3-tag">[ MÀN 03 ] · GIẢI QUYẾT PAIN POINT 03</span>
@@ -441,9 +465,9 @@
         </div>
 
         <!-- Màn 04 -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all surface-card gsap-card">
           <div class="md:col-span-4 flex justify-center items-center p-2">
-            <img src="https://framerusercontent.com/images/WCpESoEAcYkaZNFC2waCMXYeGfg.png" alt="Màn 04 Xác nhận giao dịch" class="max-w-xs w-full h-auto drop-shadow-xl">
+            <img src="https://framerusercontent.com/images/WCpESoEAcYkaZNFC2waCMXYeGfg.png" alt="Màn 04 Xác nhận giao dịch" loading="lazy" decoding="async" class="max-w-xs w-full h-auto drop-shadow-xl">
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-blue-500 font-bold" data-i18n="scr4-tag">[ MÀN 04 ] · GIẢI QUYẾT PAIN POINT 02</span>
@@ -455,9 +479,9 @@
         </div>
 
         <!-- Màn 05 -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/30 gsap-card">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 rounded-2xl hairline-all surface-card gsap-card">
           <div class="md:col-span-4 flex justify-center items-center p-2">
-            <img src="https://framerusercontent.com/images/H0p6XhyM48TmYUb1i3xwmnv8RCg.png" alt="Màn 05 Thành công cho thu ngân" class="max-w-xs w-full h-auto drop-shadow-xl">
+            <img src="https://framerusercontent.com/images/H0p6XhyM48TmYUb1i3xwmnv8RCg.png" alt="Màn 05 Thành công cho thu ngân" loading="lazy" decoding="async" class="max-w-xs w-full h-auto drop-shadow-xl">
           </div>
           <div class="md:col-span-8 space-y-4">
             <span class="font-mono text-xs uppercase text-purple-500 font-bold" data-i18n="scr5-tag">[ MÀN 05 ] · QUYẾT ĐỊNH ĐẶC BIỆT</span>
@@ -485,7 +509,7 @@
             <span class="bg-white text-black px-2 py-1 rounded shadow" data-i18n="comparison-after">CONCEPT ĐỀ XUẤT</span>
           </div>
         </div>
-        <div class="rounded-xl hairline-all p-4 sm:p-6 space-y-2 bg-[var(--bg-secondary)]/40">
+        <div class="rounded-xl hairline-all p-4 sm:p-6 space-y-2 surface-card">
           <label for="comparison-range" class="block font-mono text-xs uppercase font-bold" data-i18n="comparison-control">Kéo để so sánh hoặc dùng phím mũi tên</label>
           <input id="comparison-range" type="range" min="0" max="100" value="50" aria-controls="momo-comparison" class="w-full min-h-[44px] cursor-ew-resize" style="accent-color: #A50064;">
         </div>
@@ -553,43 +577,45 @@
       document.getElementById('scroll-progress').style.width = `${progress}%`;
     });
 
-    // 3. Hero Entrance Animations
-    gsap.from('.case-hero-title', {
-      y: 60,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power4.out',
-      delay: 0.1
-    });
-    gsap.from('.case-hero-desc', {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.25
-    });
-    gsap.from('.case-hero-img', {
-      scale: 0.95,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out',
-      delay: 0.35
-    });
-
-    // 4. ScrollTrigger Card Reveals
-    gsap.utils.toArray('.gsap-card').forEach(card => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        y: 40,
+    // 3. Hero Entrance & ScrollTrigger Card Reveals
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      gsap.from('.case-hero-title', {
+        y: 32,
         opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out'
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.04
       });
-    });
+      gsap.from('.case-hero-desc', {
+        y: 24,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.12
+      });
+      gsap.from('.case-hero-img', {
+        scale: 0.98,
+        opacity: 0,
+        duration: 0.75,
+        ease: 'power3.out',
+        delay: 0.18
+      });
+
+      gsap.utils.toArray('.gsap-card').forEach(card => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 28,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power3.out'
+        });
+      });
+    }
 
     // 5. Magnetic Buttons
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
@@ -860,10 +886,10 @@
         }
       });
 
-      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
-      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
 
       document.querySelectorAll('.lang-btn-vi').forEach(btn => {
         btn.className = (lang === 'vi') ? viActive : viInactive;

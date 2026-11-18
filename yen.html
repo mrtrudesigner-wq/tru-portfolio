@@ -50,26 +50,35 @@
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EAEAE4;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --surface-subtle: rgba(234, 234, 228, 0.55);
       --text-primary: #0E0E0E;
       --text-muted: #666660;
       --border-color: rgba(14, 14, 14, 0.14);
       --accent: #0E0E0E;
+      --accent-highlight: #047857;
     }
     [data-theme="dark"] {
       --bg-primary: #0C0C0D;
       --bg-secondary: #161618;
+      --header-bg: rgba(12, 12, 13, 0.94);
+      --surface-subtle: rgba(22, 22, 24, 0.72);
       --text-primary: #F5F5F0;
       --text-muted: #8E8E93;
       --border-color: rgba(245, 245, 240, 0.14);
       --accent: #C4FF00;
+      --accent-highlight: #C4FF00;
     }
     [data-theme="pink"] {
       --bg-primary: #FF7096;
       --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --surface-subtle: rgba(255, 133, 167, 0.62);
       --text-primary: #121212;
       --text-muted: #3D1220;
       --border-color: rgba(18, 18, 18, 0.2);
       --accent: #121212;
+      --accent-highlight: #121212;
     }
 
     html.lenis, html.lenis body { height: auto; }
@@ -92,7 +101,25 @@
     .hairline-t { border-top: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
 
-    #problem-context, #dual-apps, #yen-child-video { scroll-margin-top: 104px; }
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    .surface-card {
+      background-color: var(--surface-subtle);
+    }
+    [data-theme="pink"] .text-emerald-500,
+    [data-theme="pink"] .text-amber-500 {
+      color: #121212 !important;
+    }
+    [data-theme="pink"] .border-l-emerald-500 {
+      border-left-color: #121212 !important;
+    }
+
+    section[id], #problem-context, #dual-apps, #yen-child-video { scroll-margin-top: 104px; }
+    h1, h2, h3, blockquote { text-wrap: balance; }
+    p, li, figcaption { text-wrap: pretty; }
 
     .persona-illustration {
       display: grid;
@@ -170,7 +197,7 @@
   </div>
 
   <!-- NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+  <header class="sticky top-0 z-40 site-header hairline-b">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
       <a href="index.html" class="flex items-center gap-2 group shrink-0">
         <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
@@ -229,7 +256,7 @@
       </p>
 
       <!-- Project Metadata Grid -->
-      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all surface-card font-mono text-xs uppercase tracking-mono">
         <div>
           <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
           <span class="font-bold text-sm" data-i18n="meta-role-val">Product Designer</span>
@@ -250,7 +277,7 @@
 
       <!-- Hero Showcase Image -->
       <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
-        <img src="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png" alt="Yên Hero Banner" class="w-full h-auto object-cover">
+        <img src="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png" onerror="this.onerror=null;this.src='assets/covers/yen-mobile.webp'" alt="Yên Hero Banner" fetchpriority="high" decoding="async" class="w-full h-auto object-cover">
       </div>
     </section>
 
@@ -262,10 +289,10 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Persona Bố Mẹ -->
-        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all surface-card space-y-4 gsap-card">
           <figure class="persona-illustration rounded-lg overflow-hidden hairline-all">
             <div class="persona-artwork persona-artwork--parent">
-              <img src="https://framerusercontent.com/images/ihiHshhjp6ZEy7A6Npwnfx44.png" alt="Minh họa bố mẹ đang suy nghĩ" width="1874" height="2325" class="block w-full h-auto">
+              <img src="https://framerusercontent.com/images/ihiHshhjp6ZEy7A6Npwnfx44.png" alt="Minh họa bố mẹ đang suy nghĩ" width="1874" height="2325" loading="lazy" decoding="async" class="block w-full h-auto">
               <blockquote class="persona-dialogue persona-dialogue--parent"><span data-i18n="p1-quote">Biết con quan tâm,<br>nhưng tôi cần<br>không gian riêng.</span></blockquote>
             </div>
           </figure>
@@ -276,10 +303,10 @@
         </div>
 
         <!-- Persona Con Cái -->
-        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-4 gsap-card">
+        <div class="persona-card p-4 sm:p-8 rounded-xl hairline-all surface-card space-y-4 gsap-card">
           <figure class="persona-illustration rounded-lg overflow-hidden hairline-all">
             <div class="persona-artwork persona-artwork--child">
-              <img src="https://framerusercontent.com/images/qemF9mO9KRaFTtRXSqXAZce5yGg.png" alt="Minh họa người con đang lo lắng" width="2323" height="2362" class="block w-full h-auto">
+              <img src="https://framerusercontent.com/images/qemF9mO9KRaFTtRXSqXAZce5yGg.png" alt="Minh họa người con đang lo lắng" width="2323" height="2362" loading="lazy" decoding="async" class="block w-full h-auto">
               <blockquote class="persona-dialogue persona-dialogue--child"><span data-i18n="p2-quote">Mẹ đang bận,<br>hay có vấn đề gì không ta?</span></blockquote>
             </div>
           </figure>
@@ -316,26 +343,26 @@
         </p>
       </div>
 
-      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+      <aside class="p-6 rounded-xl hairline-all surface-card space-y-2">
         <h3 class="font-mono text-xs font-bold uppercase" data-i18n="concept-limit-title">GIỚI HẠN CỦA CONCEPT</h3>
         <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="concept-limit-desc">Điện thoại có thể hết pin hoặc không ở cạnh người dùng. Khả năng phát hiện thực tế và độ chính xác của AI cần được kiểm chứng.</p>
       </aside>
 
       <!-- 3 Pillars Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-fall-tag">[ 01 / TÉ NGÃ ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-fall-title">Ghi Nhận Va Chạm</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-fall-desc">
             Concept đề xuất ghi nhận tín hiệu va chạm, hỏi bố mẹ trước và báo con nếu chưa có phản hồi sau thời gian đã đặt.
           </p>
         </div>
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-scam-tag">[ 02 / LỪA ĐẢO ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-scam-title">AI Hỗ Trợ Đánh Giá</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-scam-desc">Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ; AI hỗ trợ con xem lại trước khi gửi hướng dẫn cho bố mẹ.</p>
         </div>
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-3 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="p-med-tag">[ 03 / NHẮC THUỐC ]</span>
           <h3 class="text-xl font-bold uppercase" data-i18n="p-med-title">Cài Đặt Từ Xa</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="p-med-desc">
@@ -349,7 +376,7 @@
     <section id="dual-apps" class="space-y-8 pt-8 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">[ 03 // HAI ỨNG DỤNG — MỖI PHÍA THẤY ĐÚNG ĐIỀU MÌNH CẦN ]</div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-        <article class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-5 gsap-card">
+        <article class="p-6 sm:p-8 rounded-xl hairline-all surface-card space-y-5 gsap-card">
           <span class="font-mono text-xs uppercase text-emerald-500 font-bold" data-i18n="child-app-tag">[ PHÍA CON CÁI ]</span>
           <h3 class="text-2xl font-bold uppercase" data-i18n="child-app-title">VIỆC GÌ CẦN XỬ LÝ?</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-app-desc">Màn hình ưu tiên các sự việc cần xử lý. Mỗi cảnh báo đi kèm thời gian, mức pin và thông tin liên quan để người dùng có cơ sở quyết định bước tiếp theo.</p>
@@ -361,11 +388,11 @@
             <figcaption id="child-video-caption" class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="child-video-caption">Prototype ứng dụng con cái — xem cảnh báo và thông tin cần xử lý.</figcaption>
           </figure>
         </article>
-        <article class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-5 gsap-card">
+        <article class="p-6 sm:p-8 rounded-xl hairline-all surface-card space-y-5 gsap-card">
           <span class="font-mono text-xs uppercase text-amber-500 font-bold" data-i18n="parent-app-tag">[ PHÍA BỐ MẸ ]</span>
           <h3 class="text-2xl font-bold uppercase" data-i18n="parent-app-title">TÔI CẦN LÀM GÌ?</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="parent-app-desc">Giao diện dùng chữ lớn, câu ngắn và nút bấm rõ. Mỗi màn hình tập trung vào một hành động chính để giảm thao tác và hạn chế nhầm lẫn.</p>
-          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện ứng dụng bố mẹ" class="block w-full max-w-xs mx-auto h-auto rounded-xl drop-shadow-xl">
+          <img src="https://framerusercontent.com/images/fGg3ctStRxdGijF6WKA6ndO2fCo.png" alt="Giao diện ứng dụng bố mẹ" loading="lazy" decoding="async" class="block w-full max-w-xs mx-auto h-auto rounded-xl drop-shadow-xl">
         </article>
       </div>
     </section>
@@ -382,8 +409,8 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
-            <img src="https://framerusercontent.com/images/MasQsRgkW4uvuGvYtNJc0m5I3Y.png" alt="Bố mẹ xác nhận" class="w-full h-auto rounded-lg drop-shadow-xl">
+          <div class="rounded-xl overflow-hidden hairline-all surface-card p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/MasQsRgkW4uvuGvYtNJc0m5I3Y.png" alt="Bố mẹ xác nhận" loading="lazy" decoding="async" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step1-title">
             01 / Bố mẹ xác nhận tình trạng
@@ -391,8 +418,8 @@
         </div>
 
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
-            <img src="https://framerusercontent.com/images/ktz2hgjT8MXhjpRVV7ywEhxMxw.png" alt="Con nhận cảnh báo" class="w-full h-auto rounded-lg drop-shadow-xl">
+          <div class="rounded-xl overflow-hidden hairline-all surface-card p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/ktz2hgjT8MXhjpRVV7ywEhxMxw.png" alt="Con nhận cảnh báo" loading="lazy" decoding="async" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step2-title">
             02 / Con nhận cảnh báo khẩn cấp
@@ -400,8 +427,8 @@
         </div>
 
         <div class="space-y-4 gsap-card">
-          <div class="rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 flex justify-center shadow-sm">
-            <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" class="w-full h-auto rounded-lg drop-shadow-xl">
+          <div class="rounded-xl overflow-hidden hairline-all surface-card p-4 flex justify-center shadow-sm">
+            <img src="https://framerusercontent.com/images/IBLEmS7BvLC227LJbMQ0qlVkl8.png" alt="Cập nhật tình trạng" loading="lazy" decoding="async" class="w-full h-auto rounded-lg drop-shadow-xl">
           </div>
           <div class="font-mono text-xs uppercase font-bold text-center" data-i18n="step3-title">
             03 / Cập nhật tình trạng
@@ -418,30 +445,30 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- AI Fraud -->
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-6 gsap-card">
           <h3 class="text-2xl font-bold uppercase" data-i18n="ai-fraud-title">AI HỖ TRỢ NHẬN DIỆN LỪA ĐẢO</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="ai-fraud-flow">Bố mẹ gửi tin nhắn hoặc đường link đáng ngờ. Hệ thống chỉ ra dấu hiệu cần chú ý để con xem lại và gửi hướng dẫn dễ hiểu cho bố mẹ.</p>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="ai-fraud-desc">
             Kết quả được chia thành ba mức: “Có dấu hiệu lừa đảo”, “Chưa đủ thông tin” và “Chưa phát hiện dấu hiệu rõ ràng”. Cách diễn đạt này tránh tạo cảm giác AI có thể xác nhận tuyệt đối một nội dung an toàn hay nguy hiểm.
           </p>
           <div class="grid grid-cols-3 gap-2">
-            <img src="https://framerusercontent.com/images/gtqUWWAxMMx3qOipzJrp4Lxc3ao.png" alt="Bố mẹ gửi tin nhắn" class="rounded-lg hairline-all w-full">
-            <img src="https://framerusercontent.com/images/fs5B8ADrCoDu6X4orqQZKNilwA.png" alt="AI phân tích" class="rounded-lg hairline-all w-full">
-            <img src="https://framerusercontent.com/images/q7GEQgtisRhwBBzhBAVPGF1cb8.png" alt="Khuyến nghị" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/gtqUWWAxMMx3qOipzJrp4Lxc3ao.png" alt="Bố mẹ gửi tin nhắn" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/fs5B8ADrCoDu6X4orqQZKNilwA.png" alt="AI phân tích" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/q7GEQgtisRhwBBzhBAVPGF1cb8.png" alt="Khuyến nghị" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
           </div>
         </div>
 
         <!-- Medication -->
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-6 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-6 gsap-card">
           <h3 class="text-2xl font-bold uppercase" data-i18n="med-remind-title">LỊCH NHẮC THUỐC ĐƠN GIẢN</h3>
           <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="med-remind-desc">
             Đến giờ, bố mẹ nhận lời nhắc với hai lựa chọn: “Tôi đã uống” hoặc “Nhắc lại sau 15 phút”. Con xem phản hồi từ xa trong ứng dụng của mình.
           </p>
 <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="med-status-note">Trạng thái “Đã uống” phản ánh xác nhận trên ứng dụng. Hệ thống không tự kiểm chứng việc uống thuốc; con có thể xem phản hồi và gửi lại lời nhắc khi cần.</p>
           <div class="grid grid-cols-3 gap-2">
-            <img src="https://framerusercontent.com/images/hseGNKreVQyEktYVoECWHvku4.png" alt="Cài đặt lịch" class="rounded-lg hairline-all w-full">
-            <img src="https://framerusercontent.com/images/W0eFyNLmv74gfKj0aDsa8b9c0gM.png" alt="Lời nhắc bố mẹ" class="rounded-lg hairline-all w-full">
-            <img src="https://framerusercontent.com/images/E62qTLdSRvKGZNSMbM1E9TeYie8.png" alt="Trạng thái uống" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/hseGNKreVQyEktYVoECWHvku4.png" alt="Cài đặt lịch" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/W0eFyNLmv74gfKj0aDsa8b9c0gM.png" alt="Lời nhắc bố mẹ" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
+            <img src="https://framerusercontent.com/images/E62qTLdSRvKGZNSMbM1E9TeYie8.png" alt="Trạng thái uống" loading="lazy" decoding="async" class="rounded-lg hairline-all w-full">
           </div>
         </div>
       </div>
@@ -473,7 +500,7 @@
         </div>
       </div>
 
-      <aside class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 space-y-2">
+      <aside class="p-6 rounded-xl hairline-all surface-card space-y-2">
         <h3 class="font-mono text-xs font-bold uppercase" data-i18n="concept-status-title">TRẠNG THÁI DỰ ÁN / CONCEPT</h3>
         <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="concept-status-desc">Đây vẫn là concept cá nhân. Bước tiếp theo là kiểm tra khả năng đọc và thao tác với người lớn tuổi, sau đó thử các tình huống cảnh báo với cả hai nhóm người dùng.</p>
       </aside>
@@ -481,10 +508,10 @@
       <!-- Large Mockup Gallery -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
         <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
-          <img src="https://framerusercontent.com/images/qlM9pxASzFZ7b5QBhCyHXyx6k0U.png" alt="Mockup tổng thể 1" class="w-full h-auto">
+          <img src="https://framerusercontent.com/images/qlM9pxASzFZ7b5QBhCyHXyx6k0U.png" alt="Mockup tổng thể 1" loading="lazy" decoding="async" class="w-full h-auto">
         </div>
         <div class="rounded-xl overflow-hidden hairline-all shadow-xl gsap-card">
-          <img src="https://framerusercontent.com/images/0qItvNARgsTM78ftPP1t1VsVRZs.png" alt="Mockup tổng thể 2" class="w-full h-auto">
+          <img src="https://framerusercontent.com/images/0qItvNARgsTM78ftPP1t1VsVRZs.png" alt="Mockup tổng thể 2" loading="lazy" decoding="async" class="w-full h-auto">
         </div>
       </div>
     </section>
@@ -528,43 +555,45 @@
       document.getElementById('scroll-progress').style.width = `${progress}%`;
     });
 
-    // 3. Hero Entrance Animations
-    gsap.from('.case-hero-title', {
-      y: 60,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power4.out',
-      delay: 0.1
-    });
-    gsap.from('.case-hero-desc', {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.25
-    });
-    gsap.from('.case-hero-img', {
-      scale: 0.95,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out',
-      delay: 0.35
-    });
-
-    // 4. ScrollTrigger Reveals for Cards and Sections
-    gsap.utils.toArray('.gsap-card').forEach(card => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        y: 40,
+    // 3. Hero Entrance & ScrollTrigger Reveals
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      gsap.from('.case-hero-title', {
+        y: 32,
         opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out'
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.04
       });
-    });
+      gsap.from('.case-hero-desc', {
+        y: 24,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.12
+      });
+      gsap.from('.case-hero-img', {
+        scale: 0.98,
+        opacity: 0,
+        duration: 0.75,
+        ease: 'power3.out',
+        delay: 0.18
+      });
+
+      gsap.utils.toArray('.gsap-card').forEach(card => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 28,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power3.out'
+        });
+      });
+    }
 
     // 5. Magnetic Buttons
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
@@ -785,10 +814,10 @@
         }
       });
 
-      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
-      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
 
       document.querySelectorAll('.lang-btn-vi').forEach(btn => {
         btn.className = (lang === 'vi') ? viActive : viInactive;

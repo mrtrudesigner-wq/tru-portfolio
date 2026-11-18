@@ -294,3 +294,14 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * `git diff --check` sạch hoàn toàn, không có trailing whitespace.
 * **Quy trình triển khai:**
   * Commit lên `main`, push lên remote `origin main` qua SSH để Vercel tự động build và deploy tới `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 14. TINH CHỈNH UI/UX CRAFT, TƯƠNG PHẢN THEME & HIỆU NĂNG — 18/11/2026
+
+* **Phạm vi cập nhật trên cả 5 trang (`index.html`, `yen.html`, `iq-myth.html`, `momo.html`, `404.html`):**
+  * **Sticky Header & Surface Tokens:** Thay các lớp `bg-[var(--...)]/opacity` (sinh CSS không hợp lệ với biến màu hex) bằng hệ thống biến chuẩn `--header-bg` (độ đục `94%` + `backdrop-filter: blur(14px)`), `--surface-subtle` và `--surface-hover` cho cả 3 theme Light / Dark / Pink, triệt tiêu hiện tượng nhòe chữ khi cuộn dưới header.
+  * **Typography & Responsive Layout:** Xử lý rớt dòng vụn ở nút `XEM CHI TIẾT DỰ ÁN` và thanh tiêu đề Quick Summary Drawer trên mobile; áp dụng `text-wrap: balance` / `text-wrap: pretty`; chuyển lưới mục `#craft` sang `lg:grid-cols-3` để tránh chật cột ở cỡ màn hình Tablet; cập nhật động nội dung Drawer khi đổi `VI / EN` và thông báo sao chép email song ngữ.
+  * **Tương phản màu (Contrast) 3 Theme:** Chuẩn hóa `--accent-highlight` (`#047857` đạt chuẩn WCAG AA trên nền Light, `#C4FF00` trên Dark, `#121212` trên Pink), `--accent-display` (`#6B0F2B` trên Pink) và `--status-dot`; sửa lỗi mất chấm trạng thái ở `404.html` khi đổi ngôn ngữ.
+  * **Hiệu năng, Điều hướng & Hình ảnh:** Rút ngắn thời gian reveal chữ Hero xuống `~0.75s` kèm hỗ trợ `prefers-reduced-motion`; bổ sung `scroll-margin-top` và offset động theo chiều cao header; dùng bộ ảnh `.webp` nội bộ (`assets/covers/`) kèm preload cho hover preview và Quick Summary Drawer; bổ sung `loading="lazy" decoding="async"` cho ảnh bên dưới màn hình đầu.
+* **Kiểm tra & Triển khai:** Toàn bộ 5 trang qua kiểm tra cân bằng thẻ HTML, cú pháp JS, đầy đủ từ điển `VI / EN` và `git diff --check` sạch; commit và push lên `origin main` để Vercel tự động deploy.

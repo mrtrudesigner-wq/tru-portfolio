@@ -71,33 +71,48 @@
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EBEBE5;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --surface-subtle: rgba(235, 235, 229, 0.55);
+      --surface-hover: rgba(235, 235, 229, 0.82);
       --text-primary: #0E0E0E;
       --text-muted: #62625C;
       --border-color: rgba(14, 14, 14, 0.12);
       --accent: #0E0E0E;
-      --accent-highlight: #10B981;
+      --accent-highlight: #047857;
+      --accent-display: #10B981;
+      --status-dot: #10B981;
       --badge-bg: #E3E3DC;
     }
 
     [data-theme="dark"] {
       --bg-primary: #0A0A0B;
       --bg-secondary: #141416;
+      --header-bg: rgba(10, 10, 11, 0.94);
+      --surface-subtle: rgba(20, 20, 22, 0.72);
+      --surface-hover: rgba(28, 28, 32, 0.88);
       --text-primary: #F5F5F0;
       --text-muted: #8E8E93;
       --border-color: rgba(245, 245, 240, 0.12);
       --accent: #C4FF00;
       --accent-highlight: #C4FF00;
+      --accent-display: #C4FF00;
+      --status-dot: #C4FF00;
       --badge-bg: #1E1E22;
     }
 
     [data-theme="pink"] {
       --bg-primary: #FF7096;
       --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --surface-subtle: rgba(255, 133, 167, 0.62);
+      --surface-hover: rgba(255, 164, 189, 0.58);
       --text-primary: #121212;
       --text-muted: #3D1220;
       --border-color: rgba(18, 18, 18, 0.18);
       --accent: #121212;
       --accent-highlight: #121212;
+      --accent-display: #6B0F2B;
+      --status-dot: #121212;
       --badge-bg: #FFA4BD;
     }
 
@@ -138,6 +153,37 @@
     .hairline-l { border-left: 1px solid var(--border-color); }
     .hairline-r { border-right: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
+
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    .surface-card {
+      background-color: var(--surface-subtle);
+    }
+    .case-row:hover {
+      background-color: var(--surface-hover);
+    }
+    .status-dot {
+      background-color: var(--status-dot);
+    }
+    .accent-text {
+      color: var(--accent-highlight);
+    }
+    .accent-display {
+      color: var(--accent-display);
+    }
+
+    section[id], footer[id] {
+      scroll-margin-top: 112px;
+    }
+    h1:not(.hero-line), h2, h3, blockquote {
+      text-wrap: balance;
+    }
+    p, li, figcaption {
+      text-wrap: pretty;
+    }
 
     /* Bracket hover reveal animation */
     .bracket-hover::before {
@@ -235,7 +281,7 @@
 
   <!-- FLOATING CURSOR IMAGE PREVIEW (Enhanced GSAP Thumbnail) -->
   <div id="cursor-preview" class="rounded-2xl overflow-hidden border hairline-all bg-black hidden lg:block backdrop-blur-md">
-    <img id="cursor-preview-img" src="" alt="Case Preview" class="w-full h-full object-cover">
+    <img id="cursor-preview-img" src="assets/covers/yen-mobile.webp" alt="Case Preview" decoding="async" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5 text-white">
       <div class="flex items-center justify-between">
         <span id="cursor-preview-tag" class="font-mono text-[10px] uppercase tracking-mono bg-white/20 backdrop-blur-md px-2.5 py-1 rounded">
@@ -276,7 +322,7 @@
   </div>
 
   <!-- MAIN NAVIGATION (Sticky & Always Visible at top) -->
-  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b transition-colors">
+  <header class="sticky top-0 z-40 site-header hairline-b transition-colors">
     <div class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 h-16 sm:h-20 md:h-24 flex items-center justify-between gap-2">
       
       <!-- Brand Logo -->
@@ -315,13 +361,13 @@
           <span id="mobile-theme-text" class="font-bold">LGT</span>
         </button>
 
-        <a href="#contact" class="hidden md:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn">
+        <a href="#contact" onclick="event.preventDefault(); scrollToAnchor('#contact')" class="hidden md:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn whitespace-nowrap shrink-0">
           <span data-i18n="btn-contact">Get in touch</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
 
         <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
-        <button onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2.5 magnetic-btn cursor-pointer" title="Open Menu">
+        <button onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2.5 magnetic-btn cursor-pointer shrink-0" title="Open Menu">
           <span data-i18n="btn-menu">MENU</span>
           <div class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between">
             <span class="w-full h-[1.5px] bg-current"></span>
@@ -338,7 +384,7 @@
     
     <div class="flex items-center justify-between font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] mb-10 sm:mb-12">
       <span class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
         <span>[ IDENTITY & DISCIPLINE ]</span>
       </span>
       <span class="hidden md:inline">[ CRAFT · INTENTION · SYSTEMS ]</span>
@@ -434,7 +480,7 @@
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24">
       <div class="space-y-3">
         <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
           <span>[ 01 // SELECTED WORK ]</span>
         </div>
         <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter" data-i18n="work-heading">
@@ -460,11 +506,12 @@
     <div class="divide-y divide-[var(--border-color)] hairline-t hairline-b">
 
       <!-- CASE 01: YÊN -->
-      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="product"
            data-case="yen"
            data-url="yen.html"
-           data-image="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png"
+           data-image="assets/covers/yen-mobile.webp"
+           data-fallback-image="https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png"
            data-title="Yên — Chăm Sóc Bố Mẹ Từ Xa"
            data-tag="AGING-TECH · HEALTHCARE DUAL APP"
            onclick="openCaseDrawer('yen')">
@@ -473,11 +520,11 @@
           
           <!-- Number & Project Title -->
           <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
-            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">
               01/
             </span>
             <div>
-              <button type="button" onclick="openCaseDrawer('yen')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openCaseDrawer('yen')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
                 YÊN
               </button>
               <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="yen-subtitle">
@@ -492,7 +539,7 @@
                  onerror="this.src='https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png'" 
                  alt="Yên — Chăm Sóc Bố Mẹ Từ Xa" 
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                 loading="lazy">
+                 loading="lazy" decoding="async">
           </div>
 
           <!-- Metadata & Scope -->
@@ -513,9 +560,9 @@
 
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
-            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
               <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
-              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </div>
             </span>
@@ -525,11 +572,12 @@
       </div>
 
       <!-- CASE 02: IQ MYTH -->
-      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="product"
            data-case="iq"
            data-url="iq-myth.html"
-           data-image="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png"
+           data-image="assets/covers/iq-mobile.webp"
+           data-fallback-image="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png"
            data-title="IQ Myth — Trải Nghiệm Kiểm Tra Trí Tuệ"
            data-tag="EDTECH · WEB APP · CONVERSION DESIGN"
            onclick="openCaseDrawer('iq')">
@@ -537,11 +585,11 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
-            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[#B9FF06] font-bold transition-colors">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">
               02/
             </span>
             <div>
-              <button type="button" onclick="openCaseDrawer('iq')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openCaseDrawer('iq')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
                 IQ MYTH
               </button>
               <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="iq-subtitle">
@@ -556,7 +604,7 @@
                  onerror="this.src='https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png'" 
                  alt="IQ Myth — Trải Nghiệm Bài Test" 
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                 loading="lazy">
+                 loading="lazy" decoding="async">
           </div>
 
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
@@ -576,9 +624,9 @@
 
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
-            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
               <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
-              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </div>
             </span>
@@ -588,11 +636,12 @@
       </div>
 
       <!-- CASE 03: MOMO TRANSFER -->
-      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all hover:bg-[var(--bg-secondary)]/60 px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
            data-category="research"
            data-case="momo"
            data-url="momo.html"
-           data-image="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png"
+           data-image="assets/covers/momo-mobile.webp"
+           data-fallback-image="https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png"
            data-title="MoMo Transfer — Tái Cấu Trúc Luồng Chuyển Tiền"
            data-tag="FINTECH · UX RESEARCH & REDESIGN"
            onclick="openCaseDrawer('momo')">
@@ -600,11 +649,11 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
-            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-pink-500 font-bold transition-colors">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">
               03/
             </span>
             <div>
-              <button type="button" onclick="openCaseDrawer('momo')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openCaseDrawer('momo')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
                 MOMO TRANSFER
               </button>
               <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="momo-subtitle">
@@ -619,7 +668,7 @@
                  onerror="this.src='https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png'" 
                  alt="MoMo Transfer Redesign" 
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                 loading="lazy">
+                 loading="lazy" decoding="async">
           </div>
 
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
@@ -639,9 +688,9 @@
 
           <!-- Action Button: Open Summary Drawer -->
           <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
-            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-emerald-500 transition-colors">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
               <span data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
-              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </div>
             </span>
@@ -659,10 +708,10 @@
     
     <div class="flex items-center justify-between font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12">
       <span class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
         <span>[ 02 // PRODUCT CRAFT ]</span>
       </span>
-      <span>DISCIPLINE & EXECUTION</span>
+      <span class="hidden sm:inline">DISCIPLINE & EXECUTION</span>
       <span>02 / 04</span>
     </div>
 
@@ -675,16 +724,16 @@
       </p>
     </div>
 
-    <!-- 3-Column Grid with Deep Padding -->
-    <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border-color)] hairline-all rounded-2xl overflow-hidden bg-[var(--bg-secondary)]/30">
+    <!-- 3-Column Grid with Deep Padding (Stacks cleanly on tablet < lg to avoid cramped headings) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-[var(--border-color)] hairline-all rounded-2xl overflow-hidden surface-card">
       
       <!-- Col 1 -->
-      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+      <div class="p-7 sm:p-10 lg:p-10 xl:p-14 flex flex-col justify-between space-y-10 craft-col">
         <div class="space-y-6">
-          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+          <span class="font-mono text-xs uppercase tracking-mono accent-text font-bold block">
             [ PILLAR 01 ]
           </span>
-          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-1-title">
+          <h3 class="text-2xl xl:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-1-title">
             PRODUCT DISCOVERY
           </h3>
           <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-1-desc">
@@ -697,12 +746,12 @@
       </div>
 
       <!-- Col 2 -->
-      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+      <div class="p-7 sm:p-10 lg:p-10 xl:p-14 flex flex-col justify-between space-y-10 craft-col">
         <div class="space-y-6">
-          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+          <span class="font-mono text-xs uppercase tracking-mono accent-text font-bold block">
             [ PILLAR 02 ]
           </span>
-          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-2-title">
+          <h3 class="text-2xl xl:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-2-title">
             UI & DESIGN SYSTEMS
           </h3>
           <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-2-desc">
@@ -715,12 +764,12 @@
       </div>
 
       <!-- Col 3 -->
-      <div class="p-10 md:p-14 flex flex-col justify-between space-y-10 craft-col">
+      <div class="p-7 sm:p-10 lg:p-10 xl:p-14 flex flex-col justify-between space-y-10 craft-col">
         <div class="space-y-6">
-          <span class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold block">
+          <span class="font-mono text-xs uppercase tracking-mono accent-text font-bold block">
             [ PILLAR 03 ]
           </span>
-          <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-3-title">
+          <h3 class="text-2xl xl:text-3xl font-bold uppercase tracking-tight" data-i18n="pillar-3-title">
             PROTOTYPING & MOTION
           </h3>
           <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="pillar-3-desc">
@@ -743,7 +792,7 @@
       
       <div class="lg:col-span-4 space-y-4">
         <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
           <span>[ 03 // TRACK RECORD ]</span>
         </div>
         <h2 class="text-4xl sm:text-6xl font-extrabold uppercase tracking-tighter" data-i18n="exp-heading">
@@ -759,7 +808,7 @@
         <!-- Role 1 -->
         <div class="py-10 flex flex-col sm:flex-row sm:items-baseline justify-between gap-6">
           <div class="space-y-2">
-            <div class="font-mono text-xs uppercase tracking-mono text-emerald-500 font-bold">
+            <div class="font-mono text-xs uppercase tracking-mono accent-text font-bold">
               [ 07/2024 — PRESENT ]
             </div>
             <h3 class="text-2xl sm:text-3xl font-bold uppercase">
@@ -824,7 +873,7 @@
       <!-- Portrait / Visual Card with Parallax -->
       <div class="lg:col-span-5 relative">
         <div class="rounded-2xl overflow-hidden hairline-all relative bg-neutral-900 group shadow-2xl">
-          <img id="story-img" src="assets/tru-portrait.png" onerror="this.src='https://framerusercontent.com/images/5GNAMQrKiYWFVMKW5klkynCA20.png'" alt="Trứ Portrait" class="w-full h-[520px] md:h-[620px] object-cover object-[center_20%] grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700">
+          <img id="story-img" src="assets/tru-portrait.png" onerror="this.src='https://framerusercontent.com/images/5GNAMQrKiYWFVMKW5klkynCA20.png'" alt="Trứ Portrait" loading="lazy" decoding="async" class="w-full h-[520px] md:h-[620px] object-cover object-[center_20%] grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700">
           <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
             <span class="font-mono text-xs uppercase tracking-mono text-neutral-400">
               TRỨ // HANOI, VIETNAM
@@ -839,7 +888,7 @@
       <!-- Narrative -->
       <div class="lg:col-span-7 space-y-8">
         <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
           <span data-i18n="story-tag">[ 04 // CHUYỆN LÀ... ]</span>
         </div>
         
@@ -875,7 +924,7 @@
   <footer id="contact" class="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-20 sm:pt-24 md:pt-40 pb-20">
     
     <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-12 flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
       <span>[ GET IN TOUCH // LET'S TALK ]</span>
     </div>
 
@@ -884,7 +933,7 @@
       <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9]" data-i18n="footer-h1">
         BẮT ĐẦU BẰNG
       </h2>
-      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9] flex flex-wrap items-center gap-6 text-emerald-500" data-i18n="footer-h2">
+      <h2 class="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-extrabold uppercase tracking-tighter leading-[0.9] flex flex-wrap items-center gap-6 accent-display" data-i18n="footer-h2">
         <span>MỘT BUỔI TRÀ ĐÁ.</span>
       </h2>
     </div>
@@ -897,7 +946,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
       
       <!-- Email Card with Copy button -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between group">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between group">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-email-lbl">
             [ EMAIL LIÊN HỆ ]
@@ -913,7 +962,7 @@
       </div>
 
       <!-- Phone Card -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-phone-lbl">
             [ SỐ ĐIỆN THOẠI ]
@@ -929,7 +978,7 @@
       </div>
 
       <!-- Location / Status -->
-      <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50 flex flex-col justify-between">
+      <div class="p-6 sm:p-8 rounded-2xl hairline-all surface-card flex flex-col justify-between">
         <div>
           <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block mb-3" data-i18n="contact-location-lbl">
             [ ĐỊA ĐIỂM ]
@@ -942,7 +991,7 @@
           </p>
         </div>
         <a href="https://mrtrudesigner.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-6 sm:mt-8 flex items-center gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+          <span class="w-2 h-2 rounded-full status-dot animate-pulse shrink-0"></span>
           <span data-i18n="contact-site-val" class="truncate">mrtrudesigner.vercel.app</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity shrink-0"></i>
         </a>
@@ -995,67 +1044,67 @@
       <!-- Primary Large Nav Links (Col 7) -->
       <nav class="lg:col-span-7 space-y-4 md:space-y-6">
         <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-4 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
           <span data-i18n="menu-sec-title">[ MAIN SECTIONS // CHUYÊN MỤC ]</span>
         </div>
 
-        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
-          <a href="#work" onclick="navigateToSection('#work')" class="group flex items-baseline justify-between cursor-pointer">
+        <div class="menu-link-row overflow-hidden hairline-b pb-3">
+          <a href="#work" onclick="event.preventDefault(); navigateToSection('#work')" class="group flex items-baseline justify-between cursor-pointer">
             <div class="flex items-baseline gap-4 sm:gap-8">
-              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">01/</span>
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">01/</span>
               <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-work">
                 Selected Work
               </span>
             </div>
-            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all accent-text shrink-0"></i>
           </a>
         </div>
 
-        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
-          <a href="#craft" onclick="navigateToSection('#craft')" class="group flex items-baseline justify-between cursor-pointer">
+        <div class="menu-link-row overflow-hidden hairline-b pb-3">
+          <a href="#craft" onclick="event.preventDefault(); navigateToSection('#craft')" class="group flex items-baseline justify-between cursor-pointer">
             <div class="flex items-baseline gap-4 sm:gap-8">
-              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">02/</span>
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">02/</span>
               <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-craft">
                 Product Craft
               </span>
             </div>
-            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all accent-text shrink-0"></i>
           </a>
         </div>
 
-        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
-          <a href="#experience" onclick="navigateToSection('#experience')" class="group flex items-baseline justify-between cursor-pointer">
+        <div class="menu-link-row overflow-hidden hairline-b pb-3">
+          <a href="#experience" onclick="event.preventDefault(); navigateToSection('#experience')" class="group flex items-baseline justify-between cursor-pointer">
             <div class="flex items-baseline gap-4 sm:gap-8">
-              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">03/</span>
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">03/</span>
               <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-experience">
                 Experience
               </span>
             </div>
-            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all accent-text shrink-0"></i>
           </a>
         </div>
 
-        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
-          <a href="#story" onclick="navigateToSection('#story')" class="group flex items-baseline justify-between cursor-pointer">
+        <div class="menu-link-row overflow-hidden hairline-b pb-3">
+          <a href="#story" onclick="event.preventDefault(); navigateToSection('#story')" class="group flex items-baseline justify-between cursor-pointer">
             <div class="flex items-baseline gap-4 sm:gap-8">
-              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">04/</span>
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">04/</span>
               <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="nav-story">
                 Story
               </span>
             </div>
-            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all accent-text shrink-0"></i>
           </a>
         </div>
 
-        <div class="menu-link-row overflow-hidden border-b border-[var(--border-color)]/60 pb-3">
-          <a href="#contact" onclick="navigateToSection('#contact')" class="group flex items-baseline justify-between cursor-pointer">
+        <div class="menu-link-row overflow-hidden hairline-b pb-3">
+          <a href="#contact" onclick="event.preventDefault(); navigateToSection('#contact')" class="group flex items-baseline justify-between cursor-pointer">
             <div class="flex items-baseline gap-4 sm:gap-8">
-              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-emerald-500 font-bold transition-colors">05/</span>
+              <span class="font-mono text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">05/</span>
               <span class="text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight group-hover:translate-x-3 transition-transform duration-300 font-sans" data-i18n="btn-contact">
                 Get in touch
               </span>
             </div>
-            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"></i>
+            <i data-lucide="arrow-right" class="w-6 h-6 sm:w-8 sm:h-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all accent-text shrink-0"></i>
           </a>
         </div>
       </nav>
@@ -1067,44 +1116,44 @@
         <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)] space-y-4">
           <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold flex items-center justify-between">
             <span data-i18n="menu-case-title">[ DỰ ÁN CASE STUDY ]</span>
-            <span class="text-emerald-500 font-mono">03 CASES</span>
+            <span class="accent-text font-mono">03 CASES</span>
           </div>
 
           <div class="space-y-2.5 font-mono text-xs uppercase">
             <button onclick="closeMenuOverlay(() => openCaseDrawer('yen'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
               <div>
-                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">01. YÊN</span>
+                <span class="font-bold text-sm block group-hover:text-[var(--accent-highlight)] transition-colors font-sans">01. YÊN</span>
                 <span class="text-[11px] text-[var(--text-muted)] normal-case">Aging-Tech · Healthcare Dual App</span>
               </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"></i>
             </button>
 
             <button onclick="closeMenuOverlay(() => openCaseDrawer('iq'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
               <div>
-                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">02. IQ MYTH</span>
+                <span class="font-bold text-sm block group-hover:text-[var(--accent-highlight)] transition-colors font-sans">02. IQ MYTH</span>
                 <span class="text-[11px] text-[var(--text-muted)] normal-case">EdTech Web App · Conversion Design</span>
               </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"></i>
             </button>
 
             <button onclick="closeMenuOverlay(() => openCaseDrawer('momo'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
               <div>
-                <span class="font-bold text-sm block group-hover:text-emerald-500 transition-colors font-sans">03. MOMO TRANSFER</span>
+                <span class="font-bold text-sm block group-hover:text-[var(--accent-highlight)] transition-colors font-sans">03. MOMO TRANSFER</span>
                 <span class="text-[11px] text-[var(--text-muted)] normal-case">Fintech Concept · User Research & UI Redesign</span>
               </div>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"></i>
             </button>
           </div>
         </div>
 
         <!-- Direct Contact Channels -->
-        <div class="space-y-3 font-mono text-xs uppercase tracking-mono p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)]/50">
+        <div class="space-y-3 font-mono text-xs uppercase tracking-mono p-6 rounded-2xl hairline-all surface-card">
           <div class="text-[var(--text-muted)] font-bold flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
             <span data-i18n="menu-contact-title">[ TRỰC TIẾP LIÊN HỆ ]</span>
           </div>
           <div class="space-y-2 text-sm font-sans">
-            <a href="mailto:mr.tru.designer@gmail.com" class="block font-bold hover:underline hover:text-emerald-500 transition-colors">
+            <a href="mailto:mr.tru.designer@gmail.com" class="block font-bold hover:underline hover:text-[var(--accent-highlight)] transition-colors">
               mr.tru.designer@gmail.com ↗
             </a>
             <a href="tel:0357458457" class="block text-[var(--text-muted)] hover:text-[var(--text-primary)]">
@@ -1112,7 +1161,7 @@
             </a>
           </div>
           <div class="pt-2">
-            <a href="assets/TRU_Product_Designer_CV.pdf" target="_blank" class="inline-flex items-center gap-1.5 font-bold text-xs underline hover:text-emerald-500 transition-colors">
+            <a href="assets/TRU_Product_Designer_CV.pdf" target="_blank" class="inline-flex items-center gap-1.5 font-bold text-xs underline hover:text-[var(--accent-highlight)] transition-colors">
               <span>TẢI VỀ RESUME (PDF)</span>
               <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i>
             </a>
@@ -1124,7 +1173,7 @@
     </div>
 
     <!-- Bottom Bar inside Menu Overlay -->
-    <div class="hairline-t px-4 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 bg-[var(--bg-secondary)]/40">
+    <div class="hairline-t px-4 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 surface-card">
       <div>
         <span>TRỨ — PRODUCT DESIGNER · HANOI, VIETNAM</span>
       </div>
@@ -1142,12 +1191,12 @@
          class="w-full max-w-4xl h-full max-h-screen bg-[var(--bg-primary)] hairline-l transform translate-x-full transition-transform duration-500 ease-out relative flex flex-col overflow-hidden">
       
       <!-- Drawer Top Bar (Fixed Header at top of panel, solid bg, 100% opaque, no text can ever bleed above it) -->
-      <div class="px-6 sm:px-12 py-5 hairline-b bg-[var(--bg-primary)] flex items-center justify-between flex-shrink-0 z-30 transition-colors shadow-sm">
-        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>[ QUICK SUMMARY // TRỨ PORTFOLIO ]</span>
+      <div class="px-4 sm:px-12 py-4 sm:py-5 hairline-b bg-[var(--bg-primary)] flex items-center justify-between gap-3 flex-shrink-0 z-30 transition-colors shadow-sm">
+        <div class="font-mono text-[10px] sm:text-xs uppercase tracking-mono text-[var(--text-muted)] flex items-center gap-2 min-w-0 whitespace-nowrap">
+          <span class="w-2 h-2 rounded-full status-dot shrink-0"></span>
+          <span class="truncate">[ QUICK SUMMARY // TRỨ PORTFOLIO ]</span>
         </div>
-        <button onclick="closeCaseDrawer()" class="p-2 px-3 rounded-full hairline-all hover:bg-[var(--bg-secondary)] transition-all flex items-center gap-2 font-mono text-xs uppercase cursor-pointer">
+        <button onclick="closeCaseDrawer()" class="p-2 px-3 rounded-full hairline-all hover:bg-[var(--bg-secondary)] transition-all flex items-center gap-2 font-mono text-xs uppercase cursor-pointer shrink-0 whitespace-nowrap">
           <span class="hidden sm:inline" data-i18n="drawer-close">Đóng (ESC)</span>
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
@@ -1198,29 +1247,32 @@
 
     // 3. GSAP Entrance Animations
     gsap.registerPlugin(ScrollTrigger);
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Reveal Hero Title Lines
-    gsap.from('.hero-line', {
-      y: 90,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.15,
-      ease: 'power4.out',
-      delay: 0.2
-    });
+    if (!prefersReducedMotion) {
+      // Reveal Hero Title Lines (Snappy, responsive settle without prolonged clipping)
+      gsap.from('.hero-line', {
+        y: 36,
+        opacity: 0,
+        duration: 0.65,
+        stagger: 0.08,
+        ease: 'power3.out',
+        delay: 0.04
+      });
 
-    // Animate Craft Columns on scroll
-    gsap.from('.craft-col', {
-      scrollTrigger: {
-        trigger: '#craft',
-        start: 'top 75%'
-      },
-      y: 60,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out'
-    });
+      // Animate Craft Columns on scroll
+      gsap.from('.craft-col', {
+        scrollTrigger: {
+          trigger: '#craft',
+          start: 'top 80%'
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.75,
+        stagger: 0.14,
+        ease: 'power3.out'
+      });
+    }
 
     // 4. GSAP FLOATING THUMBNAIL PREVIEW (Buttery Smooth Inertia + Dynamic Tilt)
     const cursorPreview = document.getElementById('cursor-preview');
@@ -1253,13 +1305,21 @@
       setRot(tilt);
     });
 
+    // Preload local cover thumbnails so desktop hover preview is instant
+    ['assets/covers/yen-mobile.webp', 'assets/covers/iq-mobile.webp', 'assets/covers/momo-mobile.webp'].forEach(src => {
+      const preloadImg = new Image();
+      preloadImg.src = src;
+    });
+
     // Bind hover states to all case rows
     document.querySelectorAll('.case-row').forEach(row => {
       row.addEventListener('mouseenter', () => {
         const img = row.getAttribute('data-image');
+        const fallbackImg = row.getAttribute('data-fallback-image');
         const title = row.getAttribute('data-title');
         const tag = row.getAttribute('data-tag') || 'FEATURED CASE';
 
+        cursorPreviewImg.onerror = fallbackImg ? () => { cursorPreviewImg.onerror = null; cursorPreviewImg.src = fallbackImg; } : null;
         cursorPreviewImg.src = img;
         cursorPreviewTitle.textContent = title;
         cursorPreviewTag.textContent = tag;
@@ -1487,6 +1547,8 @@
       }
     };
 
+    let activeDrawerCase = null;
+
     function setLang(lang) {
       lang = lang === 'en' ? 'en' : 'vi';
       document.documentElement.lang = lang;
@@ -1502,11 +1564,11 @@
         }
       });
 
-      // Update active pill button across all language switchers
-      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
-      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      // Update active pill button across all language switchers (preserving compact mobile padding)
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
 
       document.querySelectorAll('.lang-btn-vi').forEach(btn => {
         btn.className = (lang === 'vi') ? viActive : viInactive;
@@ -1519,6 +1581,11 @@
       }
       if (document.getElementById('lang-btn-en')) {
         document.getElementById('lang-btn-en').className = (lang === 'en') ? enActive : enInactive;
+      }
+
+      const drawer = document.getElementById('case-drawer');
+      if (activeDrawerCase && drawer && !drawer.classList.contains('hidden')) {
+        renderCaseDrawerContent(activeDrawerCase);
       }
     }
     const savedLang = localStorage.getItem('tru_lang') || 'vi';
@@ -1552,11 +1619,12 @@
       const email = 'mr.tru.designer@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
         const text = document.getElementById('copy-btn-text');
-        const orig = text.textContent;
-        text.textContent = '✓ Copied to clipboard!';
-        text.style.color = '#10B981';
+        const lang = localStorage.getItem('tru_lang') || 'vi';
+        text.textContent = lang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';
+        text.style.color = 'var(--accent-highlight)';
         setTimeout(() => {
-          text.textContent = orig;
+          const activeLang = localStorage.getItem('tru_lang') || 'vi';
+          text.textContent = translations[activeLang]['btn-copy-email'];
           text.style.color = '';
         }, 2500);
       });
@@ -1567,7 +1635,8 @@
       yen: {
         pageUrl: 'yen.html',
         number: '01 / 03',
-        heroImg: 'https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png',
+        heroImg: 'assets/covers/yen-mobile.webp',
+        fallbackImg: 'https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png',
         vi: {
           tag: 'AGING-TECH · HEALTHCARE DUAL APP',
           projectType: "Concept cá nhân · Giải pháp đề xuất",
@@ -1606,7 +1675,8 @@
       iq: {
         pageUrl: 'iq-myth.html',
         number: '02 / 03',
-        heroImg: 'https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png',
+        heroImg: 'assets/covers/iq-mobile.webp',
+        fallbackImg: 'https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png',
         vi: {
           tag: 'EDTECH · WEB APP · CONVERSION DESIGN',
           projectType: "Thiết kế web app · UI & prototype",
@@ -1645,7 +1715,8 @@
       momo: {
         pageUrl: 'momo.html',
         number: '03 / 03',
-        heroImg: 'https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png',
+        heroImg: 'assets/covers/momo-mobile.webp',
+        fallbackImg: 'https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png',
         vi: {
           tag: "FINTECH · UX RESEARCH & REDESIGN",
           projectType: "Concept cá nhân · Chưa triển khai trên MoMo",
@@ -1683,7 +1754,7 @@
       }
     };
 
-    function openCaseDrawer(caseKey) {
+    function renderCaseDrawerContent(caseKey) {
       const item = drawerData[caseKey];
       if (!item) return;
 
@@ -1696,12 +1767,12 @@
         <div class="space-y-8">
           <!-- Top Metadata & Direct Case Study Link Button -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 hairline-b">
-            <div class="font-mono text-xs uppercase text-emerald-500 font-bold tracking-mono">
+            <div class="font-mono text-xs uppercase accent-text font-bold tracking-mono min-w-0">
               [ ${item.number} ] · ${data.scope}
             </div>
-            <a href="${item.pageUrl}" class="self-start sm:self-auto px-5 py-2.5 rounded-lg hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2 hover:opacity-90 hover:scale-105 transition-all shadow-md group">
+            <a href="${item.pageUrl}" class="self-start sm:self-auto shrink-0 whitespace-nowrap px-5 py-2.5 rounded-lg hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2 hover:opacity-90 hover:scale-105 transition-all shadow-md group">
               <span>${data.btnDetail}</span>
-              <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
             </a>
           </div>
 
@@ -1710,15 +1781,15 @@
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-[var(--text-primary)] leading-tight">
               ${data.title}
             </h2>
-            <div class="mt-3 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]">
+            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]">
               <span>[ TAG ]: ${data.tag}</span>
               <span>[ ${isVi ? 'LOẠI DỰ ÁN' : 'PROJECT TYPE'} ]: ${data.projectType}</span>
             </div>
           </div>
 
           <!-- Hero Mockup Frame -->
-          <div class="rounded-2xl overflow-hidden hairline-all shadow-xl bg-neutral-900/10">
-            <img src="${item.heroImg}" alt="${data.title}" class="w-full h-auto object-cover max-h-[480px]">
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-xl bg-[var(--bg-secondary)]">
+            <img src="${item.heroImg}" onerror="this.onerror=null;this.src='${item.fallbackImg}'" alt="${data.title}" decoding="async" class="w-full h-auto object-cover max-h-[480px]">
           </div>
 
           <!-- Context & Problem -->
@@ -1726,13 +1797,13 @@
             <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold">
               [ ${isVi ? 'BỐI CẢNH & VẤN ĐỀ' : 'CONTEXT & PROBLEM'} ]
             </h4>
-            <p class="text-base sm:text-lg text-[var(--text-primary)]/90 leading-relaxed font-sans">
+            <p class="text-base sm:text-lg text-[var(--text-primary)] leading-relaxed font-sans">
               ${data.problem}
             </p>
           </div>
 
           <!-- Core HMW Callout Box -->
-          <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)] border-l-4 border-l-emerald-500 shadow-sm">
+          <div class="p-6 sm:p-8 rounded-2xl hairline-all bg-[var(--bg-secondary)] border-l-4 shadow-sm" style="border-left-color: var(--status-dot);">
             <h4 class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] mb-2.5 font-bold">
               [ ${isVi ? 'CÂU HỎI THIẾT KẾ CỐT LÕI (HMW)' : 'CORE HOW MIGHT WE'} ]
             </h4>
@@ -1748,7 +1819,7 @@
             </h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               ${data.pillars.map(p => `
-                <div class="p-5 rounded-xl hairline-all bg-[var(--bg-secondary)]/60 hover:bg-[var(--bg-secondary)] transition-colors">
+                <div class="p-5 rounded-xl hairline-all surface-card hover:bg-[var(--bg-secondary)] transition-colors">
                   <h5 class="font-bold text-xs uppercase mb-2 text-[var(--text-primary)] tracking-tight">${p.title}</h5>
                   <p class="text-xs text-[var(--text-muted)] leading-relaxed">${p.desc}</p>
                 </div>
@@ -1768,27 +1839,34 @@
 
           <!-- KEY CTA: VIEW FULL CASE STUDY BUTTON -->
           <div class="pt-6 pb-2">
-            <a href="${item.pageUrl}" class="w-full py-5 px-6 sm:px-8 rounded-2xl hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs sm:text-sm uppercase tracking-mono font-extrabold flex items-center justify-between hover:opacity-95 hover:shadow-2xl transition-all group">
-              <div class="flex items-center gap-3">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <a href="${item.pageUrl}" class="w-full py-5 px-6 sm:px-8 rounded-2xl hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono text-xs sm:text-sm uppercase tracking-mono font-extrabold flex items-center justify-between gap-4 hover:opacity-95 hover:shadow-2xl transition-all group">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                 <span>${data.btnDetailFull}</span>
               </div>
-              <div class="w-10 h-10 rounded-full bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center group-hover:translate-x-2 transition-transform">
+              <div class="w-10 h-10 rounded-full bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center shrink-0 group-hover:translate-x-2 transition-transform">
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </div>
             </a>
           </div>
 
           <!-- Footer of Drawer -->
-          <div class="pt-8 hairline-t flex items-center justify-between font-mono text-xs uppercase tracking-mono">
+          <div class="pt-8 hairline-t flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono">
             <span class="text-[var(--text-muted)]">TRỨ — PRODUCT DESIGNER</span>
-            <button onclick="closeCaseDrawer()" class="font-bold underline hover:text-[var(--text-primary)] transition-colors flex items-center gap-1.5 cursor-pointer">
+            <button onclick="closeCaseDrawer()" class="font-bold underline hover:text-[var(--text-primary)] transition-colors flex items-center gap-1.5 cursor-pointer shrink-0">
               <span>${data.backToList}</span>
               <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         </div>
       `;
+      lucide.createIcons();
+    }
+
+    function openCaseDrawer(caseKey) {
+      if (!drawerData[caseKey]) return;
+      activeDrawerCase = caseKey;
+      renderCaseDrawerContent(caseKey);
 
       const drawer = document.getElementById('case-drawer');
       const panel = document.getElementById('case-drawer-panel');
@@ -1803,7 +1881,6 @@
       setTimeout(() => {
         panel.classList.remove('translate-x-full');
       }, 10);
-      lucide.createIcons();
     }
 
     function closeCaseDrawer() {
@@ -1812,6 +1889,7 @@
       panel.classList.add('translate-x-full');
       setTimeout(() => {
         drawer.classList.add('hidden');
+        activeDrawerCase = null;
         document.body.style.overflow = '';
         if (typeof lenis !== 'undefined' && lenis) lenis.start();
       }, 400);
@@ -1897,15 +1975,24 @@
       });
     }
 
+    function getHeaderScrollOffset() {
+      const headerEl = document.querySelector('header');
+      return headerEl ? -(headerEl.offsetHeight + 12) : -104;
+    }
+
+    function scrollToAnchor(targetHash) {
+      if (typeof lenis !== 'undefined' && lenis) {
+        lenis.scrollTo(targetHash, { offset: getHeaderScrollOffset() });
+      } else {
+        const target = document.querySelector(targetHash);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     function navigateToSection(targetHash) {
       closeMenuOverlay(() => {
         setTimeout(() => {
-          if (typeof lenis !== 'undefined' && lenis) {
-            lenis.scrollTo(targetHash, { offset: -70 });
-          } else {
-            const target = document.querySelector(targetHash);
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-          }
+          scrollToAnchor(targetHash);
         }, 60);
       });
     }

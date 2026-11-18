@@ -50,6 +50,8 @@
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EAEAE4;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --surface-subtle: rgba(234, 234, 228, 0.55);
       --text-primary: #0E0E0E;
       --text-muted: #666660;
       --border-color: rgba(14, 14, 14, 0.14);
@@ -58,6 +60,8 @@
     [data-theme="dark"] {
       --bg-primary: #0C0C0D;
       --bg-secondary: #161618;
+      --header-bg: rgba(12, 12, 13, 0.94);
+      --surface-subtle: rgba(22, 22, 24, 0.72);
       --text-primary: #F5F5F0;
       --text-muted: #8E8E93;
       --border-color: rgba(245, 245, 240, 0.14);
@@ -66,6 +70,8 @@
     [data-theme="pink"] {
       --bg-primary: #FF7096;
       --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --surface-subtle: rgba(255, 133, 167, 0.62);
       --text-primary: #121212;
       --text-muted: #3D1220;
       --border-color: rgba(18, 18, 18, 0.2);
@@ -91,6 +97,41 @@
     .hairline-b { border-bottom: 1px solid var(--border-color); }
     .hairline-t { border-top: 1px solid var(--border-color); }
     .hairline-all { border: 1px solid var(--border-color); }
+
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    .surface-card {
+      background-color: var(--surface-subtle);
+    }
+    .iq-feature-card {
+      background-color: #ECECE8;
+    }
+    [data-theme="dark"] .iq-feature-card,
+    [data-theme="pink"] .iq-feature-card {
+      background-color: var(--surface-subtle);
+    }
+    [data-theme="pink"] .text-emerald-500,
+    [data-theme="pink"] .text-emerald-600,
+    [data-theme="pink"] .text-amber-500,
+    [data-theme="pink"] .text-amber-600,
+    [data-theme="pink"] .text-amber-700,
+    [data-theme="pink"] .text-blue-500,
+    [data-theme="pink"] .text-blue-600,
+    [data-theme="pink"] .text-purple-600,
+    [data-theme="pink"] .text-red-500 {
+      color: #121212 !important;
+    }
+    [data-theme="pink"] .border-l-emerald-500,
+    [data-theme="pink"] .border-l-amber-500 {
+      border-left-color: #121212 !important;
+    }
+
+    section[id] { scroll-margin-top: 104px; }
+    h1, h2, h3, blockquote { text-wrap: balance; }
+    p, li, figcaption { text-wrap: pretty; }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -124,7 +165,7 @@
   </div>
 
   <!-- NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-md hairline-b">
+  <header class="sticky top-0 z-40 site-header hairline-b">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
       <a href="index.html" class="flex items-center gap-2 group shrink-0">
         <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
@@ -182,7 +223,7 @@
         Dự án tập trung giảm những điểm gây phân tâm trước khi làm bài và làm rõ các bước sau khi người dùng hoàn thành bài kiểm tra.
       </p>
 
-      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 font-mono text-xs uppercase tracking-mono">
+      <div class="case-meta-grid grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl hairline-all surface-card font-mono text-xs uppercase tracking-mono">
         <div>
           <span class="text-[var(--text-muted)] block mb-1" data-i18n="meta-role-lbl">[ VAI TRÒ ]</span>
           <span class="font-bold text-sm" data-i18n="meta-role-val">UI/UX Designer</span>
@@ -202,7 +243,7 @@
       </div>
 
       <div class="case-hero-img rounded-2xl overflow-hidden hairline-all shadow-2xl">
-        <img src="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png" alt="IQ Myth Showcase" class="w-full h-auto object-cover">
+        <img src="https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png" onerror="this.onerror=null;this.src='assets/covers/iq-mobile.webp'" alt="IQ Myth Showcase" fetchpriority="high" decoding="async" class="w-full h-auto object-cover">
       </div>
     </section>
 
@@ -220,7 +261,7 @@
           <p class="text-base sm:text-lg text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc">
             Tôi phụ trách trải nghiệm toàn diện từ trang giới thiệu (Landing Page), luồng làm bài test đến màn hình nhận kết quả và thanh toán. Khi phân tích các đối thủ cùng phân khúc như MyIQ, tôi nhận thấy CTA bắt đầu bài test khá rõ nhưng trang đích đồng thời nhồi nhét Testimonial, Bảng giá, Danh sách tính năng và FAQ.
           </p>
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 border-l-4 border-l-amber-500 gsap-card">
+          <div class="p-6 rounded-xl hairline-all surface-card border-l-4 border-l-amber-500 gsap-card">
             <h4 class="font-mono text-xs uppercase tracking-mono font-bold text-amber-500 mb-2" data-i18n="hypo-lbl">[ GIẢ THUYẾT THIẾT KẾ ]</h4>
             <p class="text-sm sm:text-base leading-relaxed" data-i18n="hypo-desc">
               Lượng thông tin phụ trên trang giới thiệu có thể làm phân tán sự chú ý khỏi hành động bắt đầu bài kiểm tra. Đây là giả thuyết thiết kế; cần dữ liệu hành vi hoặc usability test để xác nhận mức độ ảnh hưởng.
@@ -228,8 +269,8 @@
           </div>
         </div>
 
-        <div class="lg:col-span-5 rounded-xl overflow-hidden hairline-all bg-[var(--bg-secondary)]/40 p-4 shadow-sm gsap-card">
-          <img src="https://framerusercontent.com/images/BBeVMTnDmr4nZKW5dkD2iiqiOg.png" alt="Phân tích đối thủ" class="w-full h-auto rounded-lg">
+        <div class="lg:col-span-5 rounded-xl overflow-hidden hairline-all surface-card p-4 shadow-sm gsap-card">
+          <img src="https://framerusercontent.com/images/BBeVMTnDmr4nZKW5dkD2iiqiOg.png" alt="Phân tích đối thủ" loading="lazy" decoding="async" class="w-full h-auto rounded-lg">
           <span class="font-mono text-[10px] uppercase text-[var(--text-muted)] block text-center mt-2" data-i18n="comp-caption">Ảnh phân tích cấu trúc đối thủ MyIQ</span>
         </div>
       </div>
@@ -279,21 +320,21 @@
       <div class="space-y-4 pt-6">
         <h3 class="text-xl sm:text-2xl font-bold uppercase" data-i18n="sec2-insights-title">BA NHẬN ĐỊNH BAN ĐẦU</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
             <span class="font-mono text-xs font-bold text-emerald-500" data-i18n="insight1-tag">[ 01 // ƯU TIÊN HÀNH ĐỘNG CHÍNH ]</span>
             <h4 class="font-bold text-base uppercase" data-i18n="insight1-title">Bắt Đầu Bài Test Ngay</h4>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight1-desc">
               Người truy cập trang có thể muốn bắt đầu bài kiểm tra ngay. Các nội dung bổ trợ nên được sắp xếp để không cạnh tranh với CTA chính.
             </p>
           </div>
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
             <span class="font-mono text-xs font-bold text-amber-500" data-i18n="insight2-tag">[ 02 // CÁC BƯỚC SAU BÀI TEST ]</span>
             <h4 class="font-bold text-base uppercase" data-i18n="insight2-title">Xem Kỹ Điểm Chạm Nhạy Cảm</h4>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight2-desc">
               Thu thập email và giới thiệu gói trả phí là những bước có khả năng tạo thêm do dự. Tôi dành nhiều thời gian hơn cho thứ tự thông tin và cách diễn đạt tại đây.
             </p>
           </div>
-          <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-3 gsap-card">
+          <div class="p-6 rounded-xl hairline-all surface-card space-y-3 gsap-card">
             <span class="font-mono text-xs font-bold text-blue-500" data-i18n="insight3-tag">[ 03 // PHONG CÁCH GIAO DIỆN ]</span>
             <h4 class="font-bold text-base uppercase" data-i18n="insight3-title">Phù Hợp Chủ Đề Khoa Học & Giải Trí</h4>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="insight3-desc">
@@ -317,7 +358,7 @@
         <h3 class="text-2xl font-bold uppercase" data-i18n="flow-title">USER FLOW TỐI GIẢN (DƯỚI 2 BƯỚC)</h3>
         <p class="text-sm text-[var(--text-muted)]" data-i18n="flow-desc">Luồng được thiết kế để đưa người dùng từ trang đích đến bài kiểm tra trong ít hơn 2 bước.</p>
         <div class="p-6 rounded-xl hairline-all bg-white flex justify-center shadow-lg">
-          <img src="https://framerusercontent.com/images/cYp9HWiKM9vjsvmK9c7PphEWTE.svg" alt="User flow IQ Myth" class="w-full max-w-4xl h-auto">
+          <img src="https://framerusercontent.com/images/cYp9HWiKM9vjsvmK9c7PphEWTE.svg" alt="User flow IQ Myth" loading="lazy" decoding="async" class="w-full max-w-4xl h-auto">
         </div>
       </div>
 
@@ -358,7 +399,7 @@
           </p>
         </div>
         
-        <div class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/40 space-y-6">
+        <div class="p-6 sm:p-8 rounded-xl hairline-all surface-card space-y-6">
           <div class="space-y-2 pb-6 border-b border-[var(--border-color)]">
             <span class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono" data-i18n="type-h1-lbl">Heading 1 / Bold / 64px</span>
             <div class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">Only the 1%</div>
@@ -391,7 +432,7 @@
 
       <div class="space-y-8">
         <!-- 01 / Hero Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all iq-feature-card gsap-card">
           <div class="lg:col-span-5 space-y-4">
             <span class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-mono" data-i18n="sec4-hero-tag">[ 01 // HERO SECTION ] · ĐỊNH VỊ HÀNH ĐỘNG</span>
             <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-hero-title">
@@ -410,7 +451,7 @@
         </div>
 
         <!-- 02 / Màn hình bài test -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all iq-feature-card gsap-card">
           <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black order-2 lg:order-1">
             <video autoplay loop muted playsinline class="w-full h-auto block rounded-xl">
               <source src="assets/iq-myth/iq-myth-test.mp4" type="video/mp4">
@@ -429,7 +470,7 @@
         </div>
 
         <!-- 03 / Thu thập Email -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all iq-feature-card gsap-card">
           <div class="lg:col-span-5 space-y-4">
             <span class="font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 font-bold tracking-mono" data-i18n="sec4-email-tag">[ 03 // THU THẬP EMAIL ] · TÂM LÝ HỌC HÀNH VI</span>
             <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight leading-snug" data-i18n="sec4-email-title">
@@ -448,9 +489,9 @@
         </div>
 
         <!-- 04 / Mobile-first & Leaderboard -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all iq-feature-card gsap-card">
           <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black order-2 lg:order-1">
-            <img src="assets/iq-myth/iq-myth-mobile.png" alt="Mobile-first & Leaderboard" class="w-full h-auto block rounded-xl" loading="lazy">
+            <img src="assets/iq-myth/iq-myth-mobile.png" alt="Mobile-first & Leaderboard" class="w-full h-auto block rounded-xl" loading="lazy" decoding="async">
           </div>
           <div class="lg:col-span-5 space-y-4 order-1 lg:order-2">
             <span class="font-mono text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-mono" data-i18n="sec4-mobile-tag">[ 04 // MOBILE-FIRST & LEADERBOARD ]</span>
@@ -464,7 +505,7 @@
         </div>
 
         <!-- 05 / Minh họa -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all bg-[#ECECE8] dark:bg-[var(--bg-secondary)]/50 gsap-card">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl hairline-all iq-feature-card gsap-card">
           <div class="lg:col-span-5 space-y-4">
             <span class="font-mono text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-mono" data-i18n="sec4-illus-tag">[ 05 // MINH HỌA ĐỒNG BỘ ]</span>
             <h3 class="text-2xl sm:text-3xl font-bold text-[#013613] dark:text-[#B9FF06] uppercase tracking-tight" data-i18n="sec4-illus-title">
@@ -475,7 +516,7 @@
             </p>
           </div>
           <div class="lg:col-span-7 rounded-xl overflow-hidden hairline-all shadow-xl bg-white dark:bg-black">
-            <img src="assets/iq-myth/iq-myth-illus.png" alt="Minh họa IQ Myth" class="w-full h-auto block rounded-xl" loading="lazy">
+            <img src="assets/iq-myth/iq-myth-illus.png" alt="Minh họa IQ Myth" class="w-full h-auto block rounded-xl" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -489,7 +530,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Bản cũ -->
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-4 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-4 gsap-card">
           <div class="flex items-center justify-between font-mono text-xs uppercase">
             <span class="text-red-500 font-bold" data-i18n="old-pricing-tag">[ BẢN CŨ ]</span>
             <span data-i18n="old-pricing-sub">BA GÓI NGANG HÀNG</span>
@@ -498,12 +539,12 @@
             Phiên bản đầu đặt ba gói cước ngang hàng, khiến người dùng phải so sánh nhiều thông tin ngay sau khi hoàn thành bài kiểm tra.
           </p>
           <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
-            <img src="https://framerusercontent.com/images/lLLYDMuepYEpS47MSGASQpmHn8.png" alt="Bản cũ pricing" class="max-w-xs h-auto">
+            <img src="https://framerusercontent.com/images/lLLYDMuepYEpS47MSGASQpmHn8.png" alt="Bản cũ pricing" loading="lazy" decoding="async" class="max-w-xs h-auto">
           </div>
         </div>
 
         <!-- Bản mới -->
-        <div class="p-6 rounded-xl hairline-all bg-[var(--bg-secondary)]/30 space-y-4 gsap-card">
+        <div class="p-6 rounded-xl hairline-all surface-card space-y-4 gsap-card">
           <div class="flex items-center justify-between font-mono text-xs uppercase">
             <span class="text-emerald-500 font-bold" data-i18n="new-pricing-tag">[ BẢN MỚI: TẬP TRUNG ]</span>
             <span data-i18n="new-pricing-sub">ƯU TIÊN GÓI CƠ BẢN</span>
@@ -512,13 +553,13 @@
             Phiên bản mới làm nổi bật gói cơ bản nhưng vẫn cho phép người dùng xem và so sánh các lựa chọn khác. Giá, quyền lợi và điều kiện thanh toán được trình bày ngay tại điểm quyết định.
           </p>
           <div class="rounded-lg overflow-hidden hairline-all flex justify-center bg-white p-4 shadow">
-            <img src="https://framerusercontent.com/images/9ypBTK2njnMG4Lm4owEmFWrkKg.png" alt="Bản mới pricing" class="max-w-xs h-auto">
+            <img src="https://framerusercontent.com/images/9ypBTK2njnMG4Lm4owEmFWrkKg.png" alt="Bản mới pricing" loading="lazy" decoding="async" class="max-w-xs h-auto">
           </div>
         </div>
       </div>
 
       <!-- Cách kiểm chứng -->
-      <div class="p-6 sm:p-8 rounded-xl hairline-all bg-[var(--bg-secondary)]/50 border-l-4 border-l-emerald-500 space-y-2 gsap-card">
+      <div class="p-6 sm:p-8 rounded-xl hairline-all surface-card border-l-4 border-l-emerald-500 space-y-2 gsap-card">
         <span class="font-mono text-xs uppercase tracking-mono font-bold text-emerald-600 dark:text-emerald-400" data-i18n="verify-lbl">[ CÁCH KIỂM CHỨNG GIẢ THUYẾT ]</span>
         <h4 class="font-bold text-lg uppercase" data-i18n="verify-title">KIỂM CHỨNG TRƯỚC KHI KẾT LUẬN</h4>
         <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="verify-desc">
@@ -580,43 +621,45 @@
       document.getElementById('scroll-progress').style.width = `${progress}%`;
     });
 
-    // 3. Hero Entrance Animations
-    gsap.from('.case-hero-title', {
-      y: 60,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power4.out',
-      delay: 0.1
-    });
-    gsap.from('.case-hero-desc', {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.25
-    });
-    gsap.from('.case-hero-img', {
-      scale: 0.95,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out',
-      delay: 0.35
-    });
-
-    // 4. ScrollTrigger Card Reveals
-    gsap.utils.toArray('.gsap-card').forEach(card => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        y: 40,
+    // 3. Hero Entrance & ScrollTrigger Card Reveals
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      gsap.from('.case-hero-title', {
+        y: 32,
         opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out'
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.04
       });
-    });
+      gsap.from('.case-hero-desc', {
+        y: 24,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.12
+      });
+      gsap.from('.case-hero-img', {
+        scale: 0.98,
+        opacity: 0,
+        duration: 0.75,
+        ease: 'power3.out',
+        delay: 0.18
+      });
+
+      gsap.utils.toArray('.gsap-card').forEach(card => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 28,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power3.out'
+        });
+      });
+    }
 
     // 5. Magnetic Buttons
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
@@ -877,10 +920,10 @@
         }
       });
 
-      const viActive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const viInactive = 'lang-btn-vi px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
-      const enActive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
-      const enInactive = 'lang-btn-en px-2.5 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
 
       document.querySelectorAll('.lang-btn-vi').forEach(btn => {
         btn.className = (lang === 'vi') ? viActive : viInactive;
