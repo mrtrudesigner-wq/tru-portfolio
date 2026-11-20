@@ -1,0 +1,38 @@
+name: Daily Portfolio Analytics Reporter
+
+on:
+  schedule:
+    # 21:00 UTC+7 (Vietnam Time) = 14:00 UTC
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      date_preset:
+        description: 'Date Range Preset (today, yesterday, 7daysAgo)'
+        required: false
+        default: 'today'
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install google-analytics-data requests
+
+      - name: Run Analytics Reporter
+        env:
+          GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID || '447155326' }}
+          GA_SERVICE_ACCOUNT_KEY: ${{ secrets.GA_SERVICE_ACCOUNT_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || '9211189986:AAFaVUSVjZEvXH9tmgqnJBQF3DPha849jEI' }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '8079649476' }}
+          GA_DATE_PRESET: ${{ github.event.inputs.date_preset || 'today' }}
+        run: python3 .github/scripts/report_analytics.py

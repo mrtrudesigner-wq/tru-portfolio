@@ -358,3 +358,25 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * `git diff --check` sạch hoàn toàn, không có trailing whitespace.
 * **Quy trình triển khai:**
   * Commit lên `main`, push lên `origin main` (`git@github.com:mrtrudesigner-wq/tru-portfolio.git`) để Vercel tự động triển khai phiên bản mới lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 17. KHỞI TẠO HỆ THỐNG DAILY ANALYTICS BOT GỬI TELEGRAM — 20/11/2026
+
+* **Bối cảnh & Cấu hình kết nối:**
+  * Khởi tạo Bot Telegram đo lường chuyên sâu cho portfolio:
+    * **Bot Username:** `@tru_portfolio_analytics_bot`
+    * **Bot Token:** `9211189986:AAFaVUSVjZEvXH9tmgqnJBQF3DPha849jEI`
+    * **User Chat ID:** `8079649476` (`@truuiuxdesign`)
+    * **GA4 Property ID:** `447155326`
+* **Triển khai kiến trúc & Kịch bản tự động hóa:**
+  * **Kịch bản phân tích (`.github/scripts/report_analytics.py`):**
+    * **Cơ chế Silent Mode:** Nếu số lượt khách truy cập trong ngày bằng 0 (`active_users == 0`), script tự động thoát trong 2 giây mà không gửi bất kỳ tin nhắn nào để giữ Telegram yên tĩnh.
+    * **Công cụ nhận định thông minh (Actionable Insights):**
+      * Phát hiện tín hiệu tuyển dụng chuyển đổi cao: Cảnh báo ngay khi có lượt sao chép email liên hệ (`copy_email`).
+      * Thống kê case study nổi bật nhất trong ngày (Yên, IQ Myth, MoMo).
+      * Đánh giá độ sâu đọc trang dựa trên thời gian tương tác trung bình.
+      * Phân tích bối cảnh người xem (Desktop tại văn phòng vs Mobile khi di chuyển).
+  * **GitHub Actions Workflow (`.github/workflows/analytics-daily.yml`):**
+    * Tự động chạy định kỳ vào **21:00 mỗi tối** (14:00 UTC).
+    * Hỗ trợ `workflow_dispatch` để kiểm tra thủ công bất kỳ lúc nào qua giao diện GitHub.
