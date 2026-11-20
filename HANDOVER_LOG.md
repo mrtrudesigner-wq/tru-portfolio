@@ -380,3 +380,7 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * **GitHub Actions Workflow (`.github/workflows/analytics-daily.yml`):**
     * Tự động chạy định kỳ vào **21:00 mỗi tối** (14:00 UTC).
     * Hỗ trợ `workflow_dispatch` để kiểm tra thủ công bất kỳ lúc nào qua giao diện GitHub.
+* **Kiểm thử thực tế (End-to-End Verification):**
+  * Đã kích hoạt test thành công với GA4 Data API: Dữ liệu thực tế được kéo về chính xác, công cụ sinh nhận định (Actionable Insights) hoạt động chuẩn xác và tin nhắn báo cáo đã gửi thành công tới Telegram `@truuiuxdesign` (`Chat ID: 8079649476`).
+  * Kiểm thử cơ chế Silent Mode: Với ngày có 0 lượt xem (`active_users == 0`), script tự động thoát trong 1 giây mà không gửi tin nhắn làm phiền.
+  * Hệ thống hoàn toàn sẵn sàng và sẽ tự động gửi báo cáo vào **21:00 mỗi tối** khi có lượt xem mới.
