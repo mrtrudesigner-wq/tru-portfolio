@@ -3,6 +3,7 @@
 Automated Daily Google Analytics Reporter for Nguyễn Công Trứ Portfolio
 Sends intelligent, actionable design insights to Telegram at 21:00 (UTC+7).
 Silent mode: Exits without sending any message if there are 0 visitors today.
+Strict Stream Filtering: Only counts traffic for the new stream (mrtrudesigner.vercel.app).
 """
 
 import os
@@ -13,6 +14,7 @@ import requests
 
 def main():
     property_id = os.environ.get('GA_PROPERTY_ID', '447155326')
+    stream_id = os.environ.get('GA_STREAM_ID', '16379788699')
     bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '9211189986:AAFaVUSVjZEvXH9tmgqnJBQF3DPha849jEI')
     chat_id = os.environ.get('TELEGRAM_CHAT_ID', '8079649476')
     sa_key_raw = os.environ.get('GA_SERVICE_ACCOUNT_KEY')
@@ -49,10 +51,19 @@ def main():
     date_preset = os.environ.get('GA_DATE_PRESET', 'today')
     date_ranges = [DateRange(start_date=date_preset, end_date="today")]
 
+    # STRICT FILTER: Exclusively isolate the new portfolio stream (mrtrudesigner.vercel.app)
+    stream_filter = FilterExpression(
+        filter=Filter(
+            field_name="streamId",
+            string_filter=Filter.StringFilter(value=stream_id)
+        )
+    )
+
     # 1. Overview Metrics
     overview_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         metrics=[
             Metric(name="activeUsers"),
             Metric(name="screenPageViews"),
@@ -76,13 +87,14 @@ def main():
 
     # SILENT MODE CHECK: If zero visitors, exit cleanly without sending message
     if active_users == 0 and page_views == 0:
-        print("Silent mode: Zero visitors recorded today. No Telegram message sent.")
+        print("Silent mode: Zero visitors recorded for mrtrudesigner.vercel.app today. No Telegram message sent.")
         sys.exit(0)
 
     # 2. Page Breakdown
     pages_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         dimensions=[Dimension(name="pagePath")],
         metrics=[Metric(name="screenPageViews"), Metric(name="activeUsers")],
         limit=10
@@ -107,6 +119,7 @@ def main():
     sources_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         dimensions=[Dimension(name="sessionSource"), Dimension(name="sessionMedium")],
         metrics=[Metric(name="activeUsers")],
         limit=5
@@ -124,6 +137,7 @@ def main():
     device_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         dimensions=[Dimension(name="deviceCategory")],
         metrics=[Metric(name="activeUsers")]
     )
@@ -138,6 +152,7 @@ def main():
     events_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         dimensions=[Dimension(name="eventName")],
         metrics=[Metric(name="eventCount")]
     )
@@ -153,6 +168,7 @@ def main():
     geo_req = RunReportRequest(
         property=f"properties/{property_id}",
         date_ranges=date_ranges,
+        dimension_filter=stream_filter,
         dimensions=[Dimension(name="city"), Dimension(name="country")],
         metrics=[Metric(name="activeUsers")],
         limit=5
