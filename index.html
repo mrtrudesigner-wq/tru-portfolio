@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi" data-theme="light" class="scroll-smooth">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JDFWHXT8Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0JDFWHXT8Q');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRỨ — Product Designer · Portfolio</title>
@@ -1694,6 +1704,12 @@
     function copyEmail() {
       const email = 'mr.tru.designer@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'copy_email', {
+            event_category: 'engagement',
+            event_label: email
+          });
+        }
         const text = document.getElementById('copy-btn-text');
         const lang = localStorage.getItem('tru_lang') || 'vi';
         text.textContent = lang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';

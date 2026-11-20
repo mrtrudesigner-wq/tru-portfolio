@@ -329,3 +329,27 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
 
 * **Quy trình triển khai:**
   * Commit lên `main`, push lên `origin main` (`git@github.com:mrtrudesigner-wq/tru-portfolio.git`) để Vercel kích hoạt webhook tự động deploy lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 16. TÍCH HỢP GOOGLE ANALYTICS 4 (GA4) TOÀN DIỆN — 20/11/2026
+
+* **Bối cảnh & Triển khai luồng đo lường:**
+  * Khởi tạo Web Data Stream trên Google Analytics 4 cho portfolio `https://mrtrudesigner.vercel.app`:
+    * **Tên luồng (Stream Name):** `Tru Portfolio`
+    * **URL luồng:** `https://mrtrudesigner.vercel.app`
+    * **Mã luồng (Stream ID):** `16379788699`
+    * **Mã đo lường (Measurement ID):** `G-0JDFWHXT8Q`
+  * Gắn đoạn mã chuẩn `gtag.js` vào ngay đầu thẻ `<head>` của cả 5 trang HTML:
+    * `index.html` (Trang chủ portfolio)
+    * `yen.html` (Case Study Yên)
+    * `iq-myth.html` (Case Study IQ Myth)
+    * `momo.html` (Case Study MoMo Transfer)
+    * `404.html` (Trang 404 Not Found)
+  * Bổ sung Custom Event Tracking cho hành động tương tác giá trị cao:
+    * Gắn sự kiện `copy_email` khi người dùng bấm nút sao chép email liên hệ (`mr.tru.designer@gmail.com`) tại Footer trang chủ.
+* **Kiểm tra kỹ thuật trước phát hành:**
+  * Toàn bộ 5 trang HTML qua kiểm tra parser cân bằng thẻ (0 unclosed tags, 0 mismatched tags).
+  * `git diff --check` sạch hoàn toàn, không có trailing whitespace.
+* **Quy trình triển khai:**
+  * Commit lên `main`, push lên `origin main` (`git@github.com:mrtrudesigner-wq/tru-portfolio.git`) để Vercel tự động triển khai phiên bản mới lên `https://mrtrudesigner.vercel.app`.
