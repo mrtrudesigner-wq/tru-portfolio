@@ -348,6 +348,11 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * `404.html` (Trang 404 Not Found)
   * Bổ sung Custom Event Tracking cho hành động tương tác giá trị cao:
     * Gắn sự kiện `copy_email` khi người dùng bấm nút sao chép email liên hệ (`mr.tru.designer@gmail.com`) tại Footer trang chủ.
+  * Dọn dẹp & Tối ưu luồng dữ liệu Google Analytics:
+    * Đã xóa 2 luồng dữ liệu portfolio cũ không còn sử dụng:
+      1. `web portfolio` (`trudesigner.framer.website` / `G-6GVFJV8ZNL`)
+      2. `portfolio v2` (`itstru.framer.website` / `G-M9DP7L7X44`)
+    * Giữ lại duy nhất 1 luồng hoạt động chính thức: `Tru Portfolio` (`mrtrudesigner.vercel.app` / `G-0JDFWHXT8Q`).
 * **Kiểm tra kỹ thuật trước phát hành:**
   * Toàn bộ 5 trang HTML qua kiểm tra parser cân bằng thẻ (0 unclosed tags, 0 mismatched tags).
   * `git diff --check` sạch hoàn toàn, không có trailing whitespace.
