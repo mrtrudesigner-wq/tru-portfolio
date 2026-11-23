@@ -384,3 +384,20 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * Đã kích hoạt test thành công với GA4 Data API: Dữ liệu thực tế được kéo về chính xác, công cụ sinh nhận định (Actionable Insights) hoạt động chuẩn xác và tin nhắn báo cáo đã gửi thành công tới Telegram `@truuiuxdesign` (`Chat ID: 8079649476`).
   * Kiểm thử cơ chế Silent Mode: Với ngày có 0 lượt xem (`active_users == 0`), script tự động thoát trong 1 giây mà không gửi tin nhắn làm phiền.
   * Hệ thống hoàn toàn sẵn sàng và sẽ tự động gửi báo cáo vào **21:00 mỗi tối** khi có lượt xem mới.
+
+---
+
+## 18. RÀ SOÁT & BIÊN TẬP CHỐNG AI SLOP TOÀN TRANG (MỨC ĐẦY ĐỦ) — 23/11/2026
+
+* **Tiêu chuẩn áp dụng:** Kết hợp 4 bộ tiêu chuẩn (`no-ai-slop`, `humanizer`, `slopbeth`, `anti-ai-slop-writing`) cho cả bản Tiếng Việt và Tiếng Anh trên 6 tệp (`index.html`, `yen.html`, `iq-myth.html`, `momo.html`, `404.html`, `assets/js/interactive-fx.js`).
+* **Các thay đổi chính:**
+  * **Chuẩn hóa giọng văn Tiếng Anh trên 3 case study & 404 (`iq-myth.html`, `yen.html`, `momo.html`, `404.html`):** Thay toàn bộ từ ngữ quảng cáo/AI slop (`leverage`, `streamlined`, `frictionless`, `ecosystem`, `journey`, `engineered to`, `universal responsiveness`, `disentangling`, `intuitive`) bằng diễn đạt chủ động, sát tông bình tĩnh của bản Tiếng Việt; gỡ chi tiết `40-question` chưa xác thực ở `404.html`.
+  * **Giảm câu bị động trên `momo.html` & `iq-myth.html`:** Chuyển các quyết định thiết kế trong phần 05 (`momo.html`) và phần 03–06 (`iq-myth.html`) về ngôi chủ động (`Tôi bỏ...`, `Tôi đặt...`, `Tôi nhóm...`), giữ nguyên toàn bộ giới hạn bằng chứng và câu chuyện trải nghiệm thật (đưa màn hình MoMo cho người bán xem, thoại bóng thoại Yên, khẩu hiệu trà đá Hà Nội).
+  * **Chỉnh `<meta description>`, chân trang và đồng bộ HTML tĩnh (`index.html`, `interactive-fx.js`):** Bỏ khẩu hiệu `Craft-focused, intentional systems, eliminating fluff` và `DESIGNED & CRAFTED WITH INTENTION` / `CRAFTED WITH INTENTION`; đổi 5 nhãn tĩnh tiếng Anh trên `index.html` (`btn-contact`, `menu-sec-title`, `nav-experience`, `nav-story`) sang tiếng Việt khớp `translations.vi`.
+* **Kết quả kiểm toán Slopbeth trên văn xuôi EN (Trước → Sau, thang 100 điểm sạch):**
+  * `index.html`: `deslop` `48 → 60/100` (nghi vấn `13 → 10`), `orwell` `100/100` (bị động `0%`), `dashes = 0`.
+  * `yen.html`: `deslop` `64 → 80/100` (nghi vấn `9 → 5`), `orwell` `92 → 96/100` (bị động `5.6% → 2.8%`), `dashes = 0`.
+  * `iq-myth.html`: `deslop` `0 → 52/100` (nghi vấn `25 → 12`), `orwell` `77 → 100/100` (bị động `13.9% → 0.0%`), `dashes = 0`.
+  * `momo.html`: `deslop` `0 → 60/100` (nghi vấn `21 → 10`), `orwell` `64 → 96/100` (bị động `16.7% → 1.9%`), `dashes = 0`.
+  * `404.html`: `deslop` `64 → 76/100` (nghi vấn `9 → 6`), `orwell` `96 → 100/100` (bị động `20.0% → 0.0%`).
+* **Trạng thái kỹ thuật & Triển khai:** Toàn bộ 5 file HTML qua kiểm tra cân bằng thẻ (0 thẻ thừa/chưa đóng), `node --check` đạt trên `interactive-fx.js` và 21 thẻ `<script>` nội tuyến, đầy đủ 100% khóa `VI / EN`, 0 từ cấm dự án và `git diff --check` sạch. Đã commit lên `main` và push lên `origin main` để Vercel triển khai lên `https://mrtrudesigner.vercel.app`.

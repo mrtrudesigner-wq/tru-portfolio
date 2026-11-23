@@ -1236,7 +1236,7 @@
 
         <div class="hairline-t px-4 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] flex-shrink-0 surface-card">
           <span>TRỨ — PRODUCT DESIGNER · HANOI, VIETNAM</span>
-          <span>© 2026 TRỨ. CRAFTED WITH INTENTION.</span>
+          <span>© 2026 NGUYỄN CÔNG TRỨ · HANOI, VIETNAM.</span>
         </div>
       `;
       document.body.appendChild(overlay);
