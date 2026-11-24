@@ -1,9 +1,9 @@
 /**
  * TRỨ PORTFOLIO — Interactive FX Engine
- * 1. Pixel-Matrix & 2D Noise Curtain Intro (with T. geometric monogram + counter)
- * 2. Satisfying Black Fire Cursor Trail Animation (Zain Zafar / Code Morphism)
- * 3. Floating Magnetic Monospace Cursor Pill (with Cipher-Scramble)
- * 4. Monospace Cipher-Scramble Hover & Entrance Reveals
+ * 1. Monospace Cipher-Scramble Engine
+ * 2. ToyFight-Inspired 5-Column Staggered Curtain & Loader Engine
+ * 3. Satisfying Black Fire Cursor Trail Animation (Zain Zafar / Code Morphism)
+ * 4. Floating Magnetic Monospace Cursor Pill (with Cipher-Scramble)
  * 5. Universal Navigation Menu & Instant Project Transitions
  * 6. Tactile Slot-Machine Roller & Copy-Email Engine
  */
@@ -108,45 +108,127 @@
   window.truScramble = scrambleElement;
 
   /* ==========================================================================
-   * 2. PIXEL-MATRIX & 2D NOISE INTRO CURTAIN
+   * 2. TOYFIGHT-INSPIRED 5-COLUMN STAGGERED INTRO & TRANSITION ENGINE
    * ========================================================================== */
-  // 8x8 Geometric Swiss Monogram "T."
-  const TRU_MONOGRAM_8X8 = [
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 0, 0],
-    [1, 1, 1, 1, 1, 1, 0, 0],
-    [0, 0, 1, 1, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0, 0, 2, 2],
-    [0, 0, 1, 1, 0, 0, 2, 2],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-  ];
-
-  // Bayer 4x4 threshold matrix (0..15 normalized to 0..1) for sub-pixel dissolve
-  const BAYER_4X4 = [
-    0 / 16,  8 / 16,  2 / 16, 10 / 16,
-    12 / 16, 4 / 16, 14 / 16,  6 / 16,
-    3 / 16, 11 / 16,  1 / 16,  9 / 16,
-    15 / 16, 7 / 16, 13 / 16,  5 / 16
-  ];
-
-  function hash2D(x, y) {
-    const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
-    return s - Math.floor(s);
+  function injectCurtainStyles() {
+    if (document.getElementById('tru-curtain-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'tru-curtain-styles';
+    style.textContent = `
+      .tru-curtain-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .tru-curtain-col {
+        flex: 1;
+        height: 100%;
+        background-color: #0E0E0E;
+        will-change: transform;
+        transform: translateY(0);
+      }
+      [data-theme="dark"] .tru-curtain-col {
+        background-color: #080809;
+      }
+      .tru-curtain-badge-wrap {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+        user-select: none;
+        transition: opacity 0.22s ease, transform 0.22s ease;
+      }
+      .tru-curtain-badge {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 9999px;
+        padding: 6px 14px;
+        color: #F5F5F0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      }
+      .tru-curtain-badge-accent {
+        color: #C4FF00 !important;
+        border-color: rgba(196, 255, 0, 0.35) !important;
+      }
+      @media (max-width: 640px) {
+        .tru-curtain-badge-wrap {
+          flex-direction: column !important;
+          gap: 6px !important;
+        }
+        .tru-curtain-badge {
+          padding: 5px 12px !important;
+          font-size: 10px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
-  function valueNoise2D(x, y) {
-    const xi = Math.floor(x);
-    const yi = Math.floor(y);
-    const xf = x - xi;
-    const yf = y - yi;
-    const u = xf * xf * (3 - 2 * xf);
-    const v = yf * yf * (3 - 2 * yf);
-    const a = hash2D(xi, yi);
-    const b = hash2D(xi + 1, yi);
-    const c = hash2D(xi, yi + 1);
-    const d = hash2D(xi + 1, yi + 1);
-    return (a * (1 - u) + b * u) * (1 - v) + (c * (1 - u) + d * u) * v;
+  function getPagePillLabels() {
+    const file = getCurrentPageFile();
+    if (file === 'iq-myth.html') return ['TRỨ', 'CASE STUDY', '02. IQ MYTH'];
+    if (file === 'yen.html') return ['TRỨ', 'CASE STUDY', '01. YÊN'];
+    if (file === 'momo.html') return ['TRỨ', 'CASE STUDY', '03. MOMO'];
+    if (file === 'shortpeek.html') return ['TRỨ', 'CASE STUDY', '04. SHORTPEEK'];
+    return ['TRỨ', 'PRODUCT DESIGNER', 'PORTFOLIO'];
+  }
+
+  function getOrCreateToyFightCurtain(customLabels) {
+    injectCurtainStyles();
+    let overlay = document.getElementById('tru-curtain-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'tru-curtain-overlay';
+      overlay.className = 'tru-curtain-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML = `
+        <div class="tru-curtain-col"></div>
+        <div class="tru-curtain-col"></div>
+        <div class="tru-curtain-col"></div>
+        <div class="tru-curtain-col"></div>
+        <div class="tru-curtain-col"></div>
+        <div id="tru-curtain-badge" class="tru-curtain-badge-wrap"></div>
+      `;
+      document.body.appendChild(overlay);
+    }
+
+    const badgeWrap = overlay.querySelector('#tru-curtain-badge');
+    if (badgeWrap) {
+      const labels = customLabels || getPagePillLabels();
+      badgeWrap.innerHTML = `
+        <div class="tru-curtain-badge">
+          <span style="width:6px;height:6px;border-radius:9999px;background:#10B981;display:inline-block;box-shadow:0 0 8px #10B981;"></span>
+          <span>${labels[0] || 'TRỨ'}</span>
+        </div>
+        <div class="tru-curtain-badge">
+          <span>${labels[1] || 'PRODUCT DESIGNER'}</span>
+        </div>
+        <div class="tru-curtain-badge tru-curtain-badge-accent">
+          <span>${labels[2] || 'PORTFOLIO'}</span>
+        </div>
+      `;
+    }
+    return overlay;
   }
 
   function triggerHeroEntrance(delaySec) {
@@ -192,388 +274,87 @@
         duration: 420
       });
     });
+
+    // Subpage tag scramble
+    const subHeroTag = document.querySelector('[data-i18n="hero-tag"] span:last-child, [data-i18n="status-tag"] span:last-child');
+    if (subHeroTag) {
+      scrambleElement(subHeroTag, subHeroTag.textContent, { delay: Math.round((delaySec + 0.08) * 1000), duration: 360 });
+    }
   }
 
-  function initIntroCurtain() {
-    const existingOverlay = document.getElementById('tru-intro-overlay');
-    const isHome = Boolean(existingOverlay);
-
+  function initToyFightCurtain() {
     if (prefersReducedMotion()) {
-      if (existingOverlay) existingOverlay.remove();
+      const oldOverlay = document.getElementById('tru-intro-overlay');
+      if (oldOverlay) oldOverlay.remove();
+      const curtain = document.getElementById('tru-curtain-overlay');
+      if (curtain) curtain.remove();
+      document.documentElement.classList.remove('tru-curtain-lock');
       triggerHeroEntrance(0);
       return;
     }
 
-    // Detect whether user navigated internally from another page on the same origin
-    let navType = 'navigate';
+    const oldOverlay = document.getElementById('tru-intro-overlay');
+    if (oldOverlay) oldOverlay.remove();
+
+    const overlay = getOrCreateToyFightCurtain();
+    const cols = overlay.querySelectorAll('.tru-curtain-col');
+    const badge = overlay.querySelector('#tru-curtain-badge');
+
+    let isTransition = false;
     try {
-      const navEntries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-      if (navEntries && navEntries[0]) navType = navEntries[0].type;
+      isTransition = sessionStorage.getItem('tru_transition') === '1';
+      sessionStorage.removeItem('tru_transition');
     } catch (_) {}
 
-    const isInternalNav =
-      navType === 'navigate' &&
-      document.referrer &&
-      document.referrer.indexOf(window.location.origin) === 0;
-
-    // On subpages, run a fast 0.52s pixel-curtain dissolve so transitions feel cohesive yet instant
-    if (!isHome) {
-      runQuickSubpageCurtain();
-      return;
-    }
-
-    const overlay = existingOverlay;
-    const canvas = document.getElementById('tru-intro-canvas');
-    const hud = document.getElementById('tru-intro-hud');
-    const pctEl = document.getElementById('tru-intro-pct');
-    const tagEl = document.getElementById('tru-intro-tag');
-
-    // Hard fail-safe so the page can NEVER remain covered
     const failSafe = setTimeout(() => {
-      if (overlay && overlay.parentNode) overlay.remove();
-      document.documentElement.classList.remove('tru-intro-lock');
-    }, 3600);
+      overlay.style.pointerEvents = 'none';
+      overlay.style.display = 'none';
+      document.documentElement.classList.remove('tru-curtain-lock');
+      triggerHeroEntrance(0);
+    }, 2800);
 
-    if (!canvas || typeof gsap === 'undefined') {
+    if (typeof gsap === 'undefined') {
       clearTimeout(failSafe);
-      if (overlay) overlay.remove();
-      document.documentElement.classList.remove('tru-intro-lock');
-      triggerHeroEntrance(0.05);
+      overlay.style.pointerEvents = 'none';
+      overlay.style.display = 'none';
+      document.documentElement.classList.remove('tru-curtain-lock');
+      triggerHeroEntrance(0);
       return;
     }
 
-    const ctx = canvas.getContext('2d');
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let vw = window.innerWidth;
-    let vh = window.innerHeight;
+    const holdDelay = isTransition ? 0.14 : 0.48;
 
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      vw = window.innerWidth;
-      vh = window.innerHeight;
-      canvas.width = Math.round(vw * dpr);
-      canvas.height = Math.round(vh * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener('resize', resize);
+    gsap.set(cols, { yPercent: 0 });
+    gsap.set(badge, { opacity: 1, scale: 1 });
+    overlay.style.pointerEvents = 'all';
 
-    const getAccentDotColor = () => {
-      const t = getTheme();
-      if (t === 'dark') return '#C4FF00';
-      if (t === 'pink') return '#FF7096';
-      return '#10B981';
-    };
-
-    const getResponsiveCells = () => {
-      const minDim = Math.min(vw, vh);
-      return {
-        start: Math.min(34, Math.max(20, Math.round(minDim * 0.055))),
-        end: Math.min(18, Math.max(12, Math.round(minDim * 0.022)))
-      };
-    };
-
-    const initialCells = getResponsiveCells();
-    const state = {
-      pct: 0,
-      logoProgress: 0,
-      logoCellPx: initialCells.start,
-      dissolve: 0,
-      logoFade: 1
-    };
-
-    const renderFrame = () => {
-      ctx.clearRect(0, 0, vw, vh);
-
-      const cell = 20;
-      const cols = Math.ceil(vw / cell);
-      const rows = Math.ceil(vh / cell);
-      const subSize = cell / 4;
-
-      // 1. Curtain background tiles with 4x4 Bayer + 2D noise dissolve
-      if (state.dissolve <= 0.001) {
-        ctx.fillStyle = '#0A0A0B';
-        ctx.fillRect(0, 0, vw, vh);
-      } else if (state.dissolve < 1) {
-        ctx.fillStyle = '#0A0A0B';
-        ctx.beginPath();
-
-        const cx = cols * 0.5;
-        const cy = rows * 0.5;
-        const maxDist = Math.hypot(cx, cy) || 1;
-
-        for (let gy = 0; gy < rows; gy++) {
-          for (let gx = 0; gx < cols; gx++) {
-            const n = valueNoise2D(gx * 0.16 + 3.1, gy * 0.16 + 7.4);
-            const radial = Math.hypot(gx - cx, gy - cy) / maxDist;
-            // Center dissolves slightly earlier, mixed with organic noise
-            const cellStart = radial * 0.28 + n * 0.34;
-            const localDissolve = (state.dissolve - cellStart) / 0.42;
-
-            if (localDissolve <= 0) {
-              ctx.rect(gx * cell, gy * cell, cell + 0.4, cell + 0.4);
-            } else if (localDissolve < 1) {
-              const baseX = gx * cell;
-              const baseY = gy * cell;
-              for (let sy = 0; sy < 4; sy++) {
-                for (let sx = 0; sx < 4; sx++) {
-                  if (BAYER_4X4[sy * 4 + sx] >= localDissolve) {
-                    ctx.rect(
-                      baseX + sx * subSize,
-                      baseY + sy * subSize,
-                      subSize + 0.35,
-                      subSize + 0.35
-                    );
-                  }
-                }
-              }
-            }
-          }
-        }
-        ctx.fill();
-      }
-
-      // 2. Center Geometric Pixel Monogram "T." (Coarse-to-Fine sub-pixel crystallization)
-      if (state.logoProgress > 0.01 && state.logoFade > 0.01) {
-        const mCell = state.logoCellPx;
-        const mSub = mCell / 4;
-        const totalSize = mCell * 8;
-        const ox = Math.round((vw - totalSize) * 0.5);
-        const oy = Math.round((vh - totalSize) * 0.5 - 38);
-        const accentHex = getAccentDotColor();
-
-        ctx.globalAlpha = state.logoFade;
-
-        for (let r = 0; r < 8; r++) {
-          for (let c = 0; c < 8; c++) {
-            const kind = TRU_MONOGRAM_8X8[r][c];
-            if (!kind) continue;
-
-            ctx.fillStyle = kind === 2 ? accentHex : '#F5F5F0';
-            const staggerBias = (r + c) / 16;
-            const cellFill = Math.max(0, Math.min(1, (state.logoProgress - staggerBias * 0.32) / 0.68));
-            if (cellFill <= 0) continue;
-
-            const bx = ox + c * mCell;
-            const by = oy + r * mCell;
-
-            if (cellFill >= 0.99) {
-              ctx.fillRect(bx + 1, by + 1, mCell - 2, mCell - 2);
-            } else {
-              ctx.beginPath();
-              for (let sy = 0; sy < 4; sy++) {
-                for (let sx = 0; sx < 4; sx++) {
-                  if (BAYER_4X4[sy * 4 + sx] < cellFill) {
-                    ctx.rect(bx + sx * mSub + 0.5, by + sy * mSub + 0.5, mSub - 1, mSub - 1);
-                  }
-                }
-              }
-              ctx.fill();
-            }
-          }
-        }
-        ctx.globalAlpha = 1;
-      }
-    };
-
-    // Fast path for internal navigation back to homepage or direct hash links
-    if (isInternalNav || Boolean(window.location.hash)) {
-      if (hud) hud.style.display = 'none';
-      state.logoProgress = 0;
-      renderFrame();
-      document.documentElement.classList.remove('tru-intro-lock');
-      triggerHeroEntrance(0.12);
-
-      gsap.to(state, {
-        dissolve: 1,
-        duration: 0.55,
-        ease: 'power2.inOut',
-        onUpdate: renderFrame,
-        onComplete: () => {
-          clearTimeout(failSafe);
-          window.removeEventListener('resize', resize);
-          overlay.remove();
-        }
-      });
-      return;
-    }
-
-    // Full Signature Intro Sequence (~2.05s)
-    document.documentElement.classList.add('tru-intro-lock');
-    if (typeof lenis !== 'undefined' && lenis) lenis.stop();
-
-    // Prepare hero lines hidden cleanly until curtain dissolves
-    gsap.set('.hero-line', { opacity: 0 });
-
-    if (tagEl) {
-      const label = getLang() === 'en' ? '[ TRỨ // PRODUCT DESIGNER ]' : '[ TRỨ // PRODUCT DESIGNER ]';
-      scrambleElement(tagEl, label, { duration: 520, fromEmpty: true });
-    }
-
-    renderFrame();
-
-    let heroTriggered = false;
     const tl = gsap.timeline({
-      onUpdate: renderFrame,
       onComplete: () => {
         clearTimeout(failSafe);
-        window.removeEventListener('resize', resize);
-        document.documentElement.classList.remove('tru-intro-lock');
-        if (typeof lenis !== 'undefined' && lenis) lenis.start();
-        overlay.remove();
+        overlay.style.pointerEvents = 'none';
+        document.documentElement.classList.remove('tru-curtain-lock');
+        triggerHeroEntrance(0.04);
       }
     });
 
-    // Act 1: Percentage 0 -> 100% + Coarse-to-Fine Pixel Monogram
-    tl.to(
-      state,
-      {
-        pct: 100,
-        duration: 0.88,
-        ease: 'power2.inOut',
-        onUpdate: () => {
-          if (pctEl) {
-            const val = Math.round(state.pct);
-            pctEl.textContent = String(val).padStart(2, '0') + '%';
-          }
-        }
-      },
-      0
-    );
-
-    tl.fromTo(
-      state,
-      { logoProgress: 0.08, logoCellPx: initialCells.start },
-      { logoProgress: 1, logoCellPx: initialCells.end, duration: 0.92, ease: 'expo.out' },
-      0
-    );
-
-    // Act 2: Clip HUD counter upward & fade monogram into pixel field
-    if (hud) {
-      tl.to(
-        hud,
-        {
-          y: 72,
-          opacity: 0,
-          clipPath: 'inset(0% 0% 100% 0%)',
-          duration: 0.34,
-          ease: 'power3.in'
-        },
-        0.90
-      );
-    }
-
-    tl.to(
-      state,
-      {
-        logoFade: 0,
-        logoCellPx: Math.max(10, initialCells.end - 4),
-        duration: 0.36,
-        ease: 'power2.in'
-      },
-      0.95
-    );
-
-    // Act 3: 16-Step Sub-Pixel Noise Dissolve + Synchronized Hero Entrance
-    tl.to(
-      state,
-      {
-        dissolve: 1,
-        duration: 0.98,
-        ease: 'power2.inOut',
-        onStart: () => {
-          overlay.style.pointerEvents = 'none';
-          document.documentElement.classList.remove('tru-intro-lock');
-          if (typeof lenis !== 'undefined' && lenis) lenis.start();
-          if (!heroTriggered) {
-            heroTriggered = true;
-            triggerHeroEntrance(0.16);
-          }
-        }
-      },
-      0.98
-    );
-
-    // Allow impatient visitors to click or press Space/Escape to jump straight to dissolve
-    const skipIntro = () => {
-      if (tl.time() < 0.92) {
-        tl.time(0.92);
-      }
-    };
-    overlay.addEventListener('click', skipIntro, { once: true });
-    window.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Escape' || e.key === ' ') skipIntro();
-      },
-      { once: true }
-    );
-  }
-
-  function runQuickSubpageCurtain() {
-    if (typeof gsap === 'undefined') return;
-
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.style.cssText =
-      'position:fixed;inset:0;width:100vw;height:100vh;z-index:9998;pointer-events:none;';
-    document.body.appendChild(canvas);
-
-    const ctx = canvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    canvas.width = Math.round(vw * dpr);
-    canvas.height = Math.round(vh * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const state = { dissolve: 0.06 };
-    const cell = 22;
-    const cols = Math.ceil(vw / cell);
-    const rows = Math.ceil(vh / cell);
-    const subSize = cell / 4;
-
-    const draw = () => {
-      ctx.clearRect(0, 0, vw, vh);
-      ctx.fillStyle = '#0A0A0B';
-      ctx.beginPath();
-      for (let gy = 0; gy < rows; gy++) {
-        for (let gx = 0; gx < cols; gx++) {
-          const n = valueNoise2D(gx * 0.18 + 1.7, gy * 0.18 + 4.3);
-          const local = (state.dissolve - n * 0.42) / 0.58;
-          if (local <= 0) {
-            ctx.rect(gx * cell, gy * cell, cell + 0.4, cell + 0.4);
-          } else if (local < 1) {
-            const bx = gx * cell;
-            const by = gy * cell;
-            for (let sy = 0; sy < 4; sy++) {
-              for (let sx = 0; sx < 4; sx++) {
-                if (BAYER_4X4[sy * 4 + sx] >= local) {
-                  ctx.rect(bx + sx * subSize, by + sy * subSize, subSize + 0.35, subSize + 0.35);
-                }
-              }
-            }
-          }
-        }
-      }
-      ctx.fill();
-    };
-
-    draw();
-    triggerHeroEntrance(0.08);
-    gsap.to(state, {
-      dissolve: 1,
-      duration: 0.50,
-      ease: 'power2.out',
-      onUpdate: draw,
-      onComplete: () => canvas.remove()
+    tl.to(badge, {
+      opacity: 0,
+      scale: 0.92,
+      duration: 0.22,
+      ease: 'power2.in',
+      delay: holdDelay
     });
 
-    // Cipher-scramble subpage hero tag if present
-    const subHeroTag = document.querySelector('[data-i18n="hero-tag"] span:last-child, [data-i18n="status-tag"] span:last-child');
-    if (subHeroTag) {
-      scrambleElement(subHeroTag, subHeroTag.textContent, { delay: 120, duration: 360 });
-    }
+    tl.to(
+      cols,
+      {
+        yPercent: -100,
+        duration: 0.72,
+        stagger: 0.065,
+        ease: 'power4.inOut'
+      },
+      '-=0.08'
+    );
   }
 
   /* ==========================================================================
@@ -958,74 +739,65 @@
     }
 
     document.querySelectorAll('.tru-exit-canvas').forEach((c) => c.remove());
-    const canvas = document.createElement('canvas');
-    canvas.className = 'tru-exit-canvas';
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.style.cssText =
-      'position:fixed;inset:0;width:100vw;height:100vh;z-index:10001;pointer-events:all;';
-    document.body.appendChild(canvas);
 
-    const ctx = canvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    canvas.width = Math.round(vw * dpr);
-    canvas.height = Math.round(vh * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    let destLabel = ['TRỨ', 'PRODUCT DESIGNER', 'PORTFOLIO'];
+    if (href.includes('iq-myth')) destLabel = ['TRỨ', 'CASE STUDY', '02. IQ MYTH'];
+    else if (href.includes('yen')) destLabel = ['TRỨ', 'CASE STUDY', '01. YÊN'];
+    else if (href.includes('momo')) destLabel = ['TRỨ', 'CASE STUDY', '03. MOMO'];
+    else if (href.includes('shortpeek')) destLabel = ['TRỨ', 'CASE STUDY', '04. SHORTPEEK'];
 
-    const state = { cover: 0 };
-    const cell = 22;
-    const cols = Math.ceil(vw / cell);
-    const rows = Math.ceil(vh / cell);
-    const subSize = cell / 4;
+    const overlay = getOrCreateToyFightCurtain(destLabel);
+    const cols = overlay.querySelectorAll('.tru-curtain-col');
+    const badge = overlay.querySelector('#tru-curtain-badge');
 
-    const draw = () => {
-      ctx.clearRect(0, 0, vw, vh);
-      ctx.fillStyle = '#0A0A0B';
-      ctx.beginPath();
-      for (let gy = 0; gy < rows; gy++) {
-        for (let gx = 0; gx < cols; gx++) {
-          const n = valueNoise2D(gx * 0.18 + 2.3, gy * 0.18 + 5.9);
-          const local = (state.cover - n * 0.36) / 0.64;
-          if (local >= 1) {
-            ctx.rect(gx * cell, gy * cell, cell + 0.4, cell + 0.4);
-          } else if (local > 0) {
-            const bx = gx * cell;
-            const by = gy * cell;
-            for (let sy = 0; sy < 4; sy++) {
-              for (let sx = 0; sx < 4; sx++) {
-                if (BAYER_4X4[sy * 4 + sx] < local) {
-                  ctx.rect(bx + sx * subSize, by + sy * subSize, subSize + 0.35, subSize + 0.35);
-                }
-              }
-            }
-          }
-        }
-      }
-      ctx.fill();
-    };
+    gsap.set(cols, { yPercent: 100 });
+    gsap.set(badge, { opacity: 0, scale: 0.88 });
+    overlay.style.pointerEvents = 'all';
+    overlay.style.display = 'flex';
 
-    gsap.to(state, {
-      cover: 1,
-      duration: 0.28,
-      ease: 'power2.in',
-      onUpdate: draw,
+    const tl = gsap.timeline({
       onComplete: () => {
+        try {
+          sessionStorage.setItem('tru_transition', '1');
+        } catch (_) {}
         window.location.href = href;
       }
     });
+
+    tl.to(cols, {
+      yPercent: 0,
+      duration: 0.58,
+      stagger: 0.055,
+      ease: 'power4.inOut'
+    });
+
+    tl.to(
+      badge,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.22,
+        ease: 'back.out(1.2)'
+      },
+      '-=0.22'
+    );
   }
 
   window.truNavigate = navigateWithCurtain;
 
   function initUniversalMenuAndTransitions() {
-    // Clean up any bfcache exit canvas on browser Back/Forward
+    // Clean up any bfcache curtain on browser Back/Forward
     window.addEventListener('pageshow', (e) => {
       document.querySelectorAll('.tru-exit-canvas').forEach((c) => c.remove());
-      if (e.persisted) {
-        const intro = document.getElementById('tru-intro-overlay');
-        if (intro) intro.remove();
-        document.documentElement.classList.remove('tru-intro-lock');
+      const overlay = document.getElementById('tru-curtain-overlay');
+      if (overlay && e.persisted) {
+        overlay.style.pointerEvents = 'none';
+        overlay.querySelectorAll('.tru-curtain-col').forEach((c) => {
+          c.style.transform = 'translateY(-100%)';
+        });
+        const badge = overlay.querySelector('#tru-curtain-badge');
+        if (badge) badge.style.opacity = '0';
+        document.documentElement.classList.remove('tru-curtain-lock');
         document.body.style.overflow = '';
       }
     });
@@ -1526,7 +1298,7 @@
   const boot = () => {
     initSlotMachineRollers();
     initUniversalMenuAndTransitions();
-    initIntroCurtain();
+    initToyFightCurtain();
     initBlackFireCursorTrail();
     initCursorPillAndHovers();
   };

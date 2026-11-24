@@ -147,6 +147,33 @@
 </head>
 <body>
 
+  <!-- TOYFIGHT-INSPIRED 5-COLUMN STAGGERED INTRO & TRANSITION CURTAIN -->
+  <div id="tru-curtain-overlay" class="tru-curtain-overlay" aria-hidden="true" style="position:fixed;inset:0;z-index:99999;display:flex;width:100vw;height:100vh;pointer-events:none;overflow:hidden;">
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div id="tru-curtain-badge" class="tru-curtain-badge-wrap" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100000;display:flex;align-items:center;gap:8px;pointer-events:none;user-select:none;">
+      <div class="tru-curtain-badge" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);border-radius:9999px;padding:6px 14px;color:#F5F5F0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span style="width:6px;height:6px;border-radius:9999px;background:#10B981;display:inline-block;box-shadow:0 0 8px #10B981;"></span>
+        <span>TRỨ</span>
+      </div>
+      <div class="tru-curtain-badge" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);border-radius:9999px;padding:6px 14px;color:#F5F5F0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span>CASE STUDY</span>
+      </div>
+      <div class="tru-curtain-badge tru-curtain-badge-accent" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(196,255,0,0.35);border-radius:9999px;padding:6px 14px;color:#C4FF00;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span>03. MOMO</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var _co = document.getElementById('tru-curtain-overlay');
+      if (_co) _co.remove();
+    }
+  </script>
+
   <!-- SCROLL PROGRESS BAR -->
   <div id="scroll-progress"></div>
 

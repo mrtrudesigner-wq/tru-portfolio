@@ -487,3 +487,35 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Mousedown kích hoạt scale tăng `1.22` lần mượt mà.
     * Tuyệt đối không cản trở thao tác click hay hover vào các nút bấm, liên kết và component trên website (`pointer-events: none`).
 * **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai phiên bản con trỏ mới lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 22. TÍCH HỢP HIỆU ỨNG LOAD ĐẦU TRANG & CHUYỂN CẢNH TOYFIGHT 5-COLUMN STAGGERED CURTAIN — 24/11/2026
+
+* **Bối cảnh & Yêu cầu:** Người dùng yêu cầu tích hợp hiệu ứng tải đầu trang (page loader/entrance) và hiệu ứng chuyển trang (page transition) theo phong cách của trang web nổi tiếng **ToyFight** (`https://toyfight.co/work`).
+* **Phân tích chuyển động ToyFight (Awwwards Site of the Year):**
+  * Khung màn che được chia thành **5 cột dọc đối xứng** (`width: 20vw` mỗi cột, trải toàn màn hình).
+  * Giữa màn hình xuất hiện cụm 3 huy hiệu viên thuốc (pill badges) tối giản: `[ TRỨ ] [ PRODUCT DESIGNER ] [ PORTFOLIO ]` (hoặc tên case study tương ứng `[ 01. YÊN ]`, `[ 02. IQ MYTH ]`, `[ 03. MOMO ]`, `[ 04. SHORTPEEK ]`).
+  * **Chuyển động bậc thang lùi dần (Staggered Echelon):** Khi mở trang, 5 cột trượt lên trên theo nhịp so le lệch pha từ trái sang phải (`stagger: 0.065s`, gia tốc `power4.inOut`). Khi chuyển trang, 5 cột quét lên từ đáy màn hình, huy hiệu xuất hiện rồi tự động mở ra ở trang mới.
+* **Triển khai kỹ thuật (`assets/js/interactive-fx.js` & 6 tệp HTML):**
+  * **Kiến trúc DOM đồng nhất (`#tru-curtain-overlay`):** Bổ sung trực tiếp khối 5 cột `.tru-curtain-col` và cụm huy hiệu `#tru-curtain-badge` vào đầu thẻ `<body>` của toàn bộ 6 trang (`index.html`, `iq-myth.html`, `yen.html`, `momo.html`, `shortpeek.html`, `404.html`). Đảm bảo 100% không bị chớp trắng (Zero FOUC) ngay cả khi người dùng truy cập trực tiếp bằng URL hay bấm `Cmd + R` làm mới.
+  * **Module `initToyFightCurtain()` (Load đầu trang):**
+    * Giữ huy hiệu trung tâm trong thời gian tối ưu (`480ms` khi mở trang mới, `140ms` khi chuyển trang nhanh).
+    * Huy hiệu mờ dần và thu nhỏ (`scale: 0.92, duration: 0.22s, ease: 'power2.in'`), ngay sau đó 5 cột đen trượt lên (`yPercent: -100`) theo nhịp so le (`stagger: 0.065s, duration: 0.72s, ease: 'power4.inOut'`).
+    * Tự động kích hoạt hiệu ứng mở chữ Hero (`triggerHeroEntrance`) ngay khi màn che bắt đầu mở.
+  * **Module `navigateWithCurtain(href)` (Chuyển trang liên kết nội bộ):**
+    * Bắt sự kiện click chuột trên toàn bộ link điều hướng và dự án nội bộ.
+    * 5 cột trượt quét ngược từ dưới lên (`yPercent: 100 -> 0`) theo nhịp so le (`stagger: 0.055s, duration: 0.58s`), huy hiệu trung tâm nảy ra nhẹ nhàng (`scale: 1, ease: 'back.out(1.2)'`), cập nhật tức thì nhãn của trang đích.
+    * Lưu cờ `sessionStorage.setItem('tru_transition', '1')` để trang kế tiếp biết và lập tức mở màn che mà không bắt người dùng phải đợi lâu.
+  * **Cơ chế chống treo & Trợ năng:**
+    * Fail-safe timeout 2.8s tự động gỡ màn che nếu trình duyệt gặp sự cố mạng hoặc JS.
+    * Hỗ trợ bộ nhớ đệm trình duyệt (bfcache): lắng nghe `pageshow` để tự động dọn sạch màn che khi người dùng bấm nút Back/Forward trên trình duyệt.
+    * Tự động tắt hoàn toàn khi phát hiện cờ `prefers-reduced-motion: reduce`.
+* **Kiểm thử thực tế & Bằng chứng xác minh:**
+  * Cú pháp `node --check assets/js/interactive-fx.js` đạt 0 lỗi.
+  * Kiểm thử qua Browser subagent trên cả 4 kịch bản:
+    1. Load đầu trang chủ: 5 cột quét lên so le mượt mà, huy hiệu hiển thị chuẩn.
+    2. Chuyển trang xuôi sang case study `yen.html`: màn che quét lên từ đáy, chuyển trang mượt mà, mở màn che để lộ case study.
+    3. Chuyển trang ngược về `index.html#work`: màn che quét lên và mở ra chuẩn xác.
+    4. Vệt chuột Black Fire Cursor Trail hoạt động song song mượt mà ở 60–120fps, không bị giật lag hay xung đột DOM.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai lên `https://mrtrudesigner.vercel.app`.

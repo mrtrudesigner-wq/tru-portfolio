@@ -307,21 +307,30 @@
 </head>
 <body class="selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
 
-  <!-- SIGNATURE PIXEL-MATRIX INTRO CURTAIN -->
-  <div id="tru-intro-overlay" aria-hidden="true" style="position:fixed;inset:0;z-index:10000;background:#0A0A0B;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;">
-    <canvas id="tru-intro-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
-    <div id="tru-intro-hud" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;transform:translateY(108px);pointer-events:none;">
-      <div id="tru-intro-pct" class="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#F5F5F0] tabular-nums">00%</div>
-      <div id="tru-intro-tag" class="font-mono text-[10px] uppercase tracking-mono text-[#8E8E93]">[ TRỨ // PRODUCT DESIGNER ]</div>
-    </div>
-    <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;z-index:2;pointer-events:none;opacity:0.32;" class="font-mono text-[9px] uppercase tracking-mono text-[#F5F5F0]">
-      [ CLICK / ESC ]
+  <!-- TOYFIGHT-INSPIRED 5-COLUMN STAGGERED INTRO & TRANSITION CURTAIN -->
+  <div id="tru-curtain-overlay" class="tru-curtain-overlay" aria-hidden="true" style="position:fixed;inset:0;z-index:99999;display:flex;width:100vw;height:100vh;pointer-events:none;overflow:hidden;">
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div class="tru-curtain-col" style="flex:1;height:100%;background-color:#0E0E0E;will-change:transform;"></div>
+    <div id="tru-curtain-badge" class="tru-curtain-badge-wrap" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100000;display:flex;align-items:center;gap:8px;pointer-events:none;user-select:none;">
+      <div class="tru-curtain-badge" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);border-radius:9999px;padding:6px 14px;color:#F5F5F0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span style="width:6px;height:6px;border-radius:9999px;background:#10B981;display:inline-block;box-shadow:0 0 8px #10B981;"></span>
+        <span>TRỨ</span>
+      </div>
+      <div class="tru-curtain-badge" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);border-radius:9999px;padding:6px 14px;color:#F5F5F0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span>PRODUCT DESIGNER</span>
+      </div>
+      <div class="tru-curtain-badge tru-curtain-badge-accent" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(196,255,0,0.35);border-radius:9999px;padding:6px 14px;color:#C4FF00;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 10px 28px rgba(0,0,0,0.45);">
+        <span>PORTFOLIO</span>
+      </div>
     </div>
   </div>
   <script>
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      var _io = document.getElementById('tru-intro-overlay');
-      if (_io) _io.remove();
+      var _co = document.getElementById('tru-curtain-overlay');
+      if (_co) _co.remove();
     }
   </script>
 
