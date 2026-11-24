@@ -173,7 +173,7 @@
       <span class="sm:hidden" data-i18n="top-back-mobile">QUAY LẠI</span>
     </a>
     <div class="flex items-center gap-2 truncate min-w-0">
-      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 02 / 03</span>
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 02 / 04</span>
       <span class="font-bold text-[#B9FF06] bg-black px-2 py-0.5 rounded truncate" data-i18n="top-case-tag">IQ MYTH — EDTECH & WEB APP</span>
     </div>
   </div>
@@ -215,6 +215,15 @@
         <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
           Liên hệ
         </a>
+
+        <button type="button" onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2 magnetic-btn cursor-pointer shrink-0" title="Open Menu">
+          <span data-menu-i18n="btnMenu">MENU</span>
+          <span class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between" aria-hidden="true">
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
@@ -740,7 +749,7 @@
         'color-intro': "Xanh neon (#B9FF06) tạo điểm nhấn và nhận diện cho hình minh họa. Xanh đậm (#013613) được dùng cho CTA và nền để tạo độ tương phản và giữ tính tiếp cận.",
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
-        'top-case-num': 'CASE 02 / 03',
+        'top-case-num': 'CASE 02 / 04',
         'top-case-tag': 'IQ MYTH — EDTECH & WEB APP',
         'btn-contact': 'Liên hệ',
         'hero-tag': '<span>[ 02 // SELECTED WORK ]</span><span>·</span><span>EDTECH · UI/UX & PROTOTYPING</span>',
@@ -834,7 +843,7 @@
         'color-intro': "Neon green (#B9FF06) accents illustrations and callouts. Dark green (#013613) backs CTAs and dark surfaces for contrast and readability.",
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
-        'top-case-num': 'CASE 02 / 03',
+        'top-case-num': 'CASE 02 / 04',
         'top-case-tag': 'IQ MYTH — EDTECH & WEB APP',
         'btn-contact': 'Get in touch',
         'hero-tag': '<span>[ 02 // SELECTED WORK ]</span><span>·</span><span>EDTECH · UI/UX & PROTOTYPING</span>',
@@ -952,6 +961,6 @@
     const savedLang = localStorage.getItem('tru_lang') || 'vi';
     setLang(savedLang);
   </script>
-  <script src="assets/js/interactive-fx.js"></script>
+  <script src="assets/js/interactive-fx.js?v=2"></script>
 </body>
 </html>

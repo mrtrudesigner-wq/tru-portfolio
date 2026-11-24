@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JDFWHXT8Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0JDFWHXT8Q');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHORTPEEK: Thiết Kế Lại Ứng Dụng Xem Phim Ngắn | Case Study · Trứ</title>
+  <meta name="description" content="Case study Shortpeek tại Marchi Lab: audit bản gốc, tái cấu trúc điều hướng, tách luồng mở khóa tập và hoàn thiện hệ thống UI chuẩn bị nộp store.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
+  <script>
+    (function() {
+      const isDark = (localStorage.getItem('tru_theme') === 'dark') ||
+        (!localStorage.getItem('tru_theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon && isDark) {
+        favicon.href = 'favicon-dark.png';
+      }
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #F5F5F0;
+      --bg-secondary: #EAEAE4;
+      --header-bg: rgba(245, 245, 240, 0.94);
+      --text-primary: #0E0E0E;
+      --text-muted: #666660;
+      --border-color: rgba(14, 14, 14, 0.14);
+      --sp-accent: #D9480F;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0C0C0D;
+      --bg-secondary: #161618;
+      --header-bg: rgba(12, 12, 13, 0.94);
+      --text-primary: #F5F5F0;
+      --text-muted: #8E8E93;
+      --border-color: rgba(245, 245, 240, 0.14);
+      --sp-accent: #F97039;
+    }
+    [data-theme="pink"] {
+      --bg-primary: #FF7096;
+      --bg-secondary: #FF85A7;
+      --header-bg: rgba(255, 112, 150, 0.94);
+      --text-primary: #121212;
+      --text-muted: #3D1220;
+      --border-color: rgba(18, 18, 18, 0.2);
+      --sp-accent: #121212;
+    }
+
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    html {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: clip;
+      max-width: 100%;
+      position: relative;
+    }
+    .hairline-b { border-bottom: 1px solid var(--border-color); }
+    .hairline-t { border-top: 1px solid var(--border-color); }
+    .hairline-all { border: 1px solid var(--border-color); }
+
+    .site-header {
+      background-color: var(--header-bg);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    /* Fixed dark stage strictly for app artifact containers */
+    .cinema-stage {
+      background-color: #0D0E11;
+      color: #F5F5F0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="pink"] .text-emerald-500,
+    [data-theme="pink"] .text-emerald-600,
+    [data-theme="pink"] .text-amber-500,
+    [data-theme="pink"] .text-amber-600,
+    [data-theme="pink"] .text-amber-700,
+    [data-theme="pink"] .text-orange-500,
+    [data-theme="pink"] .text-orange-600,
+    [data-theme="pink"] .text-red-500,
+    [data-theme="pink"] .text-blue-500 {
+      color: #121212 !important;
+    }
+    [data-theme="pink"] .cinema-stage .text-orange-400,
+    [data-theme="pink"] .cinema-stage .text-\[\#F97039\] {
+      color: #F97039 !important;
+    }
+    [data-theme="pink"] .cinema-stage .text-emerald-400 {
+      color: #34D399 !important;
+    }
+    [data-theme="pink"] .cinema-stage .text-amber-400 {
+      color: #FBBF24 !important;
+    }
+
+    section[id], #before-after { scroll-margin-top: 104px; }
+    h1, h2, h3, blockquote { text-wrap: balance; }
+    p, li, figcaption { text-wrap: pretty; }
+    main img:not(#shortpeek-comparison img), #shortpeek-comparison {
+      position: relative;
+      z-index: 32;
+    }
+    #shortpeek-comparison,
+    #shortpeek-comparison * {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-touch-callout: none;
+    }
+    #shortpeek-comparison::selection,
+    #shortpeek-comparison *::selection {
+      background: transparent;
+    }
+    body.is-dragging-comparison,
+    body.is-dragging-comparison * {
+      -webkit-user-select: none !important;
+      user-select: none !important;
+    }
+
+    /* Underline Editorial Workbench Tabs */
+    .wt-tab {
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .wt-tab:hover {
+      color: var(--text-primary);
+    }
+    .wt-tab[aria-selected="true"] {
+      color: var(--text-primary);
+      border-bottom-color: var(--text-primary);
+    }
+
+    /* Dark-stage Sub-view Switcher */
+    .subview-pill {
+      color: #9CA3AF;
+      border-bottom: 1.5px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .subview-pill:hover {
+      color: #FFFFFF;
+    }
+    .subview-pill[aria-pressed="true"] {
+      color: #F97039;
+      border-bottom-color: #F97039;
+    }
+
+    /* Borderless Clickable Rows in Monetization Flow */
+    .subview-note .sub-dot {
+      color: var(--text-muted);
+      opacity: 0.35;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    .subview-note[data-active="true"] .sub-dot {
+      color: #F97039;
+      opacity: 1;
+    }
+    [data-theme="pink"] .subview-note[data-active="true"] .sub-dot {
+      color: #121212 !important;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #E50914, #F97039, #F59E0B);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- TOP BAR -->
+  <div class="hairline-b font-mono text-[10px] sm:text-[11px] tracking-mono uppercase py-2 sm:py-2.5 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-secondary)] gap-2 overflow-hidden">
+    <a href="index.html#work" class="flex items-center gap-1.5 hover:underline font-bold magnetic-btn shrink-0">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span class="hidden sm:inline" data-i18n="top-back">QUAY LẠI DANH SÁCH DỰ ÁN</span>
+      <span class="sm:hidden" data-i18n="top-back-mobile">QUAY LẠI</span>
+    </a>
+    <div class="flex items-center gap-2 truncate min-w-0">
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 04 / 04</span>
+      <span class="font-bold text-orange-600 dark:text-[#F97039] truncate" data-i18n="top-case-tag">SHORTPEEK · MOBILE APP REDESIGN</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 site-header hairline-b">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2">
+      <a href="index.html" class="flex items-center gap-2 group shrink-0">
+        <span class="font-extrabold text-xl sm:text-2xl uppercase font-sans">TRỨ</span>
+        <span class="font-mono text-xs text-[var(--text-muted)] border border-[var(--border-color)] px-2 py-0.5 rounded hidden sm:inline-block">
+          PRODUCT DESIGNER
+        </span>
+      </a>
+
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- LANGUAGE TOGGLE -->
+        <div class="flex items-center p-0.5 sm:p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-0.5 sm:gap-1 text-xs">
+          <button onclick="setLang('vi')" class="lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]" title="Tiếng Việt">
+            VI
+          </button>
+          <button onclick="setLang('en')" class="lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]" title="English">
+            EN
+          </button>
+        </div>
+
+        <!-- Theme Switchers: Desktop -->
+        <div class="hidden sm:flex items-center p-1 rounded-full hairline-all bg-[var(--bg-secondary)] gap-1 text-xs">
+          <button onclick="setTheme('light')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="light">Light</button>
+          <button onclick="setTheme('dark')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="dark">Dark</button>
+          <button onclick="setTheme('pink')" class="theme-btn px-2.5 py-1 rounded-full font-mono text-[10px] uppercase" data-target="pink">Pink</button>
+        </div>
+
+        <!-- Theme Switcher: Mobile Cycle Button -->
+        <button onclick="cycleTheme()" class="sm:hidden flex items-center gap-1 px-2 py-1 rounded-full hairline-all bg-[var(--bg-secondary)] font-mono text-[9px] uppercase tracking-mono hover:text-[var(--text-primary)] transition-all" title="Đổi giao diện">
+          <span id="mobile-theme-icon">☀️</span>
+          <span id="mobile-theme-text" class="font-bold">LGT</span>
+        </button>
+
+        <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
+          Liên hệ
+        </a>
+
+        <button type="button" onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2 magnetic-btn cursor-pointer shrink-0" title="Open Menu">
+          <span data-menu-i18n="btnMenu">MENU</span>
+          <span class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between" aria-hidden="true">
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-16 md:py-28 space-y-28 md:space-y-44">
+
+    <!-- RESULT-FIRST HERO + BEFORE / AFTER -->
+    <section class="space-y-12 md:space-y-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+        <div class="lg:col-span-8 space-y-6">
+          <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-orange-600 dark:text-[#F97039] inline-flex flex-wrap items-center gap-2 font-bold" data-i18n="hero-tag"><span>[ 04 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span></div>
+
+          <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
+            SHORTPEEK: THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC.
+          </h1>
+
+          <p class="case-hero-desc text-lg md:text-2xl text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="hero-desc">
+            Làm mới giao diện ứng dụng xem phim ngắn theo hướng điện ảnh gọn mắt trước khi nộp store. Tôi sắp xếp lại thanh điều hướng, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.
+          </p>
+        </div>
+
+        <!-- Borderless 4-row Product Spec List -->
+        <aside class="lg:col-span-4 border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs case-meta-grid">
+          <div class="py-3.5 flex items-baseline justify-between gap-4">
+            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-role-lbl">Vai trò</span>
+            <span class="font-bold text-right" data-i18n="meta-role-val">Product Designer</span>
+          </div>
+          <div class="py-3.5 flex items-baseline justify-between gap-4">
+            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-type-lbl">Dự án</span>
+            <span class="font-bold text-right" data-i18n="meta-type-val">Marchi Lab · 2026 (Chưa phát hành)</span>
+          </div>
+          <div class="py-3.5 space-y-1">
+            <span class="text-[var(--text-muted)] uppercase block" data-i18n="meta-scope-lbl">Phạm vi</span>
+            <span class="font-bold block leading-relaxed" data-i18n="meta-scope-val">UX Audit · User Flow · UI · Design System · App Icon · Prototype</span>
+          </div>
+          <div class="py-3.5 flex items-baseline justify-between gap-4">
+            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-scale-lbl">Quy mô</span>
+            <span class="font-bold text-right text-orange-600 dark:text-[#F97039]" data-i18n="meta-scale-val">17 nhóm · 104 màn hình</span>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Result-First Before / After Comparison Stage -->
+      <figure id="before-after" class="case-hero-img space-y-4">
+        <span class="block font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="comparison-tag">[ TRƯỚC / SAU ]</span>
+
+        <div id="shortpeek-comparison" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-label="So sánh bản gốc và bản redesign" class="relative overflow-hidden rounded-2xl hairline-all aspect-[1600/980] bg-[#161618] shadow-2xl select-none cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97039]" style="--comparison-position: 50%; touch-action: pan-y;">
+          <img src="assets/shortpeek/after-comparison.webp" alt="Shortpeek bản redesign trên ba màn hình Home, Mở khóa tập và Profile" width="1600" height="980" draggable="false" class="block w-full h-full object-contain pointer-events-none" fetchpriority="high" decoding="async">
+          <img id="comparison-before-image" src="assets/shortpeek/before-comparison.webp" alt="Shortpeek bản gốc trên ba màn hình Home, Mở khóa tập và Profile" width="1600" height="980" draggable="false" class="absolute inset-0 w-full h-full object-contain pointer-events-none" style="clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);" fetchpriority="high" decoding="async">
+          <div aria-hidden="true" class="absolute inset-y-0 w-0.5 bg-white shadow pointer-events-none" style="left: var(--comparison-position);">
+            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white text-black shadow-lg flex items-center justify-center font-mono text-xs font-bold">
+              ↔
+            </div>
+          </div>
+          <div class="absolute inset-x-0 top-0 flex justify-between gap-2 p-3 sm:p-5 pointer-events-none font-mono text-[9px] sm:text-xs uppercase font-bold">
+            <span class="bg-white text-black px-2.5 py-1 rounded shadow" data-i18n="comparison-before">BẢN GỐC</span>
+            <span class="bg-[#F97039] text-white px-2.5 py-1 rounded shadow" data-i18n="comparison-after">BẢN REDESIGN</span>
+          </div>
+        </div>
+
+        <figcaption class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl" data-i18n="comparison-desc">
+          Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- 01 / BỐI CẢNH & AUDIT BẢN APP GỐC -->
+    <section id="audit" class="space-y-12 md:space-y-16 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec1-tag">
+        [ 01 // BỐI CẢNH &amp; AUDIT BẢN APP GỐC ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <!-- Context + Borderless Editorial Pull-Quote -->
+        <div class="lg:col-span-5 space-y-6">
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">
+            LÀM MỚI ĐỊNH VỊ TRƯỚC KHI NỘP STORE
+          </h2>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">
+            Shortpeek là ứng dụng xem phim ngắn dạng dọc tại Marchi Lab, hoạt động theo mô hình mở khóa tập bằng xu (Coins) hoặc gói thành viên (Premium). Trước giai đoạn nộp App Store và Google Play, đội ngũ muốn làm mới sản phẩm theo hướng gọn gàng, đậm chất điện ảnh như Netflix thay cho giao diện cũ nặng khuyến mãi.
+          </p>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">
+            Tôi trực tiếp thực hiện UX Audit bản gốc, thiết kế lại User Flow, UI, Design System, App Icon và Prototype. Kiểm tra các màn hình gốc trong file thiết kế cho thấy bốn vấn đề chính cần xử lý.
+          </p>
+
+          <div class="pt-6 hairline-t">
+            <blockquote class="text-xl sm:text-2xl font-bold tracking-tight leading-snug" data-i18n="hmw-quote">
+              "Làm sao để đưa Shortpeek về cảm giác điện ảnh gọn mắt theo hướng Netflix, mà người xem vẫn hiểu rõ cách mở khóa tập bằng xu hoặc gói thành viên và luôn biết hướng xử lý khi gặp lỗi?"
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- Borderless 4-row Editorial Audit Log -->
+        <div class="lg:col-span-7 border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] gsap-card">
+          <div class="py-6 flex gap-6 items-start">
+            <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">01</span>
+            <div class="space-y-1.5">
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp1-title">Nhiều khối nội dung cạnh tranh nhau</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp1-desc">Bản gốc đặt thanh tìm kiếm và nút VIP ở đầu trang, tiếp theo là banner ngang, bốn tab con, lưới ba cột và banner giảm 50% màu vàng đậm; trên màn For you lại phủ nút cam lớn che khuất video.</p>
+            </div>
+          </div>
+
+          <div class="py-6 flex gap-6 items-start">
+            <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">02</span>
+            <div class="space-y-1.5">
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp2-title">Thư viện bị tách giữa My List và Profile</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp2-desc">Thanh đáy gồm năm mục đặt nút Rewards kèm chấm cam ngay giữa, trong khi mục My Downloads lại nằm trong Profile thay vì đứng chung với phim đã lưu và lịch sử xem.</p>
+            </div>
+          </div>
+
+          <div class="py-6 flex gap-6 items-start">
+            <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">03</span>
+            <div class="space-y-1.5">
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp3-title">Xếp chồng gói xu chia dòng và thẻ VIP</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp3-desc">Khi mở tập khóa hoặc vào Top up Coins, người xem thấy cùng lúc hàng gói xu chia hai dòng Immediately / Free phải cộng nhẩm, kẹp với các thẻ VIP nhiều màu ở ngay bên dưới.</p>
+            </div>
+          </div>
+
+          <div class="py-6 flex gap-6 items-start">
+            <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">04</span>
+            <div class="space-y-1.5">
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp4-title">Chưa phủ đủ lỗi phát và thông tin pháp lý</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp4-desc">Bản gốc chưa thống nhất cách xử lý mất mạng, lỗi phát video, cảnh báo quay màn hình, thao tác hoàn tác danh sách hay màn chính sách đi kèm nút thanh toán để nộp duyệt store.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark Archive Reference Strip (No inner nested boxes) -->
+      <div class="rounded-2xl cinema-stage p-6 sm:p-10 space-y-6 gsap-card shadow-2xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] uppercase">
+          <span class="text-orange-400 font-bold" data-i18n="audit-strip-lbl">Tư liệu bản gốc (Archive)</span>
+          <span class="text-neutral-400" data-i18n="audit-strip-sub">Home · For you · Unlock sheet · Top up Coins</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+          <div class="lg:col-span-5 space-y-3">
+            <img src="assets/shortpeek/old-home-audit.webp" alt="Bản gốc Shortpeek màn hình Home dày banner và lưới thẻ" loading="lazy" decoding="async" class="w-full h-auto max-h-[340px] object-contain mx-auto rounded-lg">
+            <span class="font-mono text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap1">01 · Home gốc: banner ngang, 4 tab con &amp; thẻ 50% vàng</span>
+          </div>
+
+          <div class="lg:col-span-7 grid grid-cols-3 gap-4 items-end">
+            <div class="space-y-3">
+              <img src="assets/shortpeek/old-foryou-audit.webp" alt="Bản gốc Shortpeek tab For you với nút cam lớn" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap2">02 · For you gốc</span>
+            </div>
+            <div class="space-y-3">
+              <img src="assets/shortpeek/old-locked-audit.webp" alt="Bản gốc Shortpeek sheet mở khóa dồn nhiều gói" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap3">03 · Sheet mở khóa gốc</span>
+            </div>
+            <div class="space-y-3">
+              <img src="assets/shortpeek/old-topup-audit.webp" alt="Bản gốc Shortpeek trang Top up Coins chia hai dòng" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap4">04 · Top up Coins gốc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Open 3-Column Design Objectives Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 gsap-card">
+        <div class="pt-5 hairline-t space-y-2">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">01</span>
+          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj1-desc">Dọn thoáng màn Home và Clip để poster làm tâm điểm, vẫn giữ lối vào VIP và Earn Coins rõ ràng.</p>
+        </div>
+        <div class="pt-5 hairline-t space-y-2">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">02</span>
+          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj2-desc">Áp dụng Progressive Disclosure ở điểm trả phí: 1 chạm khi đủ xu, tách tab và bỏ cộng nhẩm khi thiếu xu.</p>
+        </div>
+        <div class="pt-5 hairline-t space-y-2">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">03</span>
+          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj3-desc">Gom thư viện về một chỗ và phủ đủ trạng thái lỗi, chính sách thanh toán trước khi nộp store.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 / INTERACTIVE 5-FLOW WORKBENCH -->
+    <section id="walkthrough" class="space-y-10 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="space-y-2">
+        <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec2-tag">
+          [ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight" data-i18n="sec2-heading">
+          KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN
+        </h2>
+      </div>
+
+      <!-- Clean Editorial Underline Tab Bar -->
+      <div role="tablist" aria-label="Luồng giao diện Shortpeek" class="hairline-b flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar">
+        <button type="button" role="tab" id="tab-btn-home" aria-controls="panel-home" aria-selected="true" data-wt-tab="home" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-home">
+          01 · Home
+        </button>
+        <button type="button" role="tab" id="tab-btn-clip" aria-controls="panel-clip" aria-selected="false" data-wt-tab="clip" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-clip">
+          02 · Clip
+        </button>
+        <button type="button" role="tab" id="tab-btn-monetization" aria-controls="panel-monetization" aria-selected="false" data-wt-tab="monetization" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-monetization">
+          03 · Mở khóa &amp; Ví xu
+        </button>
+        <button type="button" role="tab" id="tab-btn-mylist" aria-controls="panel-mylist" aria-selected="false" data-wt-tab="mylist" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-mylist">
+          04 · My List
+        </button>
+        <button type="button" role="tab" id="tab-btn-profile" aria-controls="panel-profile" aria-selected="false" data-wt-tab="profile" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-profile">
+          05 · Profile &amp; Xu thưởng
+        </button>
+      </div>
+
+      <!-- Borderless Workbench Container (Only artifact stage has #0D0E11 background) -->
+      <div class="gsap-card">
+
+        <!-- PANEL 01: HOME -->
+        <div role="tabpanel" id="panel-home" aria-labelledby="tab-btn-home" data-wt-panel="home" class="wt-panel grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div class="space-y-6">
+              <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d1-title">
+                Rút thanh đáy còn 4 tab và dọn thoáng màn Home
+              </h3>
+
+              <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d1-desc">
+                Tôi đưa Rewards ra khỏi thanh đáy để giữ bốn mục chính thật gọn, còn lối vào VIP và nhận xu nằm cố định ở góc phải header. Đầu trang Home chỉ mở bằng một poster lớn với hai nút rõ ràng để người xem chọn phim ngay.
+              </p>
+
+              <!-- Borderless 2-row Delta -->
+              <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
+                  <span class="block" data-i18n="d1-old">5 tab có Rewards chấm cam giữa đáy; Home dồn banner ngang, 4 tab con và thẻ 50% vàng.</span>
+                </div>
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
+                  <span class="block font-semibold" data-i18n="d1-new">4 tab dạng thanh nổi; mở đầu bằng 1 poster dọc Watch Now / + My List, Top 10 và thẻ Premium tối.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 hairline-t flex items-center justify-between font-mono text-xs uppercase">
+              <button type="button" data-wt-prev class="hover:underline opacity-35 pointer-events-none" data-i18n="btn-prev-flow">← Trước</button>
+              <span class="text-[var(--text-muted)] font-bold">01 / 05</span>
+              <button type="button" data-wt-next class="hover:underline font-bold" data-i18n="btn-next-flow">Tiếp →</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex flex-col justify-center gap-4 shadow-2xl">
+            <img src="assets/shortpeek/ui-home-new.webp" alt="Màn hình Home bản redesign của Shortpeek" loading="lazy" decoding="async" class="w-full h-auto rounded-xl shadow-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] uppercase text-neutral-400">
+              <span data-i18n="d1-stage-cap1">Trái: Đầu trang Home mới</span>
+              <span class="text-orange-400" data-i18n="d1-stage-cap2">Phải: Top 10, thẻ Premium &amp; Continue Watching</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 02: CLIP FEED -->
+        <div role="tabpanel" id="panel-clip" aria-labelledby="tab-btn-clip" data-wt-panel="clip" class="wt-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div class="space-y-6">
+              <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d2-title">
+                Đổi tên thành Clip và làm nổi nút xem ngay
+              </h3>
+
+              <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d2-desc">
+                Tôi đổi tên For you sang Clip cho đúng bản chất trích đoạn ngắn, tránh nhầm với mục đề xuất ở Home. Mô tả phim rút gọn còn một dòng và nút trắng Watch Now nổi bật trên nền video dọc.
+              </p>
+
+              <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
+                  <span class="block" data-i18n="d2-old">Đặt tên For you dễ nhầm; nhiều nhãn thẻ, đoạn mô tả dài và nút cam lớn đè cạnh dưới video.</span>
+                </div>
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
+                  <span class="block font-semibold" data-i18n="d2-new">Đổi thành Clip; thông tin gom 1 dòng, nút trắng Watch Now tương phản cao và cụm nút tròn bên phải.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 hairline-t flex items-center justify-between font-mono text-xs uppercase">
+              <button type="button" data-wt-prev class="hover:underline font-bold" data-i18n="btn-prev-flow">← Trước</button>
+              <span class="text-[var(--text-muted)] font-bold">02 / 05</span>
+              <button type="button" data-wt-next class="hover:underline font-bold" data-i18n="btn-next-flow">Tiếp →</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex items-center justify-center shadow-2xl">
+            <div class="grid grid-cols-2 gap-6 w-full max-w-2xl items-start">
+              <div class="space-y-3 text-center opacity-75">
+                <span class="inline-block font-mono text-[10px] uppercase text-neutral-400" data-i18n="clip-old-badge">Bản gốc · For you</span>
+                <img src="assets/shortpeek/old-foryou-audit.webp" alt="Bản gốc tab For you che nhiều vùng video" loading="lazy" decoding="async" class="w-full max-w-[260px] mx-auto h-auto rounded-xl">
+              </div>
+              <div class="space-y-3 text-center">
+                <span class="inline-block font-mono text-[10px] uppercase text-orange-400 font-bold" data-i18n="clip-new-badge">Bản mới · Clip</span>
+                <img src="assets/shortpeek/ui-clip-new.webp" alt="Màn hình Clip Feed bản redesign" loading="lazy" decoding="async" class="w-full max-w-[260px] mx-auto h-auto rounded-xl drop-shadow-2xl">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 03: MONETIZATION (UNLOCK FLOWS + COIN WALLET & PREMIUM) -->
+        <div role="tabpanel" id="panel-monetization" aria-labelledby="tab-btn-monetization" data-wt-panel="monetization" class="wt-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div class="space-y-5">
+              <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d3-group-title">
+                Tách luồng theo số dư và ghi rõ xu thực nhận
+              </h3>
+
+              <!-- Two clean borderless clickable rows -->
+              <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)]">
+                <button type="button" data-sub-trigger="unlock" data-active="true" class="subview-note w-full text-left py-4 flex items-start gap-3">
+                  <span aria-hidden="true" class="sub-dot text-xs pt-1 shrink-0">●</span>
+                  <div class="space-y-1.5">
+                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d3-title">Tách nhánh Đủ xu và Thiếu xu</div>
+                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d3-desc">
+                      Tôi tách luồng theo số dư theo nguyên tắc Progressive Disclosure. Người đã đủ xu chỉ thấy giá tập cạnh số dư với một nút xác nhận duy nhất. Người thiếu xu thấy ngay số xu cần thêm cùng hai tab Coins và Premium riêng biệt.
+                    </p>
+                  </div>
+                </button>
+
+                <button type="button" data-sub-trigger="wallet" data-active="false" class="subview-note w-full text-left py-4 flex items-start gap-3">
+                  <span aria-hidden="true" class="sub-dot text-xs pt-1 shrink-0">●</span>
+                  <div class="space-y-1.5">
+                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d4-title">Hiển thị tổng xu thực nhận và điều khoản thanh toán</div>
+                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d4-desc">
+                      Người mua ngại tự cộng hai dòng xu gốc và xu thưởng. Mỗi thẻ ở Coin Wallet giờ ghi thẳng tổng xu thực nhận. Cuối trang Wallet và Premium, tôi tách riêng nút Apple IAP và Stripe · Card kèm đủ liên kết chính sách cho khâu duyệt store.
+                    </p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-4 hairline-t flex items-center justify-between font-mono text-xs uppercase">
+              <button type="button" data-wt-prev class="hover:underline font-bold" data-i18n="btn-prev-flow">← Trước</button>
+              <span class="text-[var(--text-muted)] font-bold">03 / 05</span>
+              <button type="button" data-wt-next class="hover:underline font-bold" data-i18n="btn-next-flow">Tiếp →</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex flex-col justify-center gap-6 shadow-2xl">
+            <div class="flex flex-wrap items-center gap-6 border-b border-white/10 font-mono text-[11px] uppercase">
+              <button type="button" data-sub-tab="unlock" aria-pressed="true" class="subview-pill pb-2.5 font-bold" data-i18n="sub-unlock">
+                Mở khóa: Đủ xu / Thiếu xu
+              </button>
+              <button type="button" data-sub-tab="wallet" aria-pressed="false" class="subview-pill pb-2.5 font-bold" data-i18n="sub-wallet">
+                Coin Wallet &amp; Premium
+              </button>
+            </div>
+
+            <div data-sub-panel="unlock" class="grid grid-cols-2 gap-6 items-start">
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-unlock-enough.webp" alt="Luồng mở khóa khi đủ xu" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-emerald-400 block" data-i18n="sub-unlock-cap1">Đủ xu: 1 chạm xác nhận</span>
+              </div>
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-unlock-need.webp" alt="Luồng mở khóa khi thiếu xu với 2 tab Coins và Premium" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-orange-400 block" data-i18n="sub-unlock-cap2">Thiếu xu: tách 2 tab Coins / Premium</span>
+              </div>
+            </div>
+
+            <div data-sub-panel="wallet" class="hidden grid grid-cols-2 gap-6 items-start">
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-wallet-new.webp" alt="Màn hình Coin Wallet mới" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-amber-400 block" data-i18n="sub-wallet-cap1">Coin Wallet: tổng xu thực nhận</span>
+              </div>
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-premium-new.webp" alt="Màn hình Shortpeek Premium mới" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-neutral-300 block" data-i18n="sub-wallet-cap2">Premium: tách Apple IAP / Stripe &amp; điều khoản</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 04: MY LIST (SAVED -> HISTORY -> DOWNLOADS) -->
+        <div role="tabpanel" id="panel-mylist" aria-labelledby="tab-btn-mylist" data-wt-panel="mylist" class="wt-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div class="space-y-6">
+              <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d5-title">
+                Gom Saved, History và Downloads vào một thư viện
+              </h3>
+
+              <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d5-desc">
+                Tôi gom Saved, History và Downloads vào chung My List để người xem không phải vào Profile tìm tập đã tải. Cả ba tab dùng chung thao tác chọn, xác nhận xóa, thanh hoàn tác Undo và màn hình trống để tránh xóa nhầm.
+              </p>
+
+              <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
+                  <span class="block" data-i18n="d5-old">Saved và History nằm ở My List, còn My Downloads bị đẩy sang trong màn Profile.</span>
+                </div>
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
+                  <span class="block font-semibold" data-i18n="d5-new">Hợp nhất 3 tab Saved · History · Downloads kèm đủ luồng chọn, xác nhận xóa, hoàn tác Undo và màn hình trống.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 hairline-t flex items-center justify-between font-mono text-xs uppercase">
+              <button type="button" data-wt-prev class="hover:underline font-bold" data-i18n="btn-prev-flow">← Trước</button>
+              <span class="text-[var(--text-muted)] font-bold">04 / 05</span>
+              <button type="button" data-wt-next class="hover:underline font-bold" data-i18n="btn-next-flow">Tiếp →</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex flex-col justify-center gap-4 shadow-2xl">
+            <div class="grid grid-cols-3 gap-4 items-start">
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-mylist-saved.webp" alt="Màn hình My List tab Saved với Continue Watching và phim đã lưu" loading="lazy" decoding="async" class="w-full h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-neutral-300 block">01 · Saved</span>
+              </div>
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-mylist-history.webp" alt="Màn hình My List tab History hiển thị lịch sử xem và thanh Undo hoàn tác sau khi xóa" loading="lazy" decoding="async" class="w-full h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-orange-400 block">02 · History + Undo</span>
+              </div>
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-mylist-downloads.webp" alt="Màn hình My List tab Downloads quản lý tập đã tải" loading="lazy" decoding="async" class="w-full h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-neutral-300 block">03 · Downloads</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 05: PROFILE & EARN COINS -->
+        <div role="tabpanel" id="panel-profile" aria-labelledby="tab-btn-profile" data-wt-panel="profile" class="wt-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div class="space-y-6">
+              <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d6-title">
+                Chia nhóm tài khoản và phân biệt nút nhận thưởng
+              </h3>
+
+              <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d6-desc">
+                Trên Profile, tôi chia rõ ba nhóm gói thành viên, ví xu và cài đặt, tách riêng bản Guest với Premium member. Ở Earn Coins, thẻ điểm danh 7 ngày giữ sắc ấm, còn ba nút Go, Claim và Claimed phân biệt bằng độ tương phản trắng, cam và tối.
+              </p>
+
+              <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
+                  <span class="block" data-i18n="d6-old">Profile gộp chung cài đặt với My Downloads; bảng nhiệm vụ thưởng thiếu phân cấp nút hành động.</span>
+                </div>
+                <div class="py-3.5 space-y-1">
+                  <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
+                  <span class="block font-semibold" data-i18n="d6-new">Tách nhóm Membership · Coin Wallet · Support, phân biệt Guest/Premium và 3 nút Claimed / Claim / Go.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 hairline-t flex items-center justify-between font-mono text-xs uppercase">
+              <button type="button" data-wt-prev class="hover:underline font-bold" data-i18n="btn-prev-flow">← Trước</button>
+              <span class="text-[var(--text-muted)] font-bold">05 / 05</span>
+              <button type="button" data-wt-next class="hover:underline opacity-35 pointer-events-none" data-i18n="btn-next-flow">Tiếp →</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex items-center justify-center shadow-2xl">
+            <div class="grid grid-cols-2 gap-6 w-full max-w-2xl items-start">
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-profile-new.webp" alt="Màn hình Profile Premium member" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-neutral-300 block">Profile (Premium Member)</span>
+              </div>
+              <div class="space-y-2.5 text-center">
+                <img src="assets/shortpeek/ui-rewards-new.webp" alt="Màn hình Earn Coins mới" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
+                <span class="font-mono text-[10px] uppercase text-orange-400 block">Earn Coins · Claimed / Claim / Go</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 03 / KIẾN TRÚC THÔNG TIN & HỆ THỐNG UI -->
+    <section id="system-bento" class="space-y-16 md:space-y-24 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-7 space-y-2">
+          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec3-tag">
+            [ 03 // HỆ THỐNG THIẾT KẾ ]
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec3-heading">
+            KIẾN TRÚC THÔNG TIN &amp; HỆ THỐNG UI
+          </h2>
+        </div>
+        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec3-desc">
+          Tôi sắp xếp 17 nhóm màn hình (104 khung thiết kế) theo ba cụm luồng chính, đi kèm hệ màu tối và thư viện component tiền tố SP/ để đội phát triển dựng đồng bộ.
+        </p>
+      </div>
+
+      <!-- Beat A: Full-width Clean Typographic IA Table + Borderless 3-Cluster Row -->
+      <div class="space-y-10 gsap-card">
+        <div class="space-y-4">
+          <h3 class="text-lg font-bold uppercase tracking-tight" data-i18n="ia-title">Tái cấu trúc 5 khu vực chính</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs border-t border-b border-[var(--border-color)]">
+              <thead class="hairline-b uppercase text-[var(--text-muted)]">
+                <tr>
+                  <th class="py-3.5 pr-4 w-1/5" data-i18n="th-area">Khu vực</th>
+                  <th class="py-3.5 px-4 w-2/5 text-amber-600" data-i18n="th-before">Bản gốc</th>
+                  <th class="py-3.5 pl-4 w-2/5 text-emerald-600 font-bold" data-i18n="th-after">Bản redesign</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border-color)]">
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold uppercase text-[var(--text-muted)]" data-i18n="ia-r1-lbl">Bottom Bar</td>
+                  <td class="py-3.5 px-4" data-i18n="ia-r1-old">5 tab: Home · For you · Rewards · My List · Profile</td>
+                  <td class="py-3.5 pl-4 font-semibold" data-i18n="ia-r1-new">4 tab nổi: Home · Clip · My List · Profile</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold uppercase text-[var(--text-muted)]" data-i18n="ia-r2-lbl">Home</td>
+                  <td class="py-3.5 px-4" data-i18n="ia-r2-old">Banner ngang, 4 tab con, thẻ 50% vàng</td>
+                  <td class="py-3.5 pl-4 font-semibold" data-i18n="ia-r2-new">3 filter chip, poster dọc nổi bật, Top 10</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold uppercase text-[var(--text-muted)]" data-i18n="ia-r3-lbl">Thư viện</td>
+                  <td class="py-3.5 px-4" data-i18n="ia-r3-old">Saved/History ở My List; Downloads ở Profile</td>
+                  <td class="py-3.5 pl-4 font-semibold" data-i18n="ia-r3-new">Gom cả 3 về My List (chọn, xóa, Undo, trống)</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold uppercase text-[var(--text-muted)]" data-i18n="ia-r4-lbl">Mở khóa tập</td>
+                  <td class="py-3.5 px-4" data-i18n="ia-r4-old">1 sheet chồng giá tập, gói xu và 2 thẻ VIP</td>
+                  <td class="py-3.5 pl-4 font-semibold" data-i18n="ia-r4-new">Tách Đủ xu (1 bước) &amp; Thiếu xu (2 tab)</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold uppercase text-[var(--text-muted)]" data-i18n="ia-r5-lbl">Nạp &amp; Store</td>
+                  <td class="py-3.5 px-4" data-i18n="ia-r5-old">Gói xu tách 2 dòng cộng nhẩm; thiếu điều khoản</td>
+                  <td class="py-3.5 pl-4 font-semibold" data-i18n="ia-r5-new">Ghi thẳng tổng xu, tách IAP / Stripe &amp; điều khoản</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div class="space-y-1">
+            <span class="font-bold text-sm block" data-i18n="cluster1-title">01 · Khám phá &amp; Xem phim</span>
+            <span class="text-xs text-[var(--text-muted)] block" data-i18n="cluster1-desc">Sign in, Home, Clip, Search, Title details, Player &amp; Offline.</span>
+          </div>
+          <div class="space-y-1">
+            <span class="font-bold text-sm block" data-i18n="cluster2-title">02 · Thư viện &amp; Tài khoản</span>
+            <span class="text-xs text-[var(--text-muted)] block" data-i18n="cluster2-desc">My List (Saved · History · Downloads), Profile, Settings và 5 trang chính sách.</span>
+          </div>
+          <div class="space-y-1">
+            <span class="font-bold text-sm block" data-i18n="cluster3-title">03 · Xu &amp; Gói thành viên</span>
+            <span class="text-xs text-[var(--text-muted)] block" data-i18n="cluster3-desc">Nhánh đủ/thiếu xu, Coin Wallet, Premium &amp; Earn Rewards.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beat B: Colors + Typography directly on page -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pt-10 hairline-t gsap-card">
+        <div class="lg:col-span-7 space-y-5">
+          <div class="space-y-1">
+            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="color-title">COLOR SYSTEM / DARK-FIRST CINEMA UI</h3>
+            <p class="text-sm text-[var(--text-muted)]" data-i18n="color-desc">Tách rõ bốn lớp nền tối, nút hành động trắng tương phản cao và cam #F97039 chỉ dùng cho trạng thái chọn hoặc điểm thưởng.</p>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
+            <div class="p-4 rounded-xl border border-white/10 bg-[#0D0E11] text-white">
+              <span class="font-bold block">#0D0E11</span>
+              <span class="block mt-1.5 uppercase">CANVAS</span>
+              <span class="text-[10px] text-neutral-400" data-i18n="c1-desc">Nền tối chính</span>
+            </div>
+            <div class="p-4 rounded-xl border border-white/10 bg-[#1B1D22] text-white">
+              <span class="font-bold block">#1B1D22</span>
+              <span class="block mt-1.5 uppercase">SURFACE</span>
+              <span class="text-[10px] text-neutral-400" data-i18n="c2-desc">Thẻ và bảng giá</span>
+            </div>
+            <div class="p-4 rounded-xl border border-white/10 bg-[#282B32] text-white">
+              <span class="font-bold block">#282B32</span>
+              <span class="block mt-1.5 uppercase">ELEVATED</span>
+              <span class="text-[10px] text-neutral-300" data-i18n="c3-desc">Nút phụ, thanh nổi</span>
+            </div>
+            <div class="p-4 rounded-xl border border-white/10 bg-[#434854] text-white">
+              <span class="font-bold block">#434854</span>
+              <span class="block mt-1.5 uppercase">BORDER</span>
+              <span class="text-[10px] text-neutral-300" data-i18n="c4-desc">Đường chia, viền chip</span>
+            </div>
+            <div class="p-4 rounded-xl border border-black/15 bg-[#FFFFFF] text-black">
+              <span class="font-bold block">#FFFFFF</span>
+              <span class="block mt-1.5 uppercase">PRIMARY CTA</span>
+              <span class="text-[10px] text-neutral-600" data-i18n="c5-desc">Chữ và nút hành động chính</span>
+            </div>
+            <div class="p-4 rounded-xl border border-black/10 bg-[#F97039] text-white">
+              <span class="font-bold block">#F97039</span>
+              <span class="block mt-1.5 uppercase">ACCENT</span>
+              <span class="text-[10px] text-orange-100" data-i18n="c6-desc">Trạng thái chọn, gói xu, Claim</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-5">
+          <div class="space-y-1">
+            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="type-title">TYPOGRAPHY / INTER (4 BẬC RÕ)</h3>
+            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="type-desc">
+              Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn 402px mà không làm rối poster.
+            </p>
+          </div>
+          <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-sans">
+            <div class="flex items-baseline justify-between gap-4 py-3">
+              <span class="text-2xl font-bold">Title · 24px</span>
+              <span class="font-mono text-[11px] text-[var(--text-muted)] uppercase">Bold · 30px LH</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-4 py-3">
+              <span class="text-xl font-bold">Section · 20px</span>
+              <span class="font-mono text-[11px] text-[var(--text-muted)] uppercase">Bold · 26px LH</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-4 py-3">
+              <span class="text-sm font-semibold">Label · 14px</span>
+              <span class="font-mono text-[11px] text-[var(--text-muted)] uppercase">SemiBold · 20px LH</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-4 py-3">
+              <span class="text-xs">Small · 12px</span>
+              <span class="font-mono text-[11px] text-[var(--text-muted)] uppercase">Regular · 18px LH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beat C: App Icon + Single Typographic SP/ Component List -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-10 hairline-t gsap-card">
+        <div class="lg:col-span-5 space-y-5">
+          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="icon-title">APP ICON MỚI &amp; BỘ COMPONENT SP/</h3>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="icon-desc">
+            Tôi làm lại App Icon và logo từ phản hồi review trong đội: giữ nền đen, kết hợp chữ S lồng nút Play màu đỏ trắng để nhận diện ở cỡ nhỏ trên màn hình chính.
+          </p>
+          <p class="pt-4 hairline-t font-mono text-xs leading-loose text-[var(--text-muted)]" data-i18n="sp-list">
+            SP/Button · SP/FilterChip · SP/BottomNavigation · SP/EpisodeCell · SP/CoinPack · SP/PremiumPlan · SP/FeedbackPanel · SP/PurchaseLinks · + 18 icon trạng thái
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 rounded-2xl overflow-hidden bg-black shadow-2xl">
+          <img src="assets/shortpeek/app-icon-mockup.webp" alt="Shortpeek App Icon trên màn hình iPhone" loading="lazy" decoding="async" class="w-full h-auto block">
+        </div>
+      </div>
+
+      <!-- Beat D: 4-Screen Overview with Caption Outside -->
+      <figure class="space-y-4 gsap-card">
+        <div class="rounded-2xl overflow-hidden bg-[#0D0E11] shadow-2xl">
+          <img src="assets/shortpeek/shortpeek-hero.webp" alt="Toàn cảnh 4 màn hình cốt lõi Shortpeek bản redesign: Home, Clip, Unlock và Premium" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
+        </div>
+        <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2">
+          <span data-i18n="bento-hero-cap1">Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium</span>
+          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="bento-hero-cap2">Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- 04 / STORE READINESS CHECKLIST & EDGE STATES -->
+    <section id="store-readiness" class="space-y-12 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-tag">
+        [ 04 // SẴN SÀNG NỘP STORE ]
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <!-- Left Borderless 5-Row Checklist -->
+        <div class="lg:col-span-4 space-y-6 gsap-card">
+          <div class="space-y-3">
+            <h2 class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight" data-i18n="sec6-heading">
+              CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY
+            </h2>
+            <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="sec6-desc">
+              Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.
+            </p>
+          </div>
+
+          <ul class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
+            <li class="py-3.5 flex items-start gap-3">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+              <span data-i18n="chk-1">Continue with Apple / Google theo đúng nền tảng và nút Not now</span>
+            </li>
+            <li class="py-3.5 flex items-start gap-3">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+              <span data-i18n="chk-2">Mất mạng dẫn thẳng tới tập đã tải (View Downloads)</span>
+            </li>
+            <li class="py-3.5 flex items-start gap-3">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+              <span data-i18n="chk-3">10 trạng thái trình phát &amp; cảnh báo quay màn hình</span>
+            </li>
+            <li class="py-3.5 flex items-start gap-3">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+              <span data-i18n="chk-4">Tách nút Apple IAP / Stripe và Restore purchases</span>
+            </li>
+            <li class="py-3.5 flex items-start gap-3">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+              <span data-i18n="chk-5">Đủ 5 trang chính sách: Terms, Privacy, Top-up, Refund, Help</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Single Dark Showcase (No nested boxes) -->
+        <div class="lg:col-span-8 rounded-2xl cinema-stage p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-3 gap-6 items-start gsap-card shadow-2xl">
+          <div class="space-y-4">
+            <img src="assets/shortpeek/edge-signin-ios.webp" alt="Màn hình đăng nhập iOS với tùy chọn Not now" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
+            <div class="space-y-1">
+              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge1-title">Apple / Android &amp; Not now</h3>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge1-desc">Tặng 20 xu cho lần đăng nhập đầu tiên, nhưng vẫn để nút Not now cho người muốn xem thử trước.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <img src="assets/shortpeek/edge-offline.webp" alt="Màn hình báo ngoại tuyến dẫn tới View Downloads" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
+            <div class="space-y-1">
+              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge2-title">Mở thẳng tập đã tải</h3>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge2-desc">Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <img src="assets/shortpeek/edge-drm.webp" alt="Cảnh báo bảo vệ nội dung khi phát hiện quay màn hình" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
+            <div class="space-y-1">
+              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge3-title">10 trạng thái trình phát &amp; DRM</h3>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge3-desc">Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / ĐÁNH ĐỔI, SỬA THEO REVIEW, GIẢ THUYẾT & BÀI HỌC -->
+    <section id="lessons" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-tag">
+        [ 05 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]
+      </div>
+
+      <!-- Open 3-Column Editorial Trade-offs Row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 gsap-card">
+        <div class="pt-6 hairline-t space-y-3">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">01</span>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr1-title">Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr1-desc">Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.</p>
+        </div>
+        <div class="pt-6 hairline-t space-y-3">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">02</span>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr2-title">Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr2-desc">Từ phản hồi rà soát, tôi rút tên tab thứ tư còn Profile, đổi nhãn sang Top Up và bỏ bớt dòng lặp ở bảng nhiệm vụ. Tôi cũng gỡ khối Earn coins từng đặt cuối Coin Wallet để tách hẳn chuyện nạp tiền khỏi nhiệm vụ nhận thưởng.</p>
+        </div>
+        <div class="pt-6 hairline-t space-y-3">
+          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">03</span>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr3-title">Dồn lực cho trạng thái biên và pháp lý trước tính năng phụ</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr3-desc">Gần mốc nộp duyệt, tôi chọn ưu tiên những phần ảnh hưởng trực tiếp tới Store: thao tác quản lý My List (chọn, xóa, Undo, màn trống), đường dẫn ngoại tuyến tới tập đã tải, cảnh báo DRM và năm trang chính sách cạnh nút Apple IAP / Stripe.</p>
+        </div>
+      </div>
+
+      <!-- Borderless Unreleased Status + Calm Closing Note -->
+      <div class="pt-14 hairline-t grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-7 space-y-6 gsap-card">
+          <div class="space-y-3">
+            <span class="font-mono text-xs uppercase tracking-mono font-bold text-amber-600 dark:text-amber-400 block" data-i18n="status-lbl">Trạng thái hiện tại &amp; Giới hạn</span>
+            <h3 class="text-xl sm:text-2xl font-bold uppercase" data-i18n="status-title">ỨNG DỤNG CHƯA PHÁT HÀNH · CHƯA CÓ SỐ LIỆU ĐO LƯỜNG</h3>
+            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="status-desc">
+              Shortpeek hiện chưa lên store nên tôi chưa có dữ liệu hành vi thực tế để khẳng định bản thiết kế lại cải thiện tỷ lệ giữ chân hay doanh thu. Khi phát hành hoặc chạy usability test, đội ngũ cần kiểm tra ba giả thuyết sau:
+            </p>
+          </div>
+
+          <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-sans text-sm">
+            <div class="py-3.5 flex gap-4 items-start">
+              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">01</span>
+              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-1">Người dùng mới có nhận ra nút Earn Coins và VIP sau khi đưa từ thanh đáy lên góc phải header Home không.</span>
+            </div>
+            <div class="py-3.5 flex gap-4 items-start">
+              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">02</span>
+              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-2">Việc tách hai tab Coins và Premium khi thiếu xu có giúp giảm tỷ lệ bỏ dở giữa chừng khi đang xem tập khóa không.</span>
+            </div>
+            <div class="py-3.5 flex gap-4 items-start">
+              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">03</span>
+              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-3">Cách ghi thẳng tổng số xu nhận được trên thẻ Coin Wallet có giảm nhầm lẫn trước bước xác nhận thanh toán không.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calm Borderless Closing Note -->
+        <div class="lg:col-span-5 p-8 rounded-2xl bg-[var(--bg-secondary)] flex flex-col justify-between gap-6 gsap-card">
+          <div class="space-y-4">
+            <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block" data-i18n="learn-lbl">Bài học thiết kế</span>
+            <h3 class="text-2xl font-bold uppercase" data-i18n="sec7-learn-title">CÂN BẰNG THẨM MỸ ĐIỆN ẢNH VÀ MÔ HÌNH TRẢ PHÍ THEO TẬP</h3>
+            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec7-learn-desc">
+              Làm mới app phim ngắn theo hướng gọn như Netflix khó nhất ở chỗ bỏ banner rực màu mà vẫn giữ rõ lối kiếm xu và nâng cấp VIP. Phần việc tốn công nhất khi bàn giao cho kỹ thuật nằm ngoài màn Home: nhánh mở khóa theo số dư, đầy đủ thao tác thư viện (xóa, Undo, màn trống) và bộ màn hình lỗi phục vụ duyệt store.
+            </p>
+          </div>
+          <div class="pt-4 hairline-t font-mono text-[11px] uppercase text-[var(--text-muted)]" data-i18n="learn-meta">
+            Marchi Lab · Shortpeek Redesign · 2026
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER NAV -->
+    <section class="pt-12 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono">
+      <a href="momo.html" class="flex items-center gap-2 hover:underline magnetic-btn page-prev-link">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span data-i18n="foot-prev">DỰ ÁN TRƯỚC: MOMO TRANSFER</span>
+      </a>
+      <a href="yen.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn page-next-link">
+        <span data-i18n="foot-next">VỀ DỰ ÁN ĐẦU TIÊN: YÊN</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true
+    });
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    function refreshLayoutEngine() {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+      if (typeof lenis !== 'undefined' && lenis && typeof lenis.resize === 'function') {
+        lenis.resize();
+      }
+    }
+
+    // 2. Interactive Before / After Comparison (direct pointer drag + keyboard)
+    const comparisonView = document.getElementById('shortpeek-comparison');
+    let currentComparisonVal = 50;
+
+    function setComparisonPosition(val) {
+      const clamped = Math.max(0, Math.min(100, Math.round(Number(val))));
+      currentComparisonVal = clamped;
+      if (comparisonView) {
+        comparisonView.style.setProperty('--comparison-position', `${clamped}%`);
+        comparisonView.setAttribute('aria-valuenow', String(clamped));
+      }
+    }
+
+    if (comparisonView) {
+      let draggingComparison = false;
+      const updateFromPointer = (clientX) => {
+        const rect = comparisonView.getBoundingClientRect();
+        if (!rect.width) return;
+        const pct = ((clientX - rect.left) / rect.width) * 100;
+        setComparisonPosition(pct);
+      };
+
+      const clearNativeSelection = () => {
+        if (window.getSelection) {
+          try { window.getSelection().removeAllRanges(); } catch (_) {}
+        }
+      };
+
+      comparisonView.addEventListener('dragstart', (e) => e.preventDefault());
+      comparisonView.addEventListener('selectstart', (e) => e.preventDefault());
+      comparisonView.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        clearNativeSelection();
+      });
+
+      comparisonView.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        clearNativeSelection();
+        draggingComparison = true;
+        document.body.classList.add('is-dragging-comparison');
+        if (comparisonView.setPointerCapture) {
+          try { comparisonView.setPointerCapture(e.pointerId); } catch (_) {}
+        }
+        updateFromPointer(e.clientX);
+      });
+      comparisonView.addEventListener('pointermove', (e) => {
+        if (draggingComparison) {
+          e.preventDefault();
+          clearNativeSelection();
+          updateFromPointer(e.clientX);
+        }
+      });
+      document.addEventListener('selectstart', (e) => {
+        if (draggingComparison) e.preventDefault();
+      });
+      const stopDrag = () => {
+        draggingComparison = false;
+        document.body.classList.remove('is-dragging-comparison');
+      };
+      comparisonView.addEventListener('pointerup', stopDrag);
+      comparisonView.addEventListener('pointercancel', stopDrag);
+      window.addEventListener('blur', stopDrag);
+
+      comparisonView.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); setComparisonPosition(currentComparisonVal - 5); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); setComparisonPosition(currentComparisonVal + 5); }
+        else if (e.key === 'Home') { e.preventDefault(); setComparisonPosition(0); }
+        else if (e.key === 'End') { e.preventDefault(); setComparisonPosition(100); }
+      });
+    }
+
+    // 3. Interactive 5-Flow Workbench Tabs & Sub-view Switcher
+    const FLOW_ORDER = ['home', 'clip', 'monetization', 'mylist', 'profile'];
+    const wtTabs = document.querySelectorAll('.wt-tab');
+    const wtPanels = document.querySelectorAll('.wt-panel');
+    let activeFlow = 'home';
+
+    function setActiveFlow(flowId, focusTab) {
+      if (!FLOW_ORDER.includes(flowId)) return;
+      activeFlow = flowId;
+
+      wtTabs.forEach((btn) => {
+        const isTarget = btn.getAttribute('data-wt-tab') === flowId;
+        btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        btn.setAttribute('tabindex', isTarget ? '0' : '-1');
+        if (isTarget && focusTab) btn.focus();
+      });
+
+      wtPanels.forEach((panel) => {
+        const isTarget = panel.getAttribute('data-wt-panel') === flowId;
+        panel.classList.toggle('hidden', !isTarget);
+      });
+
+      requestAnimationFrame(refreshLayoutEngine);
+    }
+
+    wtTabs.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        setActiveFlow(btn.getAttribute('data-wt-tab'), false);
+      });
+      btn.addEventListener('keydown', (e) => {
+        let nextIdx = null;
+        if (e.key === 'ArrowRight') nextIdx = (idx + 1) % FLOW_ORDER.length;
+        else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + FLOW_ORDER.length) % FLOW_ORDER.length;
+        else if (e.key === 'Home') nextIdx = 0;
+        else if (e.key === 'End') nextIdx = FLOW_ORDER.length - 1;
+        if (nextIdx !== null) {
+          e.preventDefault();
+          setActiveFlow(FLOW_ORDER[nextIdx], true);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-wt-prev]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = FLOW_ORDER.indexOf(activeFlow);
+        if (idx > 0) setActiveFlow(FLOW_ORDER[idx - 1], false);
+      });
+    });
+    document.querySelectorAll('[data-wt-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = FLOW_ORDER.indexOf(activeFlow);
+        if (idx < FLOW_ORDER.length - 1) setActiveFlow(FLOW_ORDER[idx + 1], false);
+      });
+    });
+
+    function setMonetizationSubView(subId) {
+      document.querySelectorAll('[data-sub-tab]').forEach((btn) => {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-sub-tab') === subId ? 'true' : 'false');
+      });
+      document.querySelectorAll('[data-sub-trigger]').forEach((note) => {
+        note.setAttribute('data-active', note.getAttribute('data-sub-trigger') === subId ? 'true' : 'false');
+      });
+      document.querySelectorAll('[data-sub-panel]').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.getAttribute('data-sub-panel') !== subId);
+      });
+      requestAnimationFrame(refreshLayoutEngine);
+    }
+
+    document.querySelectorAll('[data-sub-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => setMonetizationSubView(btn.getAttribute('data-sub-tab')));
+    });
+    document.querySelectorAll('[data-sub-trigger]').forEach((note) => {
+      note.addEventListener('click', () => setMonetizationSubView(note.getAttribute('data-sub-trigger')));
+    });
+
+    // 4. Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTotal > 0 ? (window.scrollY / scrollTotal) * 100 : 0;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // 5. Hero Entrance & ScrollTrigger Card Reveals
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      gsap.from('.case-hero-title', {
+        y: 32,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.04
+      });
+      gsap.from('.case-hero-desc', {
+        y: 24,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        delay: 0.12
+      });
+      gsap.from('.case-hero-img', {
+        scale: 0.98,
+        opacity: 0,
+        duration: 0.75,
+        ease: 'power3.out',
+        delay: 0.18,
+        clearProps: 'transform'
+      });
+
+      gsap.utils.toArray('.gsap-card').forEach(card => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 28,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          clearProps: 'transform'
+        });
+      });
+    }
+
+    // 6. Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+    // 7. Theme Switcher
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('tru_theme', t);
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === t) {
+          btn.classList.add('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.remove('text-[var(--text-muted)]');
+        } else {
+          btn.classList.remove('bg-[var(--text-primary)]', 'text-[var(--bg-primary)]');
+          btn.classList.add('text-[var(--text-muted)]');
+        }
+      });
+
+      const iconEl = document.getElementById('mobile-theme-icon');
+      const textEl = document.getElementById('mobile-theme-text');
+      if (iconEl && textEl) {
+        if (t === 'dark') {
+          iconEl.textContent = '🌙';
+          textEl.textContent = 'DRK';
+        } else if (t === 'pink') {
+          iconEl.textContent = '🌸';
+          textEl.textContent = 'PNK';
+        } else {
+          iconEl.textContent = '☀️';
+          textEl.textContent = 'LGT';
+        }
+      }
+
+      const favicon = document.getElementById('dynamic-favicon');
+      if (favicon) {
+        favicon.href = (t === 'dark') ? 'favicon-dark.png' : 'favicon-light.png';
+      }
+    }
+
+    function cycleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : (current === 'dark' ? 'pink' : 'light');
+      setTheme(next);
+    }
+    const savedTheme = localStorage.getItem('tru_theme') || 'light';
+    setTheme(savedTheme);
+
+    // 8. Bilingual Translation System (VI / EN)
+    const translations = {
+      vi: {
+        'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
+        'top-back-mobile': 'QUAY LẠI',
+        'top-case-num': 'CASE 04 / 04',
+        'top-case-tag': 'SHORTPEEK · MOBILE APP REDESIGN',
+        'btn-contact': 'Liên hệ',
+        'hero-tag': '<span>[ 04 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span>',
+        'hero-title': 'SHORTPEEK: THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC.',
+        'hero-desc': 'Làm mới giao diện ứng dụng xem phim ngắn theo hướng điện ảnh gọn mắt trước khi nộp store. Tôi sắp xếp lại thanh điều hướng, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.',
+        'meta-role-lbl': 'Vai trò',
+        'meta-role-val': 'Product Designer',
+        'meta-type-lbl': 'Dự án',
+        'meta-type-val': 'Marchi Lab · 2026 (Chưa phát hành)',
+        'meta-scope-lbl': 'Phạm vi',
+        'meta-scope-val': 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+        'meta-scale-lbl': 'Quy mô',
+        'meta-scale-val': '17 nhóm · 104 màn hình',
+        'comparison-tag': '[ TRƯỚC / SAU ]',
+        'comparison-before': 'BẢN GỐC',
+        'comparison-after': 'BẢN REDESIGN',
+        'comparison-desc': 'Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).',
+        'sec1-tag': '[ 01 // BỐI CẢNH &amp; AUDIT BẢN APP GỐC ]',
+        'sec1-title': 'LÀM MỚI ĐỊNH VỊ TRƯỚC KHI NỘP STORE',
+        'sec1-desc1': 'Shortpeek là ứng dụng xem phim ngắn dạng dọc tại Marchi Lab, hoạt động theo mô hình mở khóa tập bằng xu (Coins) hoặc gói thành viên (Premium). Trước giai đoạn nộp App Store và Google Play, đội ngũ muốn làm mới sản phẩm theo hướng gọn gàng, đậm chất điện ảnh như Netflix thay cho giao diện cũ nặng khuyến mãi.',
+        'sec1-desc2': 'Tôi trực tiếp thực hiện UX Audit bản gốc, thiết kế lại User Flow, UI, Design System, App Icon và Prototype. Kiểm tra các màn hình gốc trong file thiết kế cho thấy bốn vấn đề chính cần xử lý.',
+        'hmw-quote': '"Làm sao để đưa Shortpeek về cảm giác điện ảnh gọn mắt theo hướng Netflix, mà người xem vẫn hiểu rõ cách mở khóa tập bằng xu hoặc gói thành viên và luôn biết hướng xử lý khi gặp lỗi?"',
+        'pp1-title': 'Nhiều khối nội dung cạnh tranh nhau',
+        'pp1-desc': 'Bản gốc đặt thanh tìm kiếm và nút VIP ở đầu trang, tiếp theo là banner ngang, bốn tab con, lưới ba cột và banner giảm 50% màu vàng đậm; trên màn For you lại phủ nút cam lớn che khuất video.',
+        'pp2-title': 'Thư viện bị tách giữa My List và Profile',
+        'pp2-desc': 'Thanh đáy gồm năm mục đặt nút Rewards kèm chấm cam ngay giữa, trong khi mục My Downloads lại nằm trong Profile thay vì đứng chung với phim đã lưu và lịch sử xem.',
+        'pp3-title': 'Xếp chồng gói xu chia dòng và thẻ VIP',
+        'pp3-desc': 'Khi mở tập khóa hoặc vào Top up Coins, người xem thấy cùng lúc hàng gói xu chia hai dòng Immediately / Free phải cộng nhẩm, kẹp với các thẻ VIP nhiều màu ở ngay bên dưới.',
+        'pp4-title': 'Chưa phủ đủ lỗi phát và thông tin pháp lý',
+        'pp4-desc': 'Bản gốc chưa thống nhất cách xử lý mất mạng, lỗi phát video, cảnh báo quay màn hình, thao tác hoàn tác danh sách hay màn chính sách đi kèm nút thanh toán để nộp duyệt store.',
+        'audit-strip-lbl': 'Tư liệu bản gốc (Archive)',
+        'audit-strip-sub': 'Home · For you · Unlock sheet · Top up Coins',
+        'old-cap1': '01 · Home gốc: banner ngang, 4 tab con &amp; thẻ 50% vàng',
+        'old-cap2': '02 · For you gốc',
+        'old-cap3': '03 · Sheet mở khóa gốc',
+        'old-cap4': '04 · Top up Coins gốc',
+        'obj1-desc': 'Dọn thoáng màn Home và Clip để poster làm tâm điểm, vẫn giữ lối vào VIP và Earn Coins rõ ràng.',
+        'obj2-desc': 'Áp dụng Progressive Disclosure ở điểm trả phí: 1 chạm khi đủ xu, tách tab và bỏ cộng nhẩm khi thiếu xu.',
+        'obj3-desc': 'Gom thư viện về một chỗ và phủ đủ trạng thái lỗi, chính sách thanh toán trước khi nộp store.',
+        'sec2-tag': '[ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]',
+        'sec2-heading': 'KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN',
+        'tab-home': '01 · Home',
+        'tab-clip': '02 · Clip',
+        'tab-monetization': '03 · Mở khóa &amp; Ví xu',
+        'tab-mylist': '04 · My List',
+        'tab-profile': '05 · Profile &amp; Xu thưởng',
+        'lbl-old-short': 'Trước',
+        'lbl-new-short': 'Sau',
+        'btn-prev-flow': '← Trước',
+        'btn-next-flow': 'Tiếp →',
+        'd1-title': 'Rút thanh đáy còn 4 tab và dọn thoáng màn Home',
+        'd1-old': '5 tab có Rewards chấm cam giữa đáy; Home dồn banner ngang, 4 tab con và thẻ 50% vàng.',
+        'd1-new': '4 tab dạng thanh nổi; mở đầu bằng 1 poster dọc Watch Now / + My List, Top 10 và thẻ Premium tối.',
+        'd1-desc': 'Tôi đưa Rewards ra khỏi thanh đáy để giữ bốn mục chính thật gọn, còn lối vào VIP và nhận xu nằm cố định ở góc phải header. Đầu trang Home chỉ mở bằng một poster lớn với hai nút rõ ràng để người xem chọn phim ngay.',
+        'd1-stage-cap1': 'Trái: Đầu trang Home mới',
+        'd1-stage-cap2': 'Phải: Top 10, thẻ Premium &amp; Continue Watching',
+        'd2-title': 'Đổi tên thành Clip và làm nổi nút xem ngay',
+        'd2-old': 'Đặt tên For you dễ nhầm; nhiều nhãn thẻ, đoạn mô tả dài và nút cam lớn đè cạnh dưới video.',
+        'd2-new': 'Đổi thành Clip; thông tin gom 1 dòng, nút trắng Watch Now tương phản cao và cụm nút tròn bên phải.',
+        'd2-desc': 'Tôi đổi tên For you sang Clip cho đúng bản chất trích đoạn ngắn, tránh nhầm với mục đề xuất ở Home. Mô tả phim rút gọn còn một dòng và nút trắng Watch Now nổi bật trên nền video dọc.',
+        'clip-old-badge': 'Bản gốc · For you',
+        'clip-new-badge': 'Bản mới · Clip',
+        'd3-group-title': 'Tách luồng theo số dư và ghi rõ xu thực nhận',
+        'd3-title': 'Tách nhánh Đủ xu và Thiếu xu',
+        'd3-desc': 'Tôi tách luồng theo số dư theo nguyên tắc Progressive Disclosure. Người đã đủ xu chỉ thấy giá tập cạnh số dư với một nút xác nhận duy nhất. Người thiếu xu thấy ngay số xu cần thêm cùng hai tab Coins và Premium riêng biệt.',
+        'd4-title': 'Hiển thị tổng xu thực nhận và điều khoản thanh toán',
+        'd4-desc': 'Người mua ngại tự cộng hai dòng xu gốc và xu thưởng. Mỗi thẻ ở Coin Wallet giờ ghi thẳng tổng xu thực nhận. Cuối trang Wallet và Premium, tôi tách riêng nút Apple IAP và Stripe · Card kèm đủ liên kết chính sách cho khâu duyệt store.',
+        'sub-unlock': 'Mở khóa: Đủ xu / Thiếu xu',
+        'sub-wallet': 'Coin Wallet &amp; Premium',
+        'sub-unlock-cap1': 'Đủ xu: 1 chạm xác nhận',
+        'sub-unlock-cap2': 'Thiếu xu: tách 2 tab Coins / Premium',
+        'sub-wallet-cap1': 'Coin Wallet: tổng xu thực nhận',
+        'sub-wallet-cap2': 'Premium: tách Apple IAP / Stripe &amp; điều khoản',
+        'd5-title': 'Gom Saved, History và Downloads vào một thư viện',
+        'd5-old': 'Saved và History nằm ở My List, còn My Downloads bị đẩy sang trong màn Profile.',
+        'd5-new': 'Hợp nhất 3 tab Saved · History · Downloads kèm đủ luồng chọn, xác nhận xóa, hoàn tác Undo và màn hình trống.',
+        'd5-desc': 'Tôi gom Saved, History và Downloads vào chung My List để người xem không phải vào Profile tìm tập đã tải. Cả ba tab dùng chung thao tác chọn, xác nhận xóa, thanh hoàn tác Undo và màn hình trống để tránh xóa nhầm.',
+        'd6-title': 'Chia nhóm tài khoản và phân biệt nút nhận thưởng',
+        'd6-old': 'Profile gộp chung cài đặt với My Downloads; bảng nhiệm vụ thưởng thiếu phân cấp nút hành động.',
+        'd6-new': 'Tách nhóm Membership · Coin Wallet · Support, phân biệt Guest/Premium và 3 nút Claimed / Claim / Go.',
+        'd6-desc': 'Trên Profile, tôi chia rõ ba nhóm gói thành viên, ví xu và cài đặt, tách riêng bản Guest với Premium member. Ở Earn Coins, thẻ điểm danh 7 ngày giữ sắc ấm, còn ba nút Go, Claim và Claimed phân biệt bằng độ tương phản trắng, cam và tối.',
+        'sec3-tag': '[ 03 // HỆ THỐNG THIẾT KẾ ]',
+        'sec3-heading': 'KIẾN TRÚC THÔNG TIN &amp; HỆ THỐNG UI',
+        'sec3-desc': 'Tôi sắp xếp 17 nhóm màn hình (104 khung thiết kế) theo ba cụm luồng chính, đi kèm hệ màu tối và thư viện component tiền tố SP/ để đội phát triển dựng đồng bộ.',
+        'ia-title': 'Tái cấu trúc 5 khu vực chính',
+        'th-area': 'Khu vực',
+        'th-before': 'Bản gốc',
+        'th-after': 'Bản redesign',
+        'ia-r1-lbl': 'Bottom Bar',
+        'ia-r1-old': '5 tab: Home · For you · Rewards · My List · Profile',
+        'ia-r1-new': '4 tab nổi: Home · Clip · My List · Profile',
+        'ia-r2-lbl': 'Home',
+        'ia-r2-old': 'Banner ngang, 4 tab con, thẻ 50% vàng',
+        'ia-r2-new': '3 filter chip, poster dọc nổi bật, Top 10',
+        'ia-r3-lbl': 'Thư viện',
+        'ia-r3-old': 'Saved/History ở My List; Downloads ở Profile',
+        'ia-r3-new': 'Gom cả 3 về My List (chọn, xóa, Undo, trống)',
+        'ia-r4-lbl': 'Mở khóa tập',
+        'ia-r4-old': '1 sheet chồng giá tập, gói xu và 2 thẻ VIP',
+        'ia-r4-new': 'Tách Đủ xu (1 bước) &amp; Thiếu xu (2 tab)',
+        'ia-r5-lbl': 'Nạp &amp; Store',
+        'ia-r5-old': 'Gói xu tách 2 dòng cộng nhẩm; thiếu điều khoản',
+        'ia-r5-new': 'Ghi thẳng tổng xu, tách IAP / Stripe &amp; điều khoản',
+        'cluster1-title': '01 · Khám phá &amp; Xem phim',
+        'cluster1-desc': 'Sign in, Home, Clip, Search, Title details, Player &amp; Offline.',
+        'cluster2-title': '02 · Thư viện &amp; Tài khoản',
+        'cluster2-desc': 'My List (Saved · History · Downloads), Profile, Settings và 5 trang chính sách.',
+        'cluster3-title': '03 · Xu &amp; Gói thành viên',
+        'cluster3-desc': 'Nhánh đủ/thiếu xu, Coin Wallet, Premium &amp; Earn Rewards.',
+        'icon-title': 'APP ICON MỚI &amp; BỘ COMPONENT SP/',
+        'icon-desc': 'Tôi làm lại App Icon và logo từ phản hồi review trong đội: giữ nền đen, kết hợp chữ S lồng nút Play màu đỏ trắng để nhận diện ở cỡ nhỏ trên màn hình chính.',
+        'sp-list': 'SP/Button · SP/FilterChip · SP/BottomNavigation · SP/EpisodeCell · SP/CoinPack · SP/PremiumPlan · SP/FeedbackPanel · SP/PurchaseLinks · + 18 icon trạng thái',
+        'color-title': 'COLOR SYSTEM / DARK-FIRST CINEMA UI',
+        'color-desc': 'Tách rõ bốn lớp nền tối, nút hành động trắng tương phản cao và cam #F97039 chỉ dùng cho trạng thái chọn hoặc điểm thưởng.',
+        'c1-desc': 'Nền tối chính',
+        'c2-desc': 'Thẻ và bảng giá',
+        'c3-desc': 'Nút phụ, thanh nổi',
+        'c4-desc': 'Đường chia, viền chip',
+        'c5-desc': 'Chữ và nút hành động chính',
+        'c6-desc': 'Trạng thái chọn, gói xu, Claim',
+        'type-title': 'TYPOGRAPHY / INTER (4 BẬC RÕ)',
+        'type-desc': 'Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn 402px mà không làm rối poster.',
+        'bento-hero-cap1': 'Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium',
+        'bento-hero-cap2': 'Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF',
+        'sec6-tag': '[ 04 // SẴN SÀNG NỘP STORE ]',
+        'sec6-heading': 'CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY',
+        'sec6-desc': 'Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.',
+        'chk-1': 'Continue with Apple / Google theo đúng nền tảng và nút Not now',
+        'chk-2': 'Mất mạng dẫn thẳng tới tập đã tải (View Downloads)',
+        'chk-3': '10 trạng thái trình phát &amp; cảnh báo quay màn hình',
+        'chk-4': 'Tách nút Apple IAP / Stripe và Restore purchases',
+        'chk-5': 'Đủ 5 trang chính sách: Terms, Privacy, Top-up, Refund, Help',
+        'edge1-title': 'Apple / Android &amp; Not now',
+        'edge1-desc': 'Tặng 20 xu cho lần đăng nhập đầu tiên, nhưng vẫn để nút Not now cho người muốn xem thử trước.',
+        'edge2-title': 'Mở thẳng tập đã tải',
+        'edge2-desc': 'Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.',
+        'edge3-title': '10 trạng thái trình phát &amp; DRM',
+        'edge3-desc': 'Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.',
+        'sec7-tag': '[ 05 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]',
+        'tr1-title': 'Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI',
+        'tr1-desc': 'Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.',
+        'tr2-title': 'Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab',
+        'tr2-desc': 'Từ phản hồi rà soát, tôi rút tên tab thứ tư còn Profile, đổi nhãn sang Top Up và bỏ bớt dòng lặp ở bảng nhiệm vụ. Tôi cũng gỡ khối Earn coins từng đặt cuối Coin Wallet để tách hẳn chuyện nạp tiền khỏi nhiệm vụ nhận thưởng.',
+        'tr3-title': 'Dồn lực cho trạng thái biên và pháp lý trước tính năng phụ',
+        'tr3-desc': 'Gần mốc nộp duyệt, tôi chọn ưu tiên những phần ảnh hưởng trực tiếp tới Store: thao tác quản lý My List (chọn, xóa, Undo, màn trống), đường dẫn ngoại tuyến tới tập đã tải, cảnh báo DRM và năm trang chính sách cạnh nút Apple IAP / Stripe.',
+        'status-lbl': 'Trạng thái hiện tại &amp; Giới hạn',
+        'status-title': 'ỨNG DỤNG CHƯA PHÁT HÀNH · CHƯA CÓ SỐ LIỆU ĐO LƯỜNG',
+        'status-desc': 'Shortpeek hiện chưa lên store nên tôi chưa có dữ liệu hành vi thực tế để khẳng định bản thiết kế lại cải thiện tỷ lệ giữ chân hay doanh thu. Khi phát hành hoặc chạy usability test, đội ngũ cần kiểm tra ba giả thuyết sau:',
+        'hyp-1': 'Người dùng mới có nhận ra nút Earn Coins và VIP sau khi đưa từ thanh đáy lên góc phải header Home không.',
+        'hyp-2': 'Việc tách hai tab Coins và Premium khi thiếu xu có giúp giảm tỷ lệ bỏ dở giữa chừng khi đang xem tập khóa không.',
+        'hyp-3': 'Cách ghi thẳng tổng số xu nhận được trên thẻ Coin Wallet có giảm nhầm lẫn trước bước xác nhận thanh toán không.',
+        'learn-lbl': 'Bài học thiết kế',
+        'sec7-learn-title': 'CÂN BẰNG THẨM MỸ ĐIỆN ẢNH VÀ MÔ HÌNH TRẢ PHÍ THEO TẬP',
+        'sec7-learn-desc': 'Làm mới app phim ngắn theo hướng gọn như Netflix khó nhất ở chỗ bỏ banner rực màu mà vẫn giữ rõ lối kiếm xu và nâng cấp VIP. Phần việc tốn công nhất khi bàn giao cho kỹ thuật nằm ngoài màn Home: nhánh mở khóa theo số dư, đầy đủ thao tác thư viện (xóa, Undo, màn trống) và bộ màn hình lỗi phục vụ duyệt store.',
+        'learn-meta': 'Marchi Lab · Shortpeek Redesign · 2026',
+        'foot-prev': 'DỰ ÁN TRƯỚC: MOMO TRANSFER',
+        'foot-next': 'VỀ DỰ ÁN ĐẦU TIÊN: YÊN'
+      },
+      en: {
+        'top-back': 'BACK TO PROJECT LIST',
+        'top-back-mobile': 'BACK',
+        'top-case-num': 'CASE 04 / 04',
+        'top-case-tag': 'SHORTPEEK · MOBILE APP REDESIGN',
+        'btn-contact': 'Get in touch',
+        'hero-tag': '<span>[ 04 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span>',
+        'hero-title': 'SHORTPEEK: REDESIGNING A VERTICAL SHORT-DRAMA APP.',
+        'hero-desc': 'A Marchi Lab redesign built for a calmer, cinema-first look before store review. I simplified navigation, split paid episode paths, and finished the edge states.',
+        'meta-role-lbl': 'Role',
+        'meta-role-val': 'Product Designer',
+        'meta-type-lbl': 'Project',
+        'meta-type-val': 'Marchi Lab · 2026 (Unreleased)',
+        'meta-scope-lbl': 'Scope',
+        'meta-scope-val': 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+        'meta-scale-lbl': 'Scale',
+        'meta-scale-val': '17 groups · 104 frames',
+        'comparison-tag': '[ BEFORE / AFTER ]',
+        'comparison-before': 'ORIGINAL',
+        'comparison-after': 'REDESIGN',
+        'comparison-desc': 'Comparing three core screens: Home (4-tab pill bar and open hero), Episode access (split Coins / Premium tabs and upfront pack totals), and Profile (grouped settings and plans).',
+        'sec1-tag': '[ 01 // CONTEXT &amp; ORIGINAL APP AUDIT ]',
+        'sec1-title': 'REFRESHING POSITIONING BEFORE STORE SUBMISSION',
+        'sec1-desc1': 'Shortpeek is a vertical short-drama app built at Marchi Lab where viewers pay for episodes with coins or a Premium membership. Ahead of App Store and Google Play submission, the team wanted a cleaner, Netflix-style look instead of the promo-heavy original screens.',
+        'sec1-desc2': 'I handled the UX audit, user flows, UI redesign, design system, App Icon, and prototype. Reviewing the original screens in the design file turned up four core problems.',
+        'hmw-quote': '"How might we give Shortpeek a calmer, Netflix-style cinema layout while keeping coin payments, memberships, and error recovery clear?"',
+        'pp1-title': 'Too many blocks fight for attention',
+        'pp1-desc': 'The original Home stacked a search bar, a VIP pill, a wide banner, four sub-tabs, and a bright yellow 50% promo card; For you added an oversized orange button across the bottom of the video.',
+        'pp2-title': 'Library items sit across both My List and Profile',
+        'pp2-desc': 'The five-tab bar placed a badged Rewards icon in the center, while My Downloads lived inside Profile instead of staying with saved shows and watch history.',
+        'pp3-title': 'Split-line coin packs stacked with VIP cards',
+        'pp3-desc': 'Opening a locked episode or Top up Coins showed coin packs divided into Immediately and Free lines above multi-color VIP cards inside the same scroll.',
+        'pp4-title': 'Error handling and store policies lacked consistency',
+        'pp4-desc': 'The original flow lacked unified screens for offline errors, playback failures, screen-recording alerts, list undo bars, and the payment terms needed for store review.',
+        'audit-strip-lbl': 'Original screens (Archive)',
+        'audit-strip-sub': 'Home · For you · Episode sheet · Top up Coins',
+        'old-cap1': '01 · Original Home: promo banners &amp; dense rows',
+        'old-cap2': '02 · Original For you',
+        'old-cap3': '03 · Original access sheet',
+        'old-cap4': '04 · Original Top up Coins',
+        'obj1-desc': 'Open up Home and Clip so show artwork leads, with VIP and Earn Coins still easy to spot.',
+        'obj2-desc': 'Use Progressive Disclosure at payment points: one-tap confirmation with coins, split tabs and upfront totals when short.',
+        'obj3-desc': 'Consolidate saved libraries into one place and complete all error and policy screens before store review.',
+        'sec2-tag': '[ 02 // REDESIGNED APP FLOWS ]',
+        'sec2-heading': 'EXPLORE THE 05 REDESIGNED APP FLOWS',
+        'tab-home': '01 · Home',
+        'tab-clip': '02 · Clip',
+        'tab-monetization': '03 · Access &amp; Wallet',
+        'tab-mylist': '04 · My List',
+        'tab-profile': '05 · Profile &amp; Rewards',
+        'lbl-old-short': 'Before',
+        'lbl-new-short': 'After',
+        'btn-prev-flow': '← Previous',
+        'btn-next-flow': 'Next →',
+        'd1-title': 'Cut bottom nav to 4 tabs and opened up Home',
+        'd1-old': '5 tabs with a badged Rewards icon in the middle; Home led with wide promos and yellow 50% cards.',
+        'd1-new': '4 floating pill tabs; hero poster with Watch Now / + My List, Top 10, and a dark Premium card.',
+        'd1-desc': 'I moved Rewards out of the bottom bar so the four main tabs stay clean. VIP and rewards stay fixed in the top-right header, and Home opens on one tall poster with two clear buttons.',
+        'd1-stage-cap1': 'Left: Top of the redesigned Home',
+        'd1-stage-cap2': 'Right: Top 10, dark Premium card &amp; Continue Watching',
+        'd2-title': 'Renamed For you to Clip and raised button contrast',
+        'd2-old': 'Generic For you naming; multi-line tags, long plot text, and a heavy orange bar blocking the frame.',
+        'd2-new': 'Renamed to Clip; single-line metadata, crisp white Watch Now CTA, and circular side actions.',
+        'd2-desc': 'I renamed For you to Clip so the tab clearly means short clips. Metadata now fits on one line, and a crisp white Watch Now button leaves the video frame unobstructed.',
+        'clip-old-badge': 'Original · For you',
+        'clip-new-badge': 'Redesign · Clip',
+        'd3-group-title': 'Balance-aware paths and upfront coin totals',
+        'd3-title': 'Separated Enough coins and Need coins paths',
+        'd3-desc': 'I split this flow by balance using Progressive Disclosure. Viewers with enough coins confirm in one tap, with no top-up grid in the way. Anyone short on coins sees the exact gap and picks between two tabs: Coins or Premium.',
+        'd4-title': 'Show total coins upfront alongside store terms',
+        'd4-desc': 'Nobody wants to add base coins and bonus coins by hand. Every Coin Wallet pack now shows the total up front. Below the plans, I placed separate Apple IAP and Stripe buttons right above policy links and purchase restoration.',
+        'sub-unlock': 'Access: Enough / Need coins',
+        'sub-wallet': 'Coin Wallet &amp; Premium',
+        'sub-unlock-cap1': 'Enough coins: 1-tap confirmation',
+        'sub-unlock-cap2': 'Need coins: split Coins / Premium tabs',
+        'sub-wallet-cap1': 'Coin Wallet: upfront total coins',
+        'sub-wallet-cap2': 'Premium: Apple IAP / Stripe &amp; store links',
+        'd5-title': 'Unified Saved, History, and Downloads in one tab',
+        'd5-old': 'Saved and History sat inside My List while My Downloads stayed buried inside Profile.',
+        'd5-new': 'Saved, History plus Downloads inside My List with full selection, delete confirmation, and Undo / empty views.',
+        'd5-desc': "I moved Downloads out of Profile to join Saved and History inside My List. All three tabs share selection tools, delete prompts, Undo bars, and empty states so viewers don't lose shows by accident.",
+        'd6-title': 'Grouped account sections and clearer reward states',
+        'd6-old': 'Profile mixed settings with downloads; Earn Rewards tasks lacked clear state contrast.',
+        'd6-new': 'Grouped Membership, Coin Wallet, and Support with distinct Guest/Premium views and Claimed / Claim / Go buttons.',
+        'd6-desc': 'On Profile, I split membership, coin wallet, and account settings into clear groups for Guest and Premium accounts. On Earn Coins, contrast cleanly separates Claimed from Claim and Go buttons beneath the warm 7-day check-in card.',
+        'sec3-tag': '[ 03 // DESIGN SYSTEM ]',
+        'sec3-heading': 'INFORMATION ARCHITECTURE &amp; UI SYSTEM',
+        'sec3-desc': 'I organized 17 screen groups across three core flows alongside dark-first color tokens and the SP/ component library so engineering had one consistent reference.',
+        'ia-title': 'IA restructuring across 5 areas',
+        'th-area': 'Area',
+        'th-before': 'Original app',
+        'th-after': 'Redesign',
+        'ia-r1-lbl': 'Bottom Bar',
+        'ia-r1-old': '5 tabs: Home · For you · Rewards · My List · Profile',
+        'ia-r1-new': '4 pill tabs: Home · Clip · My List · Profile',
+        'ia-r2-lbl': 'Home',
+        'ia-r2-old': 'Wide banner, 4 sub-tabs, yellow promo card',
+        'ia-r2-new': '3 filter chips, tall hero poster, Top 10',
+        'ia-r3-lbl': 'Library',
+        'ia-r3-old': 'Saved/History in My List; Downloads in Profile',
+        'ia-r3-new': 'All 3 under My List (edit, Undo, empty views)',
+        'ia-r4-lbl': 'Episode Access',
+        'ia-r4-old': '1 sheet stacking price, coins &amp; 2 VIP cards',
+        'ia-r4-new': 'Split Enough (1 step) &amp; Shortfall (2 tabs)',
+        'ia-r5-lbl': 'Top-up &amp; Store',
+        'ia-r5-old': 'Split base/free math; missing terms near CTA',
+        'ia-r5-new': 'Upfront coin totals, IAP / Stripe split &amp; terms',
+        'cluster1-title': '01 · Discover &amp; Watch',
+        'cluster1-desc': 'Sign in, Home, Clip, Search, Title details, Player &amp; Offline.',
+        'cluster2-title': '02 · Library &amp; Account',
+        'cluster2-desc': 'My List (Saved · History · Downloads), Profile with Settings, and 5 policy pages.',
+        'cluster3-title': '03 · Coins &amp; Membership',
+        'cluster3-desc': 'Balance branches, Coin Wallet, Premium &amp; Earn Rewards.',
+        'icon-title': 'NEW APP ICON &amp; SP/ COMPONENT LIBRARY',
+        'icon-desc': 'I updated the App Icon and brand mark after team reviews, pairing a dark base with a red-and-white S-play mark that stays recognizable on the home screen.',
+        'sp-list': 'SP/Button · SP/FilterChip · SP/BottomNavigation · SP/EpisodeCell · SP/CoinPack · SP/PremiumPlan · SP/FeedbackPanel · SP/PurchaseLinks · + 18 state icons',
+        'color-title': 'COLOR SYSTEM / DARK-FIRST CINEMA UI',
+        'color-desc': 'Four dark surface steps pair with crisp white primary CTAs while #F97039 orange stays reserved for active tabs and reward actions.',
+        'c1-desc': 'Main dark canvas',
+        'c2-desc': 'Cards and plan surfaces',
+        'c3-desc': 'Secondary buttons, floating bar',
+        'c4-desc': 'Dividers and chip borders',
+        'c5-desc': 'Primary text and action buttons',
+        'c6-desc': 'Active tabs, coin packs, Claim',
+        'type-title': 'TYPOGRAPHY / INTER (4 CLEAR STEPS)',
+        'type-desc': 'One font (Inter) across four clear sizes stays readable at 402px and never fights the posters.',
+        'bento-hero-cap1': 'Core flow overview: Home · Clip · Episode access · Shortpeek Premium',
+        'bento-hero-cap2': 'Consistent #0D0E11 cinema surfaces with high-contrast #FFFFFF primary actions',
+        'sec6-tag': '[ 04 // STORE READINESS ]',
+        'sec6-heading': 'APP STORE &amp; GOOGLE PLAY SUBMISSION CHECKLIST',
+        'sec6-desc': 'To remove guesswork for developers and satisfy store review guidelines, I covered platform-specific sign-in flows, player errors, offline handling, and five policy pages.',
+        'chk-1': 'Platform auth (Apple / Google) with a clear Not now exit',
+        'chk-2': 'Offline state points straight to View Downloads',
+        'chk-3': '10 video player states plus screen-recording warning',
+        'chk-4': 'Separate Apple IAP / Stripe buttons &amp; Restore purchases',
+        'chk-5': 'All 5 policy screens: Terms, Privacy, Top-up, Refund, Help',
+        'edge1-title': 'Apple / Android &amp; Not now',
+        'edge1-desc': 'First sign-in earns 20 coins. A Not now button still lets visitors watch clips before creating an account.',
+        'edge2-title': 'Direct path to downloads',
+        'edge2-desc': 'FeedbackPanel places View Downloads right below Try Again so offline viewers keep watching.',
+        'edge3-title': '10 player states &amp; DRM alert',
+        'edge3-desc': 'Covers speed, quality, buffering, playback failures, series completion, and screen-capture warnings.',
+        'sec7-tag': '[ 05 // TRADE-OFFS, REVIEW ITERATIONS &amp; LIMITS ]',
+        'tr1-title': 'Red-and-white mark paired with quiet white UI CTAs',
+        'tr1-desc': 'During a Home review, the team asked for red accents and a new logo. I redrew the S-play App Icon in red and white on black. Inside the app, I stuck with white primary buttons and #F97039 orange accents so the red mark never competes with posters.',
+        'tr2-title': 'Removed reward tasks from Wallet and trimmed tab labels',
+        'tr2-desc': 'After team review, I shortened the fourth tab to Profile, switched copy to Top Up, and cut extra mission lines. I also dropped the Daily check-in card from Coin Wallet. Buying coins and doing reward tasks now live in two separate screens.',
+        'tr3-title': 'Prioritized edge states and legal terms over extra features',
+        'tr3-desc': 'Right before store review, I skipped extra discovery widgets and finished what reviewers check first: My List edit and Undo flows, offline Download recovery, DRM alerts, and five policy pages beside Apple IAP and Stripe.',
+        'status-lbl': 'Current status &amp; limits',
+        'status-title': 'UNRELEASED APP · NO LIVE METRICS YET',
+        'status-desc': 'Shortpeek has not shipped to stores yet, so I have no live behavioral data to claim retention or revenue gains. After launch or during usability testing, the team needs to verify three hypotheses:',
+        'hyp-1': 'Whether new viewers spot Earn Coins and VIP after moving them from the bottom bar to the Home header.',
+        'hyp-2': 'Whether splitting Coins and Premium tabs during a shortfall reduces drop-off on paid episodes.',
+        'hyp-3': 'Whether listing total coins upfront in Coin Wallet cuts checkout confusion before paying.',
+        'learn-lbl': 'Key takeaway',
+        'sec7-learn-title': 'BALANCING CINEMA CALM WITH EPISODIC MONETIZATION',
+        'sec7-learn-desc': 'Toning down loud promo banners without hiding coin rewards or VIP upgrades was the hardest part of this redesign. For developer handoff, the real work sat behind Home: conditional payment paths, full My List recovery states (delete prompts with Undo and empty views), and the error screens needed for store review.',
+        'learn-meta': 'Marchi Lab · Shortpeek Redesign · 2026',
+        'foot-prev': 'PREVIOUS PROJECT: MOMO TRANSFER',
+        'foot-next': 'BACK TO FIRST PROJECT: YÊN'
+      }
+    };
+
+    function setLang(lang) {
+      lang = lang === 'en' ? 'en' : 'vi';
+      document.documentElement.lang = lang;
+      localStorage.setItem('tru_lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      const viActive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const viInactive = 'lang-btn-vi px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      const enActive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all bg-[var(--text-primary)] text-[var(--bg-primary)]';
+      const enInactive = 'lang-btn-en px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-mono text-[9px] sm:text-[10px] font-bold uppercase transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+
+      document.querySelectorAll('.lang-btn-vi').forEach(btn => {
+        btn.className = (lang === 'vi') ? viActive : viInactive;
+      });
+      document.querySelectorAll('.lang-btn-en').forEach(btn => {
+        btn.className = (lang === 'en') ? enActive : enInactive;
+      });
+
+      requestAnimationFrame(refreshLayoutEngine);
+    }
+
+    const savedLang = localStorage.getItem('tru_lang') || 'vi';
+    setLang(savedLang);
+  </script>
+  <script src="assets/js/interactive-fx.js?v=2"></script>
+</body>
+</html>

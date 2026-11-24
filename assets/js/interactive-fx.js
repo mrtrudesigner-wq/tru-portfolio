@@ -875,7 +875,7 @@
         ['a[href^="mailto:"]', '[ GỬI EMAIL ↗ ]', '[ SEND EMAIL ↗ ]'],
         ['#story-img, #story .group, .story-portrait-card', '[ TRỨ · HÀ NỘI ]', '[ TRỨ · HANOI ]'],
         ['#yen-child-video', '[ XEM PROTOTYPE ▶ ]', '[ PLAY PROTOTYPE ▶ ]'],
-        ['#momo-comparison, #comparison-range', '[ KÉO ĐỂ SO SÁNH ↔ ]', '[ DRAG TO COMPARE ↔ ]'],
+        ['#momo-comparison, #shortpeek-comparison, #comparison-range', '[ KÉO ĐỂ SO SÁNH ↔ ]', '[ DRAG TO COMPARE ↔ ]'],
         ['a[href*="figma.com/board"]', '[ MỞ FIGJAM ↗ ]', '[ OPEN FIGJAM ↗ ]'],
         ['a[href*="iqmyth.com"]', '[ MỞ WEB THỰC TẾ ↗ ]', '[ VISIT LIVE APP ↗ ]'],
         ['button[onclick*="spinRoulette"]', '[ CHỌN NGẪU NHIÊN 🎲 ]', '[ RANDOM CASE 🎲 ]'],
@@ -1105,8 +1105,10 @@
     const curFile = getCurrentPageFile();
 
     // Ensure every sticky <header> has a MENU button if missing (e.g. case study pages & 404)
-    const headerControls = document.querySelector('header .flex.items-center.gap-1\\.5, header .flex.items-center.gap-2');
-    if (headerControls && !headerControls.querySelector('[onclick*="openMenuOverlay"]')) {
+    const headerControls =
+      document.querySelector('header > div > .flex.items-center.gap-1\\.5') ||
+      document.querySelector('header > div > div.flex.items-center:last-child');
+    if (headerControls && !document.querySelector('header [onclick*="openMenuOverlay"]')) {
       const menuBtn = document.createElement('button');
       menuBtn.type = 'button';
       menuBtn.setAttribute('onclick', 'openMenuOverlay()');
@@ -1188,7 +1190,7 @@
             <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)] space-y-4">
               <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold flex items-center justify-between">
                 <span data-menu-i18n="caseTitle">[ DỰ ÁN CASE STUDY ]</span>
-                <span class="font-mono">03 CASES</span>
+                <span class="font-mono">04 CASES</span>
               </div>
               <div class="space-y-2.5 font-mono text-xs uppercase">
                 <a href="yen.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
@@ -1209,6 +1211,13 @@
                   <div>
                     <span class="font-bold text-sm block font-sans">03. MOMO TRANSFER</span>
                     <span class="text-[11px] text-[var(--text-muted)] normal-case">Fintech Concept · User Research & UI Redesign</span>
+                  </div>
+                  <span>↗</span>
+                </a>
+                <a href="shortpeek.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
+                  <div>
+                    <span class="font-bold text-sm block font-sans">04. SHORTPEEK</span>
+                    <span class="text-[11px] text-[var(--text-muted)] normal-case">Mobile App · UX Audit & UI Redesign</span>
                   </div>
                   <span>↗</span>
                 </a>

@@ -144,7 +144,8 @@
     }
     [data-theme="pink"] .text-emerald-600,
     [data-theme="pink"] .text-emerald-700,
-    [data-theme="pink"] .text-pink-600 {
+    [data-theme="pink"] .text-pink-600,
+    [data-theme="pink"] .text-orange-600 {
       color: #121212 !important;
     }
     h1, h2, h3 { text-wrap: balance; }
@@ -208,6 +209,15 @@
         <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold" data-i18n="btn-contact">
           Liên hệ
         </a>
+
+        <button type="button" onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0" title="Open Menu">
+          <span data-menu-i18n="btnMenu">MENU</span>
+          <span class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between" aria-hidden="true">
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
@@ -281,7 +291,7 @@
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         <!-- Work 01: Yên — Chăm Sóc Bố Mẹ Từ Xa -->
         <a href="yen.html" data-cursor-vi="[ ĐỌC CASE STUDY → ]" data-cursor-en="[ READ CASE STUDY → ]" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
@@ -338,9 +348,26 @@
             </p>
           </div>
           <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w3-meta">
-            <span>FINTECH · UX RESEARCH & REDESIGN</span>
+            <span>FINTECH · UX RESEARCH &amp; REDESIGN</span>
             <span>2025</span>
           </div>
+        </a>
+
+        <!-- Work 04: Shortpeek -->
+        <a href="shortpeek.html" data-cursor-vi="[ ĐỌC CASE STUDY → ]" data-cursor-en="[ READ CASE STUDY → ]" class="p-6 sm:p-8 rounded-2xl hairline-all surface-card hover:-translate-y-1 transition-all group flex flex-col justify-between space-y-6 shadow-sm">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-[10px] text-orange-600 dark:text-[#F97039] font-bold uppercase tracking-mono">
+              <span data-i18n="w4-tag">[ 04 // MOBILE APP ] · UX/UI REDESIGN</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-[var(--text-primary)]"></i>
+            </div>
+            <h3 class="font-bold text-xl sm:text-2xl uppercase group-hover:text-orange-600 dark:group-hover:text-[#F97039] transition-colors leading-tight" data-i18n="w4-title">
+              Shortpeek · Thiết Kế Lại Mobile App
+            </h3>
+            <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="w4-desc">
+              Thiết kế lại ứng dụng xem phim ngắn dạng dọc tại Marchi Lab trước khi nộp store: gọn lại điều hướng, tách nhánh mở khóa tập và phủ đủ trạng thái hệ thống.
+            </p>
+          </div>
+          <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-mono pt-3 hairline-t flex items-center justify-between" data-i18n="w4-meta"><span>MOBILE APP · UX AUDIT &amp; DESIGN SYSTEM</span><span>2026</span></div>
         </a>
 
       </div>
@@ -377,7 +404,8 @@
     const projects = [
       { name: 'Yên — Chăm Sóc Bố Mẹ Từ Xa', url: 'yen.html' },
       { name: 'IQ Myth — Trải Nghiệm Bài Test', url: 'iq-myth.html' },
-      { name: 'MoMo Transfer Redesign', url: 'momo.html' }
+      { name: 'MoMo Transfer Redesign', url: 'momo.html' },
+      { name: 'Shortpeek · Thiết Kế Lại Mobile App', url: 'shortpeek.html' }
     ];
 
     function spinRoulette() {
@@ -468,7 +496,11 @@
         'w3-tag': '[ 03 // FINTECH ] · USER RESEARCH',
         'w3-title': 'MoMo Transfer Redesign',
         'w3-desc': "Concept thiết kế lại luồng chuyển tiền, dựa trên nghiên cứu với 11 người dùng. Tập trung làm rõ người nhận, số dư và bước xác nhận.",
-        'w3-meta': '<span>FINTECH · UX RESEARCH & REDESIGN</span><span>2025</span>',
+        'w3-meta': '<span>FINTECH · UX RESEARCH &amp; REDESIGN</span><span>2025</span>',
+        'w4-tag': '[ 04 // MOBILE APP ] · UX/UI REDESIGN',
+        'w4-title': 'Shortpeek · Thiết Kế Lại Mobile App',
+        'w4-desc': 'Thiết kế lại ứng dụng xem phim ngắn dạng dọc tại Marchi Lab trước khi nộp store: gọn lại điều hướng, tách nhánh mở khóa tập và phủ đủ trạng thái hệ thống.',
+        'w4-meta': '<span>MOBILE APP · UX AUDIT &amp; DESIGN SYSTEM</span><span>2026</span>',
         'foot-home': 'Về trang chủ'
       },
       en: {
@@ -493,7 +525,11 @@
         'w3-tag': '[ 03 // FINTECH ] · USER RESEARCH',
         'w3-title': 'MoMo Transfer Redesign',
         'w3-desc': "A self-initiated transfer redesign based on research with 11 users, focusing on recipient details, available balance, and confirmation.",
-        'w3-meta': '<span>FINTECH · UX RESEARCH & REDESIGN</span><span>2025</span>',
+        'w3-meta': '<span>FINTECH · UX RESEARCH &amp; REDESIGN</span><span>2025</span>',
+        'w4-tag': '[ 04 // MOBILE APP ] · UX/UI REDESIGN',
+        'w4-title': 'Shortpeek · Mobile App Redesign',
+        'w4-desc': 'Redesigned a vertical short-drama app at Marchi Lab ahead of store submission, simplifying navigation, paid episode flows, and edge states.',
+        'w4-meta': '<span>MOBILE APP · UX AUDIT &amp; DESIGN SYSTEM</span><span>2026</span>',
         'foot-home': 'Return to Home'
       }
     };
@@ -528,6 +564,6 @@
     // Initialize Lucide Icons
     lucide.createIcons();
   </script>
-  <script src="assets/js/interactive-fx.js"></script>
+  <script src="assets/js/interactive-fx.js?v=2"></script>
 </body>
 </html>

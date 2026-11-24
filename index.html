@@ -14,7 +14,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRỨ — Product Designer · Portfolio</title>
-  <meta name="description" content="Portfolio của Nguyễn Công Trứ — Product Designer tại Hà Nội. Các case study về Aging-Tech, EdTech và FinTech.">
+  <meta name="description" content="Portfolio của Nguyễn Công Trứ — Product Designer tại Hà Nội. Các case study về Aging-Tech, EdTech, FinTech và Mobile App.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -471,7 +471,7 @@
         </div>
         <div class="pt-4 hairline-t">
           <span class="text-[var(--text-primary)] font-bold block mb-1" data-hero-scramble>[ FOCUS AREAS ]</span>
-          <p class="leading-relaxed break-words">HEALTHCARE, EDTECH, FINTECH & SYSTEM SCALING</p>
+          <p class="leading-relaxed break-words">HEALTHCARE, EDTECH, FINTECH, MOBILE APP &amp; SYSTEM SCALING</p>
         </div>
       </div>
 
@@ -540,13 +540,13 @@
       <!-- Filters -->
       <div class="flex flex-wrap gap-2.5 font-mono text-xs uppercase tracking-mono" id="case-filters">
         <button onclick="filterCases('all')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold" data-filter="all">
-          [ ALL (3) ]
+          [ ALL (4) ]
         </button>
         <button onclick="filterCases('product')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors" data-filter="product">
           [ PRODUCT DISCOVERY ]
         </button>
-        <button onclick="filterCases('research')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors" data-filter="research">
-          [ UX RESEARCH & AUDIT ]
+        <button onclick="filterCases('redesign')" class="case-filter-btn px-4 py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors" data-filter="redesign">
+          [ UX AUDIT &amp; REDESIGN ]
         </button>
       </div>
     </div>
@@ -696,7 +696,7 @@
 
       <!-- CASE 03: MOMO TRANSFER -->
       <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
-           data-category="research"
+           data-category="redesign"
            data-case="momo"
            data-url="momo.html"
            data-image="assets/covers/momo-mobile.webp"
@@ -742,6 +742,75 @@
             <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               <span class="text-[var(--text-primary)] font-semibold shrink-0">[ YEAR ]:</span>
               <span>2025</span>
+            </div>
+          </div>
+
+          <!-- Action Button: Open Summary Drawer -->
+          <div class="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
+            <span class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-mono font-bold group-hover:text-[var(--accent-highlight)] transition-colors whitespace-nowrap">
+              <span class="lg:hidden" data-i18n="btn-open-drawer">XEM TÓM TẮT DỰ ÁN</span>
+              <span class="hidden lg:inline-flex items-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                <span>(&nbsp;</span>
+                <span class="case-hover-scramble inline-block max-w-0 opacity-0 overflow-hidden group-hover:max-w-[165px] group-hover:opacity-100 group-hover:mr-1.5 transition-all duration-300 ease-out">XEM TÓM TẮT</span>
+                <span>+&nbsp;)</span>
+              </span>
+              <div class="w-10 h-10 rounded-full hairline-all flex items-center justify-center shrink-0 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all">
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45"></i>
+              </div>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CASE 04: SHORTPEEK -->
+      <div class="case-row group relative py-10 sm:py-12 md:py-20 transition-all px-4 sm:px-6 md:px-10 -mx-4 sm:-mx-6 md:-mx-10 rounded-2xl cursor-pointer"
+           data-category="redesign"
+           data-case="shortpeek"
+           data-url="shortpeek.html"
+           data-image="assets/covers/shortpeek-mobile.webp"
+           data-fallback-image="assets/shortpeek/shortpeek-hero.webp"
+           data-title="Shortpeek · Thiết Kế Lại Mobile App"
+           data-tag="MOBILE APP · UX AUDIT & UI REDESIGN"
+           onclick="openCaseDrawer('shortpeek')">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+          <div class="lg:col-span-5 flex items-baseline gap-6 md:gap-8">
+            <span class="font-mono text-lg md:text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-highlight)] font-bold transition-colors">
+              04/
+            </span>
+            <div>
+              <button type="button" onclick="event.stopPropagation(); openCaseDrawer('shortpeek')" class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tighter group-hover:translate-x-3 transition-transform duration-300 block text-left hover:underline cursor-pointer">
+                SHORTPEEK
+              </button>
+              <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="shortpeek-subtitle">
+                THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC
+              </p>
+            </div>
+          </div>
+
+          <!-- Mobile Showcase Image -->
+          <div class="lg:hidden w-full rounded-xl overflow-hidden hairline-all shadow-sm bg-[var(--bg-secondary)] aspect-[16/10] my-1">
+            <img src="assets/covers/shortpeek-mobile.webp"
+                 onerror="this.onerror=null;this.src='assets/shortpeek/shortpeek-hero.webp'"
+                 alt="Shortpeek · Thiết Kế Lại Mobile App"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 loading="lazy" decoding="async">
+          </div>
+
+          <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ SCOPE ]:</span>
+              <span>UX AUDIT · USER FLOW · UI · DESIGN SYSTEM · PROTOTYPE</span>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ TYPE ]:</span>
+              <span data-i18n="shortpeek-type">DỰ ÁN THỰC TẾ · MARCHI LAB (CHƯA PHÁT HÀNH)</span>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span class="text-[var(--text-primary)] font-semibold shrink-0">[ YEAR ]:</span>
+              <span>2026</span>
             </div>
           </div>
 
@@ -1080,7 +1149,7 @@
           </dl>
 
           <!-- Direct Case Study Links -->
-          <div class="grid grid-cols-3 gap-2 pt-6 font-mono text-[10px] sm:text-[11px] uppercase tracking-mono">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-6 font-mono text-[10px] sm:text-[11px] uppercase tracking-mono">
             <a href="yen.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
               <span class="truncate">01. YÊN</span><span>↗</span>
             </a>
@@ -1089,6 +1158,9 @@
             </a>
             <a href="momo.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
               <span class="truncate">03. MOMO</span><span>↗</span>
+            </a>
+            <a href="shortpeek.html" class="py-3 px-3 rounded-lg border border-white/15 hover:bg-white/10 transition-colors flex items-center justify-between font-bold text-[#F5F5F0]">
+              <span class="truncate">04. SHORTPEEK</span><span>↗</span>
             </a>
           </div>
         </div>
@@ -1212,7 +1284,7 @@
         <div class="p-6 rounded-2xl hairline-all bg-[var(--bg-secondary)] space-y-4">
           <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] font-bold flex items-center justify-between">
             <span data-i18n="menu-case-title">[ DỰ ÁN CASE STUDY ]</span>
-            <span class="accent-text font-mono">03 CASES</span>
+            <span class="accent-text font-mono">04 CASES</span>
           </div>
 
           <div class="space-y-2.5 font-mono text-xs uppercase">
@@ -1236,6 +1308,14 @@
               <div>
                 <span class="font-bold text-sm block group-hover:text-[var(--accent-highlight)] transition-colors font-sans">03. MOMO TRANSFER</span>
                 <span class="text-[11px] text-[var(--text-muted)] normal-case">Fintech Concept · User Research & UI Redesign</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"></i>
+            </button>
+
+            <button onclick="closeMenuOverlay(() => openCaseDrawer('shortpeek'))" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer">
+              <div>
+                <span class="font-bold text-sm block group-hover:text-[var(--accent-highlight)] transition-colors font-sans">04. SHORTPEEK</span>
+                <span class="text-[11px] text-[var(--text-muted)] normal-case">Mobile App · UX Audit &amp; UI Redesign</span>
               </div>
               <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"></i>
             </button>
@@ -1392,7 +1472,7 @@
     });
 
     // Preload local cover thumbnails so desktop hover preview is instant
-    ['assets/covers/yen-mobile.webp', 'assets/covers/iq-mobile.webp', 'assets/covers/momo-mobile.webp'].forEach(src => {
+    ['assets/covers/yen-mobile.webp', 'assets/covers/iq-mobile.webp', 'assets/covers/momo-mobile.webp', 'assets/covers/shortpeek-mobile.webp'].forEach(src => {
       const preloadImg = new Image();
       preloadImg.src = src;
     });
@@ -1438,6 +1518,7 @@
         if (caseKey && caseKey.includes('yen')) openCaseDrawer('yen');
         else if (caseKey && caseKey.includes('iq')) openCaseDrawer('iq');
         else if (caseKey && caseKey.includes('momo')) openCaseDrawer('momo');
+        else if (caseKey && caseKey.includes('shortpeek')) openCaseDrawer('shortpeek');
       }
     }
 
@@ -1529,6 +1610,8 @@
         'iq-type': 'EDTECH PRODUCT · WEB APP DESIGN',
         'momo-subtitle': "LÀM RÕ THÔNG TIN TRƯỚC KHI CHUYỂN TIỀN",
         'momo-type': "CONCEPT CÁ NHÂN · FINTECH REDESIGN",
+        'shortpeek-subtitle': "THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC",
+        'shortpeek-type': "DỰ ÁN THỰC TẾ · MARCHI LAB (CHƯA PHÁT HÀNH)",
         'btn-open-drawer': 'XEM TÓM TẮT DỰ ÁN',
         'btn-menu': 'MENU',
         'menu-close': 'ĐÓNG (ESC)',
@@ -1589,6 +1672,8 @@
         'iq-type': 'EDTECH WEB APP · CONVERSION AUDIT',
         'momo-subtitle': "CLEARER DETAILS BEFORE SENDING MONEY",
         'momo-type': "SELF-INITIATED CONCEPT · FINTECH REDESIGN",
+        'shortpeek-subtitle': "REDESIGNING A VERTICAL SHORT-DRAMA APP",
+        'shortpeek-type': "CLIENT PRODUCT · MARCHI LAB (UNRELEASED)",
         'btn-open-drawer': 'VIEW SUMMARY',
         'btn-menu': 'MENU',
         'menu-close': 'CLOSE (ESC)',
@@ -1726,7 +1811,7 @@
     const drawerData = {
       yen: {
         pageUrl: 'yen.html',
-        number: '01 / 03',
+        number: '01 / 04',
         heroImg: 'assets/covers/yen-mobile.webp',
         fallbackImg: 'https://framerusercontent.com/images/aLl14WIk5qVx41xzZRfZavVIco.png',
         vi: {
@@ -1766,7 +1851,7 @@
       },
       iq: {
         pageUrl: 'iq-myth.html',
-        number: '02 / 03',
+        number: '02 / 04',
         heroImg: 'assets/covers/iq-mobile.webp',
         fallbackImg: 'https://framerusercontent.com/images/vSHVKtsQ2LSUe7IqF3TMT2L7KTI.png',
         vi: {
@@ -1806,7 +1891,7 @@
       },
       momo: {
         pageUrl: 'momo.html',
-        number: '03 / 03',
+        number: '03 / 04',
         heroImg: 'assets/covers/momo-mobile.webp',
         fallbackImg: 'https://framerusercontent.com/images/Ypa7QLaRDKwD7MW17ISYAQWEc.png',
         vi: {
@@ -1841,6 +1926,46 @@
           execution: "UI/UX Designer · I researched users, audited the flow, and proposed a new UI. The concept still needs usability testing to validate its impact.",
           btnDetail: 'VIEW FULL CASE STUDY',
           btnDetailFull: "READ THE FULL CASE STUDY",
+          backToList: 'Back to project list'
+        }
+      },
+      shortpeek: {
+        pageUrl: 'shortpeek.html',
+        number: '04 / 04',
+        heroImg: 'assets/covers/shortpeek-mobile.webp',
+        fallbackImg: 'assets/shortpeek/shortpeek-hero.webp',
+        vi: {
+          tag: 'MOBILE APP · UX AUDIT &amp; UI REDESIGN',
+          projectType: 'Dự án thực tế tại Marchi Lab · Chưa phát hành',
+          scope: 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+          title: 'SHORTPEEK: LÀM MỚI ỨNG DỤNG PHIM NGẮN DẠNG DỌC',
+          problem: 'Trước khi nộp store, bản gốc có mật độ Home dày banner khuyến mãi, tab Rewards chen giữa bottom bar, sheet mở khóa dồn nhiều gói và thiếu màn trạng thái lỗi.',
+          hmw: 'Làm sao để giữ cảm giác điện ảnh gọn mắt theo hướng Netflix mà người xem vẫn rõ cách mở khóa tập bằng xu hoặc gói thành viên?',
+          pillars: [
+            {"title": "01 / GỌN ĐIỀU HƯỚNG", "desc": "Rút thanh đáy từ 5 xuống 4 tab dạng nổi, chuyển VIP và Rewards lên header, làm thoáng đầu trang Home."},
+            {"title": "02 / TÁCH NHÁNH MỞ KHÓA", "desc": "Tách rõ trường hợp Đủ xu (1 bước mở) và Thiếu xu (2 tab Coins / Premium) kèm tổng xu thực nhận."},
+            {"title": "03 / PHỦ ĐỦ EDGE STATES", "desc": "Bổ sung App Icon mới, luồng quản lý My List (chọn, xóa, Undo, màn trống), trạng thái lỗi phát, mất mạng và 5 trang chính sách."}
+          ],
+          execution: 'Product Designer · Tôi trực tiếp audit bản gốc, thiết kế User Flow, UI, Design System, App Icon và Prototype. Sản phẩm chưa phát hành nên cần đo lường sau go-live.',
+          btnDetail: 'XEM CHI TIẾT DỰ ÁN',
+          btnDetailFull: 'ĐỌC CASE STUDY ĐẦY ĐỦ',
+          backToList: 'Quay lại danh sách dự án'
+        },
+        en: {
+          tag: 'MOBILE APP · UX AUDIT &amp; UI REDESIGN',
+          projectType: 'Client product at Marchi Lab · Unreleased',
+          scope: 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+          title: 'SHORTPEEK: REDESIGNING A SHORT-DRAMA APP',
+          problem: 'Ahead of store submission, the original app had promo-heavy Home grids, a cluttered 5-tab bar, overloaded episode access sheets, and missing error states.',
+          hmw: 'How might we bring a calmer, Netflix-style cinema layout while keeping coin payments and memberships clear?',
+          pillars: [
+            {"title": "01 / CALMER NAVIGATION", "desc": "Cut the bottom bar down to 4 floating tabs, moved VIP and Rewards to the header, and opened up Home."},
+            {"title": "02 / CLEARER ACCESS FLOWS", "desc": "Split Enough coins (one tap) from Need coins (Coins and Premium tabs) with upfront pack totals."},
+            {"title": "03 / COMPLETE EDGE STATES", "desc": "Added a refreshed App Icon, My List edit and Undo flows, playback error handling, and 5 policy screens."}
+          ],
+          execution: 'Product Designer · I handled the UX audit, user flows, UI, design system, App Icon, and prototype. Since the app has not shipped yet, live metrics remain unmeasured.',
+          btnDetail: 'VIEW FULL CASE STUDY',
+          btnDetailFull: 'READ THE FULL CASE STUDY',
           backToList: 'Back to project list'
         }
       }
@@ -2110,6 +2235,6 @@
       }
     });
   </script>
-  <script src="assets/js/interactive-fx.js"></script>
+  <script src="assets/js/interactive-fx.js?v=2"></script>
 </body>
 </html>

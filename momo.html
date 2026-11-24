@@ -158,7 +158,7 @@
       <span class="sm:hidden" data-i18n="top-back-mobile">QUAY LẠI</span>
     </a>
     <div class="flex items-center gap-2 truncate min-w-0">
-      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 03 / 03</span>
+      <span class="text-[var(--text-muted)] hidden sm:inline" data-i18n="top-case-num">CASE 03 / 04</span>
       <span class="font-bold text-pink-600 truncate" data-i18n="top-case-tag">MOMO TRANSFER — FINTECH REDESIGN</span>
     </div>
   </div>
@@ -200,6 +200,15 @@
         <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
           Liên hệ
         </a>
+
+        <button type="button" onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2 magnetic-btn cursor-pointer shrink-0" title="Open Menu">
+          <span data-menu-i18n="btnMenu">MENU</span>
+          <span class="w-3 sm:w-3.5 h-2.5 sm:h-3 flex flex-col justify-between" aria-hidden="true">
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+            <span class="w-full h-[1.5px] bg-current"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
@@ -551,8 +560,8 @@
         <i data-lucide="arrow-left" class="w-4 h-4"></i>
         <span data-i18n="foot-prev">DỰ ÁN TRƯỚC: IQ MYTH</span>
       </a>
-      <a href="yen.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn">
-        <span data-i18n="foot-first">VỀ DỰ ÁN ĐẦU TIÊN: YÊN</span>
+      <a href="shortpeek.html" class="px-6 py-3 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold flex items-center gap-2 hover:opacity-90 magnetic-btn">
+        <span data-i18n="foot-next">DỰ ÁN TIẾP THEO: SHORTPEEK</span>
         <i data-lucide="arrow-right" class="w-4 h-4"></i>
       </a>
     </section>
@@ -719,7 +728,7 @@
         'comparison-desc': "Phiên bản mới sắp xếp lại các thông tin cần đối chiếu và tăng cỡ chữ ở phần quan trọng. Để đo tác động lên thời gian hoàn thành, tỷ lệ lỗi và mức độ tự tin, cần chạy usability test so sánh với bản hiện tại.",
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
-        'top-case-num': 'CASE 03 / 03',
+        'top-case-num': 'CASE 03 / 04',
         'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
         'btn-contact': 'Liên hệ',
         'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
@@ -788,7 +797,7 @@
         'sec6-learn-title': 'CHÚ Ý ĐẾN NHỮNG THAO TÁC NGẦM CỦA NGƯỜI DÙNG',
         'sec6-learn-desc': "Case study giúp tôi chú ý hơn đến những thao tác nhỏ mà người dùng tự thêm vào quy trình, như đọc lại tên người nhận hoặc đưa màn hình thành công cho người bán xem. Những hành vi này chưa tự động chứng minh giao diện có vấn đề. Chúng là tín hiệu để đặt câu hỏi, xây dựng prototype và kiểm tra với người dùng trong bước tiếp theo.",
         'foot-prev': 'DỰ ÁN TRƯỚC: IQ MYTH',
-        'foot-first': 'VỀ DỰ ÁN ĐẦU TIÊN: YÊN'
+        'foot-next': 'DỰ ÁN TIẾP THEO: SHORTPEEK'
       },
       en: {
         'color-main-use': "Nav, hero, CTA",
@@ -818,7 +827,7 @@
         'comparison-desc': "The proposal reorganizes verification details and enlarges key figures. Measuring its effect on completion time, error rate, and confidence requires a comparative usability test against the live app.",
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
-        'top-case-num': 'CASE 03 / 03',
+        'top-case-num': 'CASE 03 / 04',
         'top-case-tag': 'MOMO TRANSFER — FINTECH REDESIGN',
         'btn-contact': 'Get in touch',
         'hero-tag': '<span>[ 03 // SELECTED WORK ]</span><span>·</span><span>FINTECH UX RESEARCH & REDESIGN</span>',
@@ -887,7 +896,7 @@
         'sec6-learn-title': 'OBSERVING UNWRITTEN USER BEHAVIORS',
         'sec6-learn-desc': "This case study made me pay closer attention to small actions people add to a flow, such as re-reading a recipient’s name or showing a seller the success screen. These behaviors do not automatically prove the interface is flawed. They are signals for asking questions, building prototypes, and testing with users next.",
         'foot-prev': 'PREVIOUS PROJECT: IQ MYTH',
-        'foot-first': 'BACK TO FIRST PROJECT: YÊN'
+        'foot-next': 'NEXT PROJECT: SHORTPEEK'
       }
     };
 
@@ -918,6 +927,6 @@
     const savedLang = localStorage.getItem('tru_lang') || 'vi';
     setLang(savedLang);
   </script>
-  <script src="assets/js/interactive-fx.js"></script>
+  <script src="assets/js/interactive-fx.js?v=2"></script>
 </body>
 </html>

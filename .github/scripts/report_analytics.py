@@ -101,7 +101,7 @@ def main():
     )
     pages_resp = client.run_report(pages_req)
     pages_list = []
-    case_views = {"yen": 0, "iq_myth": 0, "momo": 0, "home": 0}
+    case_views = {"yen": 0, "iq_myth": 0, "momo": 0, "shortpeek": 0, "home": 0}
     for row in pages_resp.rows:
         path = row.dimension_values[0].value
         views = int(row.metric_values[0].value or 0)
@@ -112,6 +112,8 @@ def main():
             case_views["iq_myth"] += views
         elif 'momo' in path:
             case_views["momo"] += views
+        elif 'shortpeek' in path:
+            case_views["shortpeek"] += views
         elif path in ['/', '/index.html']:
             case_views["home"] += views
 
@@ -200,11 +202,12 @@ def main():
 
     # Top Case Study
     top_case = None
-    if case_views["yen"] > 0 or case_views["iq_myth"] > 0 or case_views["momo"] > 0:
+    if case_views["yen"] > 0 or case_views["iq_myth"] > 0 or case_views["momo"] > 0 or case_views["shortpeek"] > 0:
         sorted_cases = sorted([
             ("Yên (Aging-Tech)", case_views["yen"]),
             ("IQ Myth (EdTech)", case_views["iq_myth"]),
-            ("MoMo Transfer (FinTech)", case_views["momo"])
+            ("MoMo Transfer (FinTech)", case_views["momo"]),
+            ("Shortpeek (Mobile App)", case_views["shortpeek"])
         ], key=lambda x: x[1], reverse=True)
         top_name, top_cnt = sorted_cases[0]
         if top_cnt > 0:
@@ -258,6 +261,8 @@ def main():
             label = "IQ Myth — EdTech (iq-myth.html)"
         elif 'momo' in ppath:
             label = "MoMo Transfer (momo.html)"
+        elif 'shortpeek' in ppath:
+            label = "Shortpeek — Mobile App (shortpeek.html)"
         lines.append(f"• {label}: <b>{pviews}</b> lượt xem")
 
     if sources_list:
