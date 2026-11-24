@@ -25,6 +25,9 @@
       if (favicon && isDark) {
         favicon.href = 'favicon-dark.png';
       }
+      if (window.matchMedia && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('has-fire-cursor');
+      }
     })();
   </script>
 
@@ -60,6 +63,20 @@
   </script>
 
   <style>
+    /* Suppress native OS cursor when Black Fire Trail is active on pointer:fine */
+    @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      html.has-fire-cursor,
+      html.has-fire-cursor *,
+      html.has-fire-cursor *::before,
+      html.has-fire-cursor *::after,
+      body.has-fire-cursor,
+      body.has-fire-cursor *,
+      body.has-fire-cursor *::before,
+      body.has-fire-cursor *::after {
+        cursor: none !important;
+      }
+    }
+
     :root {
       --bg-primary: #F5F5F0;
       --bg-secondary: #EBEBE5;

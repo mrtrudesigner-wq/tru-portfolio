@@ -22,6 +22,14 @@
   const getLang = () => (localStorage.getItem('tru_lang') === 'en' ? 'en' : 'vi');
   const getTheme = () => document.documentElement.getAttribute('data-theme') || 'light';
 
+  // Proactively hide native OS cursor on fine-pointer devices when Black Fire Trail is enabled
+  if (hasFinePointer() && !prefersReducedMotion()) {
+    injectFireCursorStyles();
+    if (document.documentElement) {
+      document.documentElement.classList.add('has-fire-cursor');
+    }
+  }
+
   /* ==========================================================================
    * 1. MONOSPACE CIPHER-SCRAMBLE ENGINE
    * ========================================================================== */
@@ -360,8 +368,33 @@
   /* ==========================================================================
    * 3. SATISFYING BLACK FIRE CURSOR TRAIL ENGINE (Code Morphism / Zain Zafar)
    * ========================================================================== */
+  function injectFireCursorStyles() {
+    if (document.getElementById('tru-fire-cursor-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'tru-fire-cursor-styles';
+    style.textContent = `
+      @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+        html.has-fire-cursor,
+        html.has-fire-cursor *,
+        html.has-fire-cursor *::before,
+        html.has-fire-cursor *::after,
+        body.has-fire-cursor,
+        body.has-fire-cursor *,
+        body.has-fire-cursor *::before,
+        body.has-fire-cursor *::after {
+          cursor: none !important;
+        }
+      }
+    `;
+    (document.head || document.documentElement).appendChild(style);
+  }
+
   function initBlackFireCursorTrail() {
     if (!hasFinePointer() || prefersReducedMotion()) return;
+
+    injectFireCursorStyles();
+    if (document.documentElement) document.documentElement.classList.add('has-fire-cursor');
+    if (document.body) document.body.classList.add('has-fire-cursor');
 
     const TOTAL_CIRCLES = 22;
 
@@ -379,7 +412,7 @@
     container.id = 'tru-fire-cursor-container';
     container.setAttribute('aria-hidden', 'true');
     container.style.cssText =
-      'position:fixed;inset:0;pointer-events:none;z-index:110;opacity:0;transition:opacity 0.25s ease;overflow:hidden;';
+      'position:fixed;inset:0;pointer-events:none;z-index:100000;opacity:0;transition:opacity 0.25s ease;overflow:hidden;';
     document.body.appendChild(container);
 
     const circles = [];
@@ -509,7 +542,7 @@
     pill.id = 'tru-cursor-pill';
     pill.setAttribute('aria-hidden', 'true');
     pill.style.cssText =
-      'position:fixed;left:0;top:0;z-index:120;pointer-events:none;opacity:0;transform:translate3d(14px,-28px,0) scale(0.92);will-change:transform,opacity;';
+      'position:fixed;left:0;top:0;z-index:100001;pointer-events:none;opacity:0;transform:translate3d(14px,-28px,0) scale(0.92);will-change:transform,opacity;';
     pill.innerHTML =
       '<div style="background:var(--text-primary);color:var(--bg-primary);border:1px solid var(--border-color);box-shadow:0 10px 28px rgba(0,0,0,0.22);" class="h-[24px] px-2.5 rounded font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">' +
       '<span id="tru-cursor-pill-dot" style="width:5px;height:5px;border-radius:9999px;background:#10B981;flex-shrink:0;"></span>' +

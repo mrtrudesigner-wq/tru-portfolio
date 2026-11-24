@@ -519,3 +519,44 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     3. Chuyển trang ngược về `index.html#work`: màn che quét lên và mở ra chuẩn xác.
     4. Vệt chuột Black Fire Cursor Trail hoạt động song song mượt mà ở 60–120fps, không bị giật lag hay xung đột DOM.
 * **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 23. ẨN HOÀN TOÀN CON TRỎ MẶC ĐỊNH HỆ THỐNG (DEFAULT OS CURSOR SUPPRESSION) — 24/11/2026
+
+* **Bối cảnh & Yêu cầu:** Người dùng yêu cầu "ẩn con trỏ mặc định đi" để vệt lửa đen **Black Fire Cursor Trail** và huy hiệu nổi trở thành con trỏ thị giác duy nhất trên toàn bộ website, loại bỏ hiện tượng hiển thị cùng lúc cả con trỏ chuột mũi tên / bàn tay mặc định của hệ điều hành và vệt lửa.
+* **Thách thức kỹ thuật:**
+  * Nếu chỉ đặt `body { cursor: none; }`, khi người dùng rê chuột qua các thẻ liên kết `<a>`, nút bấm `<button>`, các phần tử mang class `cursor-pointer` (từ Tailwind) hoặc `input`, con trỏ mặc định của hệ thống vẫn sẽ hiện đè lên vệt lửa.
+  * Phải đảm bảo con trỏ chuột không bị ẩn trên thiết bị di động / màn hình cảm ứng, và phải phục hồi bình thường nếu người dùng bật chế độ giảm chuyển động (`prefers-reduced-motion: reduce`).
+  * Khắc phục độ ưu tiên z-index: Đẩy `#tru-fire-cursor-container` lên `z-index: 100000` và `#tru-cursor-pill` lên `z-index: 100001` (vượt trên màn che ToyFight `z-index: 99999`) để con trỏ không bao giờ bị "biến mất" đột ngột trong lúc chuyển trang hay tải đầu trang.
+* **Giải pháp triển khai kỹ thuật (`assets/js/interactive-fx.js` & 6 tệp HTML):**
+  * **Khai báo CSS chống override triệt để:**
+    ```css
+    @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      html.has-fire-cursor,
+      html.has-fire-cursor *,
+      html.has-fire-cursor *::before,
+      html.has-fire-cursor *::after,
+      body.has-fire-cursor,
+      body.has-fire-cursor *,
+      body.has-fire-cursor *::before,
+      body.has-fire-cursor *::after {
+        cursor: none !important;
+      }
+    }
+    ```
+  * **Đồng bộ sớm trong `<head>` của toàn bộ 6 trang (`index.html`, `iq-myth.html`, `yen.html`, `momo.html`, `shortpeek.html`, `404.html`):**
+    * Thêm cờ kích hoạt `document.documentElement.classList.add('has-fire-cursor')` ngay từ đoạn script đầu `<head>` giúp con trỏ hệ thống biến mất tức thì ngay từ frame đầu tiên khi mở trang, không có hiện tượng giật con trỏ (Zero Cursor Flicker).
+    * Bổ sung quy tắc CSS vào khối `<style>` của cả 6 trang để bộ render của trình duyệt tính toán trước.
+  * **Cơ chế tự bảo vệ trong `assets/js/interactive-fx.js`:**
+    * Hàm `injectFireCursorStyles()` tự động tiêm thẻ `<style id="tru-fire-cursor-styles">` vào DOM.
+    * Gắn class `has-fire-cursor` vào cả `documentElement` và `document.body`.
+    * Tự động hoàn trả con trỏ mặc định nếu phát hiện môi trường cảm ứng (`pointer: coarse`) hoặc chế độ giảm chuyển động.
+* **Kiểm thử thực tế & Bằng chứng xác minh:**
+  * Cú pháp `node --check assets/js/interactive-fx.js` đạt 0 lỗi.
+  * Kiểm thử qua Browser subagent trên máy chủ cục bộ:
+    * `document.documentElement.classList.contains('has-fire-cursor') === true`.
+    * `window.getComputedStyle(el).cursor` đạt giá trị `'none'` trên `body`, thẻ `<a>`, `<button>` và `.case-row`.
+    * Container `#tru-fire-cursor-container` hoạt động ổn định với đầy đủ 22 hạt `.tru-trail-circle`, opacity 1, bám sát tọa độ chuột mượt mà.
+    * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/628e2502-07ca-4a14-9a61-ff0eeff41d97/final_step_20.png`.
+* **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai lên `https://mrtrudesigner.vercel.app`.
