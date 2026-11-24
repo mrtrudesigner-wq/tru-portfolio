@@ -462,4 +462,28 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Hover desktop kích hoạt cuộn chữ mượt mà, không giật khung hình.
     * Click sao chép kích hoạt class `.is-copied`, chữ cuộn chuẩn xác lên tầng `✓ ĐÃ SAO CHÉP EMAIL!`, icon chuyển thành `check` và toast nổi xuất hiện chuẩn ở đáy màn hình.
     * Banner liên hệ trên cả 4 case study hiển thị thoáng đãng, sắc nét, đúng cấu trúc phân tầng và chuyển đổi theme (`Light / Dark / Pink`) mượt mà.
-* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, chuẩn bị commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai phiên bản tối ưu chuyển đổi lên `https://mrtrudesigner.vercel.app`.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai phiên bản tối ưu chuyển đổi và đồng bộ radius lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 21. THAY THẾ HIỆU ỨNG CON TRỎ: SATISFYING BLACK FIRE CURSOR TRAIL ANIMATION — 24/11/2026
+
+* **Bối cảnh & Yêu cầu:** Người dùng yêu cầu thay thế toàn bộ hiệu ứng con trỏ chuột hiện tại bằng hiệu ứng **"Satisfying Black Fire Cursor Trail Animation"** theo hướng dẫn video YouTube (`https://www.youtube.com/watch?v=7eE8xPyXSR4` bởi tác giả Zain Zafar / Code Morphism - CodePen: `oNypoEr`).
+* **Triển khai kỹ thuật (`assets/js/interactive-fx.js`):**
+  * **Thay thế Canvas Halftone Dithered:** Gỡ bỏ hoàn toàn bộ đệm 2D Cellular Grid và `initHalftoneCursor()` (~212 dòng tính toán ma trận điểm halftone trên canvas `#tru-cursor-canvas`), thay bằng module tăng tốc phần cứng `initBlackFireCursorTrail()`.
+  * **Cấu trúc 22 Vòng tròn Động cơ (`#tru-fire-cursor-container`):**
+    * Tự động sinh `22` phần tử tròn `.tru-trail-circle` (đường kính cơ sở `24px`, bo tròn `50%`, `position: fixed`, `pointer-events: none`, `z-index: 110`).
+    * **Dải quang phổ màu Black Fire nguyên bản:** Chuyển màu chuyển tiếp mượt mà từ đốm lửa vàng cam rực rỡ (`#ffb56b`, `#fdaf69`, `#f89d63`) qua đỏ cam (`#ef865e`, `#e36e5c`), đỏ mận (`#d5585c`, `#c5415d`), tím thẫm (`#9c155f`, `#830060`, `#60005f`) và vuốt đuôi về đen khói sâu (`#2a0026`, `#120010`). 4 vòng tròn đầu tiên được phủ thêm hiệu ứng phát quang nhẹ `box-shadow: 0 0 8px rgba(255, 181, 107, 0.45)`.
+    * **Tỷ lệ thu nhỏ liên tục (Progressive Scaling):** Vòng tròn đầu mang tỷ lệ `scale(1.0)` và thu nhỏ dần đều theo cấp số nhân dọc thân đuôi xuống `scale(0.045)` ở đốt thứ 22.
+    * **Động học Lerp Dẻo (Organic Trailing Physics):** Mỗi đốt bám theo vị trí đốt trước với hệ số nội suy mượt mà `0.32` (`x += (nextCircle.x - x) * 0.32`), tạo cảm giác lượn sóng/uốn lượn như ngọn lửa đen mềm mại, bám dính tự nhiên theo tốc độ di chuột của người dùng.
+    * **Phản hồi xúc giác khi nhấp chuột (Click Pulse):** Khi người dùng nhấn giữ chuột (`mousedown`), toàn bộ chuỗi hạt lửa nở rộng tức thì thêm `22%` (`scale * 1.22`) và thu lại trạng thái chuẩn khi nhả chuột (`mouseup`).
+    * **Tự động ngủ đông tiết kiệm năng lượng (Sleep Cycle):** Khi chuột dừng di chuyển và chuỗi hạt đã hội tụ dưới con trỏ (`maxDelta < 0.15`), vòng lặp `requestAnimationFrame` tự động dừng hẳn để bảo toàn 100% tài nguyên CPU/GPU và pin thiết bị. Chu trình chỉ thức dậy khi có sự kiện `mousemove` hoặc `mousedown` mới.
+    * **Trợ năng & Đa nền tảng:** Tự động tắt trên thiết bị cảm ứng (không có fine pointer) hoặc người dùng bật cờ `prefers-reduced-motion: reduce`. Tự động ẩn nhẹ nhàng (`opacity: 0`) khi chuột rời khỏi khung nhìn trình duyệt (`mouseleave`).
+* **Kiểm thử thực tế & Bằng chứng xác minh:**
+  * Kiểm tra cú pháp `node --check assets/js/interactive-fx.js` đạt 0 lỗi.
+  * Kiểm thử qua Browser subagent trên cả trang chủ `http://localhost:3366/` và case study `http://localhost:3366/iq-myth.html`:
+    * Container sinh đầy đủ 22 phần tử `.tru-trail-circle`.
+    * Dải màu và tỷ lệ scale chuyển tiếp chuẩn xác từ đầu đến đuôi (`scale 1.0 → 0.045`).
+    * Mousedown kích hoạt scale tăng `1.22` lần mượt mà.
+    * Tuyệt đối không cản trở thao tác click hay hover vào các nút bấm, liên kết và component trên website (`pointer-events: none`).
+* **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai phiên bản con trỏ mới lên `https://mrtrudesigner.vercel.app`.

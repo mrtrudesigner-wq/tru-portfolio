@@ -1,9 +1,11 @@
 /**
  * TRỨ PORTFOLIO — Interactive FX Engine
  * 1. Pixel-Matrix & 2D Noise Curtain Intro (with T. geometric monogram + counter)
- * 2. 2D Velocity-Field Halftone / Dithered Pixel Cursor Trail Canvas
+ * 2. Satisfying Black Fire Cursor Trail Animation (Zain Zafar / Code Morphism)
  * 3. Floating Magnetic Monospace Cursor Pill (with Cipher-Scramble)
  * 4. Monospace Cipher-Scramble Hover & Entrance Reveals
+ * 5. Universal Navigation Menu & Instant Project Transitions
+ * 6. Tactile Slot-Machine Roller & Copy-Email Engine
  */
 (function () {
   'use strict';
@@ -575,219 +577,145 @@
   }
 
   /* ==========================================================================
-   * 3. 2D VELOCITY-FIELD HALFTONE / DITHERED PIXEL CURSOR TRAIL
+   * 3. SATISFYING BLACK FIRE CURSOR TRAIL ENGINE (Code Morphism / Zain Zafar)
    * ========================================================================== */
-  // 6 progressive 4x4 sub-cell halftone patterns (each entry lists [sx, sy] in 0..3)
-  const HALFTONE_PATTERNS = [
-    [[1, 1]],
-    [[0, 0], [2, 2]],
-    [[0, 0], [2, 2], [2, 0]],
-    [[0, 0], [2, 0], [0, 2], [2, 2]],
-    [[0, 0], [2, 0], [1, 1], [3, 1], [0, 2], [2, 2]],
-    [[0, 0], [2, 0], [1, 1], [3, 1], [0, 2], [2, 2], [1, 3], [3, 3]]
-  ];
-
-  function initHalftoneCursor() {
+  function initBlackFireCursorTrail() {
     if (!hasFinePointer() || prefersReducedMotion()) return;
 
-    const canvas = document.createElement('canvas');
-    canvas.id = 'tru-cursor-canvas';
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.style.cssText =
-      'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:30;';
-    document.body.appendChild(canvas);
+    const TOTAL_CIRCLES = 22;
 
-    const ctx = canvas.getContext('2d');
-    const CELL = 10; // 10px architectural grid cell
-    const SUB = 2.5; // 4x4 sub-grid inside each 10px cell
+    // Iconic Black Fire color spectrum from Zain Zafar (Code Morphism):
+    // Warm glowing fire embers fading smoothly into smoky obsidian black
+    const FIRE_COLORS = [
+      '#ffb56b', '#fdaf69', '#f89d63', '#f59761', '#ef865e',
+      '#ec805d', '#e36e5c', '#df685c', '#d5585c', '#d1525c',
+      '#c5415d', '#c03b5d', '#b22c5e', '#ac265e', '#9c155f',
+      '#950f5f', '#830060', '#7c0060', '#680060', '#60005f',
+      '#2a0026', '#120010'
+    ];
 
-    let dpr = 1;
-    let vw = 0;
-    let vh = 0;
-    let cols = 0;
-    let rows = 0;
-    let field = new Float32Array(0);
-    let cellJitter = new Float32Array(0);
+    const container = document.createElement('div');
+    container.id = 'tru-fire-cursor-container';
+    container.setAttribute('aria-hidden', 'true');
+    container.style.cssText =
+      'position:fixed;inset:0;pointer-events:none;z-index:110;opacity:0;transition:opacity 0.25s ease;overflow:hidden;';
+    document.body.appendChild(container);
 
-    const syncThemeBlend = () => {
-      const theme = getTheme();
-      if (theme === 'pink') {
-        canvas.style.mixBlendMode = 'normal';
-      } else {
-        canvas.style.mixBlendMode = 'difference';
+    const circles = [];
+    for (let i = 0; i < TOTAL_CIRCLES; i++) {
+      const circle = document.createElement('div');
+      circle.className = 'tru-trail-circle';
+      circle.style.cssText =
+        'position:fixed;top:0;left:0;width:24px;height:24px;border-radius:50%;pointer-events:none;will-change:transform;transform:translate3d(-100px,-100px,0) scale(0);';
+      circle.style.backgroundColor = FIRE_COLORS[i % FIRE_COLORS.length];
+      if (i < 4) {
+        circle.style.boxShadow = `0 0 ${8 - i * 1.5}px rgba(255, 181, 107, ${0.45 - i * 0.08})`;
       }
-    };
-    syncThemeBlend();
+      container.appendChild(circle);
+      circles.push({
+        el: circle,
+        x: -100,
+        y: -100
+      });
+    }
 
-    const themeObs = new MutationObserver(syncThemeBlend);
-    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      vw = window.innerWidth;
-      vh = window.innerHeight;
-      canvas.width = Math.round(vw * dpr);
-      canvas.height = Math.round(vh * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      cols = Math.ceil(vw / CELL);
-      rows = Math.ceil(vh / CELL);
-      const total = cols * rows;
-      field = new Float32Array(total);
-      cellJitter = new Float32Array(total);
-      for (let gy = 0; gy < rows; gy++) {
-        for (let gx = 0; gx < cols; gx++) {
-          cellJitter[gy * cols + gx] = (hash2D(gx, gy) - 0.5) * 0.22;
-        }
-      }
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    let lastX = -999;
-    let lastY = -999;
-    let lastMoveAt = 0;
-    let lastFrameAt = 0;
+    const coords = { x: -100, y: -100 };
+    let initialized = false;
+    let isClicking = false;
+    let isVisible = false;
     let rafId = null;
 
-    const stampAt = (px, py, radiusCells, peak) => {
-      const gxCenter = px / CELL;
-      const gyCenter = py / CELL;
-      const x0 = Math.max(0, Math.floor(gxCenter - radiusCells));
-      const x1 = Math.min(cols - 1, Math.ceil(gxCenter + radiusCells));
-      const y0 = Math.max(0, Math.floor(gyCenter - radiusCells));
-      const y1 = Math.min(rows - 1, Math.ceil(gyCenter + radiusCells));
-      const invTwoSigmaSq = 1 / (radiusCells * radiusCells * 0.42);
-
-      for (let gy = y0; gy <= y1; gy++) {
-        const dy = gy + 0.5 - gyCenter;
-        const rowOff = gy * cols;
-        for (let gx = x0; gx <= x1; gx++) {
-          const dx = gx + 0.5 - gxCenter;
-          const dSq = dx * dx + dy * dy;
-          if (dSq > radiusCells * radiusCells) continue;
-
-          const idx = rowOff + gx;
-          const falloff = Math.exp(-dSq * invTwoSigmaSq) + cellJitter[idx] * 0.35;
-          if (falloff <= 0.05) continue;
-
-          const nextVal = Math.min(1, Math.max(field[idx], falloff * peak) + falloff * 0.14);
-          field[idx] = nextVal;
-        }
+    const showContainer = () => {
+      if (!isVisible) {
+        isVisible = true;
+        container.style.opacity = '1';
       }
     };
 
-    const render = (now) => {
-      const dt = lastFrameAt ? Math.min(64, now - lastFrameAt) : 16;
-      lastFrameAt = now;
-
-      const decay = Math.exp(-dt / 310);
-      ctx.clearRect(0, 0, vw, vh);
-
-      const theme = getTheme();
-      if (theme === 'pink') {
-        ctx.fillStyle = 'rgba(18, 18, 18, 0.62)';
-      } else if (theme === 'dark') {
-        ctx.fillStyle = 'rgba(245, 244, 236, 0.90)';
-      } else {
-        // Under mix-blend-mode: difference on #F5F5F0, pure white produces crisp deep ink (#0A0A0F)
-        // and inverts cleanly to off-white inside #0E0E0E typography!
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
-      }
-
-      ctx.beginPath();
-      let activeCount = 0;
-
-      for (let gy = 0; gy < rows; gy++) {
-        const rowOff = gy * cols;
-        const baseY = gy * CELL;
-        for (let gx = 0; gx < cols; gx++) {
-          const idx = rowOff + gx;
-          const v = field[idx] * decay;
-          if (v < 0.075) {
-            field[idx] = 0;
-            continue;
-          }
-          field[idx] = v;
-          activeCount++;
-
-          let level = 0;
-          if (v >= 0.76) level = 5;
-          else if (v >= 0.60) level = 4;
-          else if (v >= 0.45) level = 3;
-          else if (v >= 0.31) level = 2;
-          else if (v >= 0.18) level = 1;
-
-          const pat = HALFTONE_PATTERNS[level];
-          const baseX = gx * CELL;
-          for (let k = 0; k < pat.length; k++) {
-            ctx.rect(
-              baseX + pat[k][0] * SUB,
-              baseY + pat[k][1] * SUB,
-              2.1,
-              2.1
-            );
-          }
-        }
-      }
-
-      if (activeCount > 0) {
-        ctx.fill();
-      }
-
-      if (activeCount > 0 || now - lastMoveAt < 1300) {
-        rafId = requestAnimationFrame(render);
-      } else {
-        rafId = null;
-        lastFrameAt = 0;
+    const hideContainer = () => {
+      if (isVisible) {
+        isVisible = false;
+        container.style.opacity = '0';
       }
     };
 
     window.addEventListener(
       'mousemove',
       (e) => {
-        // Pause trail injection when fullscreen modal/menu is covering the viewport
-        const menuOverlay = document.getElementById('menu-overlay');
-        const caseDrawer = document.getElementById('case-drawer');
-        if (
-          (menuOverlay && !menuOverlay.classList.contains('hidden')) ||
-          (caseDrawer && !caseDrawer.classList.contains('hidden'))
-        ) {
-          lastX = e.clientX;
-          lastY = e.clientY;
-          return;
+        coords.x = e.clientX;
+        coords.y = e.clientY;
+
+        if (!initialized) {
+          initialized = true;
+          circles.forEach((c) => {
+            c.x = e.clientX;
+            c.y = e.clientY;
+          });
         }
 
-        const x = e.clientX;
-        const y = e.clientY;
-
-        if (lastX < -500) {
-          lastX = x;
-          lastY = y;
-        }
-
-        const dx = x - lastX;
-        const dy = y - lastY;
-        const dist = Math.hypot(dx, dy);
-        const speedNorm = Math.min(1.25, Math.max(0.45, dist / 26));
-        const radiusCells = 4.6 + speedNorm * 2.5; // ~58px - 77px organic cloud radius
-        const steps = Math.max(1, Math.ceil(dist / 7));
-
-        for (let s = 1; s <= steps; s++) {
-          const t = s / steps;
-          stampAt(lastX + dx * t, lastY + dy * t, radiusCells, 0.62 + speedNorm * 0.34);
-        }
-
-        lastX = x;
-        lastY = y;
-        lastMoveAt = performance.now();
+        showContainer();
 
         if (!rafId) {
-          rafId = requestAnimationFrame(render);
+          rafId = requestAnimationFrame(animateTrail);
         }
       },
       { passive: true }
     );
+
+    document.addEventListener('mouseleave', () => {
+      hideContainer();
+    });
+
+    document.addEventListener('mouseenter', (e) => {
+      coords.x = e.clientX;
+      coords.y = e.clientY;
+      showContainer();
+      if (!rafId) {
+        rafId = requestAnimationFrame(animateTrail);
+      }
+    });
+
+    window.addEventListener('mousedown', () => {
+      isClicking = true;
+      if (!rafId) rafId = requestAnimationFrame(animateTrail);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isClicking = false;
+      if (!rafId) rafId = requestAnimationFrame(animateTrail);
+    });
+
+    function animateTrail() {
+      let curX = coords.x;
+      let curY = coords.y;
+      let maxDelta = 0;
+
+      for (let i = 0; i < circles.length; i++) {
+        const circle = circles[i];
+        const scaleBase = (circles.length - i) / circles.length;
+        const scale = isClicking ? scaleBase * 1.22 : scaleBase;
+
+        circle.el.style.transform = `translate3d(${curX - 12}px, ${curY - 12}px, 0) scale(${scale.toFixed(3)})`;
+
+        const dx = curX - circle.x;
+        const dy = curY - circle.y;
+        const dist = Math.abs(dx) + Math.abs(dy);
+        if (dist > maxDelta) maxDelta = dist;
+
+        circle.x = curX;
+        circle.y = curY;
+
+        const nextCircle = circles[i + 1] || circles[0];
+        curX += (nextCircle.x - curX) * 0.32;
+        curY += (nextCircle.y - curY) * 0.32;
+      }
+
+      if (maxDelta < 0.15 && isVisible) {
+        rafId = null;
+      } else {
+        rafId = requestAnimationFrame(animateTrail);
+      }
+    }
   }
 
   /* ==========================================================================
@@ -1599,7 +1527,7 @@
     initSlotMachineRollers();
     initUniversalMenuAndTransitions();
     initIntroCurtain();
-    initHalftoneCursor();
+    initBlackFireCursorTrail();
     initCursorPillAndHovers();
   };
 
