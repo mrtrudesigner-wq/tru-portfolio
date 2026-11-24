@@ -194,10 +194,10 @@
 
   function getPagePillLabels() {
     const file = getCurrentPageFile();
-    if (file === 'iq-myth.html') return ['TRỨ', 'CASE STUDY', '02. IQ MYTH'];
-    if (file === 'yen.html') return ['TRỨ', 'CASE STUDY', '01. YÊN'];
-    if (file === 'momo.html') return ['TRỨ', 'CASE STUDY', '03. MOMO'];
-    if (file === 'shortpeek.html') return ['TRỨ', 'CASE STUDY', '04. SHORTPEEK'];
+    if (file === 'shortpeek.html') return ['TRỨ', 'CASE STUDY', '01. SHORTPEEK'];
+    if (file === 'yen.html') return ['TRỨ', 'CASE STUDY', '02. YÊN'];
+    if (file === 'iq-myth.html') return ['TRỨ', 'CASE STUDY', '03. IQ MYTH'];
+    if (file === 'momo.html') return ['TRỨ', 'CASE STUDY', '04. MOMO'];
     return ['TRỨ', 'PRODUCT DESIGNER', 'PORTFOLIO'];
   }
 
@@ -774,10 +774,10 @@
     document.querySelectorAll('.tru-exit-canvas').forEach((c) => c.remove());
 
     let destLabel = ['TRỨ', 'PRODUCT DESIGNER', 'PORTFOLIO'];
-    if (href.includes('iq-myth')) destLabel = ['TRỨ', 'CASE STUDY', '02. IQ MYTH'];
-    else if (href.includes('yen')) destLabel = ['TRỨ', 'CASE STUDY', '01. YÊN'];
-    else if (href.includes('momo')) destLabel = ['TRỨ', 'CASE STUDY', '03. MOMO'];
-    else if (href.includes('shortpeek')) destLabel = ['TRỨ', 'CASE STUDY', '04. SHORTPEEK'];
+    if (href.includes('shortpeek')) destLabel = ['TRỨ', 'CASE STUDY', '01. SHORTPEEK'];
+    else if (href.includes('yen')) destLabel = ['TRỨ', 'CASE STUDY', '02. YÊN'];
+    else if (href.includes('iq-myth')) destLabel = ['TRỨ', 'CASE STUDY', '03. IQ MYTH'];
+    else if (href.includes('momo')) destLabel = ['TRỨ', 'CASE STUDY', '04. MOMO'];
 
     const overlay = getOrCreateToyFightCurtain(destLabel);
     const cols = overlay.querySelectorAll('.tru-curtain-col');
@@ -926,31 +926,31 @@
                 <span class="font-mono">04 CASES</span>
               </div>
               <div class="space-y-2.5 font-mono text-xs uppercase">
+                <a href="shortpeek.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
+                  <div>
+                    <span class="font-bold text-sm block font-sans">01. SHORTPEEK</span>
+                    <span class="text-[11px] text-[var(--text-muted)] normal-case">Mobile App · UX Audit & UI Redesign</span>
+                  </div>
+                  <span>↗</span>
+                </a>
                 <a href="yen.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
                   <div>
-                    <span class="font-bold text-sm block font-sans">01. YÊN</span>
+                    <span class="font-bold text-sm block font-sans">02. YÊN</span>
                     <span class="text-[11px] text-[var(--text-muted)] normal-case">Aging-Tech · Healthcare Dual App</span>
                   </div>
                   <span>↗</span>
                 </a>
                 <a href="iq-myth.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
                   <div>
-                    <span class="font-bold text-sm block font-sans">02. IQ MYTH</span>
+                    <span class="font-bold text-sm block font-sans">03. IQ MYTH</span>
                     <span class="text-[11px] text-[var(--text-muted)] normal-case">EdTech Web App · Conversion Design</span>
                   </div>
                   <span>↗</span>
                 </a>
                 <a href="momo.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
                   <div>
-                    <span class="font-bold text-sm block font-sans">03. MOMO TRANSFER</span>
+                    <span class="font-bold text-sm block font-sans">04. MOMO TRANSFER</span>
                     <span class="text-[11px] text-[var(--text-muted)] normal-case">Fintech Concept · User Research & UI Redesign</span>
-                  </div>
-                  <span>↗</span>
-                </a>
-                <a href="shortpeek.html" class="w-full text-left p-3.5 rounded-xl hairline-all hover:bg-[var(--bg-primary)] transition-all flex items-center justify-between group cursor-pointer block">
-                  <div>
-                    <span class="font-bold text-sm block font-sans">04. SHORTPEEK</span>
-                    <span class="text-[11px] text-[var(--text-muted)] normal-case">Mobile App · UX Audit & UI Redesign</span>
                   </div>
                   <span>↗</span>
                 </a>

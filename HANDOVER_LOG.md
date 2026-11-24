@@ -560,3 +560,59 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Container `#tru-fire-cursor-container` hoạt động ổn định với đầy đủ 22 hạt `.tru-trail-circle`, opacity 1, bám sát tọa độ chuột mượt mà.
     * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/628e2502-07ca-4a14-9a61-ff0eeff41d97/final_step_20.png`.
 * **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai lên `https://mrtrudesigner.vercel.app`.
+
+---
+
+## 24. TÁI CẤU TRÚC THỨ TỰ DỰ ÁN THEO THỜI GIAN THỰC HIỆN & ĐỒNG BỘ TOÀN DIỆN BÁN KÍNH BO GÓC — 24/11/2026
+
+* **Bối cảnh & Yêu cầu:**
+  * Người dùng yêu cầu sắp xếp lại thứ tự toàn bộ các case study trên website theo trục thời gian thực hiện (Timeline).
+  * Lựa chọn đã chốt: **Mới nhất đến cũ nhất (Dự án thực tế trước)**:
+    1. **`01. SHORTPEEK`** (2026 — Client Work tại Marchi Lab, Mobile App)
+    2. **`02. YÊN`** (2026 — Personal Concept, Healthcare & Aging-Tech Dual App)
+    3. **`03. IQ MYTH`** (2025 — EdTech Web App, Behavioral UI & Prototyping)
+    4. **`04. MOMO TRANSFER`** (2025 — Personal Concept, FinTech UX Research & Redesign)
+  * Đồng thời rà soát và kiểm chứng đồng bộ bán kính góc bo (`border-radius: 8px` / `rounded-lg`) trên cụm nút liên hệ chân trang ("Sao chép địa chỉ email", "Gọi điện trực tiếp", "RESUME PDF" và lưới 4 case study liên kết trực tiếp).
+* **Các tệp được cập nhật đồng bộ xuyên suốt toàn bộ codebase (7 tệp):**
+  1. **`assets/js/interactive-fx.js`:**
+     * Cập nhật `getPagePillLabels()`: ánh xạ nhãn huy hiệu chuyển trang màn che sang `01. SHORTPEEK`, `02. YÊN`, `03. IQ MYTH`, `04. MOMO`.
+     * Cập nhật `navigateWithCurtain()`: gán nhãn đích chuẩn xác cho từng đường dẫn.
+     * Cập nhật danh sách nút dự án trong Menu Overlay toàn màn hình (Shortpeek đầu tiên, MoMo cuối cùng).
+  2. **`index.html`:**
+     * Cập nhật ảnh preview ban đầu `#cursor-preview-img` sang `assets/covers/shortpeek-mobile.webp`.
+     * Đổi thứ tự 4 hàng case study trong `#work`: Shortpeek (`01/`), Yên (`02/`), IQ Myth (`03/`), MoMo Transfer (`04/`).
+     * Đồng bộ bán kính `rounded-lg` (8px) cho cụm 3 nút liên hệ chân trang và lưới 4 thẻ liên kết direct cases.
+     * Đổi thứ tự trong danh sách nút Menu Overlay, drawer preview data (`01 / 04` .. `04 / 04`) và danh sách preload covers.
+  3. **`shortpeek.html`:**
+     * Cập nhật huy hiệu màn che `#tru-curtain-badge` sang `01. SHORTPEEK`.
+     * Cập nhật thẻ chỉ mục hero: `[ 01 // SELECTED WORK ]`.
+     * Cập nhật điều hướng chân trang: Nút trước -> `VỀ TRANG CHỦ` (`index.html`), Nút kế tiếp -> `DỰ ÁN TIẾP THEO: YÊN` (`yen.html`).
+     * Cập nhật từ điển dịch thuật đa ngữ VI/EN (`hero-tag`, `foot-back`, `foot-next`).
+  4. **`yen.html`:**
+     * Cập nhật huy hiệu màn che `#tru-curtain-badge` sang `02. YÊN`.
+     * Cập nhật thẻ chỉ mục hero: `[ 02 // SELECTED WORK ]`.
+     * Cập nhật điều hướng chân trang: Nút trước -> `DỰ ÁN TRƯỚC: SHORTPEEK` (`shortpeek.html`), Nút kế tiếp -> `DỰ ÁN TIẾP THEO: IQ MYTH` (`iq-myth.html`).
+     * Cập nhật từ điển dịch thuật đa ngữ VI/EN (`hero-tag`, `foot-prev`, `foot-next`).
+  5. **`iq-myth.html`:**
+     * Cập nhật huy hiệu màn che `#tru-curtain-badge` sang `03. IQ MYTH`.
+     * Cập nhật thẻ chỉ mục hero: `[ 03 // SELECTED WORK ]`.
+     * Điều hướng chân trang: Nút trước -> `yen.html` (`02. YÊN`), Nút kế tiếp -> `momo.html` (`04. MOMO`).
+     * Cập nhật từ điển dịch thuật đa ngữ VI/EN (`hero-tag`).
+  6. **`momo.html`:**
+     * Cập nhật huy hiệu màn che `#tru-curtain-badge` sang `04. MOMO`.
+     * Cập nhật thẻ chỉ mục hero: `[ 04 // SELECTED WORK ]`.
+     * Cập nhật điều hướng chân trang: Nút trước -> `iq-myth.html` (`03. IQ MYTH`), Nút kế tiếp -> `VỀ DỰ ÁN ĐẦU TIÊN: SHORTPEEK` (`shortpeek.html` tạo chu trình điều hướng tuần hoàn khép kín).
+     * Cập nhật từ điển dịch thuật đa ngữ VI/EN (`hero-tag`, `foot-next`).
+  7. **`404.html`:**
+     * Đổi thứ tự 4 thẻ danh mục dự án sang Shortpeek (01) → Yên (02) → IQ Myth (03) → MoMo (04).
+     * Cập nhật mảng dự án ngẫu nhiên `projects` trong hàm `spinRoulette()`.
+     * Cập nhật từ điển đa ngữ `w1` đến `w4` trong cả 2 ngôn ngữ `vi` và `en`.
+* **Kiểm thử thực tế & Bằng chứng xác minh:**
+  * Cú pháp `node --check assets/js/interactive-fx.js` đạt 0 lỗi.
+  * `git diff --check` sạch 100%, không lỗi khoảng trắng hay xung đột.
+  * Browser subagent kiểm thử trên máy chủ cục bộ:
+    * Section `#work` hiển thị chuẩn xác `01/ SHORTPEEK`, `02/ YÊN`, `03/ IQ MYTH`, `04/ MOMO TRANSFER`.
+    * Cụm nút chân trang Dark Footer đồng bộ tuyệt đối `rounded-lg` (computed 8px).
+    * Click "01. SHORTPEEK" tải đúng trang, hiển thị `[ 01 // SELECTED WORK ]`, chân trang trỏ tới "DỰ ÁN TIẾP THEO: YÊN".
+    * Trang `404.html` hiển thị đúng danh mục 4 thẻ theo thứ tự mới.
+* **Trạng thái hiện tại:** Sẵn sàng commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
