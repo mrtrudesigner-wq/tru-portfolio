@@ -446,7 +446,7 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Hiển thị thanh thông báo nổi (floating toast pill `.tru-copy-toast`) ở đáy màn hình với hiệu ứng trượt lò xo: `✓ Đã sao chép mr.tru.designer@gmail.com vào clipboard` (tự động mờ dần và biến mất sau 2.4s).
   * **Nâng cấp nút liên hệ Trang Chủ (`index.html`):**
     * **Header:** Nút "Liên hệ" desktop (`hidden sm:flex`) tích hợp `.slot-roller`: hover mượt mà lộ `mr.tru.designer@gmail.com ↗`. Đồng bộ chuẩn breakpoint `sm:flex` tương thích toàn bộ trang con.
-    * **Footer:** Nút sao chép chân trang nâng cấp thành `.footer-email-btn.slot-roll-btn` 3 tầng cuộn (`[ SAO CHÉP EMAIL ]` → `[ MR.TRU.DESIGNER@GMAIL.COM ↗ ]` → `[ ✓ ĐÃ SAO CHÉP EMAIL! ]`). Hỗ trợ click-to-copy trực tiếp cả khi bấm vào chuỗi email văn bản `#email-text`.
+    * **Footer:** Nút sao chép chân trang nâng cấp thành `.footer-email-btn.slot-roll-btn` 3 tầng cuộn (`[ SAO CHÉP EMAIL ]` → `[ MR.TRU.DESIGNER@GMAIL.COM ↗ ]` → `[ ✓ ĐÃ SAO CHÉP EMAIL! ]`). Hỗ trợ click-to-copy trực tiếp cả khi bấm vào chuỗi email văn bản `#email-text`. Đồng bộ tuyệt đối chuẩn bo góc `rounded-lg` (8px), padding `px-4 py-2`, font `text-[11px]` và `gap-2` khớp 100% với 2 hàng nút liền kề ("Gọi điện trực tiếp", "Resume PDF") và danh mục 4 case study bên dưới, khắc phục hoàn toàn tình trạng lệch khối pill (`rounded-full`) so với thiết kế bảng công nghiệp.
     * Cập nhật từ điển song ngữ: thêm `btn-copied-email` cho cả VI (`✓ Đã sao chép email!`) và EN (`✓ Copied to clipboard!`).
   * **Bổ sung Banner Liên hệ Editorial cuối 4 Case Study (`iq-myth.html`, `yen.html`, `momo.html`, `shortpeek.html`):**
     * Bố trí ngay trước `<!-- FOOTER NAV -->` tại điểm chạm kết bài của cả 4 case study.
