@@ -1389,9 +1389,214 @@
   }
 
   /* ==========================================================================
-   * 6. BOOTSTRAP
+   * 6. TACTILE SLOT-MACHINE ROLLER & COPY-EMAIL ENGINE
+   * ========================================================================== */
+  function injectSlotRollStyles() {
+    if (document.getElementById('tru-slot-roll-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'tru-slot-roll-styles';
+    style.textContent = `
+      .slot-roll-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.18s ease;
+      }
+      .slot-roll-btn:active {
+        transform: scale(0.97);
+      }
+      .slot-roller {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        height: 1.35em;
+        line-height: 1.35em;
+      }
+      .slot-roller .slot-line {
+        display: block;
+        white-space: nowrap;
+        transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        will-change: transform;
+      }
+      .slot-roller .slot-line-default {
+        transform: translateY(0);
+      }
+      .slot-roller .slot-line-hover {
+        position: absolute;
+        inset: 0;
+        transform: translateY(100%);
+      }
+      .slot-roller .slot-line-success {
+        position: absolute;
+        inset: 0;
+        transform: translateY(200%);
+      }
+      .slot-roll-btn:hover:not(.is-copied) .slot-roller .slot-line-default,
+      .group:hover:not(.is-copied) .slot-roller .slot-line-default {
+        transform: translateY(-100%) !important;
+      }
+      .slot-roll-btn:hover:not(.is-copied) .slot-roller .slot-line-hover,
+      .group:hover:not(.is-copied) .slot-roller .slot-line-hover {
+        transform: translateY(0) !important;
+      }
+      .slot-roll-btn.is-copied {
+        border-color: #10B981 !important;
+        background-color: rgba(16, 185, 129, 0.12) !important;
+        color: #10B981 !important;
+      }
+      [data-theme="dark"] .slot-roll-btn.is-copied {
+        border-color: #C4FF00 !important;
+        background-color: rgba(196, 255, 0, 0.12) !important;
+        color: #C4FF00 !important;
+      }
+      .slot-roll-btn.is-copied .slot-roller .slot-line-default {
+        transform: translateY(-200%) !important;
+      }
+      .slot-roll-btn.is-copied .slot-roller .slot-line-hover {
+        transform: translateY(-100%) !important;
+      }
+      .slot-roll-btn.is-copied .slot-roller .slot-line-success {
+        transform: translateY(0) !important;
+      }
+      .tru-copy-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translate(-50%, 20px);
+        opacity: 0;
+        z-index: 99999;
+        pointer-events: none;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      }
+      .tru-copy-toast.is-visible {
+        transform: translate(-50%, 0);
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slot-roller .slot-line {
+          transition: opacity 0.15s ease !important;
+          transform: none !important;
+        }
+        .slot-roll-btn:hover:not(.is-copied) .slot-roller .slot-line-default {
+          opacity: 0;
+        }
+        .slot-roll-btn:hover:not(.is-copied) .slot-roller .slot-line-hover {
+          opacity: 1;
+        }
+        .slot-roll-btn.is-copied .slot-roller .slot-line-default,
+        .slot-roll-btn.is-copied .slot-roller .slot-line-hover {
+          opacity: 0 !important;
+        }
+        .slot-roll-btn.is-copied .slot-roller .slot-line-success {
+          opacity: 1 !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  let toastTimer = null;
+  function showCopyToast(msg) {
+    let toast = document.getElementById('tru-copy-toast-el');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'tru-copy-toast-el';
+      toast.className = 'tru-copy-toast';
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `
+      <div class="px-4 py-2.5 rounded-full bg-[#141416]/95 border border-white/20 text-[#F5F5F0] font-mono text-xs shadow-2xl flex items-center gap-2.5 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-[#C4FF00] shrink-0 animate-pulse"></span>
+        <span class="font-medium tracking-tight">${msg}</span>
+      </div>
+    `;
+    requestAnimationFrame(() => {
+      toast.classList.add('is-visible');
+    });
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('is-visible');
+    }, 2600);
+  }
+
+  function initSlotMachineRollers() {
+    injectSlotRollStyles();
+
+    window.copyEmail = function (triggerEl) {
+      const email = 'mr.tru.designer@gmail.com';
+      const curLang = getLang();
+
+      navigator.clipboard.writeText(email).then(() => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'copy_email', {
+            event_category: 'engagement',
+            event_label: email
+          });
+        }
+
+        const buttons = triggerEl
+          ? [triggerEl.closest('.slot-roll-btn, button') || triggerEl]
+          : Array.from(document.querySelectorAll('.slot-roll-btn'));
+
+        buttons.forEach((btn) => {
+          if (!btn) return;
+          btn.classList.add('is-copied');
+
+          const icon = btn.querySelector('.slot-icon i, i[data-lucide]');
+          if (icon) {
+            icon.setAttribute('data-lucide', 'check');
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+              lucide.createIcons({ root: btn });
+            }
+          }
+
+          const legacySpan = btn.querySelector('#copy-btn-text');
+          if (legacySpan && !btn.querySelector('.slot-roller')) {
+            legacySpan.textContent = curLang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';
+            legacySpan.style.color = '#34D399';
+          }
+
+          clearTimeout(btn._copiedTimer);
+          btn._copiedTimer = setTimeout(() => {
+            btn.classList.remove('is-copied');
+            if (icon) {
+              icon.setAttribute('data-lucide', 'copy');
+              if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons({ root: btn });
+              }
+            }
+            if (legacySpan && !btn.querySelector('.slot-roller')) {
+              const activeL = getLang();
+              legacySpan.textContent = activeL === 'en' ? 'Copy Email Address' : 'Sao chép địa chỉ email';
+              legacySpan.style.color = '';
+            }
+          }, 2500);
+        });
+
+        showCopyToast(
+          curLang === 'en'
+            ? '✓ Copied mr.tru.designer@gmail.com to clipboard'
+            : '✓ Đã sao chép mr.tru.designer@gmail.com vào clipboard'
+        );
+      }).catch((err) => {
+        console.warn('Clipboard write failed, fallback to mailto:', err);
+        window.location.href = 'mailto:' + email;
+      });
+    };
+  }
+
+  /* ==========================================================================
+   * 7. BOOTSTRAP
    * ========================================================================== */
   const boot = () => {
+    initSlotMachineRollers();
     initUniversalMenuAndTransitions();
     initIntroCurtain();
     initHalftoneCursor();

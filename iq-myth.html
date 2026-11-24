@@ -212,8 +212,11 @@
           <span id="mobile-theme-text" class="font-bold">LGT</span>
         </button>
 
-        <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn" data-i18n="btn-contact">
-          Liên hệ
+        <a href="index.html#contact" class="hidden sm:flex font-mono text-xs uppercase px-4 py-2 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold magnetic-btn group overflow-hidden">
+          <span class="slot-roller">
+            <span class="slot-line slot-line-default" data-i18n="btn-contact">Liên hệ</span>
+            <span class="slot-line slot-line-hover font-mono font-bold text-[var(--accent-display)]">mr.tru.designer@gmail.com ↗</span>
+          </span>
         </a>
 
         <button type="button" onclick="openMenuOverlay()" class="font-mono text-[11px] sm:text-xs uppercase tracking-mono px-2.5 sm:px-4 py-1.5 sm:py-2 rounded hairline-all bg-[var(--bg-secondary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold flex items-center gap-1.5 sm:gap-2 magnetic-btn cursor-pointer shrink-0" title="Open Menu">
@@ -605,6 +608,40 @@
       </div>
     </section>
 
+    <!-- CALLOUT CONTACT & COPY EMAIL -->
+    <section class="pt-10 pb-4 hairline-t gsap-reveal">
+      <div class="p-8 sm:p-10 rounded-2xl hairline-all bg-[var(--bg-secondary)] flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <div class="font-mono text-[11px] uppercase tracking-mono text-[var(--accent-display)] flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[var(--accent-display)]"></span>
+            <span data-i18n="cs-contact-tag">[ HỢP TÁC & TRAO ĐỔI // GET IN TOUCH ]</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[var(--text-primary)]" data-i18n="cs-contact-title">
+            BẠN CẦN PRODUCT DESIGNER CHO DỰ ÁN?
+          </h3>
+          <p class="text-sm sm:text-base text-[var(--text-muted)] max-w-xl leading-relaxed" data-i18n="cs-contact-desc">
+            Mình luôn sẵn sàng trao đổi về cơ hội hợp tác, thiết kế sản phẩm hoặc chia sẻ góc nhìn chuyên môn.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+          <button onclick="if(window.copyEmail){window.copyEmail(this);}" class="slot-roll-btn group relative overflow-hidden px-5 py-3 rounded-xl hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] transition-all duration-300 font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2.5 cursor-pointer shrink-0 shadow-sm" title="Sao chép email mr.tru.designer@gmail.com">
+            <span class="slot-icon w-3.5 h-3.5 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            </span>
+            <span class="slot-roller">
+              <span class="slot-line slot-line-default" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+              <span class="slot-line slot-line-hover text-[var(--accent-display)] font-mono font-semibold">mr.tru.designer@gmail.com ↗</span>
+              <span class="slot-line slot-line-success text-[#34D399] font-mono font-bold" data-i18n="btn-copied-email">✓ Đã sao chép email!</span>
+            </span>
+          </button>
+          <a href="mailto:mr.tru.designer@gmail.com" class="px-5 py-3 rounded-xl hairline-all bg-transparent hover:bg-[var(--surface-hover)] transition-all font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2 text-[var(--text-primary)]">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            <span data-i18n="btn-send-mail">Gửi thư</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER NAV -->
     <section class="pt-12 hairline-t flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs uppercase tracking-mono">
       <a href="yen.html" class="flex items-center gap-2 hover:underline magnetic-btn">
@@ -835,6 +872,12 @@
         'sec6-tag': '[ 06 // KẾT LUẬN & BÀI HỌC CRAFT ]',
         'sec6-title': 'TÁCH RÕ DỮ LIỆU QUAN SÁT KHỎI GIẢ ĐỊNH THIẾT KẾ',
         'sec6-desc': 'Việc phân tích đối thủ giúp tôi nhận ra các pattern quen thuộc của thị trường và xác định điểm cần thử nghiệm trong IQ Myth. Bài học quan trọng nhất là tách rõ điều đã quan sát được khỏi giả định của người thiết kế, sau đó dùng thử nghiệm để kiểm tra giả định đó.',
+        'cs-contact-tag': '[ HỢP TÁC & TRAO ĐỔI // GET IN TOUCH ]',
+        'cs-contact-title': 'BẠN CẦN PRODUCT DESIGNER CHO DỰ ÁN?',
+        'cs-contact-desc': 'Mình luôn sẵn sàng trao đổi về cơ hội hợp tác, thiết kế sản phẩm hoặc chia sẻ góc nhìn chuyên môn.',
+        'btn-copy-email': 'Sao chép địa chỉ email',
+        'btn-copied-email': '✓ Đã sao chép email!',
+        'btn-send-mail': 'Gửi thư',
         'foot-prev': 'DỰ ÁN TRƯỚC: YÊN',
         'foot-next': 'DỰ ÁN TIẾP THEO: MOMO TRANSFER'
       },
@@ -929,6 +972,12 @@
         'sec6-tag': '[ 06 // CONCLUSION & CRAFT LESSONS ]',
         'sec6-title': 'SEPARATING OBSERVATION FROM DESIGN ASSUMPTIONS',
         'sec6-desc': "Reviewing competitors showed common market patterns and pointed to specific ideas worth testing in IQ Myth. The main lesson was separating what I actually observed from what I assumed, then testing those assumptions with users.",
+        'cs-contact-tag': '[ GET IN TOUCH // COLLABORATION ]',
+        'cs-contact-title': 'LOOKING FOR A PRODUCT DESIGNER?',
+        'cs-contact-desc': 'I am open to product design opportunities, collaboration, or discussing craft perspectives.',
+        'btn-copy-email': 'Copy Email Address',
+        'btn-copied-email': '✓ Copied to clipboard!',
+        'btn-send-mail': 'Send Email',
         'foot-prev': 'PREVIOUS PROJECT: YÊN',
         'foot-next': 'NEXT PROJECT: MOMO TRANSFER'
       }

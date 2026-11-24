@@ -424,3 +424,42 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * `0` lỗi console và `0` lỗi tải tài nguyên trên `shortpeek.html`.
   * Toàn bộ ảnh trên `shortpeek.html` (bao gồm `Before/After`, 4 ảnh Audit, `Home` `960×960`, `Saved / History + Undo / Downloads` ở Tab 04, các luồng ở 5 tab và 3 Edge States) tải HTTP 200; kiểm tra đổi 3 theme (`Light / Dark / Pink`), đổi `VI / EN` (`159/159` khóa), kéo trực tiếp trên `#shortpeek-comparison` không bị lớp phủ chọn xanh, 5 tab gạch chân `.wt-tab` + 2 nhánh con `.subview-note`, hiệu ứng scroll reveal đầy đủ và mobile `360×800` không tràn ngang.
 * **Trạng thái hiện tại:** Đã hoàn tất kiểm thử cục bộ, commit và push các chỉnh sửa tinh gọn nội dung (gỡ khối `sp-list`, bỏ đếm số màn hình `17 nhóm / 104 màn hình`, rút gọn mô tả hệ thống component và Typography) lên nhánh `main` (`origin/main`) để triển khai tự động lên Vercel (`https://mrtrudesigner.vercel.app/shortpeek.html`).
+
+---
+
+## 20. TỐI ƯU CHUYỂN ĐỔI LIÊN HỆ: SLOT-MACHINE ROLLING TEXT ENGINE & BANNER CONTACT CASE STUDY — 24/11/2026
+
+* **Bối cảnh & Lỗ hổng chuyển đổi (Conversion Gap):**
+  * Báo cáo analytics Telegram (`@truuiuxdesign` theo dõi `https://mrtrudesigner.vercel.app`) ghi nhận tương tác người dùng rất sâu (**96 pageviews / 9 visitors, trung bình 10.7 trang/người, thời lượng 1m 07s, Desktop 8/9 người dùng, IQ Myth dẫn đầu 10 views**), tuy nhiên tỷ lệ chuyển đổi liên hệ lại bằng **0 lượt copy email**.
+  * **Nguyên nhân kỹ thuật & UX:** Khi người đọc (nhà tuyển dụng/khách hàng) xem hết nội dung chuyên sâu của 4 case study (`iq-myth.html`, `yen.html`, `momo.html`, `shortpeek.html`), điểm cuối trang chỉ có thanh điều hướng chuyển bài (`FOOTER NAV`), hoàn toàn thiếu vắng điểm chạm liên hệ (CTA) tại chỗ. Khách muốn liên hệ buộc phải cuộn ngược toàn bộ trang lên header hoặc bấm về trang chủ. Đồng thời, nút copy email ở chân trang chủ thiếu phản hồi thị giác tương tác cuốn hút để kích thích hành vi bấm.
+* **Các nâng cấp kỹ thuật & tương tác chính:**
+  * **Động cơ Slot-Machine Rolling Text (`assets/js/interactive-fx.js`):**
+    * Lấy cảm hứng từ micro-interaction trục quay cơ học của ToyFight, xây dựng cơ chế cuộn chữ 3 tầng hỗ trợ tăng tốc phần cứng (`transform: translate3d`, `will-change: transform`, đường cong gia tốc lò xo `cubic-bezier(0.16, 1, 0.3, 1)`).
+    * Hỗ trợ 2 chế độ:
+      * **2 tầng (Hover reveal):** Hiển thị nhãn mặc định (`slot-line-default`), khi hover cuộn trượt lên để lộ email/action mới (`slot-line-hover`).
+      * **3 tầng (Action + Copy Success):** Mặc định (`slot-line-default`) → Hover (`slot-line-hover`) → Khi click sao chép kích hoạt `.is-copied` để trượt tiếp lên tầng thành công (`slot-line-success`). Tự động hoàn trả sau 2.8s.
+    * Tôn trọng triệt để cờ trợ năng `@media (prefers-reduced-motion: reduce)` (tắt chuyển động cuộn, chuyển sang chuyển đổi tức thì).
+  * **Cơ chế sao chép & Floating Toast Feedback toàn cục (`window.copyEmail`):**
+    * Sao chép địa chỉ `mr.tru.designer@gmail.com` vào clipboard qua `navigator.clipboard.writeText` (có fallback `document.execCommand`).
+    * Bắn sự kiện GA4 tracking `copy_email` (`gtag('event', 'copy_email', { method: 'button_click', ... })`).
+    * Tự động biến đổi icon Lucide từ `copy` sang `check` có animation xoay nhẹ.
+    * Hiển thị thanh thông báo nổi (floating toast pill `.tru-copy-toast`) ở đáy màn hình với hiệu ứng trượt lò xo: `✓ Đã sao chép mr.tru.designer@gmail.com vào clipboard` (tự động mờ dần và biến mất sau 2.4s).
+  * **Nâng cấp nút liên hệ Trang Chủ (`index.html`):**
+    * **Header:** Nút "Liên hệ" desktop (`hidden sm:flex`) tích hợp `.slot-roller`: hover mượt mà lộ `mr.tru.designer@gmail.com ↗`. Đồng bộ chuẩn breakpoint `sm:flex` tương thích toàn bộ trang con.
+    * **Footer:** Nút sao chép chân trang nâng cấp thành `.footer-email-btn.slot-roll-btn` 3 tầng cuộn (`[ SAO CHÉP EMAIL ]` → `[ MR.TRU.DESIGNER@GMAIL.COM ↗ ]` → `[ ✓ ĐÃ SAO CHÉP EMAIL! ]`). Hỗ trợ click-to-copy trực tiếp cả khi bấm vào chuỗi email văn bản `#email-text`.
+    * Cập nhật từ điển song ngữ: thêm `btn-copied-email` cho cả VI (`✓ Đã sao chép email!`) và EN (`✓ Copied to clipboard!`).
+  * **Bổ sung Banner Liên hệ Editorial cuối 4 Case Study (`iq-myth.html`, `yen.html`, `momo.html`, `shortpeek.html`):**
+    * Bố trí ngay trước `<!-- FOOTER NAV -->` tại điểm chạm kết bài của cả 4 case study.
+    * Thiết kế dạng banner tối giản tương phản cao, typography đậm chất editorial:
+      * Tag: `[ HỢP TÁC & TRAO ĐỔI // GET IN TOUCH ]`
+      * Tiêu đề: `BẠN CẦN PRODUCT DESIGNER CHO DỰ ÁN?` / `LOOKING FOR A PRODUCT DESIGNER?`
+      * Mô tả: Lời mời hợp tác rõ ràng cho các cơ hội Full-time, Remote hoặc Freelance UI/UX Product Design.
+      * Cụm nút kép: 1 nút Slot-Machine Copy Email (`.slot-roll-btn`) tích hợp toast + 1 nút secondary `mailto:mr.tru.designer@gmail.com` (`GỬI THƯ ↗` / `SEND EMAIL ↗`).
+    * Đồng bộ đầy đủ 6 khóa từ điển song ngữ VI/EN (`cs-contact-tag`, `cs-contact-title`, `cs-contact-desc`, `btn-copy-email`, `btn-copied-email`, `btn-send-mail`) trên toàn bộ 4 tệp case study.
+* **Kiểm thử thực tế & Đảm bảo chất lượng:**
+  * Cú pháp JavaScript qua kiểm tra `node --check assets/js/interactive-fx.js` đạt 0 lỗi.
+  * Kiểm thử giao diện và hành vi thực tế qua Browser subagent:
+    * Hover desktop kích hoạt cuộn chữ mượt mà, không giật khung hình.
+    * Click sao chép kích hoạt class `.is-copied`, chữ cuộn chuẩn xác lên tầng `✓ ĐÃ SAO CHÉP EMAIL!`, icon chuyển thành `check` và toast nổi xuất hiện chuẩn ở đáy màn hình.
+    * Banner liên hệ trên cả 4 case study hiển thị thoáng đãng, sắc nét, đúng cấu trúc phân tầng và chuyển đổi theme (`Light / Dark / Pink`) mượt mà.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, chuẩn bị commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai phiên bản tối ưu chuyển đổi lên `https://mrtrudesigner.vercel.app`.

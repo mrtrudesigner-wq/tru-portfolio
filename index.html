@@ -410,9 +410,12 @@
           <span id="mobile-theme-text" class="font-bold">LGT</span>
         </button>
 
-        <a href="#contact" onclick="event.preventDefault(); scrollToAnchor('#contact')" class="hidden md:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn whitespace-nowrap shrink-0">
-          <span data-i18n="btn-contact">Liên hệ</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        <a href="#contact" onclick="event.preventDefault(); scrollToAnchor('#contact')" class="hidden sm:flex font-mono text-xs uppercase tracking-mono px-4 sm:px-5 py-2 sm:py-2.5 rounded hairline-all bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 transition-all font-semibold items-center gap-2 magnetic-btn whitespace-nowrap shrink-0 group overflow-hidden">
+          <span class="slot-roller">
+            <span class="slot-line slot-line-default" data-i18n="btn-contact">Liên hệ</span>
+            <span class="slot-line slot-line-hover font-mono font-bold text-[var(--accent-display)]">mr.tru.designer@gmail.com ↗</span>
+          </span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"></i>
         </a>
 
         <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
@@ -1095,20 +1098,26 @@
         <div class="lg:col-span-6 lg:pl-12 lg:border-l lg:border-white/15 flex flex-col justify-between">
           <dl class="divide-y divide-white/15 border-t border-b border-white/15">
             <!-- Email -->
-            <div class="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <dt class="font-mono text-[11px] uppercase tracking-mono text-neutral-400 mb-1" data-i18n="contact-email-lbl">
                   [ EMAIL LIÊN HỆ ]
                 </dt>
                 <dd>
-                  <a href="mailto:mr.tru.designer@gmail.com" id="email-text" class="text-lg sm:text-xl font-bold font-mono break-all text-[#F5F5F0] hover:text-[#C4FF00] underline underline-offset-4 transition-colors">
+                  <a href="mailto:mr.tru.designer@gmail.com" id="email-text" onclick="if(window.copyEmail){window.copyEmail(document.querySelector('.footer-email-btn'));}" class="text-lg sm:text-xl font-bold font-mono break-all text-[#F5F5F0] hover:text-[#C4FF00] underline underline-offset-4 transition-colors" title="Bấm để sao chép email">
                     mr.tru.designer@gmail.com
                   </a>
                 </dd>
               </div>
-              <button onclick="copyEmail()" class="self-start sm:self-center px-4 py-2 rounded-lg border border-white/25 hover:bg-[#F5F5F0] hover:text-[#141416] transition-colors font-mono text-[11px] uppercase tracking-mono font-bold flex items-center gap-2 cursor-pointer shrink-0">
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+              <button onclick="if(window.copyEmail){window.copyEmail(this);}else{copyEmail();}" class="footer-email-btn slot-roll-btn group self-start sm:self-center px-5 py-2.5 rounded-full border border-white/25 hover:border-[#C4FF00] hover:bg-[#C4FF00] hover:text-[#141416] transition-all font-mono text-xs uppercase tracking-mono font-bold flex items-center gap-2.5 cursor-pointer shrink-0">
+                <span class="slot-icon w-3.5 h-3.5 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </span>
+                <span class="slot-roller">
+                  <span class="slot-line slot-line-default" id="copy-btn-text" data-i18n="btn-copy-email">Sao chép địa chỉ email</span>
+                  <span class="slot-line slot-line-hover font-mono text-[#C4FF00] group-hover:text-inherit">mr.tru.designer@gmail.com ↗</span>
+                  <span class="slot-line slot-line-success font-mono font-bold text-[#34D399]" data-i18n="btn-copied-email">✓ Đã sao chép email!</span>
+                </span>
               </button>
             </div>
 
@@ -1650,6 +1659,7 @@
         'footer-h2': 'MỘT BUỔI TRÀ ĐÁ.',
         'footer-desc': "Bạn đang xây dựng sản phẩm và cần Product Designer? Mình có thể bắt đầu bằng một cuộc trò chuyện.",
         'btn-copy-email': 'Sao chép địa chỉ email',
+        'btn-copied-email': '✓ Đã sao chép email!',
         'btn-call': 'Gọi điện trực tiếp',
         'location-sub': 'Hỗ trợ làm việc On-site hoặc Remote',
         'btn-top': 'VỀ ĐẦU TRANG'
@@ -1712,6 +1722,7 @@
         'footer-h2': 'A CUP OF "TRÀ ĐÁ".',
         'footer-desc': "Building a product and looking for a Product Designer? Let’s start with a conversation.",
         'btn-copy-email': 'Copy Email Address',
+        'btn-copied-email': '✓ Copied to clipboard!',
         'btn-call': 'Direct Phone Call',
         'location-sub': 'Available for On-site (Hanoi) or Remote',
         'btn-top': 'BACK TO TOP'
@@ -1786,7 +1797,11 @@
     }
 
     // 10. Copy Email
-    function copyEmail() {
+    function copyEmail(triggerEl) {
+      if (window.copyEmail && window.copyEmail !== copyEmail) {
+        window.copyEmail(triggerEl || document.querySelector('.footer-email-btn'));
+        return;
+      }
       const email = 'mr.tru.designer@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
         if (typeof gtag === 'function') {
@@ -1797,12 +1812,16 @@
         }
         const text = document.getElementById('copy-btn-text');
         const lang = localStorage.getItem('tru_lang') || 'vi';
-        text.textContent = lang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';
-        text.style.color = '#34D399';
+        if (text) {
+          text.textContent = lang === 'en' ? '✓ Copied to clipboard!' : '✓ Đã sao chép email!';
+          text.style.color = '#34D399';
+        }
         setTimeout(() => {
           const activeLang = localStorage.getItem('tru_lang') || 'vi';
-          text.textContent = translations[activeLang]['btn-copy-email'];
-          text.style.color = '';
+          if (text) {
+            text.textContent = translations[activeLang]['btn-copy-email'];
+            text.style.color = '';
+          }
         }, 2500);
       });
     }
