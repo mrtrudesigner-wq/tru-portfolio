@@ -703,3 +703,28 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Khi quét chuột qua tiêu đề `"DESIGN WITHOUT"`: dải ruy-băng đen liền mạch đảo nét chữ `"W"` thành màu trắng âm bản rõ ràng, sắc sảo.
     * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/2a8b7c1d-c139-45a8-95c4-ae601ad1e282/final_step_12.png` và `step_4_shot_1_stationary_cursor.png`.
 * **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
+
+---
+
+### 27. CỐ ĐỊNH KÍCH THƯỚC CON TRỎ ÂM BẢN VÀ HOÀN TẤT ĐỒNG BỘ GIAO DIỆN — 25/11/2026
+* **Yêu cầu tinh chỉnh:**
+  1. Khi hover chuột vào chữ hoặc các thành phần trang web, giữ nguyên kích thước con trỏ bình thường (`24px`), không phóng to (`hoverMult: 1.6`).
+  2. Rà soát và giải quyết trọn vẹn 3 ảnh đối chiếu của người dùng:
+     * *Ảnh 1:* Đồng bộ bán kính góc bo (`border-radius`) cụm nút chân trang.
+     * *Ảnh 2:* Vệt di chuyển âm bản tự nhiên uốn lượn theo chuột, đảo màu nét chữ từ đen sang trắng sắc nét.
+     * *Ảnh 3:* Khắc phục triệt để lỗi 22 vòng tròn đồng tâm (hiệu ứng moiré/dartboard) khi dừng chuột.
+* **Giải pháp kỹ thuật chi tiết:**
+  * **Loại bỏ hệ số mở rộng kích thước hover:**
+    * Trong `assets/js/interactive-fx.js`: Gỡ bỏ danh sách `HOVER_TARGETS` và cờ `isHovering`.
+    * Cố định tỷ lệ `multiplier = isClicking ? 1.15 : 1.0;` (chỉ có phản hồi nhấp chuột nhẹ 1.15x khi click, không phình to khi lướt qua văn bản).
+    * Chuẩn hóa kích thước hạt đầu về `24px` (`curX - 12px`, `curY - 12px`) và vuốt nhỏ dần đều theo 22 phân đoạn vật lý (`scale: 1.0` xuống `0.045`).
+  * **Tổng hợp kết quả 3 vấn đề đối chiếu:**
+    1. *Ảnh 1 (Radius):* Nút sao chép email đã đồng bộ `rounded-lg` (8px), kích thước `px-4 py-2`, font `text-[11px]`, khớp 100% với nút "Gọi điện trực tiếp" và "RESUME PDF".
+    2. *Ảnh 2 (Mẫu vệt âm bản):* Dải 22 hạt uốn lượn mềm mại, khi lướt qua các ký tự chữ đen sẽ đảo ngược màu thành chữ trắng tinh khôi trên dải đen mà không cần dùng thêm lớp DOM giả.
+    3. *Ảnh 3 (Moiré vòng đồng tâm):* Nhờ container cha mang `isolation: isolate; mix-blend-mode: difference;` và các hạt mang màu trắng `#ffffff` với `mix-blend-mode: normal`, các hạt khi đứng yên hợp nhất thành 1 hình tròn đen đặc duy nhất, tuyệt đối không còn vân vòng tròn bia bắn.
+* **Kiểm thử trực quan qua Browser subagent:**
+  * Browser subagent đã kiểm tra thao tác lia chuột qua các khối chữ `"DESIGN WITHOUT"`, đoạn trích dẫn `"sản phẩm số..."`:
+    * Con trỏ giữ nguyên kích thước `24px` cố định, chuyển động mượt mà ở 60fps.
+    * Nét chữ đảo màu âm bản trắng sáng chuẩn xác.
+    * Đã lưu ảnh kiểm chứng tại: `browser_evidence/5d46a6fc-e65c-4989-b276-4cf540bd0382/step_12_shot_1_trail_sweep_design.png` và `step_12_shot_2_trail_sweep_paragraph.png`.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel cập nhật trực tiếp.

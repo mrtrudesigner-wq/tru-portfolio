@@ -413,8 +413,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         background-color: #ffffff;
         pointer-events: none;
@@ -471,7 +471,6 @@
     const coords = { x: -100, y: -100 };
     let initialized = false;
     let isVisible = false;
-    let isHovering = false;
     let isClicking = false;
     let rafId = null;
 
@@ -489,15 +488,6 @@
       }
     };
 
-    // Elements that expand the 22-circle inverting ribbon
-    const HOVER_TARGETS = [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'a', 'button', 'input', 'textarea', 'select', 'label',
-      'li', 'dt', 'dd', 'blockquote', 'strong', 'em', 'b', 'i', 'th', 'td',
-      '.case-row', '.case-filter-btn', '.surface-card', '.group', '[data-cursor-vi]', '[data-cursor-en]',
-      'img', 'video', 'svg', 'figure', '[role="button"]', '[onclick]'
-    ].join(', ');
-
     window.addEventListener(
       'mousemove',
       (e) => {
@@ -513,9 +503,6 @@
         }
 
         showContainer();
-
-        const match = e.target && e.target.closest && e.target.closest(HOVER_TARGETS);
-        isHovering = Boolean(match);
 
         if (!rafId) {
           rafId = requestAnimationFrame(animateTrail);
@@ -552,17 +539,16 @@
       let curY = coords.y;
       let maxDelta = 0;
 
-      const hoverMult = isHovering ? 1.6 : 1.0;
-      const clickMult = isClicking ? 1.25 : 1.0;
-      const multiplier = hoverMult * clickMult;
+      // Keep constant natural size without expanding on hover; subtle feedback on click
+      const multiplier = isClicking ? 1.15 : 1.0;
 
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
         const scaleBase = (circles.length - i) / circles.length;
         const scale = scaleBase * multiplier;
 
-        // Base width: 26px, radius 13px
-        circle.el.style.transform = `translate3d(${curX - 13}px, ${curY - 13}px, 0) scale(${scale.toFixed(3)})`;
+        // Base width: 24px, radius 12px
+        circle.el.style.transform = `translate3d(${curX - 12}px, ${curY - 12}px, 0) scale(${scale.toFixed(3)})`;
 
         const dx = curX - circle.x;
         const dy = curY - circle.y;
