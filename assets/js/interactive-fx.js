@@ -22,11 +22,11 @@
   const getLang = () => (localStorage.getItem('tru_lang') === 'en' ? 'en' : 'vi');
   const getTheme = () => document.documentElement.getAttribute('data-theme') || 'light';
 
-  // Proactively hide native OS cursor on fine-pointer devices when Black Fire Trail is enabled
+  // Proactively hide native OS cursor on fine-pointer devices when custom cursor is enabled
   if (hasFinePointer() && !prefersReducedMotion()) {
-    injectFireCursorStyles();
+    injectInversionCursorStyles();
     if (document.documentElement) {
-      document.documentElement.classList.add('has-fire-cursor');
+      document.documentElement.classList.add('has-custom-cursor', 'has-fire-cursor');
     }
   }
 
@@ -368,16 +368,27 @@
   /* ==========================================================================
    * 3. SATISFYING BLACK FIRE CURSOR TRAIL ENGINE (Code Morphism / Zain Zafar)
    * ========================================================================== */
-  function injectFireCursorStyles() {
-    if (document.getElementById('tru-fire-cursor-styles')) return;
+  /* ==========================================================================
+   * 3. MINIMALIST BLACK INVERTING CURSOR (MÀU ÂM BẢN / DIFFERENCE BLEND LENS)
+   * ========================================================================== */
+  function injectInversionCursorStyles() {
+    if (document.getElementById('tru-inversion-cursor-styles')) return;
     const style = document.createElement('style');
-    style.id = 'tru-fire-cursor-styles';
+    style.id = 'tru-inversion-cursor-styles';
     style.textContent = `
       @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+        html.has-custom-cursor,
+        html.has-custom-cursor *,
+        html.has-custom-cursor *::before,
+        html.has-custom-cursor *::after,
         html.has-fire-cursor,
         html.has-fire-cursor *,
         html.has-fire-cursor *::before,
         html.has-fire-cursor *::after,
+        body.has-custom-cursor,
+        body.has-custom-cursor *,
+        body.has-custom-cursor *::before,
+        body.has-custom-cursor *::after,
         body.has-fire-cursor,
         body.has-fire-cursor *,
         body.has-fire-cursor *::before,
@@ -385,151 +396,153 @@
           cursor: none !important;
         }
       }
+
+      .tru-inversion-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        z-index: 100000;
+        opacity: 0;
+        will-change: transform, opacity;
+        transform: translate3d(-100px, -100px, 0);
+      }
     `;
     (document.head || document.documentElement).appendChild(style);
   }
+  const injectFireCursorStyles = injectInversionCursorStyles;
+  const initBlackFireCursorTrail = initInversionCursor;
 
-  function initBlackFireCursorTrail() {
+  function initInversionCursor() {
     if (!hasFinePointer() || prefersReducedMotion()) return;
 
-    injectFireCursorStyles();
-    if (document.documentElement) document.documentElement.classList.add('has-fire-cursor');
-    if (document.body) document.body.classList.add('has-fire-cursor');
-
-    const TOTAL_CIRCLES = 22;
-
-    // Iconic Black Fire color spectrum from Zain Zafar (Code Morphism):
-    // Warm glowing fire embers fading smoothly into smoky obsidian black
-    const FIRE_COLORS = [
-      '#ffb56b', '#fdaf69', '#f89d63', '#f59761', '#ef865e',
-      '#ec805d', '#e36e5c', '#df685c', '#d5585c', '#d1525c',
-      '#c5415d', '#c03b5d', '#b22c5e', '#ac265e', '#9c155f',
-      '#950f5f', '#830060', '#7c0060', '#680060', '#60005f',
-      '#2a0026', '#120010'
-    ];
-
-    const container = document.createElement('div');
-    container.id = 'tru-fire-cursor-container';
-    container.setAttribute('aria-hidden', 'true');
-    container.style.cssText =
-      'position:fixed;inset:0;pointer-events:none;z-index:100000;opacity:0;transition:opacity 0.25s ease;overflow:hidden;';
-    document.body.appendChild(container);
-
-    const circles = [];
-    for (let i = 0; i < TOTAL_CIRCLES; i++) {
-      const circle = document.createElement('div');
-      circle.className = 'tru-trail-circle';
-      circle.style.cssText =
-        'position:fixed;top:0;left:0;width:24px;height:24px;border-radius:50%;pointer-events:none;will-change:transform;transform:translate3d(-100px,-100px,0) scale(0);';
-      circle.style.backgroundColor = FIRE_COLORS[i % FIRE_COLORS.length];
-      if (i < 4) {
-        circle.style.boxShadow = `0 0 ${8 - i * 1.5}px rgba(255, 181, 107, ${0.45 - i * 0.08})`;
-      }
-      container.appendChild(circle);
-      circles.push({
-        el: circle,
-        x: -100,
-        y: -100
-      });
+    injectInversionCursorStyles();
+    if (document.documentElement) {
+      document.documentElement.classList.add('has-custom-cursor', 'has-fire-cursor');
+    }
+    if (document.body) {
+      document.body.classList.add('has-custom-cursor', 'has-fire-cursor');
     }
 
-    const coords = { x: -100, y: -100 };
-    let initialized = false;
-    let isClicking = false;
+    // Clean up any legacy fire cursor container
+    const oldFire = document.getElementById('tru-fire-cursor-container');
+    if (oldFire) oldFire.remove();
+
+    let cursor = document.getElementById('tru-inversion-cursor');
+    if (!cursor) {
+      cursor = document.createElement('div');
+      cursor.id = 'tru-inversion-cursor';
+      cursor.className = 'tru-inversion-cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(cursor);
+    }
+
+    const useGsap = typeof gsap !== 'undefined';
+    if (useGsap) {
+      gsap.set(cursor, { xPercent: -50, yPercent: -50, scale: 1 });
+    } else {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+
     let isVisible = false;
-    let rafId = null;
+    let isHovering = false;
+    let isClicking = false;
+    let currentScale = 1;
 
-    const showContainer = () => {
-      if (!isVisible) {
-        isVisible = true;
-        container.style.opacity = '1';
+    const setX = useGsap ? gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power2.out' }) : null;
+    const setY = useGsap ? gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power2.out' }) : null;
+
+    const updateScale = () => {
+      let target = isHovering ? 3.6 : 1.0;
+      if (isClicking) target *= 0.85;
+      currentScale = target;
+
+      if (useGsap) {
+        gsap.to(cursor, {
+          scale: target,
+          duration: isHovering ? 0.32 : 0.28,
+          ease: isHovering ? 'power3.out' : 'power2.out',
+          overwrite: 'auto'
+        });
+      } else {
+        cursor.style.transform = `translate(-50%, -50%) scale(${target})`;
       }
     };
 
-    const hideContainer = () => {
-      if (isVisible) {
-        isVisible = false;
-        container.style.opacity = '0';
-      }
-    };
+    // Text & interactive elements that trigger the expanded negative lens
+    const HOVER_TARGETS = [
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'p', 'a', 'button', 'input', 'textarea', 'select', 'label',
+      'li', 'dt', 'dd', 'blockquote', 'strong', 'em', 'b', 'i', 'th', 'td',
+      '.case-row', '.case-filter-btn', '.surface-card', '.group', '[data-cursor-vi]', '[data-cursor-en]',
+      'img', 'video', 'svg', 'figure', '[role="button"]', '[onclick]'
+    ].join(', ');
 
     window.addEventListener(
       'mousemove',
       (e) => {
-        coords.x = e.clientX;
-        coords.y = e.clientY;
-
-        if (!initialized) {
-          initialized = true;
-          circles.forEach((c) => {
-            c.x = e.clientX;
-            c.y = e.clientY;
-          });
+        if (!isVisible) {
+          isVisible = true;
+          if (useGsap) {
+            gsap.to(cursor, { opacity: 1, duration: 0.2, overwrite: 'auto' });
+          } else {
+            cursor.style.opacity = '1';
+          }
         }
 
-        showContainer();
+        if (setX && setY) {
+          setX(e.clientX);
+          setY(e.clientY);
+        } else {
+          cursor.style.left = `${e.clientX}px`;
+          cursor.style.top = `${e.clientY}px`;
+        }
 
-        if (!rafId) {
-          rafId = requestAnimationFrame(animateTrail);
+        // Detect whether mouse is over text, buttons, links, or visual elements
+        const match = e.target && e.target.closest && e.target.closest(HOVER_TARGETS);
+        if (match && !isHovering) {
+          isHovering = true;
+          updateScale();
+        } else if (!match && isHovering) {
+          isHovering = false;
+          updateScale();
         }
       },
       { passive: true }
     );
 
     document.addEventListener('mouseleave', () => {
-      hideContainer();
+      isVisible = false;
+      if (useGsap) {
+        gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.25, overwrite: 'auto' });
+      } else {
+        cursor.style.opacity = '0';
+      }
     });
 
-    document.addEventListener('mouseenter', (e) => {
-      coords.x = e.clientX;
-      coords.y = e.clientY;
-      showContainer();
-      if (!rafId) {
-        rafId = requestAnimationFrame(animateTrail);
+    document.addEventListener('mouseenter', () => {
+      isVisible = true;
+      if (useGsap) {
+        gsap.to(cursor, { opacity: 1, scale: currentScale, duration: 0.25, overwrite: 'auto' });
+      } else {
+        cursor.style.opacity = '1';
       }
     });
 
     window.addEventListener('mousedown', () => {
       isClicking = true;
-      if (!rafId) rafId = requestAnimationFrame(animateTrail);
+      updateScale();
     });
 
     window.addEventListener('mouseup', () => {
       isClicking = false;
-      if (!rafId) rafId = requestAnimationFrame(animateTrail);
+      updateScale();
     });
-
-    function animateTrail() {
-      let curX = coords.x;
-      let curY = coords.y;
-      let maxDelta = 0;
-
-      for (let i = 0; i < circles.length; i++) {
-        const circle = circles[i];
-        const scaleBase = (circles.length - i) / circles.length;
-        const scale = isClicking ? scaleBase * 1.22 : scaleBase;
-
-        circle.el.style.transform = `translate3d(${curX - 12}px, ${curY - 12}px, 0) scale(${scale.toFixed(3)})`;
-
-        const dx = curX - circle.x;
-        const dy = curY - circle.y;
-        const dist = Math.abs(dx) + Math.abs(dy);
-        if (dist > maxDelta) maxDelta = dist;
-
-        circle.x = curX;
-        circle.y = curY;
-
-        const nextCircle = circles[i + 1] || circles[0];
-        curX += (nextCircle.x - curX) * 0.32;
-        curY += (nextCircle.y - curY) * 0.32;
-      }
-
-      if (maxDelta < 0.15 && isVisible) {
-        rafId = null;
-      } else {
-        rafId = requestAnimationFrame(animateTrail);
-      }
-    }
   }
 
   /* ==========================================================================
@@ -574,9 +587,10 @@
       'mousemove',
       (e) => {
         const pillWidth = pill.offsetWidth || 120;
-        const flipLeft = e.clientX + 18 + pillWidth > window.innerWidth - 12;
-        const tx = flipLeft ? e.clientX - pillWidth - 14 : e.clientX + 14;
-        const ty = Math.max(12, e.clientY - 30);
+        const offsetDist = 38;
+        const flipLeft = e.clientX + offsetDist + pillWidth > window.innerWidth - 12;
+        const tx = flipLeft ? e.clientX - pillWidth - offsetDist : e.clientX + offsetDist;
+        const ty = Math.max(12, e.clientY - 32);
 
         if (useGsap) {
           setPillX(tx);
@@ -1332,7 +1346,7 @@
     initSlotMachineRollers();
     initUniversalMenuAndTransitions();
     initToyFightCurtain();
-    initBlackFireCursorTrail();
+    initInversionCursor();
     initCursorPillAndHovers();
   };
 
