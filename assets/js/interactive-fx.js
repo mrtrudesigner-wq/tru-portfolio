@@ -405,6 +405,8 @@
         overflow: hidden;
         opacity: 0;
         transition: opacity 0.25s ease;
+        isolation: isolate;
+        mix-blend-mode: difference;
       }
 
       .tru-trail-circle {
@@ -415,7 +417,6 @@
         height: 26px;
         border-radius: 50%;
         background-color: #ffffff;
-        mix-blend-mode: difference;
         pointer-events: none;
         will-change: transform;
         transform: translate3d(-100px, -100px, 0) scale(0);

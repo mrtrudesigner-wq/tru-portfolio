@@ -651,4 +651,55 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Rê chuột theo đường cong qua tiêu đề Hero `h1` `"DESIGN WITHOUT"`: chuỗi 22 hạt uốn lượn mượt mà, đảo nét chữ đen thành trắng âm bản rõ rệt.
     * Rê chuột xuống Dark Footer: chuỗi hạt phát sáng trắng trên nền tối, đảo chữ heading `"MỘT BUỔI"` và nút `"RESUME PDF"` qua `mix-blend-mode: difference`.
     * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/22b0e8b2-7f4f-4dd6-af11-23f284d74efa/final_step_14.png` và `step_4_shot_1.png`.
-* **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
+
+---
+
+## 26. KHẮC PHỤC TRIỆT ĐỂ LỖI VÂN ĐỒNG TÂM MOIRÉ BẰNG CSS ISOLATION COMPOSITING — 25/11/2026
+
+* **Bối cảnh & Yêu cầu:**
+  * Người dùng gửi ảnh phản ánh: *"sao giờ lại thành như này rồi"* kèm ảnh chụp con trỏ khi dừng lại trên chữ `"VIỆC"` bị co lại thành các vòng tròn đồng tâm so le đen - trắng dày đặc như bia bắn / ảo ảnh quang học moiré.
+* **Nguyên nhân gốc rễ (Root Cause):**
+  * Khi con trỏ đứng yên, toàn bộ `22` hạt tròn hội tụ về cùng một tọa độ `(x, y)` với kích thước bán kính giảm dần từ hạt 0 đến hạt 21.
+  * Nếu đặt `mix-blend-mode: difference` trực tiếp trên từng hạt `.tru-trail-circle`, mỗi hạt nằm đè lên hạt trước đó sẽ đảo ngược màu lại một lần (Hạt 0: trắng $\rightarrow$ đen; Hạt 1 đè lên: đen $\rightarrow$ trắng; Hạt 2 đè lên: trắng $\rightarrow$ đen...). Kết quả tạo ra 22 vòng tròn đồng tâm đen - trắng xen kẽ.
+* **Giải pháp kiến trúc CSS Isolation:**
+  * **Chuyển `mix-blend-mode: difference` lên Container cha `#tru-trail-cursor-container` kết hợp `isolation: isolate;`:**
+    ```css
+    #tru-trail-cursor-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100000;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      isolation: isolate;
+      mix-blend-mode: difference;
+    }
+    .tru-trail-circle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      pointer-events: none;
+      will-change: transform;
+      transform: translate3d(-100px, -100px, 0) scale(0);
+    }
+    ```
+  * **Cơ chế hoạt động:**
+    1. Bên trong container bị cô lập (`isolation: isolate`), toàn bộ 22 hạt đều mang màu trắng thuần khiết `#ffffff` và hòa trộn bình thường (`mix-blend-mode: normal`).
+    2. Khi các hạt đè lên nhau (dù lúc dừng lại hay di chuyển), chúng tự động **hợp nhất thành một khối trắng đặc liền mạch duy nhất (Single Unified Silhouette)** — triệt tiêu 100% các vòng vân đồng tâm.
+    3. Sau đó, toàn bộ khối hình trắng hợp nhất này mới được hòa trộn một lần duy nhất với trang web thông qua `mix-blend-mode: difference` của container.
+    4. *Kết quả:*
+       * Khi đứng yên: Hiện thị là **1 vòng tròn đen đặc duy nhất (Solid Black Circle)**, không có bất kỳ vân xoắn hay bia bắn nào.
+       * Khi di chuyển: Tạo thành **dải ruy-băng đen tuyền mượt mà uốn lượn**, không hề có sọc vằn moiré.
+       * Khi lướt qua chữ: Nét chữ đen bên dưới được đảo ngược thành **màu trắng sáng rực (âm bản)** trên nền dải đen liền khối.
+* **Kiểm thử trực quan qua Browser subagent:**
+  * Đã kiểm chứng trực tiếp trên máy chủ cục bộ:
+    * Khi dừng chuột tại tọa độ `(300, 300)`: con trỏ hội tụ thành một hình tròn đen đặc duy nhất, không còn dấu vết của vòng đồng tâm.
+    * Khi quét chuột qua tiêu đề `"DESIGN WITHOUT"`: dải ruy-băng đen liền mạch đảo nét chữ `"W"` thành màu trắng âm bản rõ ràng, sắc sảo.
+    * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/2a8b7c1d-c139-45a8-95c4-ae601ad1e282/final_step_12.png` và `step_4_shot_1_stationary_cursor.png`.
+* **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
