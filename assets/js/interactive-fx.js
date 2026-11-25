@@ -369,7 +369,7 @@
    * 3. SATISFYING BLACK FIRE CURSOR TRAIL ENGINE (Code Morphism / Zain Zafar)
    * ========================================================================== */
   /* ==========================================================================
-   * 3. MINIMALIST BLACK INVERTING CURSOR (MÀU ÂM BẢN / DIFFERENCE BLEND LENS)
+   * 3. 22-PARTICLE INVERTING NEGATIVE TRAIL (HIỆU ỨNG 22 HẠT ĐẢO MÀU ÂM BẢN)
    * ========================================================================== */
   function injectInversionCursorStyles() {
     if (document.getElementById('tru-inversion-cursor-styles')) return;
@@ -397,20 +397,28 @@
         }
       }
 
-      .tru-inversion-cursor {
+      #tru-trail-cursor-container {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100000;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .tru-trail-circle {
         position: fixed;
         top: 0;
         left: 0;
-        width: 18px;
-        height: 18px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
         background-color: #ffffff;
         mix-blend-mode: difference;
         pointer-events: none;
-        z-index: 100000;
-        opacity: 0;
-        will-change: transform, opacity;
-        transform: translate3d(-100px, -100px, 0);
+        will-change: transform;
+        transform: translate3d(-100px, -100px, 0) scale(0);
       }
     `;
     (document.head || document.documentElement).appendChild(style);
@@ -429,52 +437,58 @@
       document.body.classList.add('has-custom-cursor', 'has-fire-cursor');
     }
 
-    // Clean up any legacy fire cursor container
+    // Clean up any old single-cursor element or old fire container
+    const oldSingle = document.getElementById('tru-inversion-cursor');
+    if (oldSingle) oldSingle.remove();
     const oldFire = document.getElementById('tru-fire-cursor-container');
     if (oldFire) oldFire.remove();
 
-    let cursor = document.getElementById('tru-inversion-cursor');
-    if (!cursor) {
-      cursor = document.createElement('div');
-      cursor.id = 'tru-inversion-cursor';
-      cursor.className = 'tru-inversion-cursor';
-      cursor.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(cursor);
-    }
+    const TOTAL_CIRCLES = 22;
 
-    const useGsap = typeof gsap !== 'undefined';
-    if (useGsap) {
-      gsap.set(cursor, { xPercent: -50, yPercent: -50, scale: 1 });
+    let container = document.getElementById('tru-trail-cursor-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'tru-trail-cursor-container';
+      container.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(container);
     } else {
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      container.innerHTML = '';
     }
 
+    const circles = [];
+    for (let i = 0; i < TOTAL_CIRCLES; i++) {
+      const circle = document.createElement('div');
+      circle.className = 'tru-trail-circle';
+      container.appendChild(circle);
+      circles.push({
+        el: circle,
+        x: -100,
+        y: -100
+      });
+    }
+
+    const coords = { x: -100, y: -100 };
+    let initialized = false;
     let isVisible = false;
     let isHovering = false;
     let isClicking = false;
-    let currentScale = 1;
+    let rafId = null;
 
-    const setX = useGsap ? gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power2.out' }) : null;
-    const setY = useGsap ? gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power2.out' }) : null;
-
-    const updateScale = () => {
-      let target = isHovering ? 3.6 : 1.0;
-      if (isClicking) target *= 0.85;
-      currentScale = target;
-
-      if (useGsap) {
-        gsap.to(cursor, {
-          scale: target,
-          duration: isHovering ? 0.32 : 0.28,
-          ease: isHovering ? 'power3.out' : 'power2.out',
-          overwrite: 'auto'
-        });
-      } else {
-        cursor.style.transform = `translate(-50%, -50%) scale(${target})`;
+    const showContainer = () => {
+      if (!isVisible) {
+        isVisible = true;
+        container.style.opacity = '1';
       }
     };
 
-    // Text & interactive elements that trigger the expanded negative lens
+    const hideContainer = () => {
+      if (isVisible) {
+        isVisible = false;
+        container.style.opacity = '0';
+      }
+    };
+
+    // Elements that expand the 22-circle inverting ribbon
     const HOVER_TARGETS = [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'p', 'a', 'button', 'input', 'textarea', 'select', 'label',
@@ -486,63 +500,88 @@
     window.addEventListener(
       'mousemove',
       (e) => {
-        if (!isVisible) {
-          isVisible = true;
-          if (useGsap) {
-            gsap.to(cursor, { opacity: 1, duration: 0.2, overwrite: 'auto' });
-          } else {
-            cursor.style.opacity = '1';
-          }
+        coords.x = e.clientX;
+        coords.y = e.clientY;
+
+        if (!initialized) {
+          initialized = true;
+          circles.forEach((c) => {
+            c.x = e.clientX;
+            c.y = e.clientY;
+          });
         }
 
-        if (setX && setY) {
-          setX(e.clientX);
-          setY(e.clientY);
-        } else {
-          cursor.style.left = `${e.clientX}px`;
-          cursor.style.top = `${e.clientY}px`;
-        }
+        showContainer();
 
-        // Detect whether mouse is over text, buttons, links, or visual elements
         const match = e.target && e.target.closest && e.target.closest(HOVER_TARGETS);
-        if (match && !isHovering) {
-          isHovering = true;
-          updateScale();
-        } else if (!match && isHovering) {
-          isHovering = false;
-          updateScale();
+        isHovering = Boolean(match);
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(animateTrail);
         }
       },
       { passive: true }
     );
 
     document.addEventListener('mouseleave', () => {
-      isVisible = false;
-      if (useGsap) {
-        gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.25, overwrite: 'auto' });
-      } else {
-        cursor.style.opacity = '0';
-      }
+      hideContainer();
     });
 
-    document.addEventListener('mouseenter', () => {
-      isVisible = true;
-      if (useGsap) {
-        gsap.to(cursor, { opacity: 1, scale: currentScale, duration: 0.25, overwrite: 'auto' });
-      } else {
-        cursor.style.opacity = '1';
+    document.addEventListener('mouseenter', (e) => {
+      coords.x = e.clientX;
+      coords.y = e.clientY;
+      showContainer();
+      if (!rafId) {
+        rafId = requestAnimationFrame(animateTrail);
       }
     });
 
     window.addEventListener('mousedown', () => {
       isClicking = true;
-      updateScale();
+      if (!rafId) rafId = requestAnimationFrame(animateTrail);
     });
 
     window.addEventListener('mouseup', () => {
       isClicking = false;
-      updateScale();
+      if (!rafId) rafId = requestAnimationFrame(animateTrail);
     });
+
+    function animateTrail() {
+      let curX = coords.x;
+      let curY = coords.y;
+      let maxDelta = 0;
+
+      const hoverMult = isHovering ? 1.6 : 1.0;
+      const clickMult = isClicking ? 1.25 : 1.0;
+      const multiplier = hoverMult * clickMult;
+
+      for (let i = 0; i < circles.length; i++) {
+        const circle = circles[i];
+        const scaleBase = (circles.length - i) / circles.length;
+        const scale = scaleBase * multiplier;
+
+        // Base width: 26px, radius 13px
+        circle.el.style.transform = `translate3d(${curX - 13}px, ${curY - 13}px, 0) scale(${scale.toFixed(3)})`;
+
+        const dx = curX - circle.x;
+        const dy = curY - circle.y;
+        const dist = Math.abs(dx) + Math.abs(dy);
+        if (dist > maxDelta) maxDelta = dist;
+
+        circle.x = curX;
+        circle.y = curY;
+
+        const nextCircle = circles[i + 1] || circles[0];
+        curX += (nextCircle.x - curX) * 0.32;
+        curY += (nextCircle.y - curY) * 0.32;
+      }
+
+      if (maxDelta < 0.15 && isVisible) {
+        rafId = null;
+      } else {
+        rafId = requestAnimationFrame(animateTrail);
+      }
+    }
   }
 
   /* ==========================================================================

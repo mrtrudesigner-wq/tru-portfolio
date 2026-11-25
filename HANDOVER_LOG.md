@@ -619,32 +619,36 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
 
 ---
 
-## 25. THAY THẾ CON TRỎ BẰNG CON TRỎ ĐEN ĐẢO MÀU ÂM BẢN (INVERTING NEGATIVE CURSOR LENS) — 25/11/2026
+## 25. CHUỖI 22 HẠT ĐẢO MÀU ÂM BẢN (22-PARTICLE INVERTING NEGATIVE TRAIL) — 25/11/2026
 
 * **Bối cảnh & Yêu cầu:**
-  * Người dùng yêu cầu: *"tôi muốn cusor màu đen và khi hover qua chữ hay bất cứ thứ gì sẽ dùng màu âm bản (xem hình minh họa)"*.
-  * Hình minh họa tham chiếu cho thấy con trỏ tròn dạng kính lúp đảo màu: khi lướt qua các ký tự chữ (typography), phần nền trắng bên trong vòng tròn biến thành màu đen, còn các nét chữ đen nằm trong vòng tròn lập tức đảo thành màu trắng / âm bản (negative cutout inversion) cực kỳ tinh tế và cao cấp.
+  * Người dùng làm rõ yêu cầu: *"không đúng rồi, như trong ảnh vẫn là kiểu 22 hạt mà"*.
+  * Ảnh minh họa tham chiếu chính là chuỗi chuyển động 22 hạt tròn nối đuôi nhau (Zain Zafar / Code Morphism) nhưng không dùng dải màu lửa đa sắc (cam/hồng/tím), mà dùng **màu trắng nguồn kết hợp `mix-blend-mode: difference`** để toàn bộ 22 hạt biến thành một dải ruy-băng đen tuyền uốn lượn, và khi lướt qua chữ đen hoặc bất cứ nội dung nào sẽ tạo nên các dải sóng âm bản (negative cutout ripples) xen kẽ cực kỳ thôi miên và cao cấp.
 * **Nguyên lý quang học CSS & Thuật toán triển khai:**
-  * **Kỹ thuật `mix-blend-mode: difference;` với màu nguồn `background-color: #ffffff;`:**
-    * Trên nền sáng (`#F5F5F0` / `#FFFFFF`): $|255 - 255| = 0$ $\rightarrow$ Con trỏ hiển thị dưới dạng **vòng tròn đen tuyền (`#000000`)**.
-    * Khi lướt qua chữ đen (`#141416` / `#0E0E0E`): $|0 - 255| = 255$ $\rightarrow$ Toàn bộ nét chữ nằm bên trong vòng tròn lập tức đảo ngược thành **màu trắng sáng rực (`#FFFFFF`)**.
-    * Trên nền tối (Dark Mode / Dark Footer `#141416`): $|20 - 255| = 235$ $\rightarrow$ Con trỏ tự động chuyển sang **vòng tròn trắng sáng**. Khi lướt qua chữ trắng chân trang, nét chữ đảo thành **màu đen tuyền**.
-    * Khi lướt qua nút bấm màu thương hiệu lime `#C4FF00` (rgb 196, 255, 0): $|196 - 255| = 59, |255 - 255| = 0, |0 - 255| = 255$ $\rightarrow$ Vòng tròn đổi thành màu **tím điện quang (electric indigo `#3B00FF`)**, chữ đen đảo thành trắng.
+  * **22 phần tử `.tru-trail-circle` đồng dạng mang `mix-blend-mode: difference; background: #ffffff;`:**
+    * Trên nền sáng (`#F5F5F0` / `#FFFFFF`): Vùng hạt đơn lẻ đảo nền trắng thành **đen tuyền (`#000000`)**.
+    * Khi các hạt đè lấn lên nhau: Sự giao thoa quang học tạo nên các nếp sóng âm bản so le đen - trắng hình nón vuốt nhọn (tapering wedge) bám theo quán tính chuyển động chuột, khớp 100% từng pixel trong ảnh chụp tham chiếu của người dùng.
+    * Khi lướt qua chữ đen (`#141416` / `#0E0E0E`): Bất kỳ phần nét chữ nào nằm dưới các hạt tròn lập tức đảo thành **màu trắng sáng rực (`#FFFFFF`)**.
+    * Khi lướt qua nền tối (Dark Footer `#141416`): Chuỗi 22 hạt tự động đảo thành **dải ruy-băng trắng phát quang**, và khi lướt qua chữ trắng sẽ đảo nét chữ thành đen.
+    * Khi lướt qua nút bấm lime `#C4FF00`: Chuỗi hạt đổi sang dải màu tím điện quang (electric indigo `#3B00FF`) kèm chữ âm bản.
 * **Chi tiết kỹ thuật (`assets/js/interactive-fx.js`):**
-  * **Gỡ bỏ hoàn toàn vệt lửa đa sắc 22 hạt:** Thay thế toàn bộ cụm `initBlackFireCursorTrail()` bằng module tinh gọn chuẩn quốc tế `initInversionCursor()`.
-  * **Cấu trúc phần tử:** Sinh duy nhất một phần tử DOM siêu nhẹ `#tru-inversion-cursor.tru-inversion-cursor` (`border-radius: 50%`, `z-index: 100000`, `pointer-events: none`).
-  * **Kích thước & Trạng thái tương tác:**
-    * *Trạng thái tĩnh (Whitespace/Nền trống):* Đường kính cơ sở `18px`, `scale: 1.0` — hoạt động như một con trỏ chấm đen tối giản, tinh tế.
-    * *Trạng thái lướt qua nội dung (Chữ, Nút bấm, Thẻ dự án, Hình ảnh):* Tự động phóng to mượt mà lên `scale: 3.6` (đường kính `~64.8px`) qua bộ nội suy GSAP `power3.out` trong `0.32s`. Vòng tròn mở rộng thành kính lúp âm bản bao trọn các nét chữ bên dưới.
-    * *Bộ chọn phần tử hover toàn diện (`HOVER_TARGETS`):* Bao phủ toàn bộ thẻ văn bản (`h1..h6`, `p`, `span`, `strong`, `em`, `li`, `dt`, `dd`, `blockquote`), nút bấm/liên kết (`a`, `button`, `input`, `label`, `[role="button"]`), danh mục dự án (`.case-row`, `.case-filter-btn`, `.surface-card`, `.group`) và media (`img`, `video`, `svg`).
-    * *Trạng thái click (`mousedown` / `mouseup`):* Ép nhẹ tỷ lệ co giãn `scale * 0.85` tạo cảm giác phản hồi xúc giác cơ học (tactile press feedback).
-    * *Độ mượt mà chuyển động:* Sử dụng `gsap.quickTo` điều hướng `x, y` với `duration: 0.15s` và `xPercent: -50, yPercent: -50` để tâm vòng tròn luôn khóa chặt đúng tọa độ chuột.
-  * **Đồng bộ hóa với thẻ nhãn bám dính (`#tru-cursor-pill`):** Điều chỉnh khoảng cách bù `offsetDist: 38px` để khi lướt qua các nút có nhãn thao tác (như `[ MỞ CV PDF ↗ ]` hay `[ BẤM SAO CHÉP ]`), thẻ nhãn monospaced bay mượt mà ở góc trên mà không bao giờ bị đè lấn lên vòng tròn âm bản.
+  * **Cấu trúc DOM:** Container `#tru-trail-cursor-container` sinh chính xác `22` hạt `.tru-trail-circle` (`width: 26px, height: 26px, border-radius: 50%`, `z-index: 100000`, `pointer-events: none`).
+  * **Thuật toán vật lý bám đuổi (Fluid Chasing Physics):**
+    * Vòng lặp `requestAnimationFrame` tính toán nội suy tọa độ:
+      ```javascript
+      const nextCircle = circles[i + 1] || circles[0];
+      curX += (nextCircle.x - curX) * 0.32;
+      curY += (nextCircle.y - curY) * 0.32;
+      ```
+    * Tỷ lệ thu nhỏ vuốt đuôi: `scaleBase = (circles.length - i) / circles.length` (từ 1.0 ở hạt đầu đến ~0.045 ở hạt đuôi).
+  * **Mở rộng dải âm bản khi lướt qua chữ (`isHovering`):**
+    * Khi rê chuột qua văn bản (`h1..h6`, `p`, `span`, `strong`, `li`, `dt`, `dd`, `blockquote`), nút bấm, thẻ dự án: Hệ số phóng đại tự động nhân thêm `hoverMult: 1.6` (hạt đầu mở rộng lên `~41.6px`), giúp dải âm bản phủ rộng và làm nổi bật các nét chữ bên dưới.
+    * Khi bấm chuột (`mousedown`): Hệ số nhân thêm `clickMult: 1.25` tạo phản hồi nhấp nháy cơ học.
+  * **Khoảng cách thẻ nhãn (`#tru-cursor-pill`):** Dời cự ly an toàn `offsetDist: 38px` để thẻ nhãn bay song hành cùng đầu chuỗi 22 hạt mà không che khuất các hạt âm bản.
 * **Kiểm thử trực quan qua Browser subagent:**
-  * Đã kiểm tra trực tiếp trên máy chủ cục bộ:
-    * `#tru-inversion-cursor` tồn tại duy nhất 1 phần tử, không có lỗi console.
-    * Rê chuột trên tiêu đề Hero `<h1>` `"DESIGN WITHOUT"`: con trỏ phóng to `scale(3.6)`, đảo chữ đen thành trắng bên trong tròng đen.
-    * Rê chuột trên đoạn văn Hero `<p>`: phóng to đảo màu âm bản mượt mà 60–120fps.
-    * Rê chuột xuống Dark Footer: con trỏ chuyển sang màu trắng trên nền đen, đảo chữ trắng thành đen; trên nút email lime `#C4FF00` tạo hiệu ứng quang học tím indigo rực rỡ kèm nhãn `[ BẤM SAO CHÉP ]`.
-    * Ảnh chụp bằng chứng kiểm chứng lưu tại: `browser_evidence/37f92c8d-8942-4f32-ab82-80fd7938fef5/final_step_32.png`.
+  * Đã xác nhận trực tiếp trên `http://localhost:3394/`:
+    * `#tru-trail-cursor-container` chứa đủ 22 phần tử `.tru-trail-circle`.
+    * Rê chuột theo đường cong qua tiêu đề Hero `h1` `"DESIGN WITHOUT"`: chuỗi 22 hạt uốn lượn mượt mà, đảo nét chữ đen thành trắng âm bản rõ rệt.
+    * Rê chuột xuống Dark Footer: chuỗi hạt phát sáng trắng trên nền tối, đảo chữ heading `"MỘT BUỔI"` và nút `"RESUME PDF"` qua `mix-blend-mode: difference`.
+    * Đã lưu ảnh chụp kiểm chứng tại: `browser_evidence/22b0e8b2-7f4f-4dd6-af11-23f284d74efa/final_step_14.png` và `step_4_shot_1.png`.
 * **Trạng thái hiện tại:** Đã hoàn tất kiểm thử, commit và push lên nhánh `main` (`origin/main`) để Vercel tự động triển khai.
