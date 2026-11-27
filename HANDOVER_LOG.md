@@ -728,3 +728,22 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
     * Nét chữ đảo màu âm bản trắng sáng chuẩn xác.
     * Đã lưu ảnh kiểm chứng tại: `browser_evidence/5d46a6fc-e65c-4989-b276-4cf540bd0382/step_12_shot_1_trail_sweep_design.png` và `step_12_shot_2_trail_sweep_paragraph.png`.
 * **Trạng thái hiện tại:** Đã hoàn tất đóng gói, commit và push lên nhánh `main` (`origin/main`) để Vercel cập nhật trực tiếp.
+
+---
+
+## 28. CẬP NHẬT DEVICE MOCKUP 2 MÁY CHO SHORTPEEK COVER — 27/11/2026
+* **Bối cảnh & Yêu cầu:**
+  * Thay thế ảnh bìa Shortpeek trước đó (3 màn hình phẳng flat UI trên nền lưới tối) thành ảnh Device Mockup chân thực, chuyên nghiệp.
+  * Thống nhất lựa chọn mẫu Mockup 2 máy đứng trực diện chuẩn iPhone (Titanium Silver / Studio Shadow) trên nền sáng trung tính `#E9E9E7`.
+* **Thực hiện:**
+  * Tiếp nhận file ảnh mockup do người dùng xuất từ template Mẫu 1 (gồm 2 máy: máy trái là màn Home với poster phim, máy phải là màn Mở khóa tập 11 giải quyết bài toán Monetization & VIP cards).
+  * Chuẩn hóa kích thước về tỉ lệ 16:10 (`1280 × 800px`), căn giữa cụm 2 máy cân đối tuyệt đối trên nền studio xám nhạt (`#E9E9E7`) đồng điệu 100% với phong cách Swiss Editorial của toàn bộ portfolio.
+  * Tối ưu nén WebP chất lượng 90% siêu nhẹ (`55.8 KB`), thay thế trực tiếp vào `assets/covers/shortpeek-mobile.webp`.
+  * Ảnh được tự động cập nhật đồng bộ tại 3 vị trí:
+    1. Ngăn kéo tóm tắt nhanh (Quick Summary Drawer) của Shortpeek.
+    2. Khung thẻ bài Mobile Showcase tỉ lệ 16:10 trên điện thoại (`index.html`).
+    3. Cửa sổ nổi xem trước dự án theo con trỏ chuột (`#cursor-preview`) trên Desktop.
+* **Kiểm thử kỹ thuật:**
+  * HTTP 200 tải tệp `assets/covers/shortpeek-mobile.webp` (55.8 KB) trên máy chủ cục bộ.
+  * Kiểm tra hiển thị nền tiệp màu tuyệt đối không có vết ghép (zero seam).
+* **Trạng thái:** Đã cập nhật và đẩy lên nhánh `main` để Vercel tự động triển khai.
