@@ -13,8 +13,8 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHORTPEEK: Thiết Kế Lại Ứng Dụng Xem Phim Ngắn | Case Study · Trứ</title>
-  <meta name="description" content="Case study Shortpeek tại Marchi Lab: audit bản gốc, thiết kế lại hệ sinh thái Mobile App và Desktop Web (1920px), tách luồng mở khóa tập và hoàn thiện hệ thống UI chuẩn bị nộp store.">
+  <title>Shortpeek · Thiết kế luồng xem và mở khóa tập | Trứ</title>
+  <meta name="description" content="Trứ thiết kế lại luồng mở khóa tập theo số dư cho Shortpeek tại Marchi Lab trên iOS, Android và desktop web. Dự án chưa phát hành.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -34,7 +34,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..900&amp;family=JetBrains+Mono:ital,wght@0,300..700;1,400&amp;display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -178,6 +178,122 @@
     body.is-dragging-comparison * {
       -webkit-user-select: none !important;
       user-select: none !important;
+    }
+
+    .shortpeek-title {
+      font-size: clamp(3.1rem, 9vw, 6rem);
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+    .shortpeek-lede {
+      max-width: 55ch;
+      font-size: clamp(1rem, 0.84rem + 0.55vw, 1.375rem);
+      line-height: 1.55;
+    }
+    .shortpeek-byline {
+      display: grid;
+      gap: 0.25rem;
+      border-block-start: 1px solid var(--border-color);
+      padding-block-start: 0.875rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .shortpeek-byline strong {
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+    .shortpeek-chapters {
+      margin-block-start: 1.5rem;
+      border-block: 1px solid var(--border-color);
+    }
+    .shortpeek-chapters ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 1.5rem;
+    }
+    .shortpeek-chapters a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: var(--text-muted);
+      text-underline-offset: 0.25em;
+    }
+    .shortpeek-chapters a:is(:hover, :focus-visible) {
+      text-decoration-color: currentColor;
+      text-decoration-thickness: 2px;
+    }
+    #episode-unlock {
+      margin-block-start: clamp(1.5rem, 4vw, 3rem);
+    }
+    .shortpeek-feature > h2 {
+      margin-block-end: clamp(1.25rem, 3vw, 2.5rem);
+    }
+    .shortpeek-evidence,
+    .shortpeek-home-pair {
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 3rem);
+    }
+    .shortpeek-evidence figure {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+      gap: 0.875rem;
+      min-width: 0;
+      border-block-start: 1px solid var(--border-color);
+      padding-block-start: 0.875rem;
+    }
+    .shortpeek-evidence h3 {
+      font-size: 1.25rem;
+      font-weight: 750;
+    }
+    .shortpeek-evidence figcaption p,
+    .shortpeek-explainer {
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .shortpeek-evidence figcaption p {
+      margin-block-start: 0.25rem;
+      max-width: 42ch;
+    }
+    .shortpeek-phone {
+      border-radius: 0.875rem;
+      background: #17181c;
+      padding: clamp(1rem, 2vw, 2rem) 1rem;
+    }
+    .shortpeek-coin-screen {
+      display: block;
+      width: min(100%, 16rem);
+      height: auto;
+      aspect-ratio: 540 / 1174;
+      margin-inline: auto;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 0.75rem;
+    }
+    .shortpeek-explainer {
+      max-width: 68ch;
+      display: grid;
+      gap: 0.75rem;
+      margin-block-end: 1.5rem;
+      font-size: 1.0625rem;
+    }
+    .shortpeek-home-pair figcaption {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-block-end: 0.75rem;
+    }
+    .shortpeek-home-pair img {
+      width: 100%;
+      height: auto;
+      border-radius: 0.875rem;
+    }
+    @media (min-width: 768px) {
+      .shortpeek-evidence { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .shortpeek-home-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     /* Underline Editorial Workbench Tabs */
@@ -337,66 +453,157 @@
     </div>
   </header>
 
-  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-16 md:py-28 space-y-28 md:space-y-44">
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 pt-6 pb-16 md:pt-12 md:pb-24 space-y-12 md:space-y-20">
 
-    <!-- RESULT-FIRST HERO + BEFORE / AFTER -->
-    <section class="space-y-12 md:space-y-16">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
-        <div class="lg:col-span-8 space-y-6">
-          <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-orange-600 dark:text-[#F97039] inline-flex flex-wrap items-center gap-2 font-bold" data-i18n="hero-tag"><span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span></div>
-
-          <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
-            SHORTPEEK: THIẾT KẾ HỆ SINH THÁI PHIM NGẮN (MOBILE APP &amp; DESKTOP WEB).
-          </h1>
-
-          <p class="case-hero-desc text-lg md:text-2xl text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="hero-desc">
-            Làm mới toàn diện trải nghiệm xem phim ngắn dạng dọc trên cả ứng dụng di động và nền tảng Desktop Web (1920px). Tôi tái cấu trúc điều hướng, đưa Billboard điện ảnh lên màn hình lớn, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.
-          </p>
+    <section class="shortpeek-intro" aria-labelledby="shortpeek-title">
+      <div class="grid lg:grid-cols-12 gap-4 lg:gap-14 items-end">
+        <div class="lg:col-span-8 space-y-3">
+          <h1 id="shortpeek-title" class="case-hero-title shortpeek-title font-extrabold" data-i18n="hero-title">Shortpeek</h1>
+          <p class="case-hero-desc shortpeek-lede" data-i18n="hero-desc">Khi một tập phim bị khóa, giao diện cũ hiện giá tập, gói xu và thẻ VIP cùng lúc. Tôi thiết kế hai nhánh theo số dư để người xem biết có thể mở tập ngay hay cần thêm xu.</p>
         </div>
+        <div class="lg:col-span-4 shortpeek-byline">
+          <strong data-i18n="meta-role-val">Product Designer</strong>
+          <span data-i18n="meta-type-val">Marchi Lab · 2026 · Chưa phát hành</span>
+          <span data-i18n="meta-scale-val">iOS · Android · Desktop Web</span>
+        </div>
+      </div>
+      <h2 id="shortpeek-chapters-title" class="sr-only" data-i18n="chapter-nav">Trong bài</h2>
+      <nav aria-labelledby="shortpeek-chapters-title" class="shortpeek-chapters"><ul>
+          <li><a href="#episode-unlock" data-i18n="chapter-unlock">Mở khóa tập</a></li>
+          <li><a href="#desktop-web" data-i18n="chapter-web">Desktop Web</a></li>
+          <li><a href="#home-navigation" data-i18n="chapter-home">Điều hướng Home</a></li>
+          <li><a href="#design-details" data-i18n="chapter-deep">Đọc sâu</a></li>
+          <li><a href="#lessons" data-i18n="chapter-lessons">Sau review</a></li>
+        </ul></nav>
+    </section>
 
-        <!-- Borderless 4-row Product Spec List -->
-        <aside class="lg:col-span-4 border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs case-meta-grid">
-          <div class="py-3.5 flex items-baseline justify-between gap-4">
-            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-role-lbl">Vai trò</span>
-            <span class="font-bold text-right" data-i18n="meta-role-val">Product Designer</span>
+    <section id="episode-unlock" class="shortpeek-feature">
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="unlock-heading">Tách luồng mở khóa theo số dư</h2>
+      <div class="shortpeek-evidence">
+        <figure>
+          <figcaption>
+            <h3 data-i18n="unlock-original">Giao diện cũ</h3>
+            <p data-i18n="unlock-original-note">Giá tập và số dư nằm trên cùng, còn các gói xu và VIP xếp ngay bên dưới.</p>
+          </figcaption>
+          <div class="shortpeek-phone">
+            <img src="assets/shortpeek/old-locked-audit.webp" width="540" height="1174" alt="" fetchpriority="high" decoding="async" class="shortpeek-coin-screen">
           </div>
-          <div class="py-3.5 flex items-baseline justify-between gap-4">
-            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-type-lbl">Dự án</span>
-            <span class="font-bold text-right" data-i18n="meta-type-val">Marchi Lab · 2026 (Chưa phát hành)</span>
+        </figure>
+        <figure>
+          <figcaption>
+            <h3 data-i18n="unlock-enough">Khi đủ xu</h3>
+            <p data-i18n="unlock-enough-note">Giá tập đặt cạnh số dư. Người xem xác nhận để mở tập.</p>
+          </figcaption>
+          <div class="shortpeek-phone">
+            <img src="assets/shortpeek/ui-unlock-enough.webp" width="540" height="1174" alt="" loading="lazy" decoding="async" class="shortpeek-coin-screen">
           </div>
-          <div class="py-3.5 space-y-1">
-            <span class="text-[var(--text-muted)] uppercase block" data-i18n="meta-scope-lbl">Phạm vi</span>
-            <span class="font-bold block leading-relaxed" data-i18n="meta-scope-val">UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype</span>
+        </figure>
+        <figure>
+          <figcaption>
+            <h3 data-i18n="unlock-short">Khi thiếu xu</h3>
+            <p data-i18n="unlock-short-note">Báo số xu còn thiếu trước khi người xem chọn mua xu hoặc xem gói Premium.</p>
+          </figcaption>
+          <div class="shortpeek-phone">
+            <img src="assets/shortpeek/ui-unlock-need.webp" width="540" height="1907" alt="" loading="lazy" decoding="async" class="shortpeek-coin-screen">
           </div>
-          <div class="py-3.5 flex items-baseline justify-between gap-4">
-            <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-scale-lbl">Nền tảng</span>
-            <span class="font-bold text-right text-orange-600 dark:text-[#F97039]" data-i18n="meta-scale-val">iOS · Android · Desktop Web (1920px)</span>
-          </div>
-        </aside>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 04 / MỞ RỘNG NỀN TẢNG: TRẢI NGHIỆM DESKTOP WEB (1920PX) -->
+    <section id="desktop-web" class="space-y-8 md:space-y-12 pt-10 md:pt-16 hairline-t gsap-reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-7 space-y-2">
+          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-web-tag">[ DESKTOP WEB ]</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-web-heading">Mở khóa ngay trong trình phát trên web</h2>
+        </div>
+        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-web-desc">Trên desktop, tôi giữ giá tập và số dư trong hộp thoại mở khóa ngay trên trình phát. Danh sách tập nằm cạnh video để người xem có thể chọn tập trong cùng màn hình.</p>
       </div>
 
-      <!-- Result-First Before / After Comparison Stage -->
-      <figure id="before-after" class="case-hero-img space-y-4">
-        <span class="block font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="comparison-tag">[ TRƯỚC / SAU ]</span>
+      <!-- Web Showcase 2: 2-Column Grid for Player & Modal Unlock -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start gsap-card">
+        <!-- Desktop Unlock Overlay -->
+        <figure class="space-y-4">
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
+            <img src="assets/shortpeek/web-unlock.webp" alt="Modal mở khóa tập và nạp xu tối ưu cho màn hình Desktop Web" loading="lazy" decoding="async" class="w-full h-full object-cover">
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-unlock-title">Modal mở khóa tập &amp; Nạp xu trên Web</h3>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-unlock-desc">
+              Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.
+            </p>
+          </div>
+        </figure>
 
-        <div id="shortpeek-comparison" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-label="So sánh bản gốc và bản redesign" class="relative overflow-hidden rounded-2xl hairline-all aspect-[1600/980] bg-[#161618] shadow-2xl select-none cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97039]" style="--comparison-position: 50%; touch-action: pan-y;">
-          <img src="assets/shortpeek/after-comparison.webp" alt="Shortpeek bản redesign trên ba màn hình Home, Mở khóa tập và Profile" width="1600" height="980" draggable="false" class="block w-full h-full object-contain pointer-events-none" fetchpriority="high" decoding="async">
-          <img id="comparison-before-image" src="assets/shortpeek/before-comparison.webp" alt="Shortpeek bản gốc trên ba màn hình Home, Mở khóa tập và Profile" width="1600" height="980" draggable="false" class="absolute inset-0 w-full h-full object-contain pointer-events-none" style="clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);" fetchpriority="high" decoding="async">
-          <div aria-hidden="true" class="absolute inset-y-0 w-0.5 bg-white shadow pointer-events-none" style="left: var(--comparison-position);">
-            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white text-black shadow-lg flex items-center justify-center font-mono text-xs font-bold">
-              ↔
-            </div>
+        <!-- Desktop Watch Player -->
+        <figure class="space-y-4">
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
+            <img src="assets/shortpeek/web-watch.webp" alt="Trình phát xem phim Desktop Web với Side Drawer chọn tập trực tiếp" loading="lazy" decoding="async" class="w-full h-full object-cover">
           </div>
-          <div class="absolute inset-x-0 top-0 flex justify-between gap-2 p-3 sm:p-5 pointer-events-none font-mono text-[9px] sm:text-xs uppercase font-bold">
-            <span class="bg-white text-black px-2.5 py-1 rounded shadow" data-i18n="comparison-before">BẢN GỐC</span>
-            <span class="bg-[#F97039] text-white px-2.5 py-1 rounded shadow" data-i18n="comparison-after">BẢN REDESIGN</span>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-watch-title">Trình phát Desktop &amp; Side-by-side Episodes</h3>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-watch-desc">
+              Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.
+            </p>
           </div>
+        </figure>
+      </div>
+
+      <!-- Web Showcase 1: Full-width Home & Billboard Stage -->
+      <figure class="space-y-4 gsap-card">
+        <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11]">
+          <img src="assets/shortpeek/web-home.webp" alt="Trang chủ Shortpeek phiên bản Desktop Web (1920px) với Featured Cinematic Billboard và Ranked Rail Top 10" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
         </div>
-
-        <figcaption class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl" data-i18n="comparison-desc">
-          Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).
+        <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-3">
+          <span data-i18n="web-cap-home1">01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10</span>
+          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="web-cap-home2">Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng</span>
         </figcaption>
       </figure>
+
+      <!-- 3 Web Editorial Highlights -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-8 hairline-t font-mono text-xs text-[var(--text-muted)] gsap-card">
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec1-title">[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec1-desc">Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.</span>
+        </div>
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec2-title">[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec2-desc">Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.</span>
+        </div>
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec3-title">[ ĐỒNG BỘ ĐA NỀN TẢNG ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec3-desc">Bản app và desktop web dùng chung hệ màu, font Inter và cách phân biệt mở khóa bằng xu với gói Premium.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="home-navigation" class="shortpeek-feature">
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="home-focus-title">Nhường chỗ cho phim trên Home</h2>
+      <div class="shortpeek-explainer">
+        <p data-i18n="home-focus-desc">Tôi rút thanh đáy từ năm mục xuống bốn và chuyển Rewards khỏi thanh này. VIP và nhận xu vẫn có lối vào ở đầu trang Home. Phần đầu trang dành cho một poster, với hai hành động là xem ngay và lưu vào My List.</p>
+        <p data-i18n="home-focus-question">Điểm cần kiểm chứng là người mới có tìm thấy lối nhận xu ở vị trí mới hay không.</p>
+      </div>
+      <div class="shortpeek-home-pair">
+        <figure>
+          <figcaption data-i18n="home-original">Bản gốc · Banner khuyến mãi và thanh đáy năm mục</figcaption>
+          <img src="assets/shortpeek/old-home-audit.webp" width="960" height="960" alt="" loading="lazy" decoding="async" class="">
+        </figure>
+        <figure>
+          <figcaption data-i18n="home-redesign">Thiết kế mới · Poster chính và thanh đáy bốn mục</figcaption>
+          <img src="assets/shortpeek/ui-home-new.webp" width="960" height="960" alt="" loading="lazy" decoding="async" class="">
+        </figure>
+      </div>
+    </section>
+
+    <section id="design-details" class="shortpeek-feature">
+      <h2 id="shortpeek-details-title" class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="deep-heading">Chi tiết thiết kế</h2>
+      <nav aria-labelledby="shortpeek-details-title" class="shortpeek-chapters"><ul>
+          <li><a href="#audit" data-i18n="deep-audit">Audit bản gốc</a></li>
+          <li><a href="#walkthrough" data-i18n="deep-flows">Năm luồng trên app</a></li>
+          <li><a href="#system-bento" data-i18n="deep-system">Kiến trúc thông tin và UI</a></li>
+          <li><a href="#store-readiness" data-i18n="deep-store">Chuẩn bị nộp store</a></li>
+          <li><a href="#before-after" data-i18n="deep-compare">So sánh tổng quan</a></li>
+        </ul></nav>
     </section>
 
     <!-- 01 / BỐI CẢNH & AUDIT BẢN APP GỐC -->
@@ -408,21 +615,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         <!-- Context + Borderless Editorial Pull-Quote -->
         <div class="lg:col-span-5 space-y-6">
-          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">
-            LÀM MỚI ĐỊNH VỊ TRƯỚC KHI NỘP STORE
-          </h2>
-          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">
-            Shortpeek là ứng dụng xem phim ngắn dạng dọc tại Marchi Lab, hoạt động theo mô hình mở khóa tập bằng xu (Coins) hoặc gói thành viên (Premium). Trước giai đoạn nộp App Store và Google Play, đội ngũ muốn làm mới sản phẩm theo hướng gọn gàng, đậm chất điện ảnh như Netflix thay cho giao diện cũ nặng khuyến mãi.
-          </p>
-          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">
-            Tôi trực tiếp thực hiện UX Audit bản gốc, thiết kế lại User Flow, UI, Design System, App Icon và Prototype. Kiểm tra các màn hình gốc trong file thiết kế cho thấy bốn vấn đề chính cần xử lý.
-          </p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">Audit trước khi thiết kế lại</h2>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">Trước đợt chuẩn bị nộp App Store và Google Play, đội muốn giảm số khối khuyến mãi trên màn hình xem phim và làm rõ cách trả phí cho từng tập.</p>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">Tôi rà các màn hình gốc, thiết kế lại luồng và giao diện, rồi dựng prototype và hệ thống UI để bàn giao.</p>
 
-          <div class="pt-6 hairline-t">
-            <blockquote class="text-xl sm:text-2xl font-bold tracking-tight leading-snug" data-i18n="hmw-quote">
-              "Làm sao để đưa Shortpeek về cảm giác điện ảnh gọn mắt theo hướng Netflix, mà người xem vẫn hiểu rõ cách mở khóa tập bằng xu hoặc gói thành viên và luôn biết hướng xử lý khi gặp lỗi?"
-            </blockquote>
-          </div>
+
         </div>
 
         <!-- Borderless 4-row Editorial Audit Log -->
@@ -491,21 +688,7 @@
         </div>
       </div>
 
-      <!-- Open 3-Column Design Objectives Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 gsap-card">
-        <div class="pt-5 hairline-t space-y-2">
-          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">01</span>
-          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj1-desc">Dọn thoáng màn Home và Clip để poster làm tâm điểm, vẫn giữ lối vào VIP và Earn Coins rõ ràng.</p>
-        </div>
-        <div class="pt-5 hairline-t space-y-2">
-          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">02</span>
-          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj2-desc">Áp dụng Progressive Disclosure ở điểm trả phí: 1 chạm khi đủ xu, tách tab và bỏ cộng nhẩm khi thiếu xu.</p>
-        </div>
-        <div class="pt-5 hairline-t space-y-2">
-          <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">03</span>
-          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="obj3-desc">Gom thư viện về một chỗ và phủ đủ trạng thái lỗi, chính sách thanh toán trước khi nộp store.</p>
-        </div>
-      </div>
+
     </section>
 
     <!-- 02 / INTERACTIVE 5-FLOW WORKBENCH -->
@@ -514,13 +697,13 @@
         <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec2-tag">
           [ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]
         </div>
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight" data-i18n="sec2-heading">
+        <h2 id="shortpeek-flow-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight" data-i18n="sec2-heading">
           KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN
         </h2>
       </div>
 
       <!-- Clean Editorial Underline Tab Bar -->
-      <div role="tablist" aria-label="Luồng giao diện Shortpeek" class="hairline-b flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar">
+      <div role="tablist" aria-labelledby="shortpeek-flow-title" class="hairline-b flex items-center gap-x-5 gap-y-2 sm:gap-x-8 flex-wrap">
         <button type="button" role="tab" id="tab-btn-home" aria-controls="panel-home" aria-selected="true" data-wt-tab="home" class="wt-tab shrink-0 pb-3.5 font-mono text-xs font-bold uppercase tracking-mono" data-i18n="tab-home">
           01 · Home
         </button>
@@ -651,9 +834,7 @@
                   <span aria-hidden="true" class="sub-dot text-xs pt-1 shrink-0">●</span>
                   <div class="space-y-1.5">
                     <div class="font-mono text-xs font-bold uppercase" data-i18n="d4-title">Hiển thị tổng xu thực nhận và điều khoản thanh toán</div>
-                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d4-desc">
-                      Người mua ngại tự cộng hai dòng xu gốc và xu thưởng. Mỗi thẻ ở Coin Wallet giờ ghi thẳng tổng xu thực nhận. Cuối trang Wallet và Premium, tôi tách riêng nút Apple IAP và Stripe · Card kèm đủ liên kết chính sách cho khâu duyệt store.
-                    </p>
+                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d4-desc">Ở bản gốc, người xem phải cộng hai dòng xu gốc và xu thưởng. Tôi đưa tổng xu thực nhận lên thẻ Coin Wallet. Cuối trang Wallet và Premium, tôi tách nút Apple IAP và Stripe · Card, kèm liên kết đến chính sách thanh toán.</p>
                   </div>
                 </button>
               </div>
@@ -968,78 +1149,7 @@
       </figure>
     </section>
 
-    <!-- 04 / MỞ RỘNG NỀN TẢNG: TRẢI NGHIỆM DESKTOP WEB (1920PX) -->
-    <section id="desktop-web" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-        <div class="lg:col-span-7 space-y-2">
-          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-web-tag">
-            [ 04 // MỞ RỘNG NỀN TẢNG ]
-          </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-web-heading">
-            TRẢI NGHIỆM DESKTOP WEB (1920PX)
-          </h2>
-        </div>
-        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-web-desc">
-          Song song với ứng dụng di động, tôi trực tiếp thiết kế toàn bộ phiên bản Desktop Web (1920px): mở rộng không gian điện ảnh với Billboard cỡ lớn, thanh điều hướng web chuẩn mực, dải phim xếp hạng và trình phát xem phim kèm danh sách tập trực tiếp.
-        </p>
-      </div>
 
-      <!-- Web Showcase 1: Full-width Home & Billboard Stage -->
-      <figure class="space-y-4 gsap-card">
-        <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11]">
-          <img src="assets/shortpeek/web-home.webp" alt="Trang chủ Shortpeek phiên bản Desktop Web (1920px) với Featured Cinematic Billboard và Ranked Rail Top 10" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
-        </div>
-        <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-3">
-          <span data-i18n="web-cap-home1">01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10</span>
-          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="web-cap-home2">Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng</span>
-        </figcaption>
-      </figure>
-
-      <!-- Web Showcase 2: 2-Column Grid for Player & Modal Unlock -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start gsap-card">
-        <!-- Left: Desktop Watch Player -->
-        <figure class="space-y-4">
-          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
-            <img src="assets/shortpeek/web-watch.webp" alt="Trình phát xem phim Desktop Web với Side Drawer chọn tập trực tiếp" loading="lazy" decoding="async" class="w-full h-full object-cover">
-          </div>
-          <div class="space-y-1.5">
-            <h4 class="text-base font-bold uppercase tracking-tight" data-i18n="web-watch-title">Trình phát Desktop &amp; Side-by-side Episodes</h4>
-            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-watch-desc">
-              Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.
-            </p>
-          </div>
-        </figure>
-
-        <!-- Right: Desktop Unlock Overlay -->
-        <figure class="space-y-4">
-          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
-            <img src="assets/shortpeek/web-unlock.webp" alt="Modal mở khóa tập và nạp xu tối ưu cho màn hình Desktop Web" loading="lazy" decoding="async" class="w-full h-full object-cover">
-          </div>
-          <div class="space-y-1.5">
-            <h4 class="text-base font-bold uppercase tracking-tight" data-i18n="web-unlock-title">Modal mở khóa tập &amp; Nạp xu trên Web</h4>
-            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-unlock-desc">
-              Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.
-            </p>
-          </div>
-        </figure>
-      </div>
-
-      <!-- 3 Web Editorial Highlights -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-8 hairline-t font-mono text-xs text-[var(--text-muted)] gsap-card">
-        <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec1-title">[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec1-desc">Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.</span>
-        </div>
-        <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec2-title">[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec2-desc">Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.</span>
-        </div>
-        <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec3-title">[ ĐỒNG BỘ ĐA NỀN TẢNG ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec3-desc">Thống nhất hệ màu #0D0E11, font Inter và logic mở khóa xu/VIP từ app di động sang web máy tính, giúp trải nghiệm người dùng liền mạch 100%.</span>
-        </div>
-      </div>
-    </section>
 
     <!-- 05 / STORE READINESS CHECKLIST & EDGE STATES -->
     <section id="store-readiness" class="space-y-12 pt-14 md:pt-20 hairline-t gsap-reveal">
@@ -1112,11 +1222,35 @@
       </div>
     </section>
 
+    <section class="shortpeek-feature" aria-labelledby="comparison-title">
+      <h2 id="comparison-title" class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="deep-compare">So sánh tổng quan</h2>
+      <figure id="before-after" class="space-y-4">
+        <span class="block font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="comparison-tag">[ TRƯỚC / SAU ]</span>
+
+        <div id="shortpeek-comparison" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-labelledby="comparison-title" aria-describedby="comparison-caption" class="relative overflow-hidden rounded-2xl hairline-all aspect-[1600/980] bg-[#161618] shadow-2xl select-none cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97039]" style="--comparison-position: 50%; touch-action: pan-y;">
+          <img src="assets/shortpeek/after-comparison.webp" alt="" width="1600" height="980" draggable="false" class="block w-full h-full object-contain pointer-events-none" loading="lazy" decoding="async">
+          <img id="comparison-before-image" src="assets/shortpeek/before-comparison.webp" alt="" width="1600" height="980" draggable="false" class="absolute inset-0 w-full h-full object-contain pointer-events-none" style="clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);" loading="lazy" decoding="async">
+          <div aria-hidden="true" class="absolute inset-y-0 w-0.5 bg-white shadow pointer-events-none" style="left: var(--comparison-position);">
+            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white text-black shadow-lg flex items-center justify-center font-mono text-xs font-bold">
+              ↔
+            </div>
+          </div>
+          <div class="absolute inset-x-0 top-0 flex justify-between gap-2 p-3 sm:p-5 pointer-events-none font-mono text-[9px] sm:text-xs uppercase font-bold">
+            <span class="bg-white text-black px-2.5 py-1 rounded shadow" data-i18n="comparison-before">BẢN GỐC</span>
+            <span class="bg-[#F97039] text-white px-2.5 py-1 rounded shadow" data-i18n="comparison-after">BẢN REDESIGN</span>
+          </div>
+        </div>
+
+        <figcaption id="comparison-caption" class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl" data-i18n="comparison-desc">
+          Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).
+        </figcaption>
+      </figure>
+    </section>
+
     <!-- 06 / ĐÁNH ĐỔI, SỬA THEO REVIEW, GIẢ THUYẾT & BÀI HỌC -->
     <section id="lessons" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-tag">
-        [ 06 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]
-      </div>
+      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-tag">[ ĐÁNH ĐỔI &amp; GIỚI HẠN ]</div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="sec7-heading">Những gì thay đổi sau review</h2>
 
       <!-- Open 3-Column Editorial Trade-offs Row -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 gsap-card">
@@ -1423,14 +1557,6 @@
         ease: 'power3.out',
         delay: 0.12
       });
-      gsap.from('.case-hero-img', {
-        scale: 0.98,
-        opacity: 0,
-        duration: 0.75,
-        ease: 'power3.out',
-        delay: 0.18,
-        clearProps: 'transform'
-      });
 
       gsap.utils.toArray('.gsap-card').forEach(card => {
         gsap.from(card, {
@@ -1507,31 +1633,55 @@
     // 8. Bilingual Translation System (VI / EN)
     const translations = {
       vi: {
+        'hero-title': 'Shortpeek',
+        'meta-role-val': 'Product Designer',
+        'hero-desc': 'Khi một tập phim bị khóa, giao diện cũ hiện giá tập, gói xu và thẻ VIP cùng lúc. Tôi thiết kế hai nhánh theo số dư để người xem biết có thể mở tập ngay hay cần thêm xu.',
+        'meta-type-val': 'Marchi Lab · 2026 · Chưa phát hành',
+        'meta-scale-val': 'iOS · Android · Desktop Web',
+        'chapter-nav': 'Trong bài',
+        'chapter-unlock': 'Mở khóa tập',
+        'chapter-web': 'Desktop Web',
+        'chapter-home': 'Điều hướng Home',
+        'chapter-deep': 'Đọc sâu',
+        'chapter-lessons': 'Sau review',
+        'unlock-heading': 'Tách luồng mở khóa theo số dư',
+        'unlock-original': 'Giao diện cũ',
+        'unlock-original-note': 'Giá tập và số dư nằm trên cùng, còn các gói xu và VIP xếp ngay bên dưới.',
+        'unlock-enough': 'Khi đủ xu',
+        'unlock-enough-note': 'Giá tập đặt cạnh số dư. Người xem xác nhận để mở tập.',
+        'unlock-short': 'Khi thiếu xu',
+        'unlock-short-note': 'Báo số xu còn thiếu trước khi người xem chọn mua xu hoặc xem gói Premium.',
+        'home-focus-title': 'Nhường chỗ cho phim trên Home',
+        'home-focus-desc': 'Tôi rút thanh đáy từ năm mục xuống bốn và chuyển Rewards khỏi thanh này. VIP và nhận xu vẫn có lối vào ở đầu trang Home. Phần đầu trang dành cho một poster, với hai hành động là xem ngay và lưu vào My List.',
+        'home-focus-question': 'Điểm cần kiểm chứng là người mới có tìm thấy lối nhận xu ở vị trí mới hay không.',
+        'home-original': 'Bản gốc · Banner khuyến mãi và thanh đáy năm mục',
+        'home-redesign': 'Thiết kế mới · Poster chính và thanh đáy bốn mục',
+        'deep-heading': 'Chi tiết thiết kế',
+        'deep-audit': 'Audit bản gốc',
+        'deep-flows': 'Năm luồng trên app',
+        'deep-system': 'Kiến trúc thông tin và UI',
+        'deep-store': 'Chuẩn bị nộp store',
+        'deep-compare': 'So sánh tổng quan',
+        'sec1-title': 'Audit trước khi thiết kế lại',
+        'sec1-desc1': 'Trước đợt chuẩn bị nộp App Store và Google Play, đội muốn giảm số khối khuyến mãi trên màn hình xem phim và làm rõ cách trả phí cho từng tập.',
+        'sec1-desc2': 'Tôi rà các màn hình gốc, thiết kế lại luồng và giao diện, rồi dựng prototype và hệ thống UI để bàn giao.',
+        'sec4-web-heading': 'Mở khóa ngay trong trình phát trên web',
+        'sec4-web-desc': 'Trên desktop, tôi giữ giá tập và số dư trong hộp thoại mở khóa ngay trên trình phát. Danh sách tập nằm cạnh video để người xem có thể chọn tập trong cùng màn hình.',
+        'web-spec3-desc': 'Bản app và desktop web dùng chung hệ màu, font Inter và cách phân biệt mở khóa bằng xu với gói Premium.',
+        'd4-desc': 'Ở bản gốc, người xem phải cộng hai dòng xu gốc và xu thưởng. Tôi đưa tổng xu thực nhận lên thẻ Coin Wallet. Cuối trang Wallet và Premium, tôi tách nút Apple IAP và Stripe · Card, kèm liên kết đến chính sách thanh toán.',
+        'sec7-heading': 'Những gì thay đổi sau review',
+        'sec4-web-tag': '[ DESKTOP WEB ]',
+        'sec7-tag': '[ ĐÁNH ĐỔI &amp; GIỚI HẠN ]',
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
         'top-case-num': 'CASE 01 / 04',
         'top-case-tag': 'SHORTPEEK · MOBILE APP &amp; DESKTOP WEB',
         'btn-contact': 'Liên hệ',
-        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span>',
-        'hero-title': 'SHORTPEEK: THIẾT KẾ HỆ SINH THÁI PHIM NGẮN (MOBILE APP &amp; DESKTOP WEB).',
-        'hero-desc': 'Làm mới toàn diện trải nghiệm xem phim ngắn dạng dọc trên cả ứng dụng di động và nền tảng Desktop Web (1920px). Tôi tái cấu trúc thanh điều hướng, đưa Billboard điện ảnh lên màn hình lớn, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.',
-        'meta-role-lbl': 'Vai trò',
-        'meta-role-val': 'Product Designer',
-        'meta-type-lbl': 'Dự án',
-        'meta-type-val': 'Marchi Lab · 2026 (Chưa phát hành)',
-        'meta-scope-lbl': 'Phạm vi',
-        'meta-scope-val': 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
-        'meta-scale-lbl': 'Nền tảng',
-        'meta-scale-val': 'iOS · Android · Desktop Web (1920px)',
         'comparison-tag': '[ TRƯỚC / SAU ]',
         'comparison-before': 'BẢN GỐC',
         'comparison-after': 'BẢN REDESIGN',
         'comparison-desc': 'Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).',
         'sec1-tag': '[ 01 // BỐI CẢNH &amp; AUDIT BẢN APP GỐC ]',
-        'sec1-title': 'LÀM MỚI ĐỊNH VỊ TRƯỚC KHI NỘP STORE',
-        'sec1-desc1': 'Shortpeek là ứng dụng xem phim ngắn dạng dọc tại Marchi Lab, hoạt động theo mô hình mở khóa tập bằng xu (Coins) hoặc gói thành viên (Premium). Trước giai đoạn nộp App Store và Google Play, đội ngũ muốn làm mới sản phẩm theo hướng gọn gàng, đậm chất điện ảnh như Netflix thay cho giao diện cũ nặng khuyến mãi.',
-        'sec1-desc2': 'Tôi trực tiếp thực hiện UX Audit bản gốc, thiết kế lại User Flow, UI, Design System, App Icon và Prototype. Kiểm tra các màn hình gốc trong file thiết kế cho thấy bốn vấn đề chính cần xử lý.',
-        'hmw-quote': '"Làm sao để đưa Shortpeek về cảm giác điện ảnh gọn mắt theo hướng Netflix, mà người xem vẫn hiểu rõ cách mở khóa tập bằng xu hoặc gói thành viên và luôn biết hướng xử lý khi gặp lỗi?"',
         'pp1-title': 'Nhiều khối nội dung cạnh tranh nhau',
         'pp1-desc': 'Bản gốc đặt thanh tìm kiếm và nút VIP ở đầu trang, tiếp theo là banner ngang, bốn tab con, lưới ba cột và banner giảm 50% màu vàng đậm; trên màn For you lại phủ nút cam lớn che khuất video.',
         'pp2-title': 'Thư viện bị tách giữa My List và Profile',
@@ -1546,9 +1696,6 @@
         'old-cap2': '02 · For you gốc',
         'old-cap3': '03 · Sheet mở khóa gốc',
         'old-cap4': '04 · Top up Coins gốc',
-        'obj1-desc': 'Dọn thoáng màn Home và Clip để poster làm tâm điểm, vẫn giữ lối vào VIP và Earn Coins rõ ràng.',
-        'obj2-desc': 'Áp dụng Progressive Disclosure ở điểm trả phí: 1 chạm khi đủ xu, tách tab và bỏ cộng nhẩm khi thiếu xu.',
-        'obj3-desc': 'Gom thư viện về một chỗ và phủ đủ trạng thái lỗi, chính sách thanh toán trước khi nộp store.',
         'sec2-tag': '[ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]',
         'sec2-heading': 'KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN',
         'tab-home': '01 · Home',
@@ -1576,7 +1723,6 @@
         'd3-title': 'Tách nhánh Đủ xu và Thiếu xu',
         'd3-desc': 'Tôi tách luồng theo số dư theo nguyên tắc Progressive Disclosure. Người đã đủ xu chỉ thấy giá tập cạnh số dư với một nút xác nhận duy nhất. Người thiếu xu thấy ngay số xu cần thêm cùng hai tab Coins và Premium riêng biệt.',
         'd4-title': 'Hiển thị tổng xu thực nhận và điều khoản thanh toán',
-        'd4-desc': 'Người mua ngại tự cộng hai dòng xu gốc và xu thưởng. Mỗi thẻ ở Coin Wallet giờ ghi thẳng tổng xu thực nhận. Cuối trang Wallet và Premium, tôi tách riêng nút Apple IAP và Stripe · Card kèm đủ liên kết chính sách cho khâu duyệt store.',
         'sub-unlock': 'Mở khóa: Đủ xu / Thiếu xu',
         'sub-wallet': 'Coin Wallet &amp; Premium',
         'sub-unlock-cap1': 'Đủ xu: 1 chạm xác nhận',
@@ -1633,9 +1779,6 @@
         'type-desc': 'Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn hình điện thoại mà không làm rối poster.',
         'bento-hero-cap1': 'Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium',
         'bento-hero-cap2': 'Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF',
-        'sec4-web-tag': '[ 04 // MỞ RỘNG NỀN TẢNG ]',
-        'sec4-web-heading': 'TRẢI NGHIỆM DESKTOP WEB (1920PX)',
-        'sec4-web-desc': 'Song song với ứng dụng di động, tôi trực tiếp thiết kế toàn bộ phiên bản Desktop Web (1920px): mở rộng không gian điện ảnh với Billboard cỡ lớn, thanh điều hướng web chuẩn mực, dải phim xếp hạng và trình phát xem phim kèm danh sách tập trực tiếp.',
         'web-cap-home1': '01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10',
         'web-cap-home2': 'Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng',
         'web-watch-title': 'Trình phát Desktop &amp; Side-by-side Episodes',
@@ -1647,7 +1790,6 @@
         'web-spec2-title': '[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]',
         'web-spec2-desc': 'Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.',
         'web-spec3-title': '[ ĐỒNG BỘ ĐA NỀN TẢNG ]',
-        'web-spec3-desc': 'Thống nhất hệ màu #0D0E11, font Inter và logic mở khóa xu/VIP từ app di động sang web máy tính, giúp trải nghiệm người dùng liền mạch 100%.',
         'sec6-tag': '[ 05 // SẴN SÀNG NỘP STORE ]',
         'sec6-heading': 'CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY',
         'sec6-desc': 'Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.',
@@ -1662,7 +1804,6 @@
         'edge2-desc': 'Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.',
         'edge3-title': '10 trạng thái trình phát &amp; DRM',
         'edge3-desc': 'Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.',
-        'sec7-tag': '[ 06 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]',
         'tr1-title': 'Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI',
         'tr1-desc': 'Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.',
         'tr2-title': 'Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab',
@@ -1689,31 +1830,55 @@
         'foot-next': 'DỰ ÁN TIẾP THEO: YÊN'
       },
       en: {
+        'hero-title': 'Shortpeek',
+        'meta-role-val': 'Product Designer',
+        'hero-desc': 'When viewers reached a locked episode, the original screen showed the episode price, coin packs and VIP plans all at once. I split the flow by coin balance so viewers could see whether to unlock the episode or add coins.',
+        'meta-type-val': 'Marchi Lab · 2026 · Unreleased',
+        'meta-scale-val': 'iOS · Android · Desktop Web',
+        'chapter-nav': 'In this case study',
+        'chapter-unlock': 'Episode unlock',
+        'chapter-web': 'Desktop web',
+        'chapter-home': 'Home navigation',
+        'chapter-deep': 'Design details',
+        'chapter-lessons': 'After review',
+        'unlock-heading': 'Two paths based on coin balance',
+        'unlock-original': 'Original flow',
+        'unlock-original-note': 'The episode price and balance sat above a list of coin packs and VIP plans.',
+        'unlock-enough': 'Enough coins',
+        'unlock-enough-note': 'The price sits next to the balance, with one button to confirm and watch.',
+        'unlock-short': 'Short on coins',
+        'unlock-short-note': 'The screen shows the shortfall before viewers choose between Coins and Premium.',
+        'home-focus-title': 'Giving films more room on Home',
+        'home-focus-desc': 'I reduced the bottom bar from five tabs to four and moved Rewards out of it. VIP and Earn Coins remained accessible at the top of Home. A single poster leads the page, with actions to watch now or save to My List.',
+        'home-focus-question': 'I would test whether first-time viewers can still find Earn Coins after the move.',
+        'home-original': 'Original · Promo banners and a five-tab bar',
+        'home-redesign': 'Redesign · Featured poster and a four-tab bar',
+        'deep-heading': 'Design details',
+        'deep-audit': 'Audit of the original app',
+        'deep-flows': 'Five app flows',
+        'deep-system': 'Information architecture and UI',
+        'deep-store': 'Preparing for store submission',
+        'deep-compare': 'Full screen comparison',
+        'sec1-title': 'What the audit found',
+        'sec1-desc1': 'Ahead of App Store and Google Play submission, the team wanted fewer promotions in the viewing experience and a clearer way to pay for an episode.',
+        'sec1-desc2': 'I reviewed the original screens, redesigned the flows and UI, and built the prototype and UI system for handoff.',
+        'sec4-web-heading': 'Unlocking an episode inside the web player',
+        'sec4-web-desc': 'On desktop, I put the episode price and balance in a dialog over the player. The episode list sits beside the video, so viewers can pick another episode on the same screen.',
+        'web-spec3-desc': 'The app and desktop web designs share their colors, Inter typography and the distinction between unlocking with coins and choosing Premium.',
+        'd4-desc': 'The original coin packs listed base and bonus coins on separate lines. I put the total on each Coin Wallet card. At the bottom of Wallet and Premium, I separated Apple IAP and Stripe card payments and linked the payment policies.',
+        'sec7-heading': 'What changed after review',
+        'sec4-web-tag': '[ DESKTOP WEB ]',
+        'sec7-tag': '[ TRADE-OFFS &amp; LIMITS ]',
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
         'top-case-num': 'CASE 01 / 04',
         'top-case-tag': 'SHORTPEEK · MOBILE APP &amp; DESKTOP WEB',
         'btn-contact': 'Get in touch',
-        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span>',
-        'hero-title': 'SHORTPEEK: SHORT-DRAMA ECOSYSTEM (MOBILE APP &amp; DESKTOP WEB).',
-        'hero-desc': 'A comprehensive redesign of the vertical short-drama experience across both mobile apps and a 1920px Desktop Web platform. I restructured navigation, expanded cinematic billboards for large screens, split episode access paths, and covered complete system states.',
-        'meta-role-lbl': 'Role',
-        'meta-role-val': 'Product Designer',
-        'meta-type-lbl': 'Project',
-        'meta-type-val': 'Marchi Lab · 2026 (Unreleased)',
-        'meta-scope-lbl': 'Scope',
-        'meta-scope-val': 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
-        'meta-scale-lbl': 'Platform',
-        'meta-scale-val': 'iOS · Android · Desktop Web (1920px)',
         'comparison-tag': '[ BEFORE / AFTER ]',
         'comparison-before': 'ORIGINAL',
         'comparison-after': 'REDESIGN',
         'comparison-desc': 'Comparing three core screens: Home (4-tab pill bar and open hero), Episode access (split Coins / Premium tabs and upfront pack totals), and Profile (grouped settings and plans).',
         'sec1-tag': '[ 01 // CONTEXT &amp; ORIGINAL APP AUDIT ]',
-        'sec1-title': 'REFRESHING POSITIONING BEFORE STORE SUBMISSION',
-        'sec1-desc1': 'Shortpeek is a vertical short-drama app built at Marchi Lab where viewers pay for episodes with coins or a Premium membership. Ahead of App Store and Google Play submission, the team wanted a cleaner, Netflix-style look instead of the promo-heavy original screens.',
-        'sec1-desc2': 'I handled the UX audit, user flows, UI redesign, design system, App Icon, and prototype. Reviewing the original screens in the design file turned up four core problems.',
-        'hmw-quote': '"How might we give Shortpeek a calmer, Netflix-style cinema layout while keeping coin payments, memberships, and error recovery clear?"',
         'pp1-title': 'Too many blocks fight for attention',
         'pp1-desc': 'The original Home stacked a search bar, a VIP pill, a wide banner, four sub-tabs, and a bright yellow 50% promo card; For you added an oversized orange button across the bottom of the video.',
         'pp2-title': 'Library items sit across both My List and Profile',
@@ -1728,9 +1893,6 @@
         'old-cap2': '02 · Original For you',
         'old-cap3': '03 · Original access sheet',
         'old-cap4': '04 · Original Top up Coins',
-        'obj1-desc': 'Open up Home and Clip so show artwork leads, with VIP and Earn Coins still easy to spot.',
-        'obj2-desc': 'Use Progressive Disclosure at payment points: one-tap confirmation with coins, split tabs and upfront totals when short.',
-        'obj3-desc': 'Consolidate saved libraries into one place and complete all error and policy screens before store review.',
         'sec2-tag': '[ 02 // REDESIGNED APP FLOWS ]',
         'sec2-heading': 'EXPLORE THE 05 REDESIGNED APP FLOWS',
         'tab-home': '01 · Home',
@@ -1758,7 +1920,6 @@
         'd3-title': 'Separated Enough coins and Need coins paths',
         'd3-desc': 'I split this flow by balance using Progressive Disclosure. Viewers with enough coins confirm in one tap, with no top-up grid in the way. Anyone short on coins sees the exact gap and picks between two tabs: Coins or Premium.',
         'd4-title': 'Show total coins upfront alongside store terms',
-        'd4-desc': 'Nobody wants to add base coins and bonus coins by hand. Every Coin Wallet pack now shows the total up front. Below the plans, I placed separate Apple IAP and Stripe buttons right above policy links and purchase restoration.',
         'sub-unlock': 'Access: Enough / Need coins',
         'sub-wallet': 'Coin Wallet &amp; Premium',
         'sub-unlock-cap1': 'Enough coins: 1-tap confirmation',
@@ -1815,9 +1976,6 @@
         'type-desc': 'One font (Inter) across four clear sizes stays readable on mobile screens and never fights the posters.',
         'bento-hero-cap1': 'Core flow overview: Home · Clip · Episode access · Shortpeek Premium',
         'bento-hero-cap2': 'Consistent #0D0E11 cinema surfaces with high-contrast #FFFFFF primary actions',
-        'sec4-web-tag': '[ 04 // CROSS-PLATFORM ]',
-        'sec4-web-heading': 'DESKTOP WEB EXPERIENCE (1920PX)',
-        'sec4-web-desc': 'Alongside the mobile app, I designed the complete 1920px Desktop Web platform: expanding cinematic scale with wide billboards, standardized desktop navigation, ranked rails, and an inline episode player drawer.',
         'web-cap-home1': '01 · Desktop Web Home (1920px): 1312×560 Cinematic Billboard &amp; Top 10 Ranked Rail',
         'web-cap-home2': 'Primary Navigation · Search Bar · VIP &amp; Rewards Shortcuts',
         'web-watch-title': 'Desktop Player &amp; Side-by-Side Episode Drawer',
@@ -1829,7 +1987,6 @@
         'web-spec2-title': '[ DESKTOP NAVIGATION ]',
         'web-spec2-desc': 'Sticky 72px header with four primary destinations (Home, Categories, Clips, My List), quick search, and direct VIP/wallet access.',
         'web-spec3-title': '[ CROSS-PLATFORM SYSTEM ]',
-        'web-spec3-desc': 'Unifying #0D0E11 cinema surfaces, Inter typography, and coin unlock logic across mobile and web for a seamless ecosystem.',
         'sec6-tag': '[ 05 // STORE READINESS ]',
         'sec6-heading': 'APP STORE &amp; GOOGLE PLAY SUBMISSION CHECKLIST',
         'sec6-desc': 'To remove guesswork for developers and satisfy store review guidelines, I covered platform-specific sign-in flows, player errors, offline handling, and five policy pages.',
@@ -1844,7 +2001,6 @@
         'edge2-desc': 'FeedbackPanel places View Downloads right below Try Again so offline viewers keep watching.',
         'edge3-title': '10 player states &amp; DRM alert',
         'edge3-desc': 'Covers speed, quality, buffering, playback failures, series completion, and screen-capture warnings.',
-        'sec7-tag': '[ 06 // TRADE-OFFS, REVIEW ITERATIONS &amp; LIMITS ]',
         'tr1-title': 'Red-and-white mark paired with quiet white UI CTAs',
         'tr1-desc': 'During a Home review, the team asked for red accents and a new logo. I redrew the S-play App Icon in red and white on black. Inside the app, I stuck with white primary buttons and #F97039 orange accents so the red mark never competes with posters.',
         'tr2-title': 'Removed reward tasks from Wallet and trimmed tab labels',
