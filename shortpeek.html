@@ -459,7 +459,7 @@
       <div class="grid lg:grid-cols-12 gap-4 lg:gap-14 items-end">
         <div class="lg:col-span-8 space-y-3">
           <h1 id="shortpeek-title" class="case-hero-title shortpeek-title font-extrabold" data-i18n="hero-title">Shortpeek</h1>
-          <p class="case-hero-desc shortpeek-lede" data-i18n="hero-desc">Khi một tập phim bị khóa, giao diện cũ hiện giá tập, gói xu và thẻ VIP cùng lúc. Tôi thiết kế hai nhánh theo số dư để người xem biết có thể mở tập ngay hay cần thêm xu.</p>
+          <p class="case-hero-desc shortpeek-lede" data-i18n="hero-desc">Tôi thiết kế lại Shortpeek, app xem phim ngắn. Khi gặp tập khóa, người xem thấy ngay đã đủ xu để mở hay còn thiếu bao nhiêu.</p>
         </div>
         <div class="lg:col-span-4 shortpeek-byline">
           <strong data-i18n="meta-role-val">Product Designer</strong>
@@ -471,19 +471,19 @@
       <nav aria-labelledby="shortpeek-chapters-title" class="shortpeek-chapters"><ul>
           <li><a href="#episode-unlock" data-i18n="chapter-unlock">Mở khóa tập</a></li>
           <li><a href="#desktop-web" data-i18n="chapter-web">Desktop Web</a></li>
-          <li><a href="#home-navigation" data-i18n="chapter-home">Điều hướng Home</a></li>
-          <li><a href="#design-details" data-i18n="chapter-deep">Đọc sâu</a></li>
-          <li><a href="#lessons" data-i18n="chapter-lessons">Sau review</a></li>
+          <li><a href="#home-navigation" data-i18n="chapter-home">Trang chủ</a></li>
+          <li><a href="#design-details" data-i18n="chapter-deep">Thiết kế chi tiết</a></li>
+          <li><a href="#lessons" data-i18n="chapter-lessons">Sau góp ý</a></li>
         </ul></nav>
     </section>
 
     <section id="episode-unlock" class="shortpeek-feature">
-      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="unlock-heading">Tách luồng mở khóa theo số dư</h2>
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="unlock-heading">Mở khóa theo số dư</h2>
       <div class="shortpeek-evidence">
         <figure>
           <figcaption>
             <h3 data-i18n="unlock-original">Giao diện cũ</h3>
-            <p data-i18n="unlock-original-note">Giá tập và số dư nằm trên cùng, còn các gói xu và VIP xếp ngay bên dưới.</p>
+            <p data-i18n="unlock-original-note">Giá tập, số dư, gói xu và VIP cùng nằm trong một bảng.</p>
           </figcaption>
           <div class="shortpeek-phone">
             <img src="assets/shortpeek/old-locked-audit.webp" width="540" height="1174" alt="" fetchpriority="high" decoding="async" class="shortpeek-coin-screen">
@@ -492,7 +492,7 @@
         <figure>
           <figcaption>
             <h3 data-i18n="unlock-enough">Khi đủ xu</h3>
-            <p data-i18n="unlock-enough-note">Giá tập đặt cạnh số dư. Người xem xác nhận để mở tập.</p>
+            <p data-i18n="unlock-enough-note">Xem giá và số dư, rồi xác nhận để mở tập.</p>
           </figcaption>
           <div class="shortpeek-phone">
             <img src="assets/shortpeek/ui-unlock-enough.webp" width="540" height="1174" alt="" loading="lazy" decoding="async" class="shortpeek-coin-screen">
@@ -501,7 +501,7 @@
         <figure>
           <figcaption>
             <h3 data-i18n="unlock-short">Khi thiếu xu</h3>
-            <p data-i18n="unlock-short-note">Báo số xu còn thiếu trước khi người xem chọn mua xu hoặc xem gói Premium.</p>
+            <p data-i18n="unlock-short-note">Xem số xu còn thiếu trước khi chọn gói xu hoặc Premium.</p>
           </figcaption>
           <div class="shortpeek-phone">
             <img src="assets/shortpeek/ui-unlock-need.webp" width="540" height="1907" alt="" loading="lazy" decoding="async" class="shortpeek-coin-screen">
@@ -515,9 +515,9 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
         <div class="lg:col-span-7 space-y-2">
           <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-web-tag">[ DESKTOP WEB ]</div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-web-heading">Mở khóa ngay trong trình phát trên web</h2>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-web-heading">Mở tập trên máy tính</h2>
         </div>
-        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-web-desc">Trên desktop, tôi giữ giá tập và số dư trong hộp thoại mở khóa ngay trên trình phát. Danh sách tập nằm cạnh video để người xem có thể chọn tập trong cùng màn hình.</p>
+        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-web-desc">Trên máy tính, tôi đặt giá và số dư ngay trên trình phát. Danh sách tập nằm bên cạnh video.</p>
       </div>
 
       <!-- Web Showcase 2: 2-Column Grid for Player & Modal Unlock -->
@@ -528,9 +528,9 @@
             <img src="assets/shortpeek/web-unlock.webp" alt="Modal mở khóa tập và nạp xu tối ưu cho màn hình Desktop Web" loading="lazy" decoding="async" class="w-full h-full object-cover">
           </div>
           <div class="space-y-1.5">
-            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-unlock-title">Modal mở khóa tập &amp; Nạp xu trên Web</h3>
+            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-unlock-title">Hộp thoại mở tập</h3>
             <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-unlock-desc">
-              Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.
+              Người xem có thể mở tập bằng xu hoặc chọn gói thành viên ngay trong trình phát.
             </p>
           </div>
         </figure>
@@ -541,9 +541,9 @@
             <img src="assets/shortpeek/web-watch.webp" alt="Trình phát xem phim Desktop Web với Side Drawer chọn tập trực tiếp" loading="lazy" decoding="async" class="w-full h-full object-cover">
           </div>
           <div class="space-y-1.5">
-            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-watch-title">Trình phát Desktop &amp; Side-by-side Episodes</h3>
+            <h3 class="text-base font-bold uppercase tracking-tight" data-i18n="web-watch-title">Chọn tập bên cạnh video</h3>
             <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-watch-desc">
-              Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.
+              Đổi tập ngay trên màn hình đang xem.
             </p>
           </div>
         </figure>
@@ -555,33 +555,33 @@
           <img src="assets/shortpeek/web-home.webp" alt="Trang chủ Shortpeek phiên bản Desktop Web (1920px) với Featured Cinematic Billboard và Ranked Rail Top 10" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
         </div>
         <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-3">
-          <span data-i18n="web-cap-home1">01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10</span>
-          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="web-cap-home2">Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng</span>
+          <span data-i18n="web-cap-home1">Trang chủ web · Phim nổi bật và Top 10</span>
+          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="web-cap-home2">Tìm kiếm · VIP · Nhận xu</span>
         </figcaption>
       </figure>
 
       <!-- 3 Web Editorial Highlights -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-8 hairline-t font-mono text-xs text-[var(--text-muted)] gsap-card">
         <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec1-title">[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec1-desc">Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.</span>
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec1-title">Phim nổi bật</span>
+          <span class="leading-relaxed block" data-i18n="web-spec1-desc">Khung 1312 × 560 px dành cho phim nổi bật.</span>
         </div>
         <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec2-title">[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec2-desc">Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.</span>
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec2-title">Điều hướng</span>
+          <span class="leading-relaxed block" data-i18n="web-spec2-desc">Bốn mục chính, ô tìm kiếm và lối vào VIP, ví xu.</span>
         </div>
         <div class="space-y-1.5">
-          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec3-title">[ ĐỒNG BỘ ĐA NỀN TẢNG ]</span>
-          <span class="leading-relaxed block" data-i18n="web-spec3-desc">Bản app và desktop web dùng chung hệ màu, font Inter và cách phân biệt mở khóa bằng xu với gói Premium.</span>
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec3-title">Dùng chung giữa app và web</span>
+          <span class="leading-relaxed block" data-i18n="web-spec3-desc">App và web dùng cùng màu, font Inter và hai cách mở tập bằng xu hoặc Premium.</span>
         </div>
       </div>
     </section>
 
     <section id="home-navigation" class="shortpeek-feature">
-      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="home-focus-title">Nhường chỗ cho phim trên Home</h2>
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="home-focus-title">Đưa phim lên trước</h2>
       <div class="shortpeek-explainer">
-        <p data-i18n="home-focus-desc">Tôi rút thanh đáy từ năm mục xuống bốn và chuyển Rewards khỏi thanh này. VIP và nhận xu vẫn có lối vào ở đầu trang Home. Phần đầu trang dành cho một poster, với hai hành động là xem ngay và lưu vào My List.</p>
-        <p data-i18n="home-focus-question">Điểm cần kiểm chứng là người mới có tìm thấy lối nhận xu ở vị trí mới hay không.</p>
+        <p data-i18n="home-focus-desc">Tôi rút thanh điều hướng từ năm mục xuống bốn, vẫn giữ lối vào VIP và nhận xu ở đầu trang. Một poster lớn dẫn tới Xem ngay và My List.</p>
+        <p data-i18n="home-focus-question">Người mới có tìm thấy nút nhận xu ở chỗ mới không?</p>
       </div>
       <div class="shortpeek-home-pair">
         <figure>
@@ -598,10 +598,10 @@
     <section id="design-details" class="shortpeek-feature">
       <h2 id="shortpeek-details-title" class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="deep-heading">Chi tiết thiết kế</h2>
       <nav aria-labelledby="shortpeek-details-title" class="shortpeek-chapters"><ul>
-          <li><a href="#audit" data-i18n="deep-audit">Audit bản gốc</a></li>
-          <li><a href="#walkthrough" data-i18n="deep-flows">Năm luồng trên app</a></li>
-          <li><a href="#system-bento" data-i18n="deep-system">Kiến trúc thông tin và UI</a></li>
-          <li><a href="#store-readiness" data-i18n="deep-store">Chuẩn bị nộp store</a></li>
+          <li><a href="#audit" data-i18n="deep-audit">Vấn đề ở bản gốc</a></li>
+          <li><a href="#walkthrough" data-i18n="deep-flows">Năm luồng trong app</a></li>
+          <li><a href="#system-bento" data-i18n="deep-system">Cấu trúc và giao diện</a></li>
+          <li><a href="#store-readiness" data-i18n="deep-store">Chuẩn bị nộp app</a></li>
           <li><a href="#before-after" data-i18n="deep-compare">So sánh tổng quan</a></li>
         </ul></nav>
     </section>
@@ -615,9 +615,9 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         <!-- Context + Borderless Editorial Pull-Quote -->
         <div class="lg:col-span-5 space-y-6">
-          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">Audit trước khi thiết kế lại</h2>
-          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">Trước đợt chuẩn bị nộp App Store và Google Play, đội muốn giảm số khối khuyến mãi trên màn hình xem phim và làm rõ cách trả phí cho từng tập.</p>
-          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">Tôi rà các màn hình gốc, thiết kế lại luồng và giao diện, rồi dựng prototype và hệ thống UI để bàn giao.</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec1-title">Bản gốc vướng ở đâu?</h2>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc1">Trước khi nộp app, nhóm muốn giảm khuyến mãi trên màn hình xem và làm rõ cách trả phí từng tập.</p>
+          <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec1-desc2">Tôi rà bản gốc, thiết kế lại luồng và giao diện, rồi dựng bản mẫu để bàn giao.</p>
 
 
         </div>
@@ -627,32 +627,32 @@
           <div class="py-6 flex gap-6 items-start">
             <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">01</span>
             <div class="space-y-1.5">
-              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp1-title">Nhiều khối nội dung cạnh tranh nhau</h3>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp1-desc">Bản gốc đặt thanh tìm kiếm và nút VIP ở đầu trang, tiếp theo là banner ngang, bốn tab con, lưới ba cột và banner giảm 50% màu vàng đậm; trên màn For you lại phủ nút cam lớn che khuất video.</p>
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp1-title">Khuyến mãi lấn át nội dung</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp1-desc">Home dồn nhiều banner và tab. Trên For You, nút cam lớn che một phần video.</p>
             </div>
           </div>
 
           <div class="py-6 flex gap-6 items-start">
             <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">02</span>
             <div class="space-y-1.5">
-              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp2-title">Thư viện bị tách giữa My List và Profile</h3>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp2-desc">Thanh đáy gồm năm mục đặt nút Rewards kèm chấm cam ngay giữa, trong khi mục My Downloads lại nằm trong Profile thay vì đứng chung với phim đã lưu và lịch sử xem.</p>
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp2-title">Thư viện chia hai chỗ</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp2-desc">Tập đã tải nằm trong Profile. Phim đã lưu và lịch sử xem nằm trong My List.</p>
             </div>
           </div>
 
           <div class="py-6 flex gap-6 items-start">
             <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">03</span>
             <div class="space-y-1.5">
-              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp3-title">Xếp chồng gói xu chia dòng và thẻ VIP</h3>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp3-desc">Khi mở tập khóa hoặc vào Top up Coins, người xem thấy cùng lúc hàng gói xu chia hai dòng Immediately / Free phải cộng nhẩm, kẹp với các thẻ VIP nhiều màu ở ngay bên dưới.</p>
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp3-title">Phải tự cộng số xu</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp3-desc">Gói nạp tách xu gốc và xu thưởng thành hai dòng.</p>
             </div>
           </div>
 
           <div class="py-6 flex gap-6 items-start">
             <span class="font-mono text-sm font-bold text-orange-600 dark:text-[#F97039] pt-1 shrink-0">04</span>
             <div class="space-y-1.5">
-              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp4-title">Chưa phủ đủ lỗi phát và thông tin pháp lý</h3>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp4-desc">Bản gốc chưa thống nhất cách xử lý mất mạng, lỗi phát video, cảnh báo quay màn hình, thao tác hoàn tác danh sách hay màn chính sách đi kèm nút thanh toán để nộp duyệt store.</p>
+              <h3 class="text-lg sm:text-xl font-bold uppercase" data-i18n="pp4-title">Thiếu hướng xử lý khi gặp lỗi</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="pp4-desc">Bản gốc thiếu cách xử lý thống nhất khi mất mạng hoặc lỗi phát, và thiếu đường dẫn tới chính sách thanh toán.</p>
             </div>
           </div>
         </div>
@@ -661,28 +661,28 @@
       <!-- Dark Archive Reference Strip (No inner nested boxes) -->
       <div class="rounded-2xl cinema-stage p-6 sm:p-10 space-y-6 gsap-card shadow-2xl">
         <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] uppercase">
-          <span class="text-orange-400 font-bold" data-i18n="audit-strip-lbl">Tư liệu bản gốc (Archive)</span>
+          <span class="text-orange-400 font-bold" data-i18n="audit-strip-lbl">Màn hình bản gốc</span>
           <span class="text-neutral-400" data-i18n="audit-strip-sub">Home · For you · Unlock sheet · Top up Coins</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
           <div class="lg:col-span-5 space-y-3">
             <img src="assets/shortpeek/old-home-audit.webp" alt="Bản gốc Shortpeek màn hình Home dày banner và lưới thẻ" loading="lazy" decoding="async" class="w-full h-auto max-h-[340px] object-contain mx-auto rounded-lg">
-            <span class="font-mono text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap1">01 · Home gốc: banner ngang, 4 tab con &amp; thẻ 50% vàng</span>
+            <span class="font-mono text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap1">Home · Banner và thẻ giảm giá</span>
           </div>
 
           <div class="lg:col-span-7 grid grid-cols-3 gap-4 items-end">
             <div class="space-y-3">
               <img src="assets/shortpeek/old-foryou-audit.webp" alt="Bản gốc Shortpeek tab For you với nút cam lớn" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
-              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap2">02 · For you gốc</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap2">For You</span>
             </div>
             <div class="space-y-3">
               <img src="assets/shortpeek/old-locked-audit.webp" alt="Bản gốc Shortpeek sheet mở khóa dồn nhiều gói" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
-              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap3">03 · Sheet mở khóa gốc</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap3">Mở khóa tập</span>
             </div>
             <div class="space-y-3">
               <img src="assets/shortpeek/old-topup-audit.webp" alt="Bản gốc Shortpeek trang Top up Coins chia hai dòng" loading="lazy" decoding="async" class="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain object-top mx-auto rounded-lg">
-              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap4">04 · Top up Coins gốc</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase text-neutral-300 text-center block" data-i18n="old-cap4">Nạp xu</span>
             </div>
           </div>
         </div>
@@ -698,7 +698,7 @@
           [ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]
         </div>
         <h2 id="shortpeek-flow-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight" data-i18n="sec2-heading">
-          KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN
+          Năm luồng trong app
         </h2>
       </div>
 
@@ -729,22 +729,22 @@
           <div class="lg:col-span-5 flex flex-col justify-between gap-8">
             <div class="space-y-6">
               <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d1-title">
-                Rút thanh đáy còn 4 tab và dọn thoáng màn Home
+                Trang chủ với bốn mục điều hướng
               </h3>
 
               <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d1-desc">
-                Tôi đưa Rewards ra khỏi thanh đáy để giữ bốn mục chính thật gọn, còn lối vào VIP và nhận xu nằm cố định ở góc phải header. Đầu trang Home chỉ mở bằng một poster lớn với hai nút rõ ràng để người xem chọn phim ngay.
+                Rewards rời thanh điều hướng để nhường chỗ cho các mục chính. Nút nhận xu chuyển lên đầu Home.
               </p>
 
               <!-- Borderless 2-row Delta -->
               <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
-                  <span class="block" data-i18n="d1-old">5 tab có Rewards chấm cam giữa đáy; Home dồn banner ngang, 4 tab con và thẻ 50% vàng.</span>
+                  <span class="block" data-i18n="d1-old">Năm mục điều hướng, nhiều banner và khuyến mãi.</span>
                 </div>
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
-                  <span class="block font-semibold" data-i18n="d1-new">4 tab dạng thanh nổi; mở đầu bằng 1 poster dọc Watch Now / + My List, Top 10 và thẻ Premium tối.</span>
+                  <span class="block font-semibold" data-i18n="d1-new">Bốn mục điều hướng, một poster chính và danh sách Top 10.</span>
                 </div>
               </div>
             </div>
@@ -770,21 +770,21 @@
           <div class="lg:col-span-5 flex flex-col justify-between gap-8">
             <div class="space-y-6">
               <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d2-title">
-                Đổi tên thành Clip và làm nổi nút xem ngay
+                Xem phim từ đoạn trích
               </h3>
 
               <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d2-desc">
-                Tôi đổi tên For you sang Clip cho đúng bản chất trích đoạn ngắn, tránh nhầm với mục đề xuất ở Home. Mô tả phim rút gọn còn một dòng và nút trắng Watch Now nổi bật trên nền video dọc.
+                Tôi đổi tên For You thành Clip để phân biệt với đề xuất trên Home.
               </p>
 
               <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
-                  <span class="block" data-i18n="d2-old">Đặt tên For you dễ nhầm; nhiều nhãn thẻ, đoạn mô tả dài và nút cam lớn đè cạnh dưới video.</span>
+                  <span class="block" data-i18n="d2-old">Mô tả dài và nút cam che phần dưới video.</span>
                 </div>
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
-                  <span class="block font-semibold" data-i18n="d2-new">Đổi thành Clip; thông tin gom 1 dòng, nút trắng Watch Now tương phản cao và cụm nút tròn bên phải.</span>
+                  <span class="block font-semibold" data-i18n="d2-new">Mô tả một dòng, nút Xem ngay màu trắng.</span>
                 </div>
               </div>
             </div>
@@ -815,7 +815,7 @@
           <div class="lg:col-span-5 flex flex-col justify-between gap-8">
             <div class="space-y-5">
               <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d3-group-title">
-                Tách luồng theo số dư và ghi rõ xu thực nhận
+                Mở khóa tập và nạp xu
               </h3>
 
               <!-- Two clean borderless clickable rows -->
@@ -823,9 +823,9 @@
                 <button type="button" data-sub-trigger="unlock" data-active="true" class="subview-note w-full text-left py-4 flex items-start gap-3">
                   <span aria-hidden="true" class="sub-dot text-xs pt-1 shrink-0">●</span>
                   <div class="space-y-1.5">
-                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d3-title">Tách nhánh Đủ xu và Thiếu xu</div>
+                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d3-title">Đủ xu và thiếu xu</div>
                     <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d3-desc">
-                      Tôi tách luồng theo số dư theo nguyên tắc Progressive Disclosure. Người đã đủ xu chỉ thấy giá tập cạnh số dư với một nút xác nhận duy nhất. Người thiếu xu thấy ngay số xu cần thêm cùng hai tab Coins và Premium riêng biệt.
+                      Đủ xu thì xác nhận ngay. Thiếu xu thì xem cần thêm bao nhiêu.
                     </p>
                   </div>
                 </button>
@@ -833,8 +833,8 @@
                 <button type="button" data-sub-trigger="wallet" data-active="false" class="subview-note w-full text-left py-4 flex items-start gap-3">
                   <span aria-hidden="true" class="sub-dot text-xs pt-1 shrink-0">●</span>
                   <div class="space-y-1.5">
-                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d4-title">Hiển thị tổng xu thực nhận và điều khoản thanh toán</div>
-                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d4-desc">Ở bản gốc, người xem phải cộng hai dòng xu gốc và xu thưởng. Tôi đưa tổng xu thực nhận lên thẻ Coin Wallet. Cuối trang Wallet và Premium, tôi tách nút Apple IAP và Stripe · Card, kèm liên kết đến chính sách thanh toán.</p>
+                    <div class="font-mono text-xs font-bold uppercase" data-i18n="d4-title">Ghi rõ tổng xu nhận được</div>
+                    <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="d4-desc">Tôi ghi tổng xu trên thẻ nạp. Apple IAP và Stripe có nút riêng, cạnh liên kết chính sách.</p>
                   </div>
                 </button>
               </div>
@@ -850,7 +850,7 @@
           <div class="lg:col-span-7 rounded-2xl cinema-stage p-6 sm:p-10 flex flex-col justify-center gap-6 shadow-2xl">
             <div class="flex flex-wrap items-center gap-6 border-b border-white/10 font-mono text-[11px] uppercase">
               <button type="button" data-sub-tab="unlock" aria-pressed="true" class="subview-pill pb-2.5 font-bold" data-i18n="sub-unlock">
-                Mở khóa: Đủ xu / Thiếu xu
+                Mở khóa tập
               </button>
               <button type="button" data-sub-tab="wallet" aria-pressed="false" class="subview-pill pb-2.5 font-bold" data-i18n="sub-wallet">
                 Coin Wallet &amp; Premium
@@ -860,11 +860,11 @@
             <div data-sub-panel="unlock" class="grid grid-cols-2 gap-6 items-start">
               <div class="space-y-2.5 text-center">
                 <img src="assets/shortpeek/ui-unlock-enough.webp" alt="Luồng mở khóa khi đủ xu" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
-                <span class="font-mono text-[10px] uppercase text-emerald-400 block" data-i18n="sub-unlock-cap1">Đủ xu: 1 chạm xác nhận</span>
+                <span class="font-mono text-[10px] uppercase text-emerald-400 block" data-i18n="sub-unlock-cap1">Đủ xu · Xác nhận mở tập</span>
               </div>
               <div class="space-y-2.5 text-center">
                 <img src="assets/shortpeek/ui-unlock-need.webp" alt="Luồng mở khóa khi thiếu xu với 2 tab Coins và Premium" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
-                <span class="font-mono text-[10px] uppercase text-orange-400 block" data-i18n="sub-unlock-cap2">Thiếu xu: tách 2 tab Coins / Premium</span>
+                <span class="font-mono text-[10px] uppercase text-orange-400 block" data-i18n="sub-unlock-cap2">Thiếu xu · Chọn nạp hoặc Premium</span>
               </div>
             </div>
 
@@ -875,7 +875,7 @@
               </div>
               <div class="space-y-2.5 text-center">
                 <img src="assets/shortpeek/ui-premium-new.webp" alt="Màn hình Shortpeek Premium mới" loading="lazy" decoding="async" class="w-full max-w-[270px] mx-auto h-auto block drop-shadow-xl">
-                <span class="font-mono text-[10px] uppercase text-neutral-300 block" data-i18n="sub-wallet-cap2">Premium: tách Apple IAP / Stripe &amp; điều khoản</span>
+                <span class="font-mono text-[10px] uppercase text-neutral-300 block" data-i18n="sub-wallet-cap2">Premium · Thanh toán và chính sách</span>
               </div>
             </div>
           </div>
@@ -886,21 +886,21 @@
           <div class="lg:col-span-5 flex flex-col justify-between gap-8">
             <div class="space-y-6">
               <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d5-title">
-                Gom Saved, History và Downloads vào một thư viện
+                Một chỗ cho thư viện
               </h3>
 
               <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d5-desc">
-                Tôi gom Saved, History và Downloads vào chung My List để người xem không phải vào Profile tìm tập đã tải. Cả ba tab dùng chung thao tác chọn, xác nhận xóa, thanh hoàn tác Undo và màn hình trống để tránh xóa nhầm.
+                Tôi gom phim đã lưu, lịch sử xem và tập đã tải vào My List.
               </p>
 
               <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
-                  <span class="block" data-i18n="d5-old">Saved và History nằm ở My List, còn My Downloads bị đẩy sang trong màn Profile.</span>
+                  <span class="block" data-i18n="d5-old">Downloads nằm trong Profile.</span>
                 </div>
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
-                  <span class="block font-semibold" data-i18n="d5-new">Hợp nhất 3 tab Saved · History · Downloads kèm đủ luồng chọn, xác nhận xóa, hoàn tác Undo và màn hình trống.</span>
+                  <span class="block font-semibold" data-i18n="d5-new">Ba tab dùng chung thao tác chọn, xóa và hoàn tác.</span>
                 </div>
               </div>
             </div>
@@ -935,21 +935,21 @@
           <div class="lg:col-span-5 flex flex-col justify-between gap-8">
             <div class="space-y-6">
               <h3 class="text-2xl sm:text-3xl font-bold uppercase tracking-tight" data-i18n="d6-title">
-                Chia nhóm tài khoản và phân biệt nút nhận thưởng
+                Tài khoản và nhận thưởng
               </h3>
 
               <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="d6-desc">
-                Trên Profile, tôi chia rõ ba nhóm gói thành viên, ví xu và cài đặt, tách riêng bản Guest với Premium member. Ở Earn Coins, thẻ điểm danh 7 ngày giữ sắc ấm, còn ba nút Go, Claim và Claimed phân biệt bằng độ tương phản trắng, cam và tối.
+                Tôi tách màn hình cho khách và thành viên Premium. Earn Coins có ba trạng thái rõ ràng cho từng nhiệm vụ.
               </p>
 
               <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-mono text-xs">
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-[var(--text-muted)] block" data-i18n="lbl-old-short">Trước</span>
-                  <span class="block" data-i18n="d6-old">Profile gộp chung cài đặt với My Downloads; bảng nhiệm vụ thưởng thiếu phân cấp nút hành động.</span>
+                  <span class="block" data-i18n="d6-old">Cài đặt và tập đã tải nằm chung trong Profile.</span>
                 </div>
                 <div class="py-3.5 space-y-1">
                   <span class="text-[10px] uppercase text-orange-600 dark:text-[#F97039] font-bold block" data-i18n="lbl-new-short">Sau</span>
-                  <span class="block font-semibold" data-i18n="d6-new">Tách nhóm Membership · Coin Wallet · Support, phân biệt Guest/Premium và 3 nút Claimed / Claim / Go.</span>
+                  <span class="block font-semibold" data-i18n="d6-new">Profile gom gói thành viên, ví xu và hỗ trợ.</span>
                 </div>
               </div>
             </div>
@@ -986,25 +986,25 @@
             [ 03 // HỆ THỐNG THIẾT KẾ ]
           </div>
           <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec3-heading">
-            KIẾN TRÚC THÔNG TIN &amp; HỆ THỐNG UI
+            Cấu trúc và giao diện
           </h2>
         </div>
         <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec3-desc">
-          Tôi tổ chức lại toàn bộ ứng dụng theo ba cụm luồng chính, đi kèm hệ màu tối và hệ thống component dùng chung để đội phát triển dựng đồng bộ.
+          Tôi nhóm lại các luồng và dùng chung thành phần giao diện để bàn giao.
         </p>
       </div>
 
       <!-- Beat A: Full-width Clean Typographic IA Table + Borderless 3-Cluster Row -->
       <div class="space-y-10 gsap-card">
         <div class="space-y-4">
-          <h3 class="text-lg font-bold uppercase tracking-tight" data-i18n="ia-title">Tái cấu trúc 5 khu vực chính</h3>
+          <h3 class="text-lg font-bold uppercase tracking-tight" data-i18n="ia-title">Những gì thay đổi</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left font-mono text-xs border-t border-b border-[var(--border-color)]">
               <thead class="hairline-b uppercase text-[var(--text-muted)]">
                 <tr>
                   <th class="py-3.5 pr-4 w-1/5" data-i18n="th-area">Khu vực</th>
                   <th class="py-3.5 px-4 w-2/5 text-amber-600" data-i18n="th-before">Bản gốc</th>
-                  <th class="py-3.5 pl-4 w-2/5 text-emerald-600 font-bold" data-i18n="th-after">Bản redesign</th>
+                  <th class="py-3.5 pl-4 w-2/5 text-emerald-600 font-bold" data-i18n="th-after">Bản mới</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[var(--border-color)]">
@@ -1058,8 +1058,8 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pt-10 hairline-t gsap-card">
         <div class="lg:col-span-7 space-y-5">
           <div class="space-y-1">
-            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="color-title">COLOR SYSTEM / DARK-FIRST CINEMA UI</h3>
-            <p class="text-sm text-[var(--text-muted)]" data-i18n="color-desc">Tách rõ bốn lớp nền tối, nút hành động trắng tương phản cao và cam #F97039 chỉ dùng cho trạng thái chọn hoặc điểm thưởng.</p>
+            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="color-title">Màu giao diện</h3>
+            <p class="text-sm text-[var(--text-muted)]" data-i18n="color-desc">Nền tối làm nổi ảnh phim. Nút chính dùng màu trắng, còn cam đánh dấu lựa chọn và phần thưởng.</p>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
             <div class="p-4 rounded-xl border border-white/10 bg-[#0D0E11] text-white">
@@ -1097,9 +1097,9 @@
 
         <div class="lg:col-span-5 space-y-5">
           <div class="space-y-1">
-            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="type-title">TYPOGRAPHY / INTER</h3>
+            <h3 class="text-xl font-bold uppercase tracking-tight" data-i18n="type-title">Chữ Inter</h3>
             <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="type-desc">
-              Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn hình điện thoại mà không làm rối poster.
+              Bốn cỡ chữ cho tiêu đề, nhãn và nội dung trên điện thoại.
             </p>
           </div>
           <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-sans">
@@ -1126,9 +1126,9 @@
       <!-- Beat C: App Icon & Brand Mark -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-10 hairline-t gsap-card">
         <div class="lg:col-span-5 space-y-5">
-          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="icon-title">APP ICON &amp; LOGO MỚI</h3>
+          <h3 class="text-2xl font-bold uppercase tracking-tight" data-i18n="icon-title">Biểu tượng app</h3>
           <p class="text-base text-[var(--text-muted)] leading-relaxed" data-i18n="icon-desc">
-            Tôi làm lại App Icon và logo từ phản hồi review trong đội: giữ nền đen, kết hợp chữ S lồng nút Play màu đỏ trắng để nhận diện ở cỡ nhỏ trên màn hình chính.
+            Tôi lồng nút Play vào chữ S để biểu tượng dễ nhận ra ở cỡ nhỏ.
           </p>
         </div>
 
@@ -1143,8 +1143,8 @@
           <img src="assets/shortpeek/shortpeek-hero.webp" alt="Toàn cảnh 4 màn hình cốt lõi Shortpeek bản redesign: Home, Clip, Unlock và Premium" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
         </div>
         <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2">
-          <span data-i18n="bento-hero-cap1">Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium</span>
-          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="bento-hero-cap2">Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF</span>
+          <span data-i18n="bento-hero-cap1">Home · Clip · Mở khóa · Premium</span>
+          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="bento-hero-cap2">Nền tối và nút chính màu trắng</span>
         </figcaption>
       </figure>
     </section>
@@ -1162,10 +1162,10 @@
         <div class="lg:col-span-4 space-y-6 gsap-card">
           <div class="space-y-3">
             <h2 class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight" data-i18n="sec6-heading">
-              CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY
+              Chuẩn bị nộp app
             </h2>
             <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="sec6-desc">
-              Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.
+              Tôi bổ sung các màn hình đăng nhập, xem ngoại tuyến, xử lý lỗi phát và chính sách thanh toán.
             </p>
           </div>
 
@@ -1198,8 +1198,8 @@
           <div class="space-y-4">
             <img src="assets/shortpeek/edge-signin-ios.webp" alt="Màn hình đăng nhập iOS với tùy chọn Not now" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
             <div class="space-y-1">
-              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge1-title">Apple / Android &amp; Not now</h3>
-              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge1-desc">Tặng 20 xu cho lần đăng nhập đầu tiên, nhưng vẫn để nút Not now cho người muốn xem thử trước.</p>
+              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge1-title">Đăng nhập hoặc xem trước</h3>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge1-desc">Lần đầu đăng nhập được 20 xu. Người muốn xem trước có thể chọn Not now.</p>
             </div>
           </div>
 
@@ -1207,15 +1207,15 @@
             <img src="assets/shortpeek/edge-offline.webp" alt="Màn hình báo ngoại tuyến dẫn tới View Downloads" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
             <div class="space-y-1">
               <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge2-title">Mở thẳng tập đã tải</h3>
-              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge2-desc">Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.</p>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge2-desc">Khi mất mạng, View Downloads dẫn tới tập đã tải.</p>
             </div>
           </div>
 
           <div class="space-y-4">
             <img src="assets/shortpeek/edge-drm.webp" alt="Cảnh báo bảo vệ nội dung khi phát hiện quay màn hình" loading="lazy" decoding="async" class="max-w-[220px] w-full mx-auto h-auto block">
             <div class="space-y-1">
-              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge3-title">10 trạng thái trình phát &amp; DRM</h3>
-              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge3-desc">Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.</p>
+              <h3 class="font-bold text-sm uppercase text-white" data-i18n="edge3-title">Lỗi phát và bảo vệ nội dung</h3>
+              <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="edge3-desc">Màn hình cho lỗi phát, tải video và cảnh báo quay màn hình.</p>
             </div>
           </div>
         </div>
@@ -1237,79 +1237,49 @@
           </div>
           <div class="absolute inset-x-0 top-0 flex justify-between gap-2 p-3 sm:p-5 pointer-events-none font-mono text-[9px] sm:text-xs uppercase font-bold">
             <span class="bg-white text-black px-2.5 py-1 rounded shadow" data-i18n="comparison-before">BẢN GỐC</span>
-            <span class="bg-[#F97039] text-white px-2.5 py-1 rounded shadow" data-i18n="comparison-after">BẢN REDESIGN</span>
+            <span class="bg-[#F97039] text-white px-2.5 py-1 rounded shadow" data-i18n="comparison-after">BẢN MỚI</span>
           </div>
         </div>
 
         <figcaption id="comparison-caption" class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl" data-i18n="comparison-desc">
-          Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).
+          So sánh trang chủ, màn mở khóa và trang tài khoản trước và sau khi thiết kế lại.
         </figcaption>
       </figure>
     </section>
 
-    <!-- 06 / ĐÁNH ĐỔI, SỬA THEO REVIEW, GIẢ THUYẾT & BÀI HỌC -->
+    <!-- 06 / SỬA SAU GÓP Ý & BÀI HỌC -->
     <section id="lessons" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
-      <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-tag">[ ĐÁNH ĐỔI &amp; GIỚI HẠN ]</div>
-      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="sec7-heading">Những gì thay đổi sau review</h2>
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-i18n="sec7-heading">Tôi đã sửa gì sau góp ý?</h2>
 
       <!-- Open 3-Column Editorial Trade-offs Row -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 gsap-card">
         <div class="pt-6 hairline-t space-y-3">
           <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">01</span>
-          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr1-title">Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI</h3>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr1-desc">Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.</p>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr1-title">Biểu tượng đỏ, nút chính trắng</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr1-desc">Sau góp ý nội bộ, tôi vẽ lại biểu tượng đỏ trên nền đen. Nút chính trong app vẫn màu trắng để nổi trên ảnh phim.</p>
         </div>
         <div class="pt-6 hairline-t space-y-3">
           <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">02</span>
-          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr2-title">Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab</h3>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr2-desc">Từ phản hồi rà soát, tôi rút tên tab thứ tư còn Profile, đổi nhãn sang Top Up và bỏ bớt dòng lặp ở bảng nhiệm vụ. Tôi cũng gỡ khối Earn coins từng đặt cuối Coin Wallet để tách hẳn chuyện nạp tiền khỏi nhiệm vụ nhận thưởng.</p>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr2-title">Tách nhận xu khỏi ví</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr2-desc">Tôi bỏ Earn Coins khỏi ví để tách việc nạp tiền khỏi nhiệm vụ nhận thưởng.</p>
         </div>
         <div class="pt-6 hairline-t space-y-3">
           <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] block">03</span>
-          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr3-title">Dồn lực cho trạng thái biên và pháp lý trước tính năng phụ</h3>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr3-desc">Gần mốc nộp duyệt, tôi chọn ưu tiên những phần ảnh hưởng trực tiếp tới Store: thao tác quản lý My List (chọn, xóa, Undo, màn trống), đường dẫn ngoại tuyến tới tập đã tải, cảnh báo DRM và năm trang chính sách cạnh nút Apple IAP / Stripe.</p>
+          <h3 class="text-lg font-bold uppercase leading-snug" data-i18n="tr3-title">Chuẩn bị cho lỗi và mất mạng</h3>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed" data-i18n="tr3-desc">Trước khi nộp app, tôi ưu tiên hoàn tác khi xóa khỏi My List, tìm tập đã tải khi mất mạng và bổ sung chính sách thanh toán.</p>
         </div>
       </div>
 
-      <!-- Borderless Unreleased Status + Calm Closing Note -->
-      <div class="pt-14 hairline-t grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        <div class="lg:col-span-7 space-y-6 gsap-card">
-          <div class="space-y-3">
-            <span class="font-mono text-xs uppercase tracking-mono font-bold text-amber-600 dark:text-amber-400 block" data-i18n="status-lbl">Trạng thái hiện tại &amp; Giới hạn</span>
-            <h3 class="text-xl sm:text-2xl font-bold uppercase" data-i18n="status-title">ỨNG DỤNG CHƯA PHÁT HÀNH · CHƯA CÓ SỐ LIỆU ĐO LƯỜNG</h3>
-            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="status-desc">
-              Shortpeek hiện chưa lên store nên tôi chưa có dữ liệu hành vi thực tế để khẳng định bản thiết kế lại cải thiện tỷ lệ giữ chân hay doanh thu. Khi phát hành hoặc chạy usability test, đội ngũ cần kiểm tra ba giả thuyết sau:
-            </p>
-          </div>
-
-          <div class="border-t border-b border-[var(--border-color)] divide-y divide-[var(--border-color)] font-sans text-sm">
-            <div class="py-3.5 flex gap-4 items-start">
-              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">01</span>
-              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-1">Người dùng mới có nhận ra nút Earn Coins và VIP sau khi đưa từ thanh đáy lên góc phải header Home không.</span>
-            </div>
-            <div class="py-3.5 flex gap-4 items-start">
-              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">02</span>
-              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-2">Việc tách hai tab Coins và Premium khi thiếu xu có giúp giảm tỷ lệ bỏ dở giữa chừng khi đang xem tập khóa không.</span>
-            </div>
-            <div class="py-3.5 flex gap-4 items-start">
-              <span class="font-mono text-xs font-bold text-orange-600 dark:text-[#F97039] pt-0.5 shrink-0">03</span>
-              <span class="text-[var(--text-muted)] leading-relaxed" data-i18n="hyp-3">Cách ghi thẳng tổng số xu nhận được trên thẻ Coin Wallet có giảm nhầm lẫn trước bước xác nhận thanh toán không.</span>
-            </div>
-          </div>
+      <div class="max-w-3xl p-8 rounded-2xl bg-[var(--bg-secondary)] flex flex-col gap-6 gsap-card">
+        <div class="space-y-4">
+          <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block" data-i18n="learn-lbl">Bài học thiết kế</span>
+          <h3 class="text-2xl font-bold uppercase" data-i18n="sec7-learn-title">Đừng để người xem mất mạch</h3>
+          <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec7-learn-desc">
+            Bài toán khó nhất nằm ở lúc người xem gặp tập khóa hoặc mất mạng. Tôi muốn họ biết có thể làm gì tiếp ngay trên màn hình đang xem.
+          </p>
         </div>
-
-        <!-- Calm Borderless Closing Note -->
-        <div class="lg:col-span-5 p-8 rounded-2xl bg-[var(--bg-secondary)] flex flex-col justify-between gap-6 gsap-card">
-          <div class="space-y-4">
-            <span class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)] block" data-i18n="learn-lbl">Bài học thiết kế</span>
-            <h3 class="text-2xl font-bold uppercase" data-i18n="sec7-learn-title">CÂN BẰNG THẨM MỸ ĐIỆN ẢNH VÀ MÔ HÌNH TRẢ PHÍ THEO TẬP</h3>
-            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec7-learn-desc">
-              Làm mới app phim ngắn theo hướng gọn như Netflix khó nhất ở chỗ bỏ banner rực màu mà vẫn giữ rõ lối kiếm xu và nâng cấp VIP. Phần việc tốn công nhất khi bàn giao cho kỹ thuật nằm ngoài màn Home: nhánh mở khóa theo số dư, đầy đủ thao tác thư viện (xóa, Undo, màn trống) và bộ màn hình lỗi phục vụ duyệt store.
-            </p>
-          </div>
-          <div class="pt-4 hairline-t font-mono text-[11px] uppercase text-[var(--text-muted)]" data-i18n="learn-meta">
-            Marchi Lab · Shortpeek Redesign · 2026
-          </div>
+        <div class="pt-4 hairline-t font-mono text-[11px] uppercase text-[var(--text-muted)]" data-i18n="learn-meta">
+          Marchi Lab · Shortpeek Redesign · 2026
         </div>
       </div>
     </section>
@@ -1326,7 +1296,7 @@
             BẠN CẦN PRODUCT DESIGNER CHO DỰ ÁN?
           </h3>
           <p class="text-sm sm:text-base text-[var(--text-muted)] max-w-xl leading-relaxed" data-i18n="cs-contact-desc">
-            Mình luôn sẵn sàng trao đổi về cơ hội hợp tác, thiết kế sản phẩm hoặc chia sẻ góc nhìn chuyên môn.
+            Tôi sẵn sàng trao đổi về công việc và dự án thiết kế sản phẩm.
           </p>
         </div>
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
@@ -1635,43 +1605,42 @@
       vi: {
         'hero-title': 'Shortpeek',
         'meta-role-val': 'Product Designer',
-        'hero-desc': 'Khi một tập phim bị khóa, giao diện cũ hiện giá tập, gói xu và thẻ VIP cùng lúc. Tôi thiết kế hai nhánh theo số dư để người xem biết có thể mở tập ngay hay cần thêm xu.',
+        'hero-desc': 'Tôi thiết kế lại Shortpeek, app xem phim ngắn. Khi gặp tập khóa, người xem thấy ngay đã đủ xu để mở hay còn thiếu bao nhiêu.',
         'meta-type-val': 'Marchi Lab · 2026 · Chưa phát hành',
         'meta-scale-val': 'iOS · Android · Desktop Web',
         'chapter-nav': 'Trong bài',
         'chapter-unlock': 'Mở khóa tập',
         'chapter-web': 'Desktop Web',
-        'chapter-home': 'Điều hướng Home',
-        'chapter-deep': 'Đọc sâu',
-        'chapter-lessons': 'Sau review',
-        'unlock-heading': 'Tách luồng mở khóa theo số dư',
+        'chapter-home': 'Trang chủ',
+        'chapter-deep': 'Thiết kế chi tiết',
+        'chapter-lessons': 'Sau góp ý',
+        'unlock-heading': 'Mở khóa theo số dư',
         'unlock-original': 'Giao diện cũ',
-        'unlock-original-note': 'Giá tập và số dư nằm trên cùng, còn các gói xu và VIP xếp ngay bên dưới.',
+        'unlock-original-note': 'Giá tập, số dư, gói xu và VIP cùng nằm trong một bảng.',
         'unlock-enough': 'Khi đủ xu',
-        'unlock-enough-note': 'Giá tập đặt cạnh số dư. Người xem xác nhận để mở tập.',
+        'unlock-enough-note': 'Xem giá và số dư, rồi xác nhận để mở tập.',
         'unlock-short': 'Khi thiếu xu',
-        'unlock-short-note': 'Báo số xu còn thiếu trước khi người xem chọn mua xu hoặc xem gói Premium.',
-        'home-focus-title': 'Nhường chỗ cho phim trên Home',
-        'home-focus-desc': 'Tôi rút thanh đáy từ năm mục xuống bốn và chuyển Rewards khỏi thanh này. VIP và nhận xu vẫn có lối vào ở đầu trang Home. Phần đầu trang dành cho một poster, với hai hành động là xem ngay và lưu vào My List.',
-        'home-focus-question': 'Điểm cần kiểm chứng là người mới có tìm thấy lối nhận xu ở vị trí mới hay không.',
+        'unlock-short-note': 'Xem số xu còn thiếu trước khi chọn gói xu hoặc Premium.',
+        'home-focus-title': 'Đưa phim lên trước',
+        'home-focus-desc': 'Tôi rút thanh điều hướng từ năm mục xuống bốn, vẫn giữ lối vào VIP và nhận xu ở đầu trang. Một poster lớn dẫn tới Xem ngay và My List.',
+        'home-focus-question': 'Người mới có tìm thấy nút nhận xu ở chỗ mới không?',
         'home-original': 'Bản gốc · Banner khuyến mãi và thanh đáy năm mục',
         'home-redesign': 'Thiết kế mới · Poster chính và thanh đáy bốn mục',
         'deep-heading': 'Chi tiết thiết kế',
-        'deep-audit': 'Audit bản gốc',
-        'deep-flows': 'Năm luồng trên app',
-        'deep-system': 'Kiến trúc thông tin và UI',
-        'deep-store': 'Chuẩn bị nộp store',
+        'deep-audit': 'Vấn đề ở bản gốc',
+        'deep-flows': 'Năm luồng trong app',
+        'deep-system': 'Cấu trúc và giao diện',
+        'deep-store': 'Chuẩn bị nộp app',
         'deep-compare': 'So sánh tổng quan',
-        'sec1-title': 'Audit trước khi thiết kế lại',
-        'sec1-desc1': 'Trước đợt chuẩn bị nộp App Store và Google Play, đội muốn giảm số khối khuyến mãi trên màn hình xem phim và làm rõ cách trả phí cho từng tập.',
-        'sec1-desc2': 'Tôi rà các màn hình gốc, thiết kế lại luồng và giao diện, rồi dựng prototype và hệ thống UI để bàn giao.',
-        'sec4-web-heading': 'Mở khóa ngay trong trình phát trên web',
-        'sec4-web-desc': 'Trên desktop, tôi giữ giá tập và số dư trong hộp thoại mở khóa ngay trên trình phát. Danh sách tập nằm cạnh video để người xem có thể chọn tập trong cùng màn hình.',
-        'web-spec3-desc': 'Bản app và desktop web dùng chung hệ màu, font Inter và cách phân biệt mở khóa bằng xu với gói Premium.',
-        'd4-desc': 'Ở bản gốc, người xem phải cộng hai dòng xu gốc và xu thưởng. Tôi đưa tổng xu thực nhận lên thẻ Coin Wallet. Cuối trang Wallet và Premium, tôi tách nút Apple IAP và Stripe · Card, kèm liên kết đến chính sách thanh toán.',
-        'sec7-heading': 'Những gì thay đổi sau review',
+        'sec1-title': 'Bản gốc vướng ở đâu?',
+        'sec1-desc1': 'Trước khi nộp app, nhóm muốn giảm khuyến mãi trên màn hình xem và làm rõ cách trả phí từng tập.',
+        'sec1-desc2': 'Tôi rà bản gốc, thiết kế lại luồng và giao diện, rồi dựng bản mẫu để bàn giao.',
+        'sec4-web-heading': 'Mở tập trên máy tính',
+        'sec4-web-desc': 'Trên máy tính, tôi đặt giá và số dư ngay trên trình phát. Danh sách tập nằm bên cạnh video.',
+        'web-spec3-desc': 'App và web dùng cùng màu, font Inter và hai cách mở tập bằng xu hoặc Premium.',
+        'd4-desc': 'Tôi ghi tổng xu trên thẻ nạp. Apple IAP và Stripe có nút riêng, cạnh liên kết chính sách.',
+        'sec7-heading': 'Tôi đã sửa gì sau góp ý?',
         'sec4-web-tag': '[ DESKTOP WEB ]',
-        'sec7-tag': '[ ĐÁNH ĐỔI &amp; GIỚI HẠN ]',
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
         'top-case-num': 'CASE 01 / 04',
@@ -1679,25 +1648,25 @@
         'btn-contact': 'Liên hệ',
         'comparison-tag': '[ TRƯỚC / SAU ]',
         'comparison-before': 'BẢN GỐC',
-        'comparison-after': 'BẢN REDESIGN',
-        'comparison-desc': 'Đối chiếu ba màn hình chính: Home (rút thanh đáy còn 4 tab và dọn thoáng đầu trang), Mở khóa tập (tách Coins / Premium và bỏ cộng nhẩm xu) và Profile (chia nhóm chức năng rõ ràng).',
+        'comparison-after': 'BẢN MỚI',
+        'comparison-desc': 'So sánh trang chủ, màn mở khóa và trang tài khoản trước và sau khi thiết kế lại.',
         'sec1-tag': '[ 01 // BỐI CẢNH &amp; AUDIT BẢN APP GỐC ]',
-        'pp1-title': 'Nhiều khối nội dung cạnh tranh nhau',
-        'pp1-desc': 'Bản gốc đặt thanh tìm kiếm và nút VIP ở đầu trang, tiếp theo là banner ngang, bốn tab con, lưới ba cột và banner giảm 50% màu vàng đậm; trên màn For you lại phủ nút cam lớn che khuất video.',
-        'pp2-title': 'Thư viện bị tách giữa My List và Profile',
-        'pp2-desc': 'Thanh đáy gồm năm mục đặt nút Rewards kèm chấm cam ngay giữa, trong khi mục My Downloads lại nằm trong Profile thay vì đứng chung với phim đã lưu và lịch sử xem.',
-        'pp3-title': 'Xếp chồng gói xu chia dòng và thẻ VIP',
-        'pp3-desc': 'Khi mở tập khóa hoặc vào Top up Coins, người xem thấy cùng lúc hàng gói xu chia hai dòng Immediately / Free phải cộng nhẩm, kẹp với các thẻ VIP nhiều màu ở ngay bên dưới.',
-        'pp4-title': 'Chưa phủ đủ lỗi phát và thông tin pháp lý',
-        'pp4-desc': 'Bản gốc chưa thống nhất cách xử lý mất mạng, lỗi phát video, cảnh báo quay màn hình, thao tác hoàn tác danh sách hay màn chính sách đi kèm nút thanh toán để nộp duyệt store.',
-        'audit-strip-lbl': 'Tư liệu bản gốc (Archive)',
+        'pp1-title': 'Khuyến mãi lấn át nội dung',
+        'pp1-desc': 'Home dồn nhiều banner và tab. Trên For You, nút cam lớn che một phần video.',
+        'pp2-title': 'Thư viện chia hai chỗ',
+        'pp2-desc': 'Tập đã tải nằm trong Profile. Phim đã lưu và lịch sử xem nằm trong My List.',
+        'pp3-title': 'Phải tự cộng số xu',
+        'pp3-desc': 'Gói nạp tách xu gốc và xu thưởng thành hai dòng.',
+        'pp4-title': 'Thiếu hướng xử lý khi gặp lỗi',
+        'pp4-desc': 'Bản gốc thiếu cách xử lý thống nhất khi mất mạng hoặc lỗi phát, và thiếu đường dẫn tới chính sách thanh toán.',
+        'audit-strip-lbl': 'Màn hình bản gốc',
         'audit-strip-sub': 'Home · For you · Unlock sheet · Top up Coins',
-        'old-cap1': '01 · Home gốc: banner ngang, 4 tab con &amp; thẻ 50% vàng',
-        'old-cap2': '02 · For you gốc',
-        'old-cap3': '03 · Sheet mở khóa gốc',
-        'old-cap4': '04 · Top up Coins gốc',
+        'old-cap1': 'Home · Banner và thẻ giảm giá',
+        'old-cap2': 'For You',
+        'old-cap3': 'Mở khóa tập',
+        'old-cap4': 'Nạp xu',
         'sec2-tag': '[ 02 // CÁC LUỒNG CHÍNH TRÊN BẢN REDESIGN ]',
-        'sec2-heading': 'KHÁM PHÁ 05 LUỒNG CHÍNH TRÊN BẢN REDESIGN',
+        'sec2-heading': 'Năm luồng trong app',
         'tab-home': '01 · Home',
         'tab-clip': '02 · Clip',
         'tab-monetization': '03 · Mở khóa &amp; Ví xu',
@@ -1707,43 +1676,43 @@
         'lbl-new-short': 'Sau',
         'btn-prev-flow': '← Trước',
         'btn-next-flow': 'Tiếp →',
-        'd1-title': 'Rút thanh đáy còn 4 tab và dọn thoáng màn Home',
-        'd1-old': '5 tab có Rewards chấm cam giữa đáy; Home dồn banner ngang, 4 tab con và thẻ 50% vàng.',
-        'd1-new': '4 tab dạng thanh nổi; mở đầu bằng 1 poster dọc Watch Now / + My List, Top 10 và thẻ Premium tối.',
-        'd1-desc': 'Tôi đưa Rewards ra khỏi thanh đáy để giữ bốn mục chính thật gọn, còn lối vào VIP và nhận xu nằm cố định ở góc phải header. Đầu trang Home chỉ mở bằng một poster lớn với hai nút rõ ràng để người xem chọn phim ngay.',
+        'd1-title': 'Trang chủ với bốn mục điều hướng',
+        'd1-old': 'Năm mục điều hướng, nhiều banner và khuyến mãi.',
+        'd1-new': 'Bốn mục điều hướng, một poster chính và danh sách Top 10.',
+        'd1-desc': 'Rewards rời thanh điều hướng để nhường chỗ cho các mục chính. Nút nhận xu chuyển lên đầu Home.',
         'd1-stage-cap1': 'Trái: Đầu trang Home mới',
         'd1-stage-cap2': 'Phải: Top 10, thẻ Premium &amp; Continue Watching',
-        'd2-title': 'Đổi tên thành Clip và làm nổi nút xem ngay',
-        'd2-old': 'Đặt tên For you dễ nhầm; nhiều nhãn thẻ, đoạn mô tả dài và nút cam lớn đè cạnh dưới video.',
-        'd2-new': 'Đổi thành Clip; thông tin gom 1 dòng, nút trắng Watch Now tương phản cao và cụm nút tròn bên phải.',
-        'd2-desc': 'Tôi đổi tên For you sang Clip cho đúng bản chất trích đoạn ngắn, tránh nhầm với mục đề xuất ở Home. Mô tả phim rút gọn còn một dòng và nút trắng Watch Now nổi bật trên nền video dọc.',
+        'd2-title': 'Xem phim từ đoạn trích',
+        'd2-old': 'Mô tả dài và nút cam che phần dưới video.',
+        'd2-new': 'Mô tả một dòng, nút Xem ngay màu trắng.',
+        'd2-desc': 'Tôi đổi tên For You thành Clip để phân biệt với đề xuất trên Home.',
         'clip-old-badge': 'Bản gốc · For you',
         'clip-new-badge': 'Bản mới · Clip',
-        'd3-group-title': 'Tách luồng theo số dư và ghi rõ xu thực nhận',
-        'd3-title': 'Tách nhánh Đủ xu và Thiếu xu',
-        'd3-desc': 'Tôi tách luồng theo số dư theo nguyên tắc Progressive Disclosure. Người đã đủ xu chỉ thấy giá tập cạnh số dư với một nút xác nhận duy nhất. Người thiếu xu thấy ngay số xu cần thêm cùng hai tab Coins và Premium riêng biệt.',
-        'd4-title': 'Hiển thị tổng xu thực nhận và điều khoản thanh toán',
-        'sub-unlock': 'Mở khóa: Đủ xu / Thiếu xu',
+        'd3-group-title': 'Mở khóa tập và nạp xu',
+        'd3-title': 'Đủ xu và thiếu xu',
+        'd3-desc': 'Đủ xu thì xác nhận ngay. Thiếu xu thì xem cần thêm bao nhiêu.',
+        'd4-title': 'Ghi rõ tổng xu nhận được',
+        'sub-unlock': 'Mở khóa tập',
         'sub-wallet': 'Coin Wallet &amp; Premium',
-        'sub-unlock-cap1': 'Đủ xu: 1 chạm xác nhận',
-        'sub-unlock-cap2': 'Thiếu xu: tách 2 tab Coins / Premium',
+        'sub-unlock-cap1': 'Đủ xu · Xác nhận mở tập',
+        'sub-unlock-cap2': 'Thiếu xu · Chọn nạp hoặc Premium',
         'sub-wallet-cap1': 'Coin Wallet: tổng xu thực nhận',
-        'sub-wallet-cap2': 'Premium: tách Apple IAP / Stripe &amp; điều khoản',
-        'd5-title': 'Gom Saved, History và Downloads vào một thư viện',
-        'd5-old': 'Saved và History nằm ở My List, còn My Downloads bị đẩy sang trong màn Profile.',
-        'd5-new': 'Hợp nhất 3 tab Saved · History · Downloads kèm đủ luồng chọn, xác nhận xóa, hoàn tác Undo và màn hình trống.',
-        'd5-desc': 'Tôi gom Saved, History và Downloads vào chung My List để người xem không phải vào Profile tìm tập đã tải. Cả ba tab dùng chung thao tác chọn, xác nhận xóa, thanh hoàn tác Undo và màn hình trống để tránh xóa nhầm.',
-        'd6-title': 'Chia nhóm tài khoản và phân biệt nút nhận thưởng',
-        'd6-old': 'Profile gộp chung cài đặt với My Downloads; bảng nhiệm vụ thưởng thiếu phân cấp nút hành động.',
-        'd6-new': 'Tách nhóm Membership · Coin Wallet · Support, phân biệt Guest/Premium và 3 nút Claimed / Claim / Go.',
-        'd6-desc': 'Trên Profile, tôi chia rõ ba nhóm gói thành viên, ví xu và cài đặt, tách riêng bản Guest với Premium member. Ở Earn Coins, thẻ điểm danh 7 ngày giữ sắc ấm, còn ba nút Go, Claim và Claimed phân biệt bằng độ tương phản trắng, cam và tối.',
+        'sub-wallet-cap2': 'Premium · Thanh toán và chính sách',
+        'd5-title': 'Một chỗ cho thư viện',
+        'd5-old': 'Downloads nằm trong Profile.',
+        'd5-new': 'Ba tab dùng chung thao tác chọn, xóa và hoàn tác.',
+        'd5-desc': 'Tôi gom phim đã lưu, lịch sử xem và tập đã tải vào My List.',
+        'd6-title': 'Tài khoản và nhận thưởng',
+        'd6-old': 'Cài đặt và tập đã tải nằm chung trong Profile.',
+        'd6-new': 'Profile gom gói thành viên, ví xu và hỗ trợ.',
+        'd6-desc': 'Tôi tách màn hình cho khách và thành viên Premium. Earn Coins có ba trạng thái rõ ràng cho từng nhiệm vụ.',
         'sec3-tag': '[ 03 // HỆ THỐNG THIẾT KẾ ]',
-        'sec3-heading': 'KIẾN TRÚC THÔNG TIN &amp; HỆ THỐNG UI',
-        'sec3-desc': 'Tôi tổ chức lại toàn bộ ứng dụng theo ba cụm luồng chính, đi kèm hệ màu tối và hệ thống component dùng chung để đội phát triển dựng đồng bộ.',
-        'ia-title': 'Tái cấu trúc 5 khu vực chính',
+        'sec3-heading': 'Cấu trúc và giao diện',
+        'sec3-desc': 'Tôi nhóm lại các luồng và dùng chung thành phần giao diện để bàn giao.',
+        'ia-title': 'Những gì thay đổi',
         'th-area': 'Khu vực',
         'th-before': 'Bản gốc',
-        'th-after': 'Bản redesign',
+        'th-after': 'Bản mới',
         'ia-r1-lbl': 'Bottom Bar',
         'ia-r1-old': '5 tab: Home · For you · Rewards · My List · Profile',
         'ia-r1-new': '4 tab nổi: Home · Clip · My List · Profile',
@@ -1765,64 +1734,58 @@
         'cluster2-desc': 'My List (Saved · History · Downloads), Profile, Settings và 5 trang chính sách.',
         'cluster3-title': '03 · Xu &amp; Gói thành viên',
         'cluster3-desc': 'Nhánh đủ/thiếu xu, Coin Wallet, Premium &amp; Earn Rewards.',
-        'icon-title': 'APP ICON &amp; LOGO MỚI',
-        'icon-desc': 'Tôi làm lại App Icon và logo từ phản hồi review trong đội: giữ nền đen, kết hợp chữ S lồng nút Play màu đỏ trắng để nhận diện ở cỡ nhỏ trên màn hình chính.',
-        'color-title': 'COLOR SYSTEM / DARK-FIRST CINEMA UI',
-        'color-desc': 'Tách rõ bốn lớp nền tối, nút hành động trắng tương phản cao và cam #F97039 chỉ dùng cho trạng thái chọn hoặc điểm thưởng.',
+        'icon-title': 'Biểu tượng app',
+        'icon-desc': 'Tôi lồng nút Play vào chữ S để biểu tượng dễ nhận ra ở cỡ nhỏ.',
+        'color-title': 'Màu giao diện',
+        'color-desc': 'Nền tối làm nổi ảnh phim. Nút chính dùng màu trắng, còn cam đánh dấu lựa chọn và phần thưởng.',
         'c1-desc': 'Nền tối chính',
         'c2-desc': 'Thẻ và bảng giá',
         'c3-desc': 'Nút phụ, thanh nổi',
         'c4-desc': 'Đường chia, viền chip',
         'c5-desc': 'Chữ và nút hành động chính',
         'c6-desc': 'Trạng thái chọn, gói xu, Claim',
-        'type-title': 'TYPOGRAPHY / INTER',
-        'type-desc': 'Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn hình điện thoại mà không làm rối poster.',
-        'bento-hero-cap1': 'Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium',
-        'bento-hero-cap2': 'Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF',
-        'web-cap-home1': '01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10',
-        'web-cap-home2': 'Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng',
-        'web-watch-title': 'Trình phát Desktop &amp; Side-by-side Episodes',
-        'web-watch-desc': 'Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.',
-        'web-unlock-title': 'Modal mở khóa tập &amp; Nạp xu trên Web',
-        'web-unlock-desc': 'Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.',
-        'web-spec1-title': '[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]',
-        'web-spec1-desc': 'Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.',
-        'web-spec2-title': '[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]',
-        'web-spec2-desc': 'Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.',
-        'web-spec3-title': '[ ĐỒNG BỘ ĐA NỀN TẢNG ]',
+        'type-title': 'Chữ Inter',
+        'type-desc': 'Bốn cỡ chữ cho tiêu đề, nhãn và nội dung trên điện thoại.',
+        'bento-hero-cap1': 'Home · Clip · Mở khóa · Premium',
+        'bento-hero-cap2': 'Nền tối và nút chính màu trắng',
+        'web-cap-home1': 'Trang chủ web · Phim nổi bật và Top 10',
+        'web-cap-home2': 'Tìm kiếm · VIP · Nhận xu',
+        'web-watch-title': 'Chọn tập bên cạnh video',
+        'web-watch-desc': 'Đổi tập ngay trên màn hình đang xem.',
+        'web-unlock-title': 'Hộp thoại mở tập',
+        'web-unlock-desc': 'Người xem có thể mở tập bằng xu hoặc chọn gói thành viên ngay trong trình phát.',
+        'web-spec1-title': 'Phim nổi bật',
+        'web-spec1-desc': 'Khung 1312 × 560 px dành cho phim nổi bật.',
+        'web-spec2-title': 'Điều hướng',
+        'web-spec2-desc': 'Bốn mục chính, ô tìm kiếm và lối vào VIP, ví xu.',
+        'web-spec3-title': 'Dùng chung giữa app và web',
         'sec6-tag': '[ 05 // SẴN SÀNG NỘP STORE ]',
-        'sec6-heading': 'CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY',
-        'sec6-desc': 'Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.',
+        'sec6-heading': 'Chuẩn bị nộp app',
+        'sec6-desc': 'Tôi bổ sung các màn hình đăng nhập, xem ngoại tuyến, xử lý lỗi phát và chính sách thanh toán.',
         'chk-1': 'Continue with Apple / Google theo đúng nền tảng và nút Not now',
         'chk-2': 'Mất mạng dẫn thẳng tới tập đã tải (View Downloads)',
         'chk-3': '10 trạng thái trình phát &amp; cảnh báo quay màn hình',
         'chk-4': 'Tách nút Apple IAP / Stripe và Restore purchases',
         'chk-5': 'Đủ 5 trang chính sách: Terms, Privacy, Top-up, Refund, Help',
-        'edge1-title': 'Apple / Android &amp; Not now',
-        'edge1-desc': 'Tặng 20 xu cho lần đăng nhập đầu tiên, nhưng vẫn để nút Not now cho người muốn xem thử trước.',
+        'edge1-title': 'Đăng nhập hoặc xem trước',
+        'edge1-desc': 'Lần đầu đăng nhập được 20 xu. Người muốn xem trước có thể chọn Not now.',
         'edge2-title': 'Mở thẳng tập đã tải',
-        'edge2-desc': 'Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.',
-        'edge3-title': '10 trạng thái trình phát &amp; DRM',
-        'edge3-desc': 'Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.',
-        'tr1-title': 'Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI',
-        'tr1-desc': 'Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.',
-        'tr2-title': 'Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab',
-        'tr2-desc': 'Từ phản hồi rà soát, tôi rút tên tab thứ tư còn Profile, đổi nhãn sang Top Up và bỏ bớt dòng lặp ở bảng nhiệm vụ. Tôi cũng gỡ khối Earn coins từng đặt cuối Coin Wallet để tách hẳn chuyện nạp tiền khỏi nhiệm vụ nhận thưởng.',
-        'tr3-title': 'Dồn lực cho trạng thái biên và pháp lý trước tính năng phụ',
-        'tr3-desc': 'Gần mốc nộp duyệt, tôi chọn ưu tiên những phần ảnh hưởng trực tiếp tới Store: thao tác quản lý My List (chọn, xóa, Undo, màn trống), đường dẫn ngoại tuyến tới tập đã tải, cảnh báo DRM và năm trang chính sách cạnh nút Apple IAP / Stripe.',
-        'status-lbl': 'Trạng thái hiện tại &amp; Giới hạn',
-        'status-title': 'ỨNG DỤNG CHƯA PHÁT HÀNH · CHƯA CÓ SỐ LIỆU ĐO LƯỜNG',
-        'status-desc': 'Shortpeek hiện chưa lên store nên tôi chưa có dữ liệu hành vi thực tế để khẳng định bản thiết kế lại cải thiện tỷ lệ giữ chân hay doanh thu. Khi phát hành hoặc chạy usability test, đội ngũ cần kiểm tra ba giả thuyết sau:',
-        'hyp-1': 'Người dùng mới có nhận ra nút Earn Coins và VIP sau khi đưa từ thanh đáy lên góc phải header Home không.',
-        'hyp-2': 'Việc tách hai tab Coins và Premium khi thiếu xu có giúp giảm tỷ lệ bỏ dở giữa chừng khi đang xem tập khóa không.',
-        'hyp-3': 'Cách ghi thẳng tổng số xu nhận được trên thẻ Coin Wallet có giảm nhầm lẫn trước bước xác nhận thanh toán không.',
+        'edge2-desc': 'Khi mất mạng, View Downloads dẫn tới tập đã tải.',
+        'edge3-title': 'Lỗi phát và bảo vệ nội dung',
+        'edge3-desc': 'Màn hình cho lỗi phát, tải video và cảnh báo quay màn hình.',
+        'tr1-title': 'Biểu tượng đỏ, nút chính trắng',
+        'tr1-desc': 'Sau góp ý nội bộ, tôi vẽ lại biểu tượng đỏ trên nền đen. Nút chính trong app vẫn màu trắng để nổi trên ảnh phim.',
+        'tr2-title': 'Tách nhận xu khỏi ví',
+        'tr2-desc': 'Tôi bỏ Earn Coins khỏi ví để tách việc nạp tiền khỏi nhiệm vụ nhận thưởng.',
+        'tr3-title': 'Chuẩn bị cho lỗi và mất mạng',
+        'tr3-desc': 'Trước khi nộp app, tôi ưu tiên hoàn tác khi xóa khỏi My List, tìm tập đã tải khi mất mạng và bổ sung chính sách thanh toán.',
         'learn-lbl': 'Bài học thiết kế',
-        'sec7-learn-title': 'CÂN BẰNG THẨM MỸ ĐIỆN ẢNH VÀ MÔ HÌNH TRẢ PHÍ THEO TẬP',
-        'sec7-learn-desc': 'Làm mới app phim ngắn theo hướng gọn như Netflix khó nhất ở chỗ bỏ banner rực màu mà vẫn giữ rõ lối kiếm xu và nâng cấp VIP. Phần việc tốn công nhất khi bàn giao cho kỹ thuật nằm ngoài màn Home: nhánh mở khóa theo số dư, đầy đủ thao tác thư viện (xóa, Undo, màn trống) và bộ màn hình lỗi phục vụ duyệt store.',
+        'sec7-learn-title': 'Đừng để người xem mất mạch',
+        'sec7-learn-desc': 'Bài toán khó nhất nằm ở lúc người xem gặp tập khóa hoặc mất mạng. Tôi muốn họ biết có thể làm gì tiếp ngay trên màn hình đang xem.',
         'learn-meta': 'Marchi Lab · Shortpeek Redesign · 2026',
         'cs-contact-tag': '[ HỢP TÁC & TRAO ĐỔI // GET IN TOUCH ]',
         'cs-contact-title': 'BẠN CẦN PRODUCT DESIGNER CHO DỰ ÁN?',
-        'cs-contact-desc': 'Mình luôn sẵn sàng trao đổi về cơ hội hợp tác, thiết kế sản phẩm hoặc chia sẻ góc nhìn chuyên môn.',
+        'cs-contact-desc': 'Tôi sẵn sàng trao đổi về công việc và dự án thiết kế sản phẩm.',
         'btn-copy-email': 'Sao chép địa chỉ email',
         'btn-copied-email': '✓ Đã sao chép email!',
         'btn-send-mail': 'Gửi thư',
@@ -1832,43 +1795,42 @@
       en: {
         'hero-title': 'Shortpeek',
         'meta-role-val': 'Product Designer',
-        'hero-desc': 'When viewers reached a locked episode, the original screen showed the episode price, coin packs and VIP plans all at once. I split the flow by coin balance so viewers could see whether to unlock the episode or add coins.',
+        'hero-desc': 'I redesigned Shortpeek, a short-drama app. At a locked episode, viewers can see whether they have enough coins to watch or how many more they need.',
         'meta-type-val': 'Marchi Lab · 2026 · Unreleased',
         'meta-scale-val': 'iOS · Android · Desktop Web',
         'chapter-nav': 'In this case study',
         'chapter-unlock': 'Episode unlock',
         'chapter-web': 'Desktop web',
-        'chapter-home': 'Home navigation',
+        'chapter-home': 'Home',
         'chapter-deep': 'Design details',
         'chapter-lessons': 'After review',
-        'unlock-heading': 'Two paths based on coin balance',
+        'unlock-heading': 'Unlocking by coin balance',
         'unlock-original': 'Original flow',
-        'unlock-original-note': 'The episode price and balance sat above a list of coin packs and VIP plans.',
+        'unlock-original-note': 'The same sheet showed the episode price, balance, coin packs and VIP.',
         'unlock-enough': 'Enough coins',
-        'unlock-enough-note': 'The price sits next to the balance, with one button to confirm and watch.',
+        'unlock-enough-note': 'Check the price and balance, then confirm to watch.',
         'unlock-short': 'Short on coins',
-        'unlock-short-note': 'The screen shows the shortfall before viewers choose between Coins and Premium.',
-        'home-focus-title': 'Giving films more room on Home',
-        'home-focus-desc': 'I reduced the bottom bar from five tabs to four and moved Rewards out of it. VIP and Earn Coins remained accessible at the top of Home. A single poster leads the page, with actions to watch now or save to My List.',
-        'home-focus-question': 'I would test whether first-time viewers can still find Earn Coins after the move.',
+        'unlock-short-note': 'See how many coins are missing before choosing Coins or Premium.',
+        'home-focus-title': 'Putting films first',
+        'home-focus-desc': 'I cut the bottom bar from five tabs to four and kept VIP and Earn Coins at the top of Home. One featured poster leads to Watch Now and My List.',
+        'home-focus-question': 'Can new viewers find Earn Coins in its new spot?',
         'home-original': 'Original · Promo banners and a five-tab bar',
         'home-redesign': 'Redesign · Featured poster and a four-tab bar',
         'deep-heading': 'Design details',
-        'deep-audit': 'Audit of the original app',
+        'deep-audit': 'Original design',
         'deep-flows': 'Five app flows',
-        'deep-system': 'Information architecture and UI',
-        'deep-store': 'Preparing for store submission',
+        'deep-system': 'Structure and UI',
+        'deep-store': 'Preparing for submission',
         'deep-compare': 'Full screen comparison',
-        'sec1-title': 'What the audit found',
-        'sec1-desc1': 'Ahead of App Store and Google Play submission, the team wanted fewer promotions in the viewing experience and a clearer way to pay for an episode.',
-        'sec1-desc2': 'I reviewed the original screens, redesigned the flows and UI, and built the prototype and UI system for handoff.',
-        'sec4-web-heading': 'Unlocking an episode inside the web player',
-        'sec4-web-desc': 'On desktop, I put the episode price and balance in a dialog over the player. The episode list sits beside the video, so viewers can pick another episode on the same screen.',
-        'web-spec3-desc': 'The app and desktop web designs share their colors, Inter typography and the distinction between unlocking with coins and choosing Premium.',
-        'd4-desc': 'The original coin packs listed base and bonus coins on separate lines. I put the total on each Coin Wallet card. At the bottom of Wallet and Premium, I separated Apple IAP and Stripe card payments and linked the payment policies.',
-        'sec7-heading': 'What changed after review',
+        'sec1-title': 'Where the original design got in the way',
+        'sec1-desc1': 'Before submitting the app, the team wanted fewer promos while watching and a clearer way to pay per episode.',
+        'sec1-desc2': 'I reviewed the original screens, redesigned the flows and UI, and built the prototype for handoff.',
+        'sec4-web-heading': 'Unlocking on desktop',
+        'sec4-web-desc': 'On desktop, I put the price and balance over the player and the episode list beside the video.',
+        'web-spec3-desc': 'Both use the same colors and Inter, with coins or Premium for episode access.',
+        'd4-desc': 'I put the coin total on each top-up card. Apple IAP and Stripe have separate buttons next to the policy links.',
+        'sec7-heading': 'What I changed after review',
         'sec4-web-tag': '[ DESKTOP WEB ]',
-        'sec7-tag': '[ TRADE-OFFS &amp; LIMITS ]',
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
         'top-case-num': 'CASE 01 / 04',
@@ -1877,24 +1839,24 @@
         'comparison-tag': '[ BEFORE / AFTER ]',
         'comparison-before': 'ORIGINAL',
         'comparison-after': 'REDESIGN',
-        'comparison-desc': 'Comparing three core screens: Home (4-tab pill bar and open hero), Episode access (split Coins / Premium tabs and upfront pack totals), and Profile (grouped settings and plans).',
+        'comparison-desc': 'Compare Home, episode unlock and Profile before and after the redesign.',
         'sec1-tag': '[ 01 // CONTEXT &amp; ORIGINAL APP AUDIT ]',
-        'pp1-title': 'Too many blocks fight for attention',
-        'pp1-desc': 'The original Home stacked a search bar, a VIP pill, a wide banner, four sub-tabs, and a bright yellow 50% promo card; For you added an oversized orange button across the bottom of the video.',
-        'pp2-title': 'Library items sit across both My List and Profile',
-        'pp2-desc': 'The five-tab bar placed a badged Rewards icon in the center, while My Downloads lived inside Profile instead of staying with saved shows and watch history.',
-        'pp3-title': 'Split-line coin packs stacked with VIP cards',
-        'pp3-desc': 'Opening a locked episode or Top up Coins showed coin packs divided into Immediately and Free lines above multi-color VIP cards inside the same scroll.',
-        'pp4-title': 'Error handling and store policies lacked consistency',
-        'pp4-desc': 'The original flow lacked unified screens for offline errors, playback failures, screen-recording alerts, list undo bars, and the payment terms needed for store review.',
-        'audit-strip-lbl': 'Original screens (Archive)',
+        'pp1-title': 'Promos crowd out the films',
+        'pp1-desc': 'Home stacked banners and tabs. On For You, a large orange button covered part of the video.',
+        'pp2-title': 'The library lives in two places',
+        'pp2-desc': 'Downloads lived in Profile. Saved titles and watch history lived in My List.',
+        'pp3-title': 'Viewers have to add up the coins',
+        'pp3-desc': 'Coin packs listed base and bonus coins on separate lines.',
+        'pp4-title': 'Error screens lack next steps',
+        'pp4-desc': 'The original screens handled offline and playback errors inconsistently and lacked links to payment policies.',
+        'audit-strip-lbl': 'Original screens',
         'audit-strip-sub': 'Home · For you · Episode sheet · Top up Coins',
-        'old-cap1': '01 · Original Home: promo banners &amp; dense rows',
-        'old-cap2': '02 · Original For you',
-        'old-cap3': '03 · Original access sheet',
-        'old-cap4': '04 · Original Top up Coins',
+        'old-cap1': 'Home · Banner and discount card',
+        'old-cap2': 'For You',
+        'old-cap3': 'Episode unlock',
+        'old-cap4': 'Top up',
         'sec2-tag': '[ 02 // REDESIGNED APP FLOWS ]',
-        'sec2-heading': 'EXPLORE THE 05 REDESIGNED APP FLOWS',
+        'sec2-heading': 'Five app flows',
         'tab-home': '01 · Home',
         'tab-clip': '02 · Clip',
         'tab-monetization': '03 · Access &amp; Wallet',
@@ -1904,40 +1866,40 @@
         'lbl-new-short': 'After',
         'btn-prev-flow': '← Previous',
         'btn-next-flow': 'Next →',
-        'd1-title': 'Cut bottom nav to 4 tabs and opened up Home',
-        'd1-old': '5 tabs with a badged Rewards icon in the middle; Home led with wide promos and yellow 50% cards.',
-        'd1-new': '4 floating pill tabs; hero poster with Watch Now / + My List, Top 10, and a dark Premium card.',
-        'd1-desc': 'I moved Rewards out of the bottom bar so the four main tabs stay clean. VIP and rewards stay fixed in the top-right header, and Home opens on one tall poster with two clear buttons.',
+        'd1-title': 'Home with four tabs',
+        'd1-old': 'Five tabs, stacked banners and promos.',
+        'd1-new': 'Four tabs, one featured poster and a Top 10 list.',
+        'd1-desc': 'Rewards moved out of the bottom bar to make room for core tabs. Earn Coins moved to the top of Home.',
         'd1-stage-cap1': 'Left: Top of the redesigned Home',
         'd1-stage-cap2': 'Right: Top 10, dark Premium card &amp; Continue Watching',
-        'd2-title': 'Renamed For you to Clip and raised button contrast',
-        'd2-old': 'Generic For you naming; multi-line tags, long plot text, and a heavy orange bar blocking the frame.',
-        'd2-new': 'Renamed to Clip; single-line metadata, crisp white Watch Now CTA, and circular side actions.',
-        'd2-desc': 'I renamed For you to Clip so the tab clearly means short clips. Metadata now fits on one line, and a crisp white Watch Now button leaves the video frame unobstructed.',
+        'd2-title': 'Watch the series from a clip',
+        'd2-old': 'A long description and an orange button covered the bottom of the video.',
+        'd2-new': 'A one-line description and a white Watch Now button.',
+        'd2-desc': 'I renamed For You to Clip so it reads differently from Home recommendations.',
         'clip-old-badge': 'Original · For you',
         'clip-new-badge': 'Redesign · Clip',
-        'd3-group-title': 'Balance-aware paths and upfront coin totals',
-        'd3-title': 'Separated Enough coins and Need coins paths',
-        'd3-desc': 'I split this flow by balance using Progressive Disclosure. Viewers with enough coins confirm in one tap, with no top-up grid in the way. Anyone short on coins sees the exact gap and picks between two tabs: Coins or Premium.',
-        'd4-title': 'Show total coins upfront alongside store terms',
-        'sub-unlock': 'Access: Enough / Need coins',
+        'd3-group-title': 'Unlocking and topping up',
+        'd3-title': 'Enough coins or short on coins',
+        'd3-desc': 'Confirm if you have enough coins. If you’re short, see how many more you need.',
+        'd4-title': 'Show the total coins',
+        'sub-unlock': 'Episode unlock',
         'sub-wallet': 'Coin Wallet &amp; Premium',
-        'sub-unlock-cap1': 'Enough coins: 1-tap confirmation',
-        'sub-unlock-cap2': 'Need coins: split Coins / Premium tabs',
+        'sub-unlock-cap1': 'Enough coins · Confirm to watch',
+        'sub-unlock-cap2': 'Short on coins · Top up or choose Premium',
         'sub-wallet-cap1': 'Coin Wallet: upfront total coins',
-        'sub-wallet-cap2': 'Premium: Apple IAP / Stripe &amp; store links',
-        'd5-title': 'Unified Saved, History, and Downloads in one tab',
-        'd5-old': 'Saved and History sat inside My List while My Downloads stayed buried inside Profile.',
-        'd5-new': 'Saved, History plus Downloads inside My List with full selection, delete confirmation, and Undo / empty views.',
-        'd5-desc': "I moved Downloads out of Profile to join Saved and History inside My List. All three tabs share selection tools, delete prompts, Undo bars, and empty states so viewers don't lose shows by accident.",
-        'd6-title': 'Grouped account sections and clearer reward states',
-        'd6-old': 'Profile mixed settings with downloads; Earn Rewards tasks lacked clear state contrast.',
-        'd6-new': 'Grouped Membership, Coin Wallet, and Support with distinct Guest/Premium views and Claimed / Claim / Go buttons.',
-        'd6-desc': 'On Profile, I split membership, coin wallet, and account settings into clear groups for Guest and Premium accounts. On Earn Coins, contrast cleanly separates Claimed from Claim and Go buttons beneath the warm 7-day check-in card.',
+        'sub-wallet-cap2': 'Premium · Payments and policies',
+        'd5-title': 'One place for the library',
+        'd5-old': 'Downloads sat in Profile.',
+        'd5-new': 'All three tabs share select, delete and undo controls.',
+        'd5-desc': "I put saved titles, watch history and downloads in My List.",
+        'd6-title': 'Account and rewards',
+        'd6-old': 'Settings and downloads shared the Profile screen.',
+        'd6-new': 'Profile groups membership, wallet and support.',
+        'd6-desc': 'I made separate screens for guests and Premium members. Each Earn Coins task has three distinct states.',
         'sec3-tag': '[ 03 // DESIGN SYSTEM ]',
-        'sec3-heading': 'INFORMATION ARCHITECTURE &amp; UI SYSTEM',
-        'sec3-desc': 'I grouped the app into three core flows with dark-first color tokens and a shared component system for engineering handoff.',
-        'ia-title': 'IA restructuring across 5 areas',
+        'sec3-heading': 'Structure and UI',
+        'sec3-desc': 'I regrouped the flows and used shared UI components for handoff.',
+        'ia-title': 'What changed',
         'th-area': 'Area',
         'th-before': 'Original app',
         'th-after': 'Redesign',
@@ -1962,64 +1924,58 @@
         'cluster2-desc': 'My List (Saved · History · Downloads), Profile with Settings, and 5 policy pages.',
         'cluster3-title': '03 · Coins &amp; Membership',
         'cluster3-desc': 'Balance branches, Coin Wallet, Premium &amp; Earn Rewards.',
-        'icon-title': 'NEW APP ICON &amp; MARK',
-        'icon-desc': 'I updated the App Icon and brand mark after team reviews, pairing a dark base with a red-and-white S-play mark that stays recognizable on the home screen.',
-        'color-title': 'COLOR SYSTEM / DARK-FIRST CINEMA UI',
-        'color-desc': 'Four dark surface steps pair with crisp white primary CTAs while #F97039 orange stays reserved for active tabs and reward actions.',
+        'icon-title': 'App icon',
+        'icon-desc': 'I set the play symbol inside the S so the icon reads at small sizes.',
+        'color-title': 'UI colors',
+        'color-desc': 'Dark surfaces frame the artwork. White marks the primary action and orange marks selections and rewards.',
         'c1-desc': 'Main dark canvas',
         'c2-desc': 'Cards and plan surfaces',
         'c3-desc': 'Secondary buttons, floating bar',
         'c4-desc': 'Dividers and chip borders',
         'c5-desc': 'Primary text and action buttons',
         'c6-desc': 'Active tabs, coin packs, Claim',
-        'type-title': 'TYPOGRAPHY / INTER',
-        'type-desc': 'One font (Inter) across four clear sizes stays readable on mobile screens and never fights the posters.',
-        'bento-hero-cap1': 'Core flow overview: Home · Clip · Episode access · Shortpeek Premium',
-        'bento-hero-cap2': 'Consistent #0D0E11 cinema surfaces with high-contrast #FFFFFF primary actions',
-        'web-cap-home1': '01 · Desktop Web Home (1920px): 1312×560 Cinematic Billboard &amp; Top 10 Ranked Rail',
-        'web-cap-home2': 'Primary Navigation · Search Bar · VIP &amp; Rewards Shortcuts',
-        'web-watch-title': 'Desktop Player &amp; Side-by-Side Episode Drawer',
-        'web-watch-desc': 'Wide-format desktop player paired with a side-by-side episode drawer (Episodes 1..30); viewers switch chapters instantly without leaving the viewing frame.',
-        'web-unlock-title': 'Web Episode Access &amp; Coin Checkout Modal',
-        'web-unlock-desc': 'Cursor-optimized modal dimmer: clear coin balance, unlock costs, and weekly/monthly VIP plans paired with card payment options.',
-        'web-spec1-title': '[ CINEMATIC SCALE ]',
-        'web-spec1-desc': 'Leveraging 1920px desktop viewports for a 1312×560px billboard with subtle scrim fades, bringing home-theater scale to vertical drama.',
-        'web-spec2-title': '[ DESKTOP NAVIGATION ]',
-        'web-spec2-desc': 'Sticky 72px header with four primary destinations (Home, Categories, Clips, My List), quick search, and direct VIP/wallet access.',
-        'web-spec3-title': '[ CROSS-PLATFORM SYSTEM ]',
+        'type-title': 'Inter typography',
+        'type-desc': 'Four sizes for headings, labels and body text on mobile.',
+        'bento-hero-cap1': 'Home · Clips · Episode unlock · Premium',
+        'bento-hero-cap2': 'Dark surfaces with white primary buttons',
+        'web-cap-home1': 'Desktop Home · Featured titles and Top 10',
+        'web-cap-home2': 'Search · VIP · Earn Coins',
+        'web-watch-title': 'Episode list beside the player',
+        'web-watch-desc': 'Pick another episode on the same screen.',
+        'web-unlock-title': 'Episode unlock dialog',
+        'web-unlock-desc': 'Viewers can spend coins or choose a membership without leaving the player.',
+        'web-spec1-title': 'Featured titles',
+        'web-spec1-desc': 'A 1312 × 560 px area for the featured title.',
+        'web-spec2-title': 'Navigation',
+        'web-spec2-desc': 'Four main sections, search, and links to VIP and the coin wallet.',
+        'web-spec3-title': 'Shared by app and web',
         'sec6-tag': '[ 05 // STORE READINESS ]',
-        'sec6-heading': 'APP STORE &amp; GOOGLE PLAY SUBMISSION CHECKLIST',
-        'sec6-desc': 'To remove guesswork for developers and satisfy store review guidelines, I covered platform-specific sign-in flows, player errors, offline handling, and five policy pages.',
+        'sec6-heading': 'Preparing for app submission',
+        'sec6-desc': 'I designed sign-in, offline playback, error screens and payment policy pages.',
         'chk-1': 'Platform auth (Apple / Google) with a clear Not now exit',
         'chk-2': 'Offline state points straight to View Downloads',
         'chk-3': '10 video player states plus screen-recording warning',
         'chk-4': 'Separate Apple IAP / Stripe buttons &amp; Restore purchases',
         'chk-5': 'All 5 policy screens: Terms, Privacy, Top-up, Refund, Help',
-        'edge1-title': 'Apple / Android &amp; Not now',
-        'edge1-desc': 'First sign-in earns 20 coins. A Not now button still lets visitors watch clips before creating an account.',
+        'edge1-title': 'Sign in or keep watching',
+        'edge1-desc': 'First sign-in earns 20 coins. Viewers can also choose Not now.',
         'edge2-title': 'Direct path to downloads',
-        'edge2-desc': 'FeedbackPanel places View Downloads right below Try Again so offline viewers keep watching.',
-        'edge3-title': '10 player states &amp; DRM alert',
-        'edge3-desc': 'Covers speed, quality, buffering, playback failures, series completion, and screen-capture warnings.',
-        'tr1-title': 'Red-and-white mark paired with quiet white UI CTAs',
-        'tr1-desc': 'During a Home review, the team asked for red accents and a new logo. I redrew the S-play App Icon in red and white on black. Inside the app, I stuck with white primary buttons and #F97039 orange accents so the red mark never competes with posters.',
-        'tr2-title': 'Removed reward tasks from Wallet and trimmed tab labels',
-        'tr2-desc': 'After team review, I shortened the fourth tab to Profile, switched copy to Top Up, and cut extra mission lines. I also dropped the Daily check-in card from Coin Wallet. Buying coins and doing reward tasks now live in two separate screens.',
-        'tr3-title': 'Prioritized edge states and legal terms over extra features',
-        'tr3-desc': 'Right before store review, I skipped extra discovery widgets and finished what reviewers check first: My List edit and Undo flows, offline Download recovery, DRM alerts, and five policy pages beside Apple IAP and Stripe.',
-        'status-lbl': 'Current status &amp; limits',
-        'status-title': 'UNRELEASED APP · NO LIVE METRICS YET',
-        'status-desc': 'Shortpeek has not shipped to stores yet, so I have no live behavioral data to claim retention or revenue gains. After launch or during usability testing, the team needs to verify three hypotheses:',
-        'hyp-1': 'Whether new viewers spot Earn Coins and VIP after moving them from the bottom bar to the Home header.',
-        'hyp-2': 'Whether splitting Coins and Premium tabs during a shortfall reduces drop-off on paid episodes.',
-        'hyp-3': 'Whether listing total coins upfront in Coin Wallet cuts checkout confusion before paying.',
+        'edge2-desc': 'When offline, View Downloads takes viewers to their saved episodes.',
+        'edge3-title': 'Playback errors and content protection',
+        'edge3-desc': 'Screens for playback errors, buffering and screen-recording alerts.',
+        'tr1-title': 'Red icon, white buttons',
+        'tr1-desc': 'After team feedback, I redrew the icon in red on black. The app kept white buttons so they stand out over film artwork.',
+        'tr2-title': 'Rewards move out of Wallet',
+        'tr2-desc': 'I removed Earn Coins from Wallet to separate paid top-ups from reward tasks.',
+        'tr3-title': 'Preparing for errors and lost connections',
+        'tr3-desc': 'Before submission, I prioritized undo in My List, reaching downloads offline and adding payment policies.',
         'learn-lbl': 'Key takeaway',
-        'sec7-learn-title': 'BALANCING CINEMA CALM WITH EPISODIC MONETIZATION',
-        'sec7-learn-desc': 'Toning down loud promo banners without hiding coin rewards or VIP upgrades was the hardest part of this redesign. For developer handoff, the real work sat behind Home: conditional payment paths, full My List recovery states (delete prompts with Undo and empty views), and the error screens needed for store review.',
+        'sec7-learn-title': 'The viewer’s place matters',
+        'sec7-learn-desc': 'The hardest moments came at a locked episode or a lost connection. I wanted the next action to be clear on the screen viewers were already using.',
         'learn-meta': 'Marchi Lab · Shortpeek Redesign · 2026',
         'cs-contact-tag': '[ GET IN TOUCH // COLLABORATION ]',
         'cs-contact-title': 'LOOKING FOR A PRODUCT DESIGNER?',
-        'cs-contact-desc': 'I am open to product design opportunities, collaboration, or discussing craft perspectives.',
+        'cs-contact-desc': 'I’m open to product design roles and projects.',
         'btn-copy-email': 'Copy Email Address',
         'btn-copied-email': '✓ Copied to clipboard!',
         'btn-send-mail': 'Send Email',
