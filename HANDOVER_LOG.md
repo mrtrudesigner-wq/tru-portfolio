@@ -747,3 +747,30 @@ Bằng chứng đọc từ DOM Framer và kết quả đối chiếu tài nguyê
   * HTTP 200 tải tệp `assets/covers/shortpeek-mobile.webp` (55.8 KB) trên máy chủ cục bộ.
   * Kiểm tra hiển thị nền tiệp màu tuyệt đối không có vết ghép (zero seam).
 * **Trạng thái:** Đã cập nhật và đẩy lên nhánh `main` để Vercel tự động triển khai.
+
+---
+
+## 29. BỔ SUNG NỀN TẢNG DESKTOP WEB (1920PX) CHO SHORTPEEK & NÂNG CẤP HỆ SINH THÁI — 27/11/2026
+* **Bối cảnh & Yêu cầu:**
+  * Người dùng cung cấp đường dẫn Figma (`2QwkE80vfdgSVRotQn2M57`, node `2:2`) cho thấy dự án Shortpeek không chỉ dừng lại ở ứng dụng di động mà còn bao gồm trọn vẹn **hệ thống thiết kế Desktop Web 1920px** (gồm 15 section chi tiết từ Discover, Watch player, Unlock overlays đến Legal policies).
+  * Yêu cầu cập nhật toàn diện phạm vi dự án từ "Mobile App" thành **Hệ sinh thái Đa nền tảng (Mobile App & Desktop Web)** trên toàn bộ website portfolio.
+* **Các công việc đã thực hiện:**
+  1. **Trích xuất & Tối ưu tài nguyên từ Figma MCP:**
+     * Trích xuất trực tiếp 3 màn hình Desktop Web 1920px độ nét cao qua Figma MCP:
+       - `web-home.webp` (`288 KB`): Trang chủ Desktop Web với Featured Cinematic Billboard 1312×560px & dải phim xếp hạng Ranked Rail Top 10.
+       - `web-watch.webp` (`81 KB`): Trình phát xem phim Desktop kèm Side Drawer chọn tập trực tiếp (Episodes 1..30).
+       - `web-unlock.webp` (`33 KB`): Hộp thoại Modal mở khóa tập bằng xu hoặc gói Weekly/Monthly VIP tối ưu cho con trỏ chuột máy tính.
+  2. **Bổ sung Section 04 chuyên sâu trong `shortpeek.html`:**
+     * Thêm Section `[ 04 // MỞ RỘNG NỀN TẢNG: TRẢI NGHIỆM DESKTOP WEB (1920PX) ]` với đầy đủ showcase hình ảnh, chú thích song ngữ VI/EN và 3 điểm nhấn kỹ thuật: *Không gian điện ảnh rộng (1312×560)*, *Điều hướng web chuẩn mực (72px header)* và *Đồng bộ hệ thống đa nền tảng*.
+     * Cập nhật đánh số thứ tự các section tiếp theo: Section 05 Sẵn sàng nộp Store & Section 06 Đánh đổi / Trạng thái dự án.
+     * Cập nhật Hero tag, Tiêu đề, Meta description và Spec list sang: `iOS · Android · Desktop Web (1920px)`.
+  3. **Đồng bộ Trang chủ (`index.html`) & Trang 404 (`404.html`):**
+     * Cập nhật danh mục dự án sang: `Shortpeek · Mobile App & Desktop Web Redesign` (`CROSS-PLATFORM · MOBILE & DESKTOP WEB`).
+     * Cập nhật nội dung Quick Summary Drawer (VI/EN) làm rõ năng lực thiết kế hệ sinh thái đa nền tảng.
+     * Cập nhật thẻ dự án và Case Roulette trên `404.html`.
+* **Kiểm toán kỹ thuật:**
+  * Toàn bộ các file HTML qua kiểm tra parser cân bằng thẻ (`0` unclosed tags).
+  * Đầy đủ 100% khóa song ngữ `VI / EN` (`0` missing keys).
+  * HTTP 200 tải tệp hình ảnh web và trang HTML trên máy chủ cục bộ.
+  * `git diff --check` sạch hoàn toàn.
+* **Trạng thái:** Đã đóng gói, commit và push lên nhánh `main` để Vercel tự động deploy.

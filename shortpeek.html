@@ -14,7 +14,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHORTPEEK: Thiết Kế Lại Ứng Dụng Xem Phim Ngắn | Case Study · Trứ</title>
-  <meta name="description" content="Case study Shortpeek tại Marchi Lab: audit bản gốc, tái cấu trúc điều hướng, tách luồng mở khóa tập và hoàn thiện hệ thống UI chuẩn bị nộp store.">
+  <meta name="description" content="Case study Shortpeek tại Marchi Lab: audit bản gốc, thiết kế lại hệ sinh thái Mobile App và Desktop Web (1920px), tách luồng mở khóa tập và hoàn thiện hệ thống UI chuẩn bị nộp store.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon-light.png">
   <script>
@@ -343,14 +343,14 @@
     <section class="space-y-12 md:space-y-16">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
         <div class="lg:col-span-8 space-y-6">
-          <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-orange-600 dark:text-[#F97039] inline-flex flex-wrap items-center gap-2 font-bold" data-i18n="hero-tag"><span>[ 01 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span></div>
+          <div class="font-mono text-[11px] sm:text-xs uppercase tracking-mono text-orange-600 dark:text-[#F97039] inline-flex flex-wrap items-center gap-2 font-bold" data-i18n="hero-tag"><span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span></div>
 
           <h1 class="case-hero-title text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tighter leading-[0.95]" data-i18n="hero-title">
-            SHORTPEEK: THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC.
+            SHORTPEEK: THIẾT KẾ HỆ SINH THÁI PHIM NGẮN (MOBILE APP &amp; DESKTOP WEB).
           </h1>
 
           <p class="case-hero-desc text-lg md:text-2xl text-[var(--text-muted)] max-w-3xl leading-relaxed" data-i18n="hero-desc">
-            Làm mới giao diện ứng dụng xem phim ngắn theo hướng điện ảnh gọn mắt trước khi nộp store. Tôi sắp xếp lại thanh điều hướng, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.
+            Làm mới toàn diện trải nghiệm xem phim ngắn dạng dọc trên cả ứng dụng di động và nền tảng Desktop Web (1920px). Tôi tái cấu trúc điều hướng, đưa Billboard điện ảnh lên màn hình lớn, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.
           </p>
         </div>
 
@@ -366,11 +366,11 @@
           </div>
           <div class="py-3.5 space-y-1">
             <span class="text-[var(--text-muted)] uppercase block" data-i18n="meta-scope-lbl">Phạm vi</span>
-            <span class="font-bold block leading-relaxed" data-i18n="meta-scope-val">UX Audit · User Flow · UI · Design System · App Icon · Prototype</span>
+            <span class="font-bold block leading-relaxed" data-i18n="meta-scope-val">UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype</span>
           </div>
           <div class="py-3.5 flex items-baseline justify-between gap-4">
             <span class="text-[var(--text-muted)] uppercase shrink-0" data-i18n="meta-scale-lbl">Nền tảng</span>
-            <span class="font-bold text-right text-orange-600 dark:text-[#F97039]" data-i18n="meta-scale-val">iOS &amp; Android</span>
+            <span class="font-bold text-right text-orange-600 dark:text-[#F97039]" data-i18n="meta-scale-val">iOS · Android · Desktop Web (1920px)</span>
           </div>
         </aside>
       </div>
@@ -968,10 +968,83 @@
       </figure>
     </section>
 
-    <!-- 04 / STORE READINESS CHECKLIST & EDGE STATES -->
+    <!-- 04 / MỞ RỘNG NỀN TẢNG: TRẢI NGHIỆM DESKTOP WEB (1920PX) -->
+    <section id="desktop-web" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-7 space-y-2">
+          <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec4-web-tag">
+            [ 04 // MỞ RỘNG NỀN TẢNG ]
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight" data-i18n="sec4-web-heading">
+            TRẢI NGHIỆM DESKTOP WEB (1920PX)
+          </h2>
+        </div>
+        <p class="lg:col-span-5 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed" data-i18n="sec4-web-desc">
+          Song song với ứng dụng di động, tôi trực tiếp thiết kế toàn bộ phiên bản Desktop Web (1920px): mở rộng không gian điện ảnh với Billboard cỡ lớn, thanh điều hướng web chuẩn mực, dải phim xếp hạng và trình phát xem phim kèm danh sách tập trực tiếp.
+        </p>
+      </div>
+
+      <!-- Web Showcase 1: Full-width Home & Billboard Stage -->
+      <figure class="space-y-4 gsap-card">
+        <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11]">
+          <img src="assets/shortpeek/web-home.webp" alt="Trang chủ Shortpeek phiên bản Desktop Web (1920px) với Featured Cinematic Billboard và Ranked Rail Top 10" loading="lazy" decoding="async" class="w-full h-auto block object-cover">
+        </div>
+        <figcaption class="font-mono text-xs uppercase text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-3">
+          <span data-i18n="web-cap-home1">01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10</span>
+          <span class="text-orange-600 dark:text-[#F97039]" data-i18n="web-cap-home2">Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng</span>
+        </figcaption>
+      </figure>
+
+      <!-- Web Showcase 2: 2-Column Grid for Player & Modal Unlock -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start gsap-card">
+        <!-- Left: Desktop Watch Player -->
+        <figure class="space-y-4">
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
+            <img src="assets/shortpeek/web-watch.webp" alt="Trình phát xem phim Desktop Web với Side Drawer chọn tập trực tiếp" loading="lazy" decoding="async" class="w-full h-full object-cover">
+          </div>
+          <div class="space-y-1.5">
+            <h4 class="text-base font-bold uppercase tracking-tight" data-i18n="web-watch-title">Trình phát Desktop &amp; Side-by-side Episodes</h4>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-watch-desc">
+              Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.
+            </p>
+          </div>
+        </figure>
+
+        <!-- Right: Desktop Unlock Overlay -->
+        <figure class="space-y-4">
+          <div class="rounded-2xl overflow-hidden hairline-all shadow-2xl bg-[#0D0E11] aspect-[16/9]">
+            <img src="assets/shortpeek/web-unlock.webp" alt="Modal mở khóa tập và nạp xu tối ưu cho màn hình Desktop Web" loading="lazy" decoding="async" class="w-full h-full object-cover">
+          </div>
+          <div class="space-y-1.5">
+            <h4 class="text-base font-bold uppercase tracking-tight" data-i18n="web-unlock-title">Modal mở khóa tập &amp; Nạp xu trên Web</h4>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed" data-i18n="web-unlock-desc">
+              Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.
+            </p>
+          </div>
+        </figure>
+      </div>
+
+      <!-- 3 Web Editorial Highlights -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-8 hairline-t font-mono text-xs text-[var(--text-muted)] gsap-card">
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec1-title">[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec1-desc">Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.</span>
+        </div>
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec2-title">[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec2-desc">Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.</span>
+        </div>
+        <div class="space-y-1.5">
+          <span class="font-bold text-[var(--text-primary)] uppercase block" data-i18n="web-spec3-title">[ ĐỒNG BỘ ĐA NỀN TẢNG ]</span>
+          <span class="leading-relaxed block" data-i18n="web-spec3-desc">Thống nhất hệ màu #0D0E11, font Inter và logic mở khóa xu/VIP từ app di động sang web máy tính, giúp trải nghiệm người dùng liền mạch 100%.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / STORE READINESS CHECKLIST & EDGE STATES -->
     <section id="store-readiness" class="space-y-12 pt-14 md:pt-20 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec6-tag">
-        [ 04 // SẴN SÀNG NỘP STORE ]
+        [ 05 // SẴN SÀNG NỘP STORE ]
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -1039,10 +1112,10 @@
       </div>
     </section>
 
-    <!-- 05 / ĐÁNH ĐỔI, SỬA THEO REVIEW, GIẢ THUYẾT & BÀI HỌC -->
+    <!-- 06 / ĐÁNH ĐỔI, SỬA THEO REVIEW, GIẢ THUYẾT & BÀI HỌC -->
     <section id="lessons" class="space-y-14 md:space-y-20 pt-14 md:pt-20 hairline-t gsap-reveal">
       <div class="font-mono text-xs uppercase tracking-mono text-[var(--text-muted)]" data-i18n="sec7-tag">
-        [ 05 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]
+        [ 06 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]
       </div>
 
       <!-- Open 3-Column Editorial Trade-offs Row -->
@@ -1437,19 +1510,19 @@
         'top-back': 'QUAY LẠI DANH SÁCH DỰ ÁN',
         'top-back-mobile': 'QUAY LẠI',
         'top-case-num': 'CASE 01 / 04',
-        'top-case-tag': 'SHORTPEEK · MOBILE APP REDESIGN',
+        'top-case-tag': 'SHORTPEEK · MOBILE APP &amp; DESKTOP WEB',
         'btn-contact': 'Liên hệ',
-        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span>',
-        'hero-title': 'SHORTPEEK: THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC.',
-        'hero-desc': 'Làm mới giao diện ứng dụng xem phim ngắn theo hướng điện ảnh gọn mắt trước khi nộp store. Tôi sắp xếp lại thanh điều hướng, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.',
+        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span>',
+        'hero-title': 'SHORTPEEK: THIẾT KẾ HỆ SINH THÁI PHIM NGẮN (MOBILE APP &amp; DESKTOP WEB).',
+        'hero-desc': 'Làm mới toàn diện trải nghiệm xem phim ngắn dạng dọc trên cả ứng dụng di động và nền tảng Desktop Web (1920px). Tôi tái cấu trúc thanh điều hướng, đưa Billboard điện ảnh lên màn hình lớn, tách nhánh mở khóa tập và bổ sung đầy đủ trạng thái hệ thống.',
         'meta-role-lbl': 'Vai trò',
         'meta-role-val': 'Product Designer',
         'meta-type-lbl': 'Dự án',
         'meta-type-val': 'Marchi Lab · 2026 (Chưa phát hành)',
         'meta-scope-lbl': 'Phạm vi',
-        'meta-scope-val': 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+        'meta-scope-val': 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
         'meta-scale-lbl': 'Nền tảng',
-        'meta-scale-val': 'iOS &amp; Android',
+        'meta-scale-val': 'iOS · Android · Desktop Web (1920px)',
         'comparison-tag': '[ TRƯỚC / SAU ]',
         'comparison-before': 'BẢN GỐC',
         'comparison-after': 'BẢN REDESIGN',
@@ -1560,7 +1633,22 @@
         'type-desc': 'Chỉ dùng một font Inter với bốn bậc cỡ chữ giúp đọc rõ trên màn hình điện thoại mà không làm rối poster.',
         'bento-hero-cap1': 'Toàn cảnh bộ màn hình cốt lõi: Home · Clip · Mở khóa tập · Shortpeek Premium',
         'bento-hero-cap2': 'Nhất quán hệ màu #0D0E11 và nút hành động trắng #FFFFFF',
-        'sec6-tag': '[ 04 // SẴN SÀNG NỘP STORE ]',
+        'sec4-web-tag': '[ 04 // MỞ RỘNG NỀN TẢNG ]',
+        'sec4-web-heading': 'TRẢI NGHIỆM DESKTOP WEB (1920PX)',
+        'sec4-web-desc': 'Song song với ứng dụng di động, tôi trực tiếp thiết kế toàn bộ phiên bản Desktop Web (1920px): mở rộng không gian điện ảnh với Billboard cỡ lớn, thanh điều hướng web chuẩn mực, dải phim xếp hạng và trình phát xem phim kèm danh sách tập trực tiếp.',
+        'web-cap-home1': '01 · Trang chủ Desktop Web (1920px): Cinematic Billboard 1312×560 &amp; Ranked Rail Top 10',
+        'web-cap-home2': 'Primary Navigation · Search Bar · Shortcut VIP &amp; Xu thưởng',
+        'web-watch-title': 'Trình phát Desktop &amp; Side-by-side Episodes',
+        'web-watch-desc': 'Trình phát video tỷ lệ rộng đi kèm Side Drawer chọn tập trực tiếp (Episodes 1..30) bên hông; người xem chuyển tập tức thì mà không cần thoát khỏi màn hình xem phim.',
+        'web-unlock-title': 'Modal mở khóa tập &amp; Nạp xu trên Web',
+        'web-unlock-desc': 'Hộp thoại mờ (Modal Dimmer) tối ưu cho con trỏ chuột máy tính: hiển thị rõ số dư xu, chi phí mở tập và gói thành viên tuần/tháng tích hợp cổng thanh toán thẻ quốc tế.',
+        'web-spec1-title': '[ KHÔNG GIAN ĐIỆN ẢNH RỘNG ]',
+        'web-spec1-desc': 'Tận dụng khung nhìn 1920px để dựng Featured Billboard 1312×560px với scrim che phủ tinh tế, mang lại cảm giác giải trí chuẩn rạp tại gia.',
+        'web-spec2-title': '[ ĐIỀU HƯỚNG WEB CHUẨN MỰC ]',
+        'web-spec2-desc': 'Thanh điều hướng cố định 72px với 4 phân mục chính (Home, Categories, Clips, My List), ô tìm kiếm nhanh và truy cập nhanh vào VIP/Ví xu.',
+        'web-spec3-title': '[ ĐỒNG BỘ ĐA NỀN TẢNG ]',
+        'web-spec3-desc': 'Thống nhất hệ màu #0D0E11, font Inter và logic mở khóa xu/VIP từ app di động sang web máy tính, giúp trải nghiệm người dùng liền mạch 100%.',
+        'sec6-tag': '[ 05 // SẴN SÀNG NỘP STORE ]',
         'sec6-heading': 'CHECKLIST DUYỆT APP STORE &amp; GOOGLE PLAY',
         'sec6-desc': 'Để đội kỹ thuật không phải đoán ở các tình huống phụ và đáp ứng quy định xét duyệt ứng dụng, tôi thiết kế bổ sung màn hình đăng nhập theo nền tảng, trạng thái trình phát, ngoại tuyến và năm trang chính sách.',
         'chk-1': 'Continue with Apple / Google theo đúng nền tảng và nút Not now',
@@ -1574,7 +1662,7 @@
         'edge2-desc': 'Mẫu FeedbackPanel đặt nút View Downloads ngay dưới Try Again để không gián đoạn khi mất mạng.',
         'edge3-title': '10 trạng thái trình phát &amp; DRM',
         'edge3-desc': 'Phủ Speed, Quality, Buffering, Playback error, Series complete và cảnh báo chụp hoặc quay màn hình.',
-        'sec7-tag': '[ 05 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]',
+        'sec7-tag': '[ 06 // ĐÁNH ĐỔI, SỬA THEO REVIEW &amp; GIỚI HẠN ]',
         'tr1-title': 'Chốt App Icon đỏ đen nhưng giữ CTA trắng trên UI',
         'tr1-desc': 'Trong buổi review màn Home, đội góp ý nhấn đỏ và làm lại logo. Tôi vẽ lại biểu tượng chữ S lồng nút Play màu đỏ trắng trên nền đen cho dễ nhận diện. Bên trong app, tôi vẫn giữ nút hành động màu trắng và nhấn cam #F97039 để không lấn ảnh phim.',
         'tr2-title': 'Gỡ khối nhận xu khỏi Wallet và rút gọn nhãn tab',
@@ -1604,19 +1692,19 @@
         'top-back': 'BACK TO PROJECT LIST',
         'top-back-mobile': 'BACK',
         'top-case-num': 'CASE 01 / 04',
-        'top-case-tag': 'SHORTPEEK · MOBILE APP REDESIGN',
+        'top-case-tag': 'SHORTPEEK · MOBILE APP &amp; DESKTOP WEB',
         'btn-contact': 'Get in touch',
-        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>MOBILE APP · UX/UI REDESIGN</span>',
-        'hero-title': 'SHORTPEEK: REDESIGNING A VERTICAL SHORT-DRAMA APP.',
-        'hero-desc': 'A Marchi Lab redesign built for a calmer, cinema-first look before store review. I simplified navigation, split paid episode paths, and finished the edge states.',
+        'hero-tag': '<span>[ 01 // SELECTED WORK ]</span><span>·</span><span>CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB</span>',
+        'hero-title': 'SHORTPEEK: SHORT-DRAMA ECOSYSTEM (MOBILE APP &amp; DESKTOP WEB).',
+        'hero-desc': 'A comprehensive redesign of the vertical short-drama experience across both mobile apps and a 1920px Desktop Web platform. I restructured navigation, expanded cinematic billboards for large screens, split episode access paths, and covered complete system states.',
         'meta-role-lbl': 'Role',
         'meta-role-val': 'Product Designer',
         'meta-type-lbl': 'Project',
         'meta-type-val': 'Marchi Lab · 2026 (Unreleased)',
         'meta-scope-lbl': 'Scope',
-        'meta-scope-val': 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
+        'meta-scope-val': 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
         'meta-scale-lbl': 'Platform',
-        'meta-scale-val': 'iOS &amp; Android',
+        'meta-scale-val': 'iOS · Android · Desktop Web (1920px)',
         'comparison-tag': '[ BEFORE / AFTER ]',
         'comparison-before': 'ORIGINAL',
         'comparison-after': 'REDESIGN',
@@ -1727,7 +1815,22 @@
         'type-desc': 'One font (Inter) across four clear sizes stays readable on mobile screens and never fights the posters.',
         'bento-hero-cap1': 'Core flow overview: Home · Clip · Episode access · Shortpeek Premium',
         'bento-hero-cap2': 'Consistent #0D0E11 cinema surfaces with high-contrast #FFFFFF primary actions',
-        'sec6-tag': '[ 04 // STORE READINESS ]',
+        'sec4-web-tag': '[ 04 // CROSS-PLATFORM ]',
+        'sec4-web-heading': 'DESKTOP WEB EXPERIENCE (1920PX)',
+        'sec4-web-desc': 'Alongside the mobile app, I designed the complete 1920px Desktop Web platform: expanding cinematic scale with wide billboards, standardized desktop navigation, ranked rails, and an inline episode player drawer.',
+        'web-cap-home1': '01 · Desktop Web Home (1920px): 1312×560 Cinematic Billboard &amp; Top 10 Ranked Rail',
+        'web-cap-home2': 'Primary Navigation · Search Bar · VIP &amp; Rewards Shortcuts',
+        'web-watch-title': 'Desktop Player &amp; Side-by-Side Episode Drawer',
+        'web-watch-desc': 'Wide-format desktop player paired with a side-by-side episode drawer (Episodes 1..30); viewers switch chapters instantly without leaving the viewing frame.',
+        'web-unlock-title': 'Web Episode Access &amp; Coin Checkout Modal',
+        'web-unlock-desc': 'Cursor-optimized modal dimmer: clear coin balance, unlock costs, and weekly/monthly VIP plans paired with card payment options.',
+        'web-spec1-title': '[ CINEMATIC SCALE ]',
+        'web-spec1-desc': 'Leveraging 1920px desktop viewports for a 1312×560px billboard with subtle scrim fades, bringing home-theater scale to vertical drama.',
+        'web-spec2-title': '[ DESKTOP NAVIGATION ]',
+        'web-spec2-desc': 'Sticky 72px header with four primary destinations (Home, Categories, Clips, My List), quick search, and direct VIP/wallet access.',
+        'web-spec3-title': '[ CROSS-PLATFORM SYSTEM ]',
+        'web-spec3-desc': 'Unifying #0D0E11 cinema surfaces, Inter typography, and coin unlock logic across mobile and web for a seamless ecosystem.',
+        'sec6-tag': '[ 05 // STORE READINESS ]',
         'sec6-heading': 'APP STORE &amp; GOOGLE PLAY SUBMISSION CHECKLIST',
         'sec6-desc': 'To remove guesswork for developers and satisfy store review guidelines, I covered platform-specific sign-in flows, player errors, offline handling, and five policy pages.',
         'chk-1': 'Platform auth (Apple / Google) with a clear Not now exit',
@@ -1741,7 +1844,7 @@
         'edge2-desc': 'FeedbackPanel places View Downloads right below Try Again so offline viewers keep watching.',
         'edge3-title': '10 player states &amp; DRM alert',
         'edge3-desc': 'Covers speed, quality, buffering, playback failures, series completion, and screen-capture warnings.',
-        'sec7-tag': '[ 05 // TRADE-OFFS, REVIEW ITERATIONS &amp; LIMITS ]',
+        'sec7-tag': '[ 06 // TRADE-OFFS, REVIEW ITERATIONS &amp; LIMITS ]',
         'tr1-title': 'Red-and-white mark paired with quiet white UI CTAs',
         'tr1-desc': 'During a Home review, the team asked for red accents and a new logo. I redrew the S-play App Icon in red and white on black. Inside the app, I stuck with white primary buttons and #F97039 orange accents so the red mark never competes with posters.',
         'tr2-title': 'Removed reward tasks from Wallet and trimmed tab labels',

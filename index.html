@@ -590,8 +590,8 @@
            data-url="shortpeek.html"
            data-image="assets/covers/shortpeek-mobile.webp"
            data-fallback-image="assets/shortpeek/shortpeek-hero.webp"
-           data-title="Shortpeek · Thiết Kế Lại Mobile App"
-           data-tag="MOBILE APP · UX AUDIT & UI REDESIGN"
+           data-title="Shortpeek · Mobile App &amp; Desktop Web Redesign"
+           data-tag="CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB"
            onclick="openCaseDrawer('shortpeek')">
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -605,7 +605,7 @@
                 SHORTPEEK
               </button>
               <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-mono mt-2" data-i18n="shortpeek-subtitle">
-                THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC
+                HỆ SINH THÁI XEM PHIM NGẮN DẠNG DỌC (APP &amp; WEB)
               </p>
             </div>
           </div>
@@ -614,7 +614,7 @@
           <div class="lg:hidden w-full rounded-xl overflow-hidden hairline-all shadow-sm bg-[var(--bg-secondary)] aspect-[16/10] my-1">
             <img src="assets/covers/shortpeek-mobile.webp"
                  onerror="this.onerror=null;this.src='assets/shortpeek/shortpeek-hero.webp'"
-                 alt="Shortpeek · Thiết Kế Lại Mobile App"
+                 alt="Shortpeek · Mobile App &amp; Desktop Web Redesign"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                  loading="lazy" decoding="async">
           </div>
@@ -622,7 +622,7 @@
           <div class="lg:col-span-4 font-mono text-xs uppercase tracking-mono space-y-1.5 text-[var(--text-muted)]">
             <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               <span class="text-[var(--text-primary)] font-semibold shrink-0">[ SCOPE ]:</span>
-              <span>UX AUDIT · USER FLOW · UI · DESIGN SYSTEM · PROTOTYPE</span>
+              <span>UX AUDIT · MOBILE APP · DESKTOP WEB (1920PX) · DESIGN SYSTEM</span>
             </div>
             <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               <span class="text-[var(--text-primary)] font-semibold shrink-0">[ TYPE ]:</span>
@@ -1645,7 +1645,7 @@
         'iq-type': 'EDTECH PRODUCT · WEB APP DESIGN',
         'momo-subtitle': "LÀM RÕ THÔNG TIN TRƯỚC KHI CHUYỂN TIỀN",
         'momo-type': "CONCEPT CÁ NHÂN · FINTECH REDESIGN",
-        'shortpeek-subtitle': "THIẾT KẾ LẠI ỨNG DỤNG XEM PHIM NGẮN DẠNG DỌC",
+        'shortpeek-subtitle': "HỆ SINH THÁI XEM PHIM NGẮN DẠNG DỌC (APP &amp; WEB)",
         'shortpeek-type': "DỰ ÁN THỰC TẾ · MARCHI LAB (CHƯA PHÁT HÀNH)",
         'btn-open-drawer': 'XEM TÓM TẮT DỰ ÁN',
         'btn-menu': 'MENU',
@@ -1708,7 +1708,7 @@
         'iq-type': 'EDTECH WEB APP · CONVERSION AUDIT',
         'momo-subtitle': "CLEARER DETAILS BEFORE SENDING MONEY",
         'momo-type': "SELF-INITIATED CONCEPT · FINTECH REDESIGN",
-        'shortpeek-subtitle': "REDESIGNING A VERTICAL SHORT-DRAMA APP",
+        'shortpeek-subtitle': "VERTICAL SHORT-DRAMA ECOSYSTEM (APP &amp; WEB)",
         'shortpeek-type': "CLIENT PRODUCT · MARCHI LAB (UNRELEASED)",
         'btn-open-drawer': 'VIEW SUMMARY',
         'btn-menu': 'MENU',
@@ -1860,35 +1860,35 @@
         heroImg: 'assets/covers/shortpeek-mobile.webp',
         fallbackImg: 'assets/shortpeek/shortpeek-hero.webp',
         vi: {
-          tag: 'MOBILE APP · UX AUDIT &amp; UI REDESIGN',
+          tag: 'CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB',
           projectType: 'Dự án thực tế tại Marchi Lab · Chưa phát hành',
-          scope: 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
-          title: 'SHORTPEEK: LÀM MỚI ỨNG DỤNG PHIM NGẮN DẠNG DỌC',
-          problem: 'Trước khi nộp store, bản gốc có mật độ Home dày banner khuyến mãi, tab Rewards chen giữa bottom bar, sheet mở khóa dồn nhiều gói và thiếu màn trạng thái lỗi.',
-          hmw: 'Làm sao để giữ cảm giác điện ảnh gọn mắt theo hướng Netflix mà người xem vẫn rõ cách mở khóa tập bằng xu hoặc gói thành viên?',
+          scope: 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
+          title: 'SHORTPEEK: HỆ SINH THÁI PHIM NGẮN (APP &amp; WEB)',
+          problem: 'Trước khi nộp store, bản gốc có mật độ Home dày banner khuyến mãi, tab Rewards chen giữa bottom bar, sheet mở khóa dồn nhiều gói và thiếu bản trải nghiệm trên màn hình lớn.',
+          hmw: 'Làm sao để giữ cảm giác điện ảnh gọn mắt theo hướng Netflix trên cả Mobile và Desktop Web 1920px mà người xem vẫn rõ cách mở khóa tập và nạp xu?',
           pillars: [
-            {"title": "01 / GỌN ĐIỀU HƯỚNG", "desc": "Rút thanh đáy từ 5 xuống 4 tab dạng nổi, chuyển VIP và Rewards lên header, làm thoáng đầu trang Home."},
-            {"title": "02 / TÁCH NHÁNH MỞ KHÓA", "desc": "Tách rõ trường hợp Đủ xu (1 bước mở) và Thiếu xu (2 tab Coins / Premium) kèm tổng xu thực nhận."},
-            {"title": "03 / PHỦ ĐỦ EDGE STATES", "desc": "Bổ sung App Icon mới, luồng quản lý My List (chọn, xóa, Undo, màn trống), trạng thái lỗi phát, mất mạng và 5 trang chính sách."}
+            {"title": "01 / GỌN ĐIỀU HƯỚNG", "desc": "Rút thanh đáy từ 5 xuống 4 tab dạng nổi trên mobile, chuẩn hóa Primary Navigation 72px trên Desktop Web."},
+            {"title": "02 / TÁCH NHÁNH MỞ KHÓA", "desc": "Tách rõ trường hợp Đủ xu (1 bước mở) và Thiếu xu (2 tab Coins / Premium) kèm cổng nạp thẻ quốc tế trên Web."},
+            {"title": "03 / MỞ RỘNG DESKTOP WEB (1920PX)", "desc": "Thiết kế toàn diện giao diện Web: Billboard điện ảnh 1312×560, dải phim Top 10 và trình phát có danh sách tập bên hông."}
           ],
-          execution: 'Product Designer · Tôi trực tiếp audit bản gốc, thiết kế User Flow, UI, Design System, App Icon và Prototype. Sản phẩm chưa phát hành nên cần đo lường sau go-live.',
+          execution: 'Product Designer · Tôi trực tiếp audit bản gốc, thiết kế lại Mobile App & Desktop Web 1920px, Design System, App Icon và Prototype.',
           btnDetail: 'XEM CHI TIẾT DỰ ÁN',
           btnDetailFull: 'ĐỌC CASE STUDY ĐẦY ĐỦ',
           backToList: 'Quay lại danh sách dự án'
         },
         en: {
-          tag: 'MOBILE APP · UX AUDIT &amp; UI REDESIGN',
+          tag: 'CROSS-PLATFORM · MOBILE &amp; DESKTOP WEB',
           projectType: 'Client product at Marchi Lab · Unreleased',
-          scope: 'UX Audit · User Flow · UI · Design System · App Icon · Prototype',
-          title: 'SHORTPEEK: REDESIGNING A SHORT-DRAMA APP',
-          problem: 'Ahead of store submission, the original app had promo-heavy Home grids, a cluttered 5-tab bar, overloaded episode access sheets, and missing error states.',
-          hmw: 'How might we bring a calmer, Netflix-style cinema layout while keeping coin payments and memberships clear?',
+          scope: 'UX Audit · Mobile App · Desktop Web (1920px) · Design System · Prototype',
+          title: 'SHORTPEEK: SHORT-DRAMA ECOSYSTEM (APP &amp; WEB)',
+          problem: 'Ahead of store submission, the original app had promo-heavy Home grids, a cluttered 5-tab bar, overloaded episode access sheets, and lacked a dedicated desktop viewing platform.',
+          hmw: 'How might we bring a calmer, Netflix-style cinema layout across both Mobile and 1920px Desktop Web while keeping episode access and coin top-ups clear?',
           pillars: [
-            {"title": "01 / CALMER NAVIGATION", "desc": "Cut the bottom bar down to 4 floating tabs, moved VIP and Rewards to the header, and opened up Home."},
-            {"title": "02 / CLEARER ACCESS FLOWS", "desc": "Split Enough coins (one tap) from Need coins (Coins and Premium tabs) with upfront pack totals."},
-            {"title": "03 / COMPLETE EDGE STATES", "desc": "Added a refreshed App Icon, My List edit and Undo flows, playback error handling, and 5 policy screens."}
+            {"title": "01 / CALMER NAVIGATION", "desc": "Cut mobile navigation to 4 floating tabs and standardized a 72px desktop header with direct discovery access."},
+            {"title": "02 / CLEARER ACCESS FLOWS", "desc": "Split Enough coins from Need coins with upfront pack totals and integrated card checkouts on web."},
+            {"title": "03 / DESKTOP WEB EXPANSION (1920PX)", "desc": "Full desktop web system: 1312×560 cinematic billboard, ranked rails, and an inline episode player drawer."}
           ],
-          execution: 'Product Designer · I handled the UX audit, user flows, UI, design system, App Icon, and prototype. Since the app has not shipped yet, live metrics remain unmeasured.',
+          execution: 'Product Designer · I handled the UX audit, mobile app & 1920px desktop web UI, design system, App Icon, and prototype.',
           btnDetail: 'VIEW FULL CASE STUDY',
           btnDetailFull: 'READ THE FULL CASE STUDY',
           backToList: 'Back to project list'
